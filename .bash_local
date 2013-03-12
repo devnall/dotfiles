@@ -1,0 +1,33 @@
+## .bash_local
+# For output on new shells so that I don't break scp
+#
+
+# If Homebrew bash-completion is installed, use it
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+fi
+
+
+# Use grc for better colorized output
+source "/usr/local/etc/grc.bashrc"
+
+# Tell ls to be colorful
+export CLICOLOR=1
+
+# Tell grep to highlight matches
+export GREP_OPTIONS='--color=auto'
+
+# Use cdf for colorized df output
+if [ -f /usr/local/bin/cdf ]; then
+	alias df="cdf"
+fi
+
+# Use htop for pretty top output
+if [ -f /usr/local/bin/htop ]; then
+	alias top="htop"
+fi
+
+# Call script that displays a random line from my quotefile
+~/dev/scripts/qotd.sh ~/Dropbox/Docs/QuoteFile.txt
+
+date
