@@ -39,6 +39,16 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# Use vim and vim keybindings
+export EDITOR="vim"
+bindkey -v
+
+# vi style incremental search
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+bindkey '^P' history-search-backward
+bindkey '^N' history-search-forward
+
 # Add my ~/bin dir to PATH
 if [ -d ~/bin ]; then
   PATH="~/bin:${PATH}"
@@ -52,3 +62,5 @@ fi
 if [ -d /usr/local/sbin ]; then
   PATH="/usr/local/sbin:${PATH}"
 fi
+
+#. /Library/Python/2.7/site-packages/Powerline-beta-py2.7.egg/powerline/bindings/zsh/powerline.zsh
