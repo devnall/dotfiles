@@ -207,4 +207,5 @@ else
   set background=light
 endif
 
+let g:solarized_termtrans = 1
 colorscheme solarized
