@@ -33,7 +33,7 @@ ZSH_THEME="devnall"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew git osx sublime vi-mode)
+plugins=(brew git osx sublime vi-mode zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
