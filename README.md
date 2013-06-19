@@ -1,4 +1,5 @@
-[/dev/nall's dotfiles]
+/dev/nall's dotfiles
+--------------------
 
 A bunch of dotfiles for my environment, including:
 * BASH
