@@ -37,7 +37,12 @@ plugins=(brew colored-man colorize extract git gitfast history osx sublime vi-mo
 
 source $ZSH/oh-my-zsh.sh
 
+#
 # Customize to your needs...
+#
+
+# Use zsh-completion.rb (from homebrew)
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Use vim and vim keybindings
 export EDITOR="vim"
