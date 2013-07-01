@@ -62,5 +62,3 @@ fi
 if [ -d /usr/local/sbin ]; then
   PATH="/usr/local/sbin:${PATH}"
 fi
-
-#. /Library/Python/2.7/site-packages/Powerline-beta-py2.7.egg/powerline/bindings/zsh/powerline.zsh
