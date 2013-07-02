@@ -13,8 +13,8 @@ call vundle#rc()
 " General options
 set nocompatible	" Use vim functionality
 set history=256		" Number of things to remember in history
-set autowrite		  " Writes on make/shell commands
-set autoread		  " If file is changed outside of vim, pull in changes
+set autowrite		" Writes on make/shell commands
+set autoread		" If file is changed outside of vim, pull in changes
 set timeoutlen=250	" Time to wait after ESC (default causes and annoying delay)
 set clipboard+=unnamed	" Yanks go on clipboard instead
 set pastetoggle=<F10>	" Toggle between paste and normal: for 'safer' pasting from keyboard
