@@ -1,0 +1,7 @@
+set shell=/usr/local/bin/zsh    "Set shell to zsh
+set autoread                    "If file is changed outside of vim, pull in changes
+set timeoutlen=250              "Time to wait after ESC (default causes an annoying delay)
+set clipboard+=unnamed          "yank to OS clipboard
+
+
+UnBundle 'PIV'
