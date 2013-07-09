@@ -3,40 +3,6 @@
 " Maintainer: Drew Nall <drewnall@gmail.com>
 " Last updated: 2013 Feb 23
 
-
-" Call vundle for plugin management 
-set runtimepath+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-"set runtimepath+=/Library/Python/2.7/site-packages/Powerline-beta-py2.7.egg/powerline/bindings/vim"
-
-" General options
-set nocompatible	" Use vim functionality
-set history=256		" Number of things to remember in history
-set autowrite		" Writes on make/shell commands
-set autoread		" If file is changed outside of vim, pull in changes
-set timeoutlen=250	" Time to wait after ESC (default causes and annoying delay)
-set clipboard+=unnamed	" Yanks go on clipboard instead
-set pastetoggle=<F10>	" Toggle between paste and normal: for 'safer' pasting from keyboard
-set tags=./tags;$HOME	" Walk directory tree up to $HOME looking for tags
-
-" Modeline
-set modeline
-
-" Backup
-set nowritebackup
-set nobackup
-set directory=$HOME/.vim/tmp//,. " Keep swap files in one place
-
-" Buffers
-set hidden " The current buffer can be put to the background without writing to disk
-
-" Match and search
-set hlsearch		" Highlight search results
-set ignorecase		" Case insensitive searching...
-set smartcase		" But case sensitive if there's 1+ capital letter
-set incsearch		" Do incremental searching
-
 " Formatting
 set fo+=o		" Insert current comment leader after hitting 'o' or 'O' in Normal mode
 set fo-=r		" Do not automatically insert a comment leader after an enter
