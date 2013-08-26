@@ -67,3 +67,8 @@ fi
 if [ -d /usr/local/sbin ]; then
   PATH="/usr/local/sbin:${PATH}"
 fi
+
+# If Homebrew zsh-syntax-highlighting is installed, use it
+if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
