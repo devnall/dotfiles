@@ -1,0 +1,12 @@
+[user]
+	name = Drew Nall
+	email = devnall@gmail.com
+[credential]
+	helper = osxkeychain
+[push]
+	default = simple
+[core]
+	autocrlf = input
+	safecrlf = true
+[alias]
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
