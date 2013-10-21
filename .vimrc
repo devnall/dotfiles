@@ -1,7 +1,12 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: 2013 Feb 23
+" Last updated: 2013 Oct 7
+
+set nocompatible
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
 " Formatting
 set fo+=o		" Insert current comment leader after hitting 'o' or 'O' in Normal mode
@@ -67,17 +72,19 @@ map <silent> <F12> :set invlist<CR>	" Show/hide hidden characters
 
 " Bundles go here:
 "
+" Let vundle manage vundle. Required!
+Bundle "gmarik/vundle"
+
 "" Trying these out
-Bundle "YankRing.vim"
-"Bundle "http://github.com/thinca/vim-quickrun.git"
-"Bundle "http://github.com/mattn/gist-vim.git"
-Bundle "Townk/vim-autoclose"
-"Bundle "Lokaltog/vim-easymotion"
-Bundle "http://github.com/tpope/vim-fugitive"
+"Bundle "YankRing.vim"
+""Bundle "http://github.com/thinca/vim-quickrun.git"
+""Bundle "http://github.com/mattn/gist-vim.git"
+"Bundle "Townk/vim-autoclose"
+""Bundle "Lokaltog/vim-easymotion"
+"Bundle "http://github.com/tpope/vim-fugitive"
 "
 """ Github repo bundles
-Bundle "gmarik/vundle"
-Bundle "tpope/vim-markdown.git"
+"Bundle "tpope/vim-markdown.git"
 Bundle "altercation/vim-colors-solarized.git"
 Bundle "Lokaltog/vim-powerline"
 "Bundle "stephenmckinney/vim-solarized-powerline"
@@ -86,7 +93,7 @@ Bundle "Lokaltog/vim-powerline"
 "Bundle "L9"
 "Bundle "FuzzyFinder"
 "Bundle "git.zip"
-Bundle "Markdown"
+"Bundle "Markdown"
 "Bundle "repeat.vim"
 "Bundle "surround.vim"
 "Bundle "SuperTab"
@@ -103,8 +110,8 @@ Bundle "Markdown"
 " nnoremap // :TComment<CR>
 " vnoremap // :TComment<CR>
 "
-Bundle "git://git.wincent.com/command-t.git"
-let g:CommandTMatchWindowAtTop=1   " Show window at top
+"Bundle "git://git.wincent.com/command-t.git"
+"let g:CommandTMatchWindowAtTop=1   " Show window at top
 
 " Powerline stuff
 python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
