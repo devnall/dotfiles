@@ -1,7 +1,7 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: 2013 Oct 7
+" Last updated: 2013 Dec 13
 
 set nocompatible
 
@@ -82,6 +82,7 @@ Bundle "gmarik/vundle"
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
 "Bundle "http://github.com/tpope/vim-fugitive"
+Bundle "http://github.com/rodjek/vim-puppet"
 "
 """ Github repo bundles
 "Bundle "tpope/vim-markdown.git"
