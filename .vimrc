@@ -1,7 +1,7 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: 2013 Dec 13
+" Last updated: 2013 Dec 15
 
 set nocompatible
 
@@ -81,14 +81,17 @@ Bundle "gmarik/vundle"
 ""Bundle "http://github.com/mattn/gist-vim.git"
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
-"Bundle "http://github.com/tpope/vim-fugitive"
-Bundle "http://github.com/rodjek/vim-puppet"
+Bundle "https://github.com/tpope/vim-fugitive"
+Bundle "https://github.com/rodjek/vim-puppet"
+Bundle "https://github.com/scrooloose/syntastic"
+Bundle "https://github.com/godlygeek/tabular"
+Bundle "https://github.com/tpope/vim-speeddating"
+Bundle "https://github.com/scrooloose/nerdtree"
 "
 """ Github repo bundles
-"Bundle "tpope/vim-markdown.git"
+Bundle "tpope/vim-markdown.git"
 Bundle "altercation/vim-colors-solarized.git"
 Bundle "Lokaltog/vim-powerline"
-"Bundle "stephenmckinney/vim-solarized-powerline"
 "
 "" vim-scripts repos
 "Bundle "L9"
@@ -159,11 +162,12 @@ endif
 
 " Key bindings
 let mapleader = ","
-" Bind NERDTree to F2
 map <F2> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 map <F3> :CommandT<CR>
 imap jj <Esc>	" jj instead of escape in insert mode
 nnoremap <space> :nohlsearch<CR>/<BS>	" space unhighlights search results
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Make it pretty by defining color scheme and other visual niceties
 "set background=dark
