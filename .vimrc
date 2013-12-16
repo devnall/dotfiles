@@ -87,6 +87,7 @@ Bundle "https://github.com/scrooloose/syntastic"
 Bundle "https://github.com/godlygeek/tabular"
 Bundle "https://github.com/tpope/vim-speeddating"
 Bundle "https://github.com/scrooloose/nerdtree"
+Bundle "https://github.com/puppetlabs/puppet-syntax-vim"
 "
 """ Github repo bundles
 Bundle "tpope/vim-markdown.git"
