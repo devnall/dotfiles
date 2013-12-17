@@ -73,6 +73,11 @@ if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+# Add gem-installed executables to PATH
+if [ -d /usr/local/opt/ruby/bin ]; then
+  PATH="/usr/local/opt/ruby/bin:${PATH}"
+fi
+
 # May be needed to access online help?
 unalias run-help
 autoload run-help
