@@ -72,3 +72,8 @@ fi
 if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+# May be needed to access online help?
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/helpfiles
