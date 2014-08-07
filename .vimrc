@@ -17,37 +17,37 @@ call vundle#begin()
 " Let Vundle manage Vundle. Required!
 Plugin 'gmarik/Vundle.vim'
 
-"" Trying these out
-"Bundle "YankRing.vim"
-""Bundle "http://github.com/thinca/vim-quickrun.git"
-""Bundle "http://github.com/mattn/gist-vim.git"
-"Bundle "Townk/vim-autoclose"
-""Bundle "Lokaltog/vim-easymotion"
-Plugin 'https://github.com/tpope/vim-fugitive'
-"Bundle "https://github.com/rodjek/vim-puppet"
-Plugin 'https://github.com/scrooloose/syntastic'
-Plugin 'https://github.com/godlygeek/tabular'
-Plugin 'https://github.com/tpope/vim-speeddating'
-Plugin 'https://github.com/scrooloose/nerdtree'
-Plugin 'https://github.com/puppetlabs/puppet-syntax-vim'
-Plugin 'https://github.com/ajf/puppet-vim'
 "
 """ Github repo bundles
 Plugin 'tpope/vim-markdown.git'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-powerline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
+Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-speeddating'
+Plugin 'scrooloose/nerdtree'
+Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'ajf/puppet-vim'
 "
-"" vim-scripts repos
+""" vim-scripts repos
+Plugin 'Markdown'
+Plugin 'git.zip'
 "Bundle "L9"
 "Bundle "FuzzyFinder"
-"Bundle "git.zip"
-"Bundle "Markdown"
 "Bundle "repeat.vim"
 "Bundle "surround.vim"
 "Bundle "SuperTab"
 "
-"" non-github repos
+""" Stuff to try out
+"Bundle "YankRing.vim"
+""Bundle "http://github.com/thinca/vim-quickrun.git"
+""Bundle "http://github.com/mattn/gist-vim.git"
+"Bundle "Townk/vim-autoclose"
+""Bundle "Lokaltog/vim-easymotion"
+"Bundle "https://github.com/rodjek/vim-puppet"
 "
+""" non-github repos
 " Bundle "ZoomWin"
 " noremap MLocalLeader o :ZoomWin<CR>
 " vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
