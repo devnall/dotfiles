@@ -1,12 +1,84 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: 2013 Dec 17
+" Last updated: 2014 Aug 6
 
 set nocompatible
+filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" Set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" Alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" Bundles go here:
+"
+" Let Vundle manage Vundle. Required!
+Plugin 'gmarik/Vundle.vim'
+
+"" Trying these out
+"Bundle "YankRing.vim"
+""Bundle "http://github.com/thinca/vim-quickrun.git"
+""Bundle "http://github.com/mattn/gist-vim.git"
+"Bundle "Townk/vim-autoclose"
+""Bundle "Lokaltog/vim-easymotion"
+Plugin 'https://github.com/tpope/vim-fugitive'
+"Bundle "https://github.com/rodjek/vim-puppet"
+Plugin 'https://github.com/scrooloose/syntastic'
+Plugin 'https://github.com/godlygeek/tabular'
+Plugin 'https://github.com/tpope/vim-speeddating'
+Plugin 'https://github.com/scrooloose/nerdtree'
+Plugin 'https://github.com/puppetlabs/puppet-syntax-vim'
+Plugin 'https://github.com/ajf/puppet-vim'
+"
+""" Github repo bundles
+Plugin 'tpope/vim-markdown.git'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'Lokaltog/vim-powerline'
+"
+"" vim-scripts repos
+"Bundle "L9"
+"Bundle "FuzzyFinder"
+"Bundle "git.zip"
+"Bundle "Markdown"
+"Bundle "repeat.vim"
+"Bundle "surround.vim"
+"Bundle "SuperTab"
+"
+"" non-github repos
+"
+" Bundle "ZoomWin"
+" noremap MLocalLeader o :ZoomWin<CR>
+" vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
+" inoremap <LocalLeader>o <C-O>:ZoomWin<CR>
+" noremap <C-W>+o :ZoomWin<CR>
+"
+" Bundle "tComment"
+" nnoremap // :TComment<CR>
+" vnoremap // :TComment<CR>
+"
+"Bundle "git://git.wincent.com/command-t.git"
+"let g:CommandTMatchWindowAtTop=1   " Show window at top
+
+" All of your Plugins must be added before the following line
+call vundle#end()                   " Required
+filetype plugin indent on           " Required
+" To ignore plugin indent change, instead use:
+"filetype plugin on
+"
+" Brief Vundle help
+" :PluginList         - lists configured plugins
+" :PluginInstall      - installs plugins
+" :PluginUpdate       - update installed plugins
+" :PluginSearch foo   - searches for foo; append `!` to refresh local cache
+" :PluginClean        - confirms removal of unused plugins; append `!` to
+" auto-approve
+"
+" See `:h vundle` for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+
 
 " Formatting
 set fo+=o		" Insert current comment leader after hitting 'o' or 'O' in Normal mode
@@ -28,7 +100,6 @@ set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do,for,switch,case
 
 syntax enable		" Enable syntax highlighting
-filetype plugin indent on	" Automatically detect file types
 
 " Visual
 set number		    " Turn on line numbers
@@ -70,54 +141,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "norma
 " Key mappings
 map <silent> <F12> :set invlist<CR>	" Show/hide hidden characters
 
-" Bundles go here:
-"
-" Let vundle manage vundle. Required!
-Bundle "gmarik/vundle"
-
-"" Trying these out
-"Bundle "YankRing.vim"
-""Bundle "http://github.com/thinca/vim-quickrun.git"
-""Bundle "http://github.com/mattn/gist-vim.git"
-"Bundle "Townk/vim-autoclose"
-""Bundle "Lokaltog/vim-easymotion"
-Bundle "https://github.com/tpope/vim-fugitive"
-"Bundle "https://github.com/rodjek/vim-puppet"
-Bundle "https://github.com/scrooloose/syntastic"
-Bundle "https://github.com/godlygeek/tabular"
-Bundle "https://github.com/tpope/vim-speeddating"
-Bundle "https://github.com/scrooloose/nerdtree"
-Bundle "https://github.com/puppetlabs/puppet-syntax-vim"
-Bundle "https://github.com/ajf/puppet-vim"
-"
-""" Github repo bundles
-Bundle "tpope/vim-markdown.git"
-Bundle "altercation/vim-colors-solarized.git"
-Bundle "Lokaltog/vim-powerline"
-"
-"" vim-scripts repos
-"Bundle "L9"
-"Bundle "FuzzyFinder"
-"Bundle "git.zip"
-"Bundle "Markdown"
-"Bundle "repeat.vim"
-"Bundle "surround.vim"
-"Bundle "SuperTab"
-"
-"" non-github repos
-"
-" Bundle "ZoomWin"
-" noremap MLocalLeader o :ZoomWin<CR>
-" vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
-" inoremap <LocalLeader>o <C-O>:ZoomWin<CR>
-" noremap <C-W>+o :ZoomWin<CR>
-"
-" Bundle "tComment"
-" nnoremap // :TComment<CR>
-" vnoremap // :TComment<CR>
-"
-"Bundle "git://git.wincent.com/command-t.git"
-"let g:CommandTMatchWindowAtTop=1   " Show window at top
 
 " Powerline stuff
 python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
