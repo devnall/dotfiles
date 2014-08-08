@@ -31,6 +31,7 @@ Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
 "
 """ vim-scripts repos
 Plugin 'Markdown'
@@ -60,7 +61,6 @@ Plugin 'git.zip'
 " nnoremap // :TComment<CR>
 " vnoremap // :TComment<CR>
 "
-"Bundle "git://git.wincent.com/command-t.git"
 "let g:CommandTMatchWindowAtTop=1   " Show window at top
 
 " All of your Plugins must be added before the following line
