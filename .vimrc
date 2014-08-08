@@ -29,6 +29,7 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'ajf/puppet-vim'
+Plugin 'Raimondi/delimitMate'
 "
 """ vim-scripts repos
 Plugin 'Markdown'
