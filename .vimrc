@@ -30,6 +30,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
+Plugin 'mileszs/ack.vim'
 "
 """ vim-scripts repos
 Plugin 'Markdown'
