@@ -146,7 +146,7 @@ map <silent> <F12> :set invlist<CR>	" Show/hide hidden characters
 
 
 " Powerline stuff
-python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
+"python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
 "let g:Powerline_theme='short'
 "let g:Powerline_colorscheme='solarized256'
 
