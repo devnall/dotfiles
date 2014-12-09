@@ -19,12 +19,12 @@ Plugin 'gmarik/Vundle.vim'
 
 "
 """ Github repo bundles
-Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-markdown.git'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
+Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
