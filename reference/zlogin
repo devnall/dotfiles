@@ -1,4 +1,0 @@
-# Call script that displays a random line from my quotefile
-~/dev/scripts/qotd.sh ~/Dropbox/Docs/QuoteFile.txt
-
-date
