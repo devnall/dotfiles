@@ -1,0 +1,40 @@
+# ~/.tmuxinator/work.yml
+
+name: work
+root: ~/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+windows:
+  - scratch:
+      layout: 3c70,177x94,0,0[177x32,0,0,0,177x61,0,33{88x61,0,33,5,88x61,89,33[88x41,89,33,6,88x19,89,75,7]}]
+      panes:
+        - vim ~/Work/Notes.txt
+        - #empty
+        - #empty
+        - #empty
+  - bastion:
+      layout: b794,177x94,0,0{88x94,0,0,4,88x94,89,0[88x47,89,0,8,88x46,89,48,9]}
+      panes:
+        - #empty
+        - #empty
+        - #empty
+  - overflow:
+      layout: 2520,177x94,0,0{87x94,0,0[87x47,0,0,10,87x46,0,48,12],89x94,88,0,11}
+      panes:
+        - #empty
+        - #empty
+        - #empty
