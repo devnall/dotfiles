@@ -33,6 +33,8 @@ Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'rizzatti/dash.vim'
+
 "
 """ vim-scripts repos
 Plugin 'Markdown'
