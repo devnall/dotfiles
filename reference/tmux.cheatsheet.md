@@ -81,10 +81,10 @@ Panes:
 C-o rotate-window
 Space next-layout
 ! break-pane
-H resize-pane -L 5
-J resize-pane -D 5
-K resize-pane -U 5
-L resize-pane -R 5
+H resize-pane -L 10
+J resize-pane -D 10
+K resize-pane -U 10
+L resize-pane -R 10
 h select-pane -L
 j select-pane -D
 k select-pane -U
@@ -92,7 +92,8 @@ l select-pane -R
 o select-pane -t :.+
 q display-panes
 x confirm-before -p "kill-pane #P? (y/n)" kill-pane
-z resize-pane -Z
++ resize-pane -Z
+= resize-pane -Z
 { swap-pane -U
 } swap-pane -D
 Up select-pane -U
