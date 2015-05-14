@@ -1,7 +1,7 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: 2014 Aug 6
+" Last updated: May 14, 2015
 
 set nocompatible
 filetype off
@@ -105,6 +105,11 @@ set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do,for,switch,case
 
 syntax enable		" Enable syntax highlighting
+
+" Turn off backups and swap files
+set nobackup      " don't backup files
+set nowritebackup " don't write backup files either
+set noswapfile    " don't create swap files
 
 " Visual
 set number		    " Turn on line numbers
