@@ -12,67 +12,58 @@
 # 
 # > brew tap homebrew/bundle
 # > brew bundle
+#
+# Or use the brewfile.sh wrapper
 
-# Make sure we're using the latest homebrew
-update
-
-# Upgrade any already-installed formula
-upgrade --all
 
 # Tap some repos
-tap caskroom/cask
-tap homebrew/dupes
-tap telemachus/desc
+tap "caskroom/cask"
+tap "homebrew/dupes"
+tap "telemachus/desc"
 
 # Install some brew-related stuff
-install brew-cask
-install brew-desc
+brew "brew-cask"
+brew "brew-desc"
 
 # Install shells and completion
-install bash
-install bash-completion
-install zsh
-install zsh-completions
-install zsh-history-substring-search
-install zsh-syntax-highlighting
-install mobile-shell
+brew "bash"
+brew "bash-completion"
+brew "zsh"
+brew "zsh-completions"
+brew "zsh-history-substring-search"
+brew "zsh-syntax-highlighting"
+brew "mobile-shell"
 
 # Install vim
-install vim
-install macvim
+brew "vim"
+brew "macvim"
 
 # Install command line utilities
-install ack
-install apg
-install archey
-install cdf
-install colordiff
-install ctags
-install curl
-install elinks
-install gist
-install git
-install grc
-install grep
-install htop-osx
-install iftop
-install ipcalc
-install ncdu
-install pcre
-indtall pdfgrep
-install python
-install readline
-install reattach-to-user-namespace
-install rename
-install ssh-copy-id
-install tmux
-install unrar
-install wget
-install xz
-install youtube-dl
-
-# Cleanup any outdated formulas from the cellar
-cleanup
-
-# Run brew doctor to make sure there aren't any problems
-doctor
+brew "ack"
+brew "apg"
+brew "archey"
+brew "cdf"
+brew "colordiff"
+brew "ctags"
+brew "curl"
+brew "elinks"
+brew "gist"
+brew "git"
+brew "grc"
+brew "grep"
+brew "htop-osx"
+brew "iftop"
+brew "ipcalc"
+brew "ncdu"
+brew "pcre"
+brew "pdfgrep"
+brew "python"
+brew "readline"
+brew "reattach-to-user-namespace"
+brew "rename"
+brew "ssh-copy-id"
+brew "tmux"
+brew "unrar"
+brew "wget"
+brew "xz"
+brew "youtube-dl"
