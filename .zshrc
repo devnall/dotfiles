@@ -1,3 +1,11 @@
+###############################################
+## .zshrc                                     #
+## zsh configuration file                     #
+## Maintainer: Drew Nall <drewnall@gmail.com> #
+## Last updated: July 27, 2015                #
+###############################################
+
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
