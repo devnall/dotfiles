@@ -2,7 +2,7 @@
 # Brewfile                                  #
 # Install homebrew packages                 #
 # Maintainer: Drew Nall <drewnall@gmail.com #
-# Last Updated: May 10, 2015                #
+# Last Updated: July 27, 2015               #
 #############################################
 
 # Usage:
@@ -43,6 +43,7 @@ install macvim
 
 # Install command line utilities
 install ack
+install apg
 install archey
 install cdf
 install colordiff
@@ -58,11 +59,12 @@ install iftop
 install ipcalc
 install ncdu
 install pcre
+indtall pdfgrep
 install python
 install readline
 install reattach-to-user-namespace
 install rename
-install the_silver_searcher
+install ssh-copy-id
 install tmux
 install unrar
 install wget
