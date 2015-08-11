@@ -53,6 +53,7 @@ Plugin 'git.zip'
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
 "Bundle "https://github.com/rodjek/vim-puppet"
+"Plugin 'jmcantrell/vim-virtualenv'
 "
 """ non-github repos
 " Bundle "ZoomWin"
@@ -188,7 +189,7 @@ else
   set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
- 
+
 " Convenient command to see the difference between the current buffer and the file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
@@ -223,3 +224,16 @@ endif
 
 let g:solarized_termtrans = 1
 colorscheme solarized
+
+" vim-airline statusline config
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_detect_crypt=1
+let g:airline_detect_iminsert=0
+let g:airline_inactive_collapse=1
+let g:airline_theme='papercolor'
+let g:airline_powerline_fonts=1 
+"let g:airline#extensions#whitespace#show_message = 1
+
