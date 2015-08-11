@@ -19,13 +19,13 @@ Plugin 'gmarik/Vundle.vim'
 
 "
 """ Github repo bundles
-Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-markdown.git'
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'Lokaltog/vim-powerline'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
+Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -34,6 +34,8 @@ Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'rizzatti/dash.vim'
+
 "
 """ vim-scripts repos
 Plugin 'Markdown'
