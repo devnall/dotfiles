@@ -105,7 +105,7 @@ set autoindent
 set cindent
 set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do,for,switch,case
-set hls
+set hlsearch 
 
 syntax enable		" Enable syntax highlighting
 
