@@ -1,7 +1,7 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: August 11, 2015
+" Last updated: August 12, 2015
 
 set nocompatible
 filetype off
@@ -105,6 +105,7 @@ set autoindent
 set cindent
 set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do,for,switch,case
+set hls
 
 syntax enable		" Enable syntax highlighting
 
