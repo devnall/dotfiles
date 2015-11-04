@@ -111,3 +111,6 @@ autoload run-help
 HELPDIR=/Users/dnall/homebrew/share/zsh/helpfiles
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+# Trying out thefuck CLI tool
+eval "$(thefuck --alias)"
