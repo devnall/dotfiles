@@ -41,7 +41,8 @@ ZSH_THEME="devnall"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew colored-man colorize extract git gitfast history osx sublime terminalapp vi-mode web-search zsh-syntax-highlighting)
+#plugins=(brew colored-man colorize extract git gitfast history osx sublime terminalapp vi-mode web-search zsh-syntax-highlighting)
+plugins=(brew colored-man colorize extract git gitfast history osx sublime terminalapp web-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,7 +51,8 @@ source $ZSH/oh-my-zsh.sh
 #
 
 # Use zsh-completion.rb (from homebrew)
-fpath=(/usr/local/share/zsh-completions $fpath)
+#fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/Users/dnall/homebrew/bin/zsh-completions $fpath)
 
 # Use vim and vim keybindings
 export EDITOR="vim"
@@ -72,8 +74,16 @@ if [ -d /usr/local/bin ]; then
   PATH="/usr/local/bin:${PATH}"
 fi
 
+if [ -d /Users/dnall/homebrew/bin ]; then
+  PATH="/Users/dnall/homebrew/bin:${PATH}"
+fi
+
 if [ -d /usr/local/sbin ]; then
   PATH="/usr/local/sbin:${PATH}"
+fi
+
+if [ -d /Users/dnall/homebrew/sbin ]; then
+  PATH="/Users/dnall/homebrew/sbin:${PATH}"
 fi
 
 # If Homebrew zsh-syntax-highlighting is installed, use it
@@ -81,12 +91,23 @@ if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+if [ -f /Users/dnall/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /Users/dnall/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 # Add gem-installed executables to PATH
 if [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
 
+if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
+  PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
+fi
+
 # May be needed to access online help?
 unalias run-help
 autoload run-help
-HELPDIR=/usr/local/share/zsh/helpfiles
+#HELPDIR=/usr/local/share/zsh/helpfiles
+HELPDIR=/Users/dnall/homebrew/share/zsh/helpfiles
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
