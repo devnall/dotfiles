@@ -42,7 +42,7 @@ ZSH_THEME="devnall"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(brew colored-man colorize extract git gitfast history osx sublime terminalapp vi-mode web-search zsh-syntax-highlighting)
-plugins=(brew colored-man colorize docker docker-compose extract git gitfast history osx sublime terminalapp vagrant web-search zsh-syntax-highlighting)
+plugins=(brew colored-man colorize docker docker-compose extract git gitfast history knife osx sublime terminalapp vagrant web-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
