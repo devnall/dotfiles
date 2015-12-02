@@ -114,3 +114,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 # Trying out thefuck CLI tool
 eval "$(thefuck --alias)"
+
+# Make docker work?
+eval "$(docker-machine env default)"
