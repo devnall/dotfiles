@@ -143,6 +143,7 @@ set splitright
 
 set title		" Set the terminal title
 
+set clipboard=unnamed
 
 " Command and Auto commands
 "
