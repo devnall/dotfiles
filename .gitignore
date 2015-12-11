@@ -1,18 +1,19 @@
 # Global .gitignore file to keep random crap out of my repos
-# 
+#
 # If setting up a new box, will need to copy/link to ~/ then:
 # git config --global core.excludesfile '~/.gitignore'
 
 #
-# Vagrant boxes
+# Vagrant stuff
 *.box
+/.vagrant/
 
 #
-# Bundled Plugins 
+# Bundled Plugins
 node_modules/
 
 #
-# Temporary Files 
+# Temporary Files
 *~
 *.swp
 *.orig
