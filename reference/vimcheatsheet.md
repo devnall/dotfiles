@@ -1,6 +1,20 @@
 #Vim Cheatsheet
 
 ##Standard vim shit:
+* `.`: repeat the last change
+* `>G`: increase indention level on this and all subsequent lines to end of file
+
+## Compound Commands
+|Compound Command | Equivalent To |
+| --------------- |:-------------:|
+| C               | c$            |
+| s               | cl            |
+| S               | ^C            |
+| I               | ^i            |
+| A               | $a            |
+| o               | A<CR>         |
+| O               | ko            |
+
 ###Panes:
 - CTRL+A, CTRL+W, Arrow - Move to indicated pane
 - CTRL+A, CTRL+W, CTRL+W - Switch to other/next pane
