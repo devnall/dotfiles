@@ -20,6 +20,7 @@
 tap "caskroom/cask"
 tap "homebrew/dupes"
 tap "telemachus/desc"
+tap "tldr-pages/tldr"
 
 # Install some brew-related stuff
 brew "brew-cask"
@@ -62,6 +63,7 @@ brew "readline"
 brew "reattach-to-user-namespace"
 brew "rename"
 brew "ssh-copy-id"
+brew "tldr"
 brew "tmux"
 brew "unrar"
 brew "wget"
