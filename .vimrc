@@ -29,12 +29,13 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'puppetlabs/puppet-syntax-vim'
-Plugin 'ajf/puppet-vim'
+"Plugin 'puppetlabs/puppet-syntax-vim'
+"Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rizzatti/dash.vim'
+Plugin 'dougireton/vim-chef'
 
 "
 """ vim-scripts repos
@@ -236,6 +237,16 @@ let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
 let g:airline_theme='papercolor'
-let g:airline_powerline_fonts=1 
+let g:airline_powerline_fonts=1
 "let g:airline#extensions#whitespace#show_message = 1
 
+" Syntastic config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" End Syntastic config
