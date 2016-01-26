@@ -20,6 +20,15 @@
 - CTRL+A, CTRL+W, CTRL+W - Switch to other/next pane
 
 ##Plugins:
+### Vundle:
+* :PluginList - lists configured plugins
+* :PluginInstall - installs plugins
+* :PluginUpdate - update installed plugins
+* :PluginSearch foo - searches for foo; append ! to refresh local cache
+* :PluginClean - confirms removal of unused plugins; append ! to auto-approve
+
+See `:h vundle` for more details or wiki for FAQ
+
 ###Fugitive:
 :help :Git
 - :Git \<command> - Run the specified git command
