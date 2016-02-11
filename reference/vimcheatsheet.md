@@ -3,6 +3,7 @@
 ##Standard vim shit:
 * `.`: repeat the last change
 * `>G`: increase indention level on this and all subsequent lines to end of file
+* `:! <command>`: run a shell command
 
 ## Compound Commands
 |Compound Command | Equivalent To |
@@ -15,9 +16,17 @@
 | o               | A<CR>         |
 | O               | ko            |
 
-###Panes:
-- CTRL+A, CTRL+W, Arrow - Move to indicated pane
-- CTRL+A, CTRL+W, CTRL+W - Switch to other/next pane
+##Panes:
+- CTRL+W, Arrow - Move to indicated pane
+- CTRL+W, CTRL+W - Switch to other/next pane
+
+## Folding:
+* `{{{`: open a fold section
+  * Precede with a comment marker
+  * Follow with a description. 
+  * Example: `#{{{ ---Section Description---`
+* `}}}`: close a fold section (precede with comment marker)
+* `za`: toggle a fold
 
 ##Plugins:
 ### Vundle:
