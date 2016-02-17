@@ -104,8 +104,8 @@ if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
 fi
 
 # May be needed to access online help?
-unalias run-help
-autoload run-help
+#unalias run-help
+#autoload run-help
 #HELPDIR=/usr/local/share/zsh/helpfiles
 HELPDIR=/Users/dnall/homebrew/share/zsh/helpfiles
 export PATH="$HOME/.rbenv/bin:$PATH"
