@@ -13,8 +13,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="devnall2"
-#ZSH_THEME="clean"
+export ZSH_THEME="devnall2"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -43,7 +42,7 @@ ZSH_THEME="devnall2"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(brew colored-man colorize docker docker-compose extract git gitfast history knife osx sublime terminalapp vagrant web-search zsh-syntax-highlighting)
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 #
 # Customize to your needs...
@@ -64,8 +63,8 @@ bindkey '^P' history-search-backward
 bindkey '^N' history-search-forward
 
 # Add my ~/bin dir to PATH
-if [ -d ~/bin ]; then
-  PATH="~/bin:${PATH}"
+if [ -d "$HOME/bin" ]; then
+  PATH="$HOME/bin:${PATH}"
 fi
 
 # Add homebrew dirs to PATH
@@ -103,16 +102,24 @@ if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
   PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
 fi
 
+if [ -d /usr/local/share/zsh/help ]
+then
+  export HELPDIR=/usr/local/share/zsh/help
+elif [ -d /Users/dnall/homebrew/share/zsh/help ]
+then
+  export HELPDIR=/Users/dnall/homebrew/share/zsh/help
+else
+  export HELPDIR=''
+fi
+
 # May be needed to access online help?
-#unalias run-help
-#autoload run-help
-#HELPDIR=/usr/local/share/zsh/helpfiles
-HELPDIR=/Users/dnall/homebrew/share/zsh/helpfiles
+unalias run-help
+autoload run-help
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 # Keep github from getting mad if I'm hammering it with homebrew
-HOMEBREW_GITHUB_API_TOKEN=789ee0a7cb754d3d6f872822af22545d18e67b11
+export HOMEBREW_GITHUB_API_TOKEN=789ee0a7cb754d3d6f872822af22545d18e67b11
 
 # Trying out thefuck CLI tool
 eval "$(thefuck --alias)"
