@@ -1,29 +1,38 @@
-#Alfred Cheatsheet:
+# Alfred Cheatsheet
 
-## Built-ins:
+## Built-ins
+
 ---
 
-### File Manipulation:
+### File Manipulation
+
 ---
+
 * `open $file` open $file in associated app
 * `find $file` reveal $file in Finder
 * `in $file` look for the contents of $file
 
-### Other:
+### Other
+
 ---
+
 * `dict $word` search for $word in Dictionary.app
 * `spell $word` use Dictionary.app to suggest spellings for $word
 * `email $contact` send an email to $contact using default mail client (gMail)
 
-### Clipboard History:
+### Clipboard History
+
 ---
+
 * `SHIFT+CMD+C` to invoke (alt: invoke Alfred and use "clipboard" keyword)
 * `clear` - clear clipboard history (with "Last 5 minutes" or "Last 15 minutes" options)
 * Search Clipboard History by invoking it (`SHIFT+CMD+C`) and typing search term
 * `SHIFT+CMD+V` quickly pastes the current contents of the clipboard into the frontmost app as plain text
 
-#### Snippets:
+#### Snippets
+
 ---
+
 * To create snippets: Alfred -> Preferences -> Features -> Clipboard -> Snippets
 * To invoke snippets:
   * Open Clipboard History with `SHIFT+CMD+C`
@@ -32,8 +41,10 @@
   * Invoke Alfred
   * `snip $keyword`
 
-### iTunes:
+### iTunes
+
 ---
+
 * `play`
 * `pause`
 * `next`
@@ -44,26 +55,32 @@
 * `mute`
 
 ### 1Password
+
 ---
+
 * `1p $site` - Open $site and login
 
-### System:
----
-* `screensaver` - start screensaver
-- `trash` - show trash
-- `emptytrash` - empty trash
-- `logout`
-- `sleep`
-- `lock`
-- `restart`
-- `shutdown`
-- `hide` - hide current app window
-- `quit` - quit current app
-- `forcequit`
-- `quitall`
+### System
 
-## Custom Searches:
 ---
+
+* `screensaver` - start screensaver
+* `trash` - show trash
+* `emptytrash` - empty trash
+* `logout`
+* `sleep`
+* `lock`
+* `restart`
+* `shutdown`
+* `hide` - hide current app window
+* `quit` - quit current app
+* `forcequit`
+* `quitall`
+
+## Custom Searches
+
+---
+
 * `+gcal` - Add event to Google Calendar
 * `+gmail` - Compose message in Google Mail
 * `+rtm $task` - Add $task to Remember the Milk
@@ -92,8 +109,10 @@
 * `wolfram $query` - Ask Wolfram $query
 * `weather $location` - Get weather for $location from Weather Underground
 
-# Workflows:
+## Workflows
+
 ---
+
 * amaz $query - Search Amazon for $query and display results in Alfred
 * convert $number - Convert $number from one USD to Euro or vice-versa
 * dash $query - Search Dash programming docs for $query
@@ -109,6 +128,8 @@
 * conditions - Get current weather conditions in Atlanta
 * forecast - Get four day forecast for Atlanta
 
-######Last Updated: Dec 15, 2015
-######Alfred Version: 2.8.1 (425)
-######OS X Version: OS X 10.10.5 (14F1021)
+###### Last Updated: Dec 15, 2015
+
+###### Alfred Version: 2.8.1 (425)
+
+###### OS X Version: OS X 10.10.5 (14F1021)
