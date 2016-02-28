@@ -253,5 +253,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_chef_checkers = ['foodcritic']
+let g:syntastic_Dockerfile_checkers = ['dockerfile_lint']
+let g:syntastic_JSON_checkers = ['jsonlint']
+let g:syntastic_Markdown_checkers = ['mdl']
 " End Syntastic config
