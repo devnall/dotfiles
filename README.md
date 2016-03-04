@@ -2,10 +2,15 @@
 ====================
 
 A bunch of dotfiles for my environment, including:
+
 * zsh
+
 * vim
+
 * tmux
+
 * BASH (deprecated)
+
 * screen (deprecated)
 
 These are a work in progress (and likely always will be) and are in dire need of a cleanup.
