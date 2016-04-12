@@ -19,6 +19,10 @@ node_modules/
 *.orig
 
 #
+# Thumbnails
+._*
+
+#
 # Config Files
 .rvmrc
 .ruby-version
@@ -48,17 +52,16 @@ node_modules/
 *.zip
 
 #
-# Logs and databases #
+# Logs and databases
 dump.rdb
 *.log
 *.sql
 *.sqlite
 
 #
-# OS generated files #
+# OS generated files
 .DS_Store
 .DS_Store?
-._*
 .Spotlight-V100
 .Trashes
 Thumbs.db
