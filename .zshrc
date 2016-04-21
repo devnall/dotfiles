@@ -2,7 +2,7 @@
 ## .zshrc                                     #
 ## zsh configuration file                     #
 ## Maintainer: Drew Nall <drewnall@gmail.com> #
-## Last updated: July 27, 2015                #
+## Last updated: April 19, 2016               #
 ###############################################
 
 
@@ -40,7 +40,7 @@ export ZSH_THEME="devnall2"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew colored-man colorize docker docker-compose extract git gitfast history knife osx sublime terminalapp vagrant web-search zsh-syntax-highlighting)
+plugins=(colored-man-pages colorize docker docker-compose extract git git-extras history knife osx vagrant)
 
 source "$ZSH/oh-my-zsh.sh"
 
@@ -49,8 +49,9 @@ source "$ZSH/oh-my-zsh.sh"
 #
 
 # Use zsh-completion.rb (from homebrew)
+# Disabled to prevent conflict with OMZ completions
 #fpath=(/usr/local/share/zsh-completions $fpath)
-fpath=(/Users/dnall/homebrew/bin/zsh-completions $fpath)
+#fpath=(/Users/dnall/homebrew/share/zsh-completions $fpath)
 
 # Use vim and vim keybindings
 export EDITOR="vim"
