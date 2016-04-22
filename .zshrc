@@ -40,7 +40,7 @@ export ZSH_THEME="devnall2"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew colored-man-pages colorize docker docker-compose extract git git-extras history knife osx vagrant)
+plugins=(bgnotify brew colored-man-pages colorize docker docker-compose extract git git-extras history knife osx vagrant)
 
 source "$ZSH/oh-my-zsh.sh"
 
