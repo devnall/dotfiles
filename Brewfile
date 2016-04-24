@@ -21,6 +21,7 @@ tap "caskroom/cask"
 tap "homebrew/dupes"
 tap "telemachus/desc"
 tap "tldr-pages/tldr"
+tap "homebrew/command-not-found"
 
 # Install some brew-related stuff
 brew "brew-cask"
