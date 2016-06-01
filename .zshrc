@@ -85,6 +85,11 @@ if [ -d /Users/dnall/homebrew/sbin ]; then
   PATH="/Users/dnall/homebrew/sbin:${PATH}"
 fi
 
+# Add gem installed stuff to PATH
+if [ -d "/Users/dnall/.gem/ruby/2.0.0/bin" ]; then
+  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
+fi
+
 # If Homebrew zsh-syntax-highlighting is installed, use it
 if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

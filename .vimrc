@@ -37,6 +37,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'rizzatti/dash.vim'
 Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'hashivim/vim-terraform'
 
 "
 """ vim-scripts repos
