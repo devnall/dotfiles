@@ -65,3 +65,7 @@ dump.rdb
 .Spotlight-V100
 .Trashes
 Thumbs.db
+
+#
+# Secrets!
+secrets.txt
