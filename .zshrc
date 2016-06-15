@@ -129,3 +129,9 @@ export HOMEBREW_GITHUB_API_TOKEN=789ee0a7cb754d3d6f872822af22545d18e67b11
 
 # Trying out thefuck CLI tool
 eval "$(thefuck --alias)"
+
+# Secrets!
+if [ -f /Users/dnall/.dotfiles/secrets.txt ]
+then
+  source /Users/dnall/.dotfiles/secrets.txt
+fi
