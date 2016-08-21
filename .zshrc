@@ -124,9 +124,6 @@ autoload run-help
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
-# Keep github from getting mad if I'm hammering it with homebrew
-export HOMEBREW_GITHUB_API_TOKEN=789ee0a7cb754d3d6f872822af22545d18e67b11
-
 # Trying out thefuck CLI tool
 eval "$(thefuck --alias)"
 
