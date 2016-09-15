@@ -43,6 +43,7 @@ Plugin 'hashivim/vim-terraform'
 """ vim-scripts repos
 Plugin 'Markdown'
 Plugin 'git.zip'
+Plugin 'groovy.vim'
 "Bundle "L9"
 "Bundle "FuzzyFinder"
 "Bundle "repeat.vim"
