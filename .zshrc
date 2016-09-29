@@ -132,3 +132,7 @@ if [ -f /Users/dnall/.dotfiles/secrets.txt ]
 then
   source /Users/dnall/.dotfiles/secrets.txt
 fi
+
+# Kubectl completions
+# TODO: Move this somewhere else - oh-my-zsh plugin maybe?
+source <(kubectl completion zsh)
