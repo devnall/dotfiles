@@ -136,3 +136,7 @@ fi
 # Kubectl completions
 # TODO: Move this somewhere else - oh-my-zsh plugin maybe?
 source <(kubectl completion zsh)
+
+# TODO: Move this somewhere better if I like it
+# ccat - colorized cat
+alias cat=ccat
