@@ -145,6 +145,9 @@ if has ('mouse')
 	set mousehide
 endif
 
+" Splits
+"
+" New splits appear below/right
 set splitbelow
 set splitright
 
