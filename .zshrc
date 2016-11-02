@@ -117,7 +117,7 @@ fi
 # Source plugins and add commands to PATH
 zplug load
 
-#source ~/.dotfiles/zsh/lib/*.zsh
+source ~/.dotfiles/zsh/lib/*.zsh
 
 # pure promt testing
 autoload -U promptinit && promptinit
