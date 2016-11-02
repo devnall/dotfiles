@@ -102,6 +102,9 @@ source ~/homebrew/opt/zplug/init.zsh
 
 # Plugins
 zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+zplug "plugins/colorize", from:oh-my-zsh
+zplug "plugins/command-not-found", from:oh-my-zsh
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
