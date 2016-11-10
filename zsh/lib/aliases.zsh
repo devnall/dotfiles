@@ -33,6 +33,9 @@ alias rm='rm -i'
 alias du='du -h'
 alias cp='cp -i'
 alias mv='mv -i'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
