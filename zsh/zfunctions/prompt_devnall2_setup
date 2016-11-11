@@ -55,7 +55,7 @@ git_arrows() {
   local left=${arrow_status[1]} right=${arrow_status[2]}
 
   (( ${right:-0} > 0 )) && arrows+="%F{red}⬇%f"
-  (( ${left:-0} > 0 )) && arrows+="%F${214}⬆%f"
+  (( ${left:-0} > 0 )) && arrows+="%F{214}⬆%f"
 
   echo $arrows
 }
