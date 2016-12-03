@@ -42,6 +42,16 @@ if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
   PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
 fi
 
+## History config
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE="500000"
+SAVEHIST="500000"
+setopt EXTENDED_HISTORY   # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+
 ## Set helpdir
 if [ -d /usr/local/share/zsh/help ]
 then
