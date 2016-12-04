@@ -31,6 +31,8 @@ fi
 if [ -d /Users/dnall/homebrew/sbin ]; then
   PATH="/Users/dnall/homebrew/sbin:${PATH}"
 fi
+# Hombrew Cask in userspace
+export HOMEBREW_CASK_OPTS="--appdir=/Users/dnall/Applications"
 # Add gem installed stuff to PATH
 if [ -d "/Users/dnall/.gem/ruby/2.0.0/bin" ]; then
   PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
