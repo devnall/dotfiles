@@ -20,6 +20,7 @@ alias l='ls -lAhF ${colorflag}'
 alias ll='ls -lhF ${colorflag}'
 alias la='ls -AhF ${colorflag}'
 alias lsa='ls -lahF ${colorflag}'
+alias k='k -Ah'
 
 # Homebrew
 alias brews='brew list -1|grep $1'

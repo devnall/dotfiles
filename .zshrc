@@ -104,6 +104,7 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "devnall/zsh-autosuggestions"
 # other
 zplug "djui/alias-tips"
+zplug "supercrabtree/k"
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
