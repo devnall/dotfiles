@@ -46,6 +46,7 @@ brew "apg"
 brew "archey"
 brew "cdf"
 brew "colordiff"
+brew "coreutils"
 brew "ctags"
 brew "curl"
 brew "elinks"
@@ -77,3 +78,7 @@ brew "wget"
 brew "wifi-password"
 brew "xz"
 brew "youtube-dl"
+
+# Install cask apps
+cask 'google-cloud-sdk'
+cask 'meteorologist'
