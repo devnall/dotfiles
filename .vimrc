@@ -19,9 +19,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "
 """ Github repo bundles
-Plugin 'tpope/vim-markdown.git'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'Lokaltog/vim-powerline'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
@@ -30,12 +28,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'puppetlabs/puppet-syntax-vim'
-"Plugin 'ajf/puppet-vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
-Plugin 'rizzatti/dash.vim'
 Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'hashivim/vim-terraform'
@@ -72,6 +67,11 @@ Plugin 'groovy.vim'
 " vnoremap // :TComment<CR>
 "
 "let g:CommandTMatchWindowAtTop=1   " Show window at top
+
+""" Plugins no longer used but may need in future
+"Plugin 'puppetlabs/puppet-syntax-vim'
+"Plugin 'rizzatti/dash.vim'
+"Plugin 'ajf/puppet-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()                   " Required
