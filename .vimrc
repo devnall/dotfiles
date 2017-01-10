@@ -34,6 +34,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'hashivim/vim-terraform'
+Plugin 'tmux-plugins/vim-tmux'
 
 "
 """ vim-scripts repos
