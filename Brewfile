@@ -82,3 +82,4 @@ brew "youtube-dl"
 # Install cask apps
 cask 'google-cloud-sdk'
 cask 'meteorologist'
+cask 'iina'
