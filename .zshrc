@@ -81,12 +81,13 @@ alias cat=ccat
 ## zplug
 fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 
-source ~/homebrew/opt/zplug/init.zsh
+export ZPLUG_HOME=/Users/dnall/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 #
 ## Plugins
 #
-# from:oh-my-zsh
+## from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/colorize", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
@@ -95,17 +96,17 @@ zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/kubectl", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
-# zsh-users
+## zsh-users
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 # Use my autosuggestion fork until PR150 or Issue126
 # get merged upstream to fix segfault
 #zplug "zsh-users/zsh-autosuggestions"
 zplug "devnall/zsh-autosuggestions"
-# other
+## other
 zplug "djui/alias-tips"
 zplug "supercrabtree/k"
-
+zplug "~/.dotfiles/zsh/zfunctions/prompt_devnall2_setup", from:local, as:theme
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
   printf "Install plugins? [y/N]: "
