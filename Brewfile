@@ -80,6 +80,8 @@ brew "xz"
 brew "youtube-dl"
 
 # Install cask apps
+cask 'cleanmymac'
 cask 'google-cloud-sdk'
 cask 'meteorologist'
 cask 'iina'
+cask 'volumemixer'
