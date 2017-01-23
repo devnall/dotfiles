@@ -1,0 +1,13 @@
+# .ackrc file
+
+# Always sort files
+# --sort-files
+
+# Always color, even if piping to another program
+--color
+
+# Use 'less -R' as pager
+#--pager=less -R
+
+# Set tf type to search Terraform but not tfstate files
+--type-set=terraform:ext:tf
