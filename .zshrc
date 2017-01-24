@@ -123,3 +123,7 @@ source ~/.dotfiles/zsh/lib/*.zsh
 # pure promt testing
 autoload -U promptinit && promptinit
 prompt devnall2 
+
+ssh-add -K ~/.ssh/id_rsa
+eval "$(ssh-agent -s)"
+ssh-add -A
