@@ -41,7 +41,7 @@ Plugin 'tpope/vim-repeat'
 """ Stuff to try out
 "Plugin 'tpope/vim-surround'
 "Plugin 'ervandew/supertab'
-"Bundle "YankRing.vim"
+"Plugin 'vim-scripts/YankRing.vim'
 ""Bundle "http://github.com/thinca/vim-quickrun.git"
 ""Bundle "http://github.com/mattn/gist-vim.git"
 "Bundle "Townk/vim-autoclose"
