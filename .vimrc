@@ -29,32 +29,26 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
-Plugin 'mileszs/ack.vim'
-Plugin 'kien/ctrlp.vim'
 Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'tmux-plugins/vim-tmux'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-repeat'
 
 "
-""" vim-scripts repos
-Plugin 'Markdown'
-Plugin 'git.zip'
-Plugin 'groovy.vim'
-"Bundle "L9"
-"Bundle "FuzzyFinder"
-"Bundle "repeat.vim"
-"Bundle "surround.vim"
-"Bundle "SuperTab"
-"
 """ Stuff to try out
+"Plugin 'tpope/vim-surround'
+"Plugin 'ervandew/supertab'
 "Bundle "YankRing.vim"
 ""Bundle "http://github.com/thinca/vim-quickrun.git"
 ""Bundle "http://github.com/mattn/gist-vim.git"
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
-"Bundle "https://github.com/rodjek/vim-puppet"
 "Plugin 'jmcantrell/vim-virtualenv'
+"Plugin 'mileszs/ack.vim'
+"Plugin 'kien/ctrlp.vim'
 "
 """ non-github repos
 " Bundle "ZoomWin"
