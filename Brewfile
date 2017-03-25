@@ -44,6 +44,7 @@ brew "macvim"
 brew "ack"
 brew "apg"
 brew "archey"
+brew "ccat"
 brew "cdf"
 brew "colordiff"
 brew "coreutils"
@@ -78,10 +79,35 @@ brew "wget"
 brew "wifi-password"
 brew "xz"
 brew "youtube-dl"
+brew "zplug"
 
 # Install cask apps
-cask 'cleanmymac'
+cask '1password'
+cask 'alfred'
+cask 'appzapper'
+cask 'bartender'
+cask 'daisydisk'
+cask 'day-o'
+cask 'disk-inventory-x'
+cask 'divvy'
+cask 'docker'
+cask 'dropbox'
+cask 'evernote'
+cask 'firefox'
+cask 'flux'
+cask 'google-chrome'
 cask 'google-cloud-sdk'
-cask 'meteorologist'
+cask 'karabiner'
+cask 'keepingyouawake'
+cask 'kindle'
+cask 'mactracker'
 cask 'iina'
 cask 'volumemixer'
+cask 'iterm2'
+cask 'seil'
+cask 'sonos'
+cask 'spotify'
+cask 'the-archive-browser'
+cask 'the-unarchiver'
+cask 'viscosity'
+cask 'vlc'
