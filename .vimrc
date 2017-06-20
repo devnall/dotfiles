@@ -265,4 +265,5 @@ let g:syntastic_chef_checkers = ['foodcritic']
 let g:syntastic_Dockerfile_checkers = ['dockerfile_lint']
 let g:syntastic_JSON_checkers = ['jsonlint']
 let g:syntastic_Markdown_checkers = ['mdl']
+let g:syntastic_yaml_checkers = ['yamllint']
 " End Syntastic config
