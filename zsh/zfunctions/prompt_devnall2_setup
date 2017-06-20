@@ -37,17 +37,17 @@ git_dirty() {
 }
 
 # TODO: Fix this
-#git_untracked() {
-#  # check to see if we're in a git repo
-#  command git rev-parse --is-inside-work-tree &>/dev/null || return
-#  # check to see if there are untracked files (that don't match a .gitignore line)
-#  command git ls-files . --exclude-standard --others &>/dev/null
-#  if [[ $? -eq 1 ]]; then
-#    exit 0
-#  else
-#    print -P "%F{214}⨁%f"
-#  fi
-#}
+git_untracked() {
+  # check to see if we're in a git repo
+  command git rev-parse --is-inside-work-tree &>/dev/null || return
+  # check to see if there are untracked files (that don't match a .gitignore line)
+  command git ls-files . --exclude-standard --others &>/dev/null
+  if [[ $? -eq 1 ]]; then
+    exit 0
+  else
+    print -P "%F{214}⨁%f"
+  fi
+}
 
 # Get the status of the current branch and its remote
 # If there are changes upstream, display a ⇣

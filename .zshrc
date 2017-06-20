@@ -43,6 +43,10 @@ fi
 if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
   PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
 fi
+# Add zsh-completions to fpath
+if [ -d /Users/dnall/homebrew/share/zsh-completions ]; then
+  fpath=(/Users/dnall/homebrew/share/zsh-completions $fpath)
+fi
 # Use GPG2.1 instead of 2.0
 if [ -d /Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin ]; then
   PATH="/Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin:${PATH}"
