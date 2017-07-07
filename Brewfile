@@ -42,10 +42,8 @@ brew "macvim"
 
 # Install command line utilities
 brew "ack"
-brew "apg"
 brew "archey"
 brew "ccat"
-brew "cdf"
 brew "colordiff"
 brew "coreutils"
 brew "ctags"
@@ -62,7 +60,6 @@ brew "iftop"
 brew "ipcalc"
 brew "mas"
 brew "ncdu"
-brew "neofetch"
 brew "pcre"
 brew "pdfgrep"
 brew "pv"
@@ -102,7 +99,6 @@ cask 'keepingyouawake'
 cask 'kindle'
 cask 'mactracker'
 cask 'iina'
-cask 'volumemixer'
 cask 'iterm2'
 cask 'seil'
 cask 'sonos'
