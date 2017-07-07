@@ -60,20 +60,20 @@ setopt EXTENDED_HISTORY   # Write the history file in the ":start:elapsed;comman
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_IGNORE_SPACE         # Dont record an entry starting with a space.
 
-## Set helpdir
-if [ -d /usr/local/share/zsh/help ]
-then
-  export HELPDIR=/usr/local/share/zsh/help
-elif [ -d /Users/dnall/homebrew/share/zsh/help ]
-then
-  export HELPDIR=/Users/dnall/homebrew/share/zsh/help
-else
-  export HELPDIR=''
-fi
-## May be needed to access online help?
-autoload run-help
+### Set helpdir
+#if [ -d /usr/local/share/zsh/help ]
+#then
+#  export HELPDIR=/usr/local/share/zsh/help
+#elif [ -d /Users/dnall/homebrew/share/zsh/help ]
+#then
+#  export HELPDIR=/Users/dnall/homebrew/share/zsh/help
+#else
+#  export HELPDIR=''
+#fi
+### May be needed to access online help?
+#autoload run-help
 
 # Secrets!
 if [ -f /Users/dnall/.dotfiles/secrets.txt ]
@@ -89,10 +89,10 @@ alias cat=ccat
 ## zplug
 fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 
-if [ -f /Users/dnall/homebrew/opt/zplug ]
+if [ -d /Users/dnall/homebrew/opt/zplug ]
 then
   export ZPLUG_HOME=/Users/dnall/homebrew/opt/zplug
-elif [ -f /usr/local/opt/zplug ]
+elif [ -d /usr/local/opt/zplug ]
 then
   export ZPLUG_HOME=/usr/local/opt/zplug
 fi
