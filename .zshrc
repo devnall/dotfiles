@@ -79,10 +79,10 @@ alias cat=ccat
 
 #
 ## zplug
-fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
-
 export ZPLUG_HOME=/Users/dnall/homebrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
+
+fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 
 #
 ## Plugins
