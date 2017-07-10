@@ -134,7 +134,12 @@ fi
 # Source plugins and add commands to PATH
 zplug load
 
-source ~/.dotfiles/zsh/lib/*.zsh
+source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
+source "$HOME"/.dotfiles/zsh/lib/brew.zsh
+source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
+source "$HOME"/.dotfiles/zsh/lib/completions.zsh
+source "$HOME"/.dotfiles/zsh/lib/keybinds.zsh
+
 
 # pure promt testing
 autoload -U promptinit && promptinit
