@@ -34,7 +34,7 @@ alias mv='mv -i'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias gpg='gpg2'
+#alias gpg='gpg2'
 
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
