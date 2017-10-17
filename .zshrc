@@ -110,7 +110,7 @@ zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/kubectl", from:oh-my-zsh
+#zplug "plugins/kubectl", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
 ## zsh-users
 zplug "zsh-users/zsh-syntax-highlighting"
