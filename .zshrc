@@ -146,5 +146,5 @@ autoload -U promptinit && promptinit
 prompt devnall2 
 
 #ssh-add -K ~/.ssh/id_rsa
-eval "$(ssh-agent -s)" &> /dev/null
+#eval "$(ssh-agent -s)" &> /dev/null
 #ssh-add -A
