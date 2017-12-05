@@ -36,6 +36,7 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-repeat'
+Plugin 'rizzatti/dash.vim'
 
 "
 """ Stuff to try out
