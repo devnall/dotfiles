@@ -140,11 +140,20 @@ source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
 source "$HOME"/.dotfiles/zsh/lib/completions.zsh
 source "$HOME"/.dotfiles/zsh/lib/keybinds.zsh
 
+# Setup fzf
+if [[ ! "$PATH" == */Users/dnall/homebrew/opt/fzf/bin* ]]; then
+  export PATH="$PATH:/Users/dnall/homebrew/opt/fzf/bin"
+fi
 
-# pure promt testing
+# fzf auto-completion
+[[ $- == *i* ]] && source "/Users/dnall/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+# fzf key bindings
+source "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh"
+
+# Load prompt
 autoload -U promptinit && promptinit
 prompt devnall2 
 
-#ssh-add -K ~/.ssh/id_rsa
-#eval "$(ssh-agent -s)" &> /dev/null
-#ssh-add -A
+eval "$(ssh-agent -s)" &> /dev/null
+ssh-add -K ~/.ssh/id_rsa &> /dev/null
