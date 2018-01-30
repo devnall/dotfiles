@@ -2,5 +2,4 @@
 
 * npm
 * git-unsaved
-* hyperline
 * speed-test
