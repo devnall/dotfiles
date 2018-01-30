@@ -43,6 +43,10 @@ fi
 if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
   PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
 fi
+# Add npm installed stuff to PATH
+if [ -d "/Users/dnall/.npm-packages/bin" ]; then
+  PATH="${PATH}:/Users/dnall/.npm-packages/bin"
+fi
 # Add zsh-completions to fpath
 if [ -d /Users/dnall/homebrew/share/zsh-completions ]; then
   fpath=(/Users/dnall/homebrew/share/zsh-completions $fpath)
