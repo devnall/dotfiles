@@ -87,6 +87,8 @@ filetype plugin indent on           " Required
 " Put your non-Plugin stuff after this line
 "
 
+" Add fzf to runtime path
+set rtp+=~/homebrew/opt/fzf
 
 " Formatting
 set fo+=o		" Insert current comment leader after hitting 'o' or 'O' in Normal mode
