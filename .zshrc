@@ -85,10 +85,6 @@ then
   source /Users/dnall/.dotfiles/secrets.txt
 fi
 
-# TODO: Move this somewhere better if I like it
-# ccat - colorized cat
-alias cat=ccat
-
 #
 ## zplug
 fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
