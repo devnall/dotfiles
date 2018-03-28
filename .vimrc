@@ -20,16 +20,12 @@ Plugin 'gmarik/Vundle.vim'
 "
 """ Github repo bundles
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
-Plugin 'godlygeek/tabular'
-Plugin 'tpope/vim-speeddating'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
-Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'tmux-plugins/vim-tmux'
@@ -40,7 +36,10 @@ Plugin 'rizzatti/dash.vim'
 
 "
 """ Stuff to try out
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'godlygeek/tabular'
 "Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-speeddating'
 "Plugin 'ervandew/supertab'
 "Plugin 'vim-scripts/YankRing.vim'
 ""Bundle "http://github.com/thinca/vim-quickrun.git"
@@ -163,12 +162,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "norma
 " Key mappings
 map <silent> <F12> :set invlist<CR>	" Show/hide hidden characters
 
-
-" Powerline stuff
-"python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
-"let g:Powerline_theme='short'
-"let g:Powerline_colorscheme='solarized256'
-
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
 
@@ -184,13 +177,13 @@ if has("autocmd")
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler (happens when drag/dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default position when opening a file.
-"  autocmd BufReadPost *
-"    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-"    \   exr "normal! g`\"" |
-"    \ endif
+  " Open NERDTree automatically when vim starts with no file specified
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  " Close vim automatically if NERDTree is the only window left open
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 
   augroup END
 
@@ -211,10 +204,10 @@ endif
 let mapleader = ","
 map <F2> :NERDTreeToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
-map <F3> :CommandT<CR>
+"map <F3> :CommandT<CR>
 imap jj <Esc>	" jj instead of escape in insert mode
-nnoremap <space> :nohlsearch<CR>/<BS>	" space unhighlights search results
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nnoremap <space> :nohlsearch<CR>/<BS>	      " space unhighlights search results
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Make it pretty by defining color scheme and other visual niceties
 "set background=dark
@@ -245,6 +238,7 @@ let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
 let g:airline_theme='papercolor'
 let g:airline_powerline_fonts=1
+let g:airline#extenstions#syntastic#enabled=1
 "let g:airline#extensions#whitespace#show_message = 1
 
 " Syntastic config
@@ -256,11 +250,12 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1    "show all errors from all defined checkers
 
 let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_chef_checkers = ['foodcritic']
 let g:syntastic_Dockerfile_checkers = ['dockerfile_lint']
 let g:syntastic_JSON_checkers = ['jsonlint']
-let g:syntastic_Markdown_checkers = ['mdl']
+let g:syntastic_Markdown_checkers = ['mdl', 'proselint']
 let g:syntastic_yaml_checkers = ['yamllint']
 " End Syntastic config
