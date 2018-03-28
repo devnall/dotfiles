@@ -55,6 +55,10 @@ fi
 if [ -d /Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin ]; then
   PATH="/Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin:${PATH}"
 fi
+# Rust/Cargo binaries
+if [ -d /Users/dnall/.cargo/bin ]; then
+  PATH="/Users/dnall/.cargo/bin:${PATH}"
+fi
 
 ## History config
 HISTFILE="$HOME/.zsh_history"
