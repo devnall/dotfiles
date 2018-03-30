@@ -126,7 +126,6 @@ zplug "devnall/zsh-autosuggestions"
 ## other
 zplug "djui/alias-tips"
 zplug "supercrabtree/k"
-zplug "~/.dotfiles/zsh/zfunctions/prompt_devnall2_setup", from:local, as:theme
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
   printf "Install plugins? [y/N]: "
@@ -147,7 +146,7 @@ source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
 
 # Load prompt
 autoload -U promptinit && promptinit
-prompt devnall2 
+prompt devnall 
 
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
