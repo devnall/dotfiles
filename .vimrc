@@ -209,6 +209,10 @@ imap jj <Esc>	" jj instead of escape in insert mode
 nnoremap <space> :nohlsearch<CR>/<BS>	      " space unhighlights search results
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Enable format on save for terraform files
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
 " Make it pretty by defining color scheme and other visual niceties
 "set background=dark
 "colors ir_black
