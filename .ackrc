@@ -1,7 +1,7 @@
 # .ackrc file
 
 # Always sort files
-# --sort-files
+--sort-files
 
 # Always color, even if piping to another program
 --color
@@ -9,5 +9,19 @@
 # Use 'less -R' as pager
 #--pager=less -R
 
+# Smart case - case sensitive if upper/mixed case, insensitive if all lower (use --no-smart-case to force sensitive) 
+--smart-case
+
+# Colors
+--color-filename=bright_green
+--color-lineno=bright_blue
+--color-match=yellow
+
+# Show the context (surrounding lines) of matches
+#--context
+
 # Set tf type to search Terraform but not tfstate files
 --type-set=terraform:ext:tf
+
+# Other types to set
+
