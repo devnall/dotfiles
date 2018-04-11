@@ -6,7 +6,7 @@ vim-like keyboard shortcuts.
 
 Configuration is managed via a cvimrc which can be configured in the extention's Options page.
 The cvimrc can also be synced to/from a GitHub Gist.
-My cvimrc can be here: 
+My cvimrc can be found here: https://gist.github.com/devnall/4ccd8f2779856016b9811bdacfe4d16d
 
 ## Keybinds
 
