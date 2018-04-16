@@ -24,4 +24,4 @@
 --type-set=terraform:ext:tf
 
 # Other types to set
-
+--type-add=vim=.vim,.snippets
