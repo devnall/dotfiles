@@ -101,4 +101,5 @@ precmd() {
 }
 
 export PROMPT="${suspended_jobs}%(?.%F{10}.%F{10})❯%f "
+[[ -n "$SSH_CLIENT" ]] && export PROMPT="[%n@%M] $PROMPT" #TODO: figure out if this works the way I want it to, I don't think it does?
 export RPROMPT=''
