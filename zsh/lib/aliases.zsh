@@ -4,22 +4,21 @@ alias reload!='source ~/.zshrc'
 # Super user
 alias _='sudo'
 
-# ls
+# Directory listing
 
-# Determine flavor of `ls`
-# TODO: Break the lsal stuff into its own function
-if ls --color > /dev/null 2>&1; then # GNU ls
-  colorflag="--color"
-  alias lsal='ls -lahF ${colorflag} | less -R'
-else # OSX ls
+if [[ `uname` == 'Darwin' ]]; then
   colorflag="-G"
-  alias lsal='CLICOLOR_FORCE=1 ls -lahF ${colorflag} | less -R'
+  export lsal='CLICOLOR_FORCE=1 ls -lahF ${colorflag} | less -R'
+else
+  colorflag="--color"
+  export lsal='ls -lahF ${colorflag} | less -R'
 fi
 
 alias l='ls -lAhF ${colorflag}'
 alias ll='ls -lhF ${colorflag}'
 alias la='ls -AhF ${colorflag}'
 alias lsa='ls -lahF ${colorflag}'
+
 alias k='k -Ah'
 alias kl='k -Ah|less -R'
 
