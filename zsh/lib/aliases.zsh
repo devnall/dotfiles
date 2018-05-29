@@ -37,10 +37,12 @@ alias rm='rm -i'
 alias du='du -h'
 alias cp='cp -i'
 alias mv='mv -i'
+alias pu="pushd"
+alias po="popd"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-#alias gpg='gpg2'
+alias ssr="ssh -l root"
 if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
@@ -70,3 +72,7 @@ alias glg="g hist"
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
+
+# Weather and moon phase
+alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
+alias moon="curl -s wttr.in/Moon | head -n 23"
