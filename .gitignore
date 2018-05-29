@@ -71,3 +71,7 @@ Thumbs.db
 #
 # Secrets!
 secrets.txt
+
+#
+# Local files
+local.zsh
