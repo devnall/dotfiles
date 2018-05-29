@@ -7,20 +7,27 @@ alias _='sudo'
 # Directory listing
 
 if [[ `uname` == 'Darwin' ]]; then
-  colorflag="-G"
-  export lsal='CLICOLOR_FORCE=1 ls -lahF ${colorflag} | less -R'
+  ls_colorflag="-G"
+  alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
+  if [[ -f ${brew_path}/bin/colorls ]]; then
+    alias l='colorls -lA --sd --gs'
+    alias ll='colorls -l --sd --gs'
+    alias la='colorls -A --sd --gs'
+    alias lsa='colorls -la --sd --gs'
+  else
+    alias l='ls -lAhF ${ls_colorflag}'
+    alias ll='ls -lhF ${ls_colorflag}'
+    alias la='ls -AhF ${ls_colorflag}'
+    alias lsa='ls -lahF ${ls_colorflag}'
+  fi
 else
   colorflag="--color"
-  export lsal='ls -lahF ${colorflag} | less -R'
+  alias l='ls -lAhF ${ls_colorflag}'
+  alias ll='ls -lhF ${ls_colorflag}'
+  alias la='ls -AhF ${ls_colorflag}'
+  alias lsa='ls -lahF ${ls_colorflag}'
+  alias lsal='ls -lahF ${ls_colorflag} | less -R'
 fi
-
-alias l='ls -lAhF ${colorflag}'
-alias ll='ls -lhF ${colorflag}'
-alias la='ls -AhF ${colorflag}'
-alias lsa='ls -lahF ${colorflag}'
-
-alias k='k -Ah'
-alias kl='k -Ah|less -R'
 
 # Homebrew
 alias brews='brew list -1|grep $1'
