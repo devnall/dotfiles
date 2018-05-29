@@ -10,6 +10,17 @@
 bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
 
+## If MacOS, determine homebrew path
+if [[ `uname` == 'Darwin' ]]; then
+  if [ -d /usr/local/bin/homebrew ]; then
+    export brew_path="/usr/local/bin/homebrew"
+  elif [ -d /Users/dnall/homebrew ]; then
+    export brew_path="/Users/dnall/homebrew"
+  else
+    echo "ERROR: Unable to locate homebrew directory"
+  fi
+fi
+
 ## Set my path
 # TODO: Move this into zsh/lib/path.zsh
 # TODO: Build in some OS-specific logic
@@ -18,20 +29,13 @@ bindkey '^S' history-incremental-search-forward
 if [ -d "$HOME/bin" ]; then
   PATH="$HOME/bin:${PATH}"
 fi
+# Add more bin dirs to PATH
+PATH="/usr/local/bin:${PATH}"
+PATH="/usr/local/sbin:${PATH}"
 # Add homebrew dirs to PATH
-if [ -d /usr/local/bin ]; then
-  PATH="/usr/local/bin:${PATH}"
-fi
-if [ -d /Users/dnall/homebrew/bin ]; then
-  PATH="/Users/dnall/homebrew/bin:${PATH}"
-fi
-if [ -d /usr/local/sbin ]; then
-  PATH="/usr/local/sbin:${PATH}"
-fi
-if [ -d /Users/dnall/homebrew/sbin ]; then
-  PATH="/Users/dnall/homebrew/sbin:${PATH}"
-fi
-# Hombrew Cask in userspace
+PATH="${brew_path}/bin:${PATH}"
+PATH="${brew_path}/sbin:${PATH}"
+# Homebrew Cask in userspace
 export HOMEBREW_CASK_OPTS="--appdir=/Users/dnall/Applications"
 # Add gem installed stuff to PATH
 if [ -d "/Users/dnall/.gem/ruby/2.0.0/bin" ]; then
@@ -40,20 +44,16 @@ fi
 if [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
-if [ -d /Users/dnall/homebrew/opt/ruby/bin ]; then
-  PATH="/Users/dnall/homebrew/opt/ruby/bin:${PATH}"
-fi
+PATH="${brew_path}/opt/ruby/bin:${PATH}"
 # Add npm installed stuff to PATH
 if [ -d "/Users/dnall/.npm-packages/bin" ]; then
   PATH="${PATH}:/Users/dnall/.npm-packages/bin"
 fi
 # Add zsh-completions to fpath
-if [ -d /Users/dnall/homebrew/share/zsh-completions ]; then
-  fpath=(/Users/dnall/homebrew/share/zsh-completions $fpath)
-fi
+fpath=(${brew_path}/share/zsh-completions $fpath)
 # Use GPG2.1 instead of 2.0
-if [ -d /Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin ]; then
-  PATH="/Users/dnall/homebrew/Cellar/gnupg@2.1/2.1.19/bin:${PATH}"
+if [ -d ${brew_path}/Cellar/gnupg@2.1/2.1.19/bin ]; then
+  PATH="${brew_path}/Cellar/gnupg@2.1/2.1.19/bin:${PATH}"
 fi
 # Rust/Cargo binaries
 if [ -d /Users/dnall/.cargo/bin ]; then
@@ -64,11 +64,11 @@ fi
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE="500000"
 SAVEHIST="500000"
-setopt EXTENDED_HISTORY   # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_SPACE         # Dont record an entry starting with a space.
+setopt EXTENDED_HISTORY         # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY       # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY            # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_SPACE        # Dont record an entry starting with a space.
 
 ### Set helpdir
 #if [ -d /usr/local/share/zsh/help ]
@@ -93,12 +93,12 @@ fi
 ## zplug
 fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 
-if [ -d /Users/dnall/homebrew/opt/zplug ]
+if [ -d ${brew_path}/opt/zplug ]
 then
-  export ZPLUG_HOME=/Users/dnall/homebrew/opt/zplug
+  export ZPLUG_HOME="${brew_path}/opt/zplug"
 elif [ -d /usr/local/opt/zplug ]
 then
-  export ZPLUG_HOME=/usr/local/opt/zplug
+  export ZPLUG_HOME="/usr/local/opt/zplug"
 fi
 source $ZPLUG_HOME/init.zsh
 
