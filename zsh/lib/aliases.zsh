@@ -6,7 +6,7 @@ alias _='sudo'
 
 # Directory listing
 
-if [[ `uname` == 'Darwin' ]]; then
+if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
   if [[ -f ${brew_path}/bin/colorls ]]; then
@@ -20,7 +20,7 @@ if [[ `uname` == 'Darwin' ]]; then
     alias la='ls -AhF ${ls_colorflag}'
     alias lsa='ls -lahF ${ls_colorflag}'
   fi
-else
+else # Linux
   colorflag="--color"
   alias l='ls -lAhF ${ls_colorflag}'
   alias ll='ls -lhF ${ls_colorflag}'
