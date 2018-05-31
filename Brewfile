@@ -18,13 +18,17 @@
 
 # Tap some repos
 tap "caskroom/cask"
+tap "hombrew/boneyard"
+tap "homebrew/bundle"
 tap "homebrew/dupes"
-tap "telemachus/desc"
-tap "tldr-pages/tldr"
+tap "homebrew/core"
+tap "homebrew/head-only"
+tap "homebrew/versions"
 tap "homebrew/command-not-found"
 
 # Install some brew-related stuff
 brew "brew-cask"
+brew "brew-cask-completion"
 brew "brew-desc"
 
 # Install shells and completion
@@ -42,25 +46,35 @@ brew "macvim"
 
 # Install command line utilities
 brew "ack"
-brew "archey"
+brew "awscli"
+brew "catimg"
 brew "ccat"
 brew "colordiff"
 brew "coreutils"
-brew "ctags"
 brew "curl"
+brew "diff-so-fancy"
+brew "docker-completion"
+brew "doitlive"
 brew "elinks"
 brew "fd"
 brew "gist"
-brew "git --without-completions"
+brew "git", args: ['without-completions']
 brew "grc"
+brew "gpg"
+brew "gpg-agent"
 brew "grep"
 brew "htop-osx"
 brew "httpie"
 brew "httpstat"
+brew "hub"
 brew "iftop"
 brew "ipcalc"
+brew "jq"
+brew "kubernetes-cli"
 brew "mas"
 brew "ncdu"
+brew "neofetch"
+brew "openssl"
 brew "pcre"
 brew "pdfgrep"
 brew "pv"
@@ -68,11 +82,15 @@ brew "python"
 brew "readline"
 brew "reattach-to-user-namespace"
 brew "rename"
+brew "shellcheck"
 brew "ssh-copy-id"
+brew "terminal-notifier"
+brew "thefuck"
 brew "tldr"
 brew "tmux"
 brew "tree"
 brew "unrar"
+brew "watch"
 brew "wget"
 brew "wifi-password"
 brew "xz"
@@ -83,6 +101,7 @@ brew "zplug"
 cask '1password'
 cask 'alfred'
 cask 'appzapper'
+cask 'atom'
 cask 'bartender'
 cask 'daisydisk'
 cask 'day-o'
@@ -91,20 +110,33 @@ cask 'divvy'
 cask 'docker'
 cask 'dropbox'
 cask 'evernote'
+cask 'fantastical'
 cask 'firefox'
 cask 'flux'
 cask 'google-chrome'
 cask 'google-cloud-sdk'
-cask 'karabiner'
-cask 'keepingyouawake'
-cask 'kindle'
-cask 'mactracker'
 cask 'iina'
 cask 'iterm2'
+cask 'karabiner'
+cask 'keepingyouawake'
+cask 'keycastr'
+cask 'kindle'
+cask 'macdown'
+cask 'mactracker'
+cask 'marked'
 cask 'seil'
+cask 'sip'
 cask 'sonos'
+cask 'sound-control'
 cask 'spotify'
 cask 'the-archive-browser'
 cask 'the-unarchiver'
 cask 'viscosity'
 cask 'vlc'
+
+# Install stuff from Mac App Store via mas
+mas 'iStat Mini', id:927292435
+mas 'Degrees Pro', id: 951510024
+mas 'Copied', id: 1026349850
+mas 'Pixelmator', id: 407963104
+mas 'Tweetbot', id: 557168941
