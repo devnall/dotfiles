@@ -51,10 +51,6 @@ if [ -d "/Users/dnall/.npm-packages/bin" ]; then
 fi
 # Add zsh-completions to fpath
 fpath=(${brew_path}/share/zsh-completions $fpath)
-# Use GPG2.1 instead of 2.0
-if [ -d ${brew_path}/Cellar/gnupg@2.1/2.1.19/bin ]; then
-  PATH="${brew_path}/Cellar/gnupg@2.1/2.1.19/bin:${PATH}"
-fi
 # Rust/Cargo binaries
 if [ -d /Users/dnall/.cargo/bin ]; then
   PATH="/Users/dnall/.cargo/bin:${PATH}"
