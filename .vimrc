@@ -20,6 +20,7 @@ Plugin 'gmarik/Vundle.vim'
 "
 """ Github repo bundles
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'mhartington/oceanic-next'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
@@ -231,6 +232,7 @@ endif
 
 let g:solarized_termtrans = 1
 colorscheme solarized
+"colorscheme OceanicNext
 
 " vim-airline statusline config
 let g:airline_left_sep=''
@@ -240,10 +242,13 @@ let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
-let g:airline_theme='papercolor'
+"let g:airline_theme='papercolor'
 let g:airline_powerline_fonts=1
 let g:airline#extenstions#syntastic#enabled=1
 "let g:airline#extensions#whitespace#show_message = 1
+let g:airline_theme='oceanicnext'
+"let g:oceanic_next_terminal_bold = 1
+"let g:oceanic_next_terminal_italic = 1
 
 " Syntastic config
 set statusline+=%#warningmsg#

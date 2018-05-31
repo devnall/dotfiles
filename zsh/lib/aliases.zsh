@@ -6,21 +6,28 @@ alias _='sudo'
 
 # Directory listing
 
-if [[ `uname` == 'Darwin' ]]; then
-  colorflag="-G"
-  export lsal='CLICOLOR_FORCE=1 ls -lahF ${colorflag} | less -R'
-else
+if [[ `uname` == 'Darwin' ]]; then # MacOS
+  ls_colorflag="-G"
+  alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
+  if [[ -f ${brew_path}/bin/colorls ]]; then
+    alias l='colorls -lA --sd --gs'
+    alias ll='colorls -l --sd --gs'
+    alias la='colorls -A --sd --gs'
+    alias lsa='colorls -la --sd --gs'
+  else
+    alias l='ls -lAhF ${ls_colorflag}'
+    alias ll='ls -lhF ${ls_colorflag}'
+    alias la='ls -AhF ${ls_colorflag}'
+    alias lsa='ls -lahF ${ls_colorflag}'
+  fi
+else # Linux
   colorflag="--color"
-  export lsal='ls -lahF ${colorflag} | less -R'
+  alias l='ls -lAhF ${ls_colorflag}'
+  alias ll='ls -lhF ${ls_colorflag}'
+  alias la='ls -AhF ${ls_colorflag}'
+  alias lsa='ls -lahF ${ls_colorflag}'
+  alias lsal='ls -lahF ${ls_colorflag} | less -R'
 fi
-
-alias l='ls -lAhF ${colorflag}'
-alias ll='ls -lhF ${colorflag}'
-alias la='ls -AhF ${colorflag}'
-alias lsa='ls -lahF ${colorflag}'
-
-alias k='k -Ah'
-alias kl='k -Ah|less -R'
 
 # Homebrew
 alias brews='brew list -1|grep $1'
@@ -30,9 +37,12 @@ alias rm='rm -i'
 alias du='du -h'
 alias cp='cp -i'
 alias mv='mv -i'
+alias pu="pushd"
+alias po="popd"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias ssr="ssh -l root"
 if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
@@ -62,3 +72,7 @@ alias glg="g hist"
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
+
+# Weather and moon phase
+alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
+alias moon="curl -s wttr.in/Moon | head -n 23"
