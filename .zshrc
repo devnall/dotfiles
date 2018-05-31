@@ -55,6 +55,12 @@ fpath=(${brew_path}/share/zsh-completions $fpath)
 if [ -d /Users/dnall/.cargo/bin ]; then
   PATH="/Users/dnall/.cargo/bin:${PATH}"
 fi
+if [ -d /Users/dnall/homebrew/bin ]; then
+  PATH="/Users/dnall/homebrew/bin:${PATH}"
+fi
+if [ -d /Users/dnall/homebrew/sbin ]; then
+  PATH="/Users/dnall/homebrew/sbin:${PATH}"
+fi
 
 ## History config
 HISTFILE="$HOME/.zsh_history"
@@ -66,18 +72,19 @@ setopt SHARE_HISTORY            # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_SPACE        # Dont record an entry starting with a space.
 
-### Set helpdir
-#if [ -d /usr/local/share/zsh/help ]
-#then
-#  export HELPDIR=/usr/local/share/zsh/help
-#elif [ -d /Users/dnall/homebrew/share/zsh/help ]
-#then
-#  export HELPDIR=/Users/dnall/homebrew/share/zsh/help
-#else
-#  export HELPDIR=''
-#fi
-### May be needed to access online help?
-#autoload run-help
+ brew installing node installs an old version of npm
+# to install new version, do the following:
+# `ls /usr/local/lib/node_modules` and make a note of any packages to reinstall
+# `rm -rf /usr/local/lib/node_modules`
+# `brew uninstall node`
+# `brew install node --without-npm
+# `echo prefix=~/.npm-packages >> ~/.npmrc`
+# `curl -L https://www.npmjs.com/install.sh | sh`
+# Add .npm-packages to PATH:
+export NODE_PATH="$HOME/homebrew/lib/node_modules"
+export PATH="$HOME/.npm-packages/bin:$PATH"
+# Reinstall any packages deleted in step 2
+
 
 # Secrets!
 if [ -f /Users/dnall/.dotfiles/secrets.txt ]
