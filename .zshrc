@@ -105,6 +105,8 @@ then
 fi
 source $ZPLUG_HOME/init.zsh
 
+fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
+
 #
 ## Plugins
 #
