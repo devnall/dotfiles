@@ -27,13 +27,19 @@ Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'hashivim/vim-terraform'
-Plugin 'tmux-plugins/vim-tmux'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-repeat'
 Plugin 'rizzatti/dash.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'dougireton/vim-chef'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'hashivim/vim-terraform'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'Markdown'
+Plugin 'git.zip'
+Plugin 'groovy.vim'
 
 "
 """ Stuff to try out
@@ -48,8 +54,6 @@ Plugin 'rizzatti/dash.vim'
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
 "Plugin 'jmcantrell/vim-virtualenv'
-"Plugin 'mileszs/ack.vim'
-"Plugin 'kien/ctrlp.vim'
 "
 """ non-github repos
 " Bundle "ZoomWin"
