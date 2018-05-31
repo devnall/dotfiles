@@ -98,8 +98,6 @@ then
 fi
 source $ZPLUG_HOME/init.zsh
 
-fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
-
 #
 ## Plugins
 #
@@ -115,12 +113,8 @@ zplug "plugins/thefuck", from:oh-my-zsh
 ## zsh-users
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
-# Use my autosuggestion fork until PR150 or Issue126
-# get merged upstream to fix segfault
-#zplug "zsh-users/zsh-autosuggestions"
-zplug "devnall/zsh-autosuggestions"
+zplug "zsh-users/zsh-autosuggestions"
 ## other
-zplug "djui/alias-tips"
 zplug "supercrabtree/k"
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
