@@ -1,9 +1,9 @@
 " vimrc file
 "
 " Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: August 12, 2015
+" Last updated: May 31, 2018
 
-set nocompatible
+set nocompatible " be iMproved, required
 filetype off
 
 " Set the runtime path to include Vundle and initialize
@@ -12,13 +12,23 @@ call vundle#begin()
 " Alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-" Bundles go here:
+" Brief Vundle help
+" :PluginList         - lists configured plugins
+" :PluginInstall      - installs plugins
+" :PluginUpdate       - update installed plugins
+" :PluginSearch foo   - searches for foo; append `!` to refresh local cache
+" :PluginClean        - confirms removal of unused plugins; append `!` to auto-approve
 "
+" See `:h vundle` for more details or wiki for FAQ
+
+" Bundles go here:
+" See the Vundle readme for different supported plugin formats
+" Keep plugin calls between vundle#begin and vundle#end
+
 " Let Vundle manage Vundle. Required!
 Plugin 'gmarik/Vundle.vim'
 
-"
-""" Github repo bundles
+" Github repo bundles
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'mhartington/oceanic-next'
 Plugin 'vim-airline/vim-airline'
@@ -41,8 +51,7 @@ Plugin 'Markdown'
 Plugin 'git.zip'
 Plugin 'groovy.vim'
 
-"
-""" Stuff to try out
+" Stuff to try out
 "Plugin 'tpope/vim-fugitive'
 "Plugin 'godlygeek/tabular'
 "Plugin 'tpope/vim-surround'
@@ -54,8 +63,8 @@ Plugin 'groovy.vim'
 "Bundle "Townk/vim-autoclose"
 ""Bundle "Lokaltog/vim-easymotion"
 "Plugin 'jmcantrell/vim-virtualenv'
-"
-""" non-github repos
+
+" non-github repos
 " Bundle "ZoomWin"
 " noremap MLocalLeader o :ZoomWin<CR>
 " vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
@@ -68,28 +77,17 @@ Plugin 'groovy.vim'
 "
 "let g:CommandTMatchWindowAtTop=1   " Show window at top
 
-""" Plugins no longer used but may need in future
+" Plugins no longer used but may need in future
 "Plugin 'puppetlabs/puppet-syntax-vim'
 "Plugin 'rizzatti/dash.vim'
 "Plugin 'ajf/puppet-vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()                   " Required
-filetype plugin indent on           " Required
+" All Plugins must be added before the following line
+call vundle#end()
+
+filetype plugin indent on
 " To ignore plugin indent change, instead use:
 "filetype plugin on
-"
-" Brief Vundle help
-" :PluginList         - lists configured plugins
-" :PluginInstall      - installs plugins
-" :PluginUpdate       - update installed plugins
-" :PluginSearch foo   - searches for foo; append `!` to refresh local cache
-" :PluginClean        - confirms removal of unused plugins; append `!` to
-" auto-approve
-"
-" See `:h vundle` for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
 
 " Add fzf to runtime path
 set rtp+=~/homebrew/opt/fzf
@@ -99,15 +97,15 @@ set fo+=o		" Insert current comment leader after hitting 'o' or 'O' in Normal mo
 set fo-=r		" Do not automatically insert a comment leader after an enter
 set fo-=t		" Do not auto-wrap text using textwidth (doesn't apply to comments)
 
-set nowrap		" Don't wrap lines
+set nowrap		    " Don't wrap lines
 set textwidth=0		" Don't wrap lines by default
 set wildmode=longest,list	" At the CLI, complete longest common string, then list alternatives
 set backspace=indent,eol,start	" Allow backspacing over everything in insert mode
-set tabstop=2		" Set the defaul tabstop
+set tabstop=2		  " Set the defaul tabstop
 set softtabstop=2
 set shiftwidth=2	" Set the default shift width for indents
-set expandtab		" Make tabs into spaces (set by tabstop)
-set smarttab		" Smarter tab levels
+set expandtab		  " Make tabs into spaces (set by tabstop)
+set smarttab		  " Smarter tab levels
 set autoindent
 set cindent
 set cinoptions=:s,ps,ts,cs
@@ -116,9 +114,8 @@ set hlsearch
 set autoread
 set timeoutlen=250
 
-syntax enable		" Enable syntax highlighting
+syntax enable		  " Enable syntax highlighting
 
-" Turn off backups and swap files
 set nobackup      " don't backup files
 set nowritebackup " don't write backup files either
 set noswapfile    " don't create swap files
@@ -136,10 +133,12 @@ set shortmess=atI	" Shorten messages
 set nolist		    " Display unprintable characters F12 - switches
 set listchars=tab:·\ ,eol:¶,trail:·,extends:»,precedes:«	" Unprintable char mappings
 
+" Folding
 set foldenable		" Turn on folding
 set foldmethod=marker	" Fold on the marker
 set foldlevel=100	" Don't autofold anything (can still fold manually)
 set foldopen=block,hor,mark,percent,quickfix,tag	" Define  movements which open folds
+
 " Lots of terminal emulators handle the mouse just fine, so find out if it's
 " supported and, if so, enable it. Also, hide mouse when not using it.
 if has ('mouse')
