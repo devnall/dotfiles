@@ -72,7 +72,7 @@ setopt SHARE_HISTORY            # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_SPACE        # Dont record an entry starting with a space.
 
- brew installing node installs an old version of npm
+# brew installing node installs an old version of npm
 # to install new version, do the following:
 # `ls /usr/local/lib/node_modules` and make a note of any packages to reinstall
 # `rm -rf /usr/local/lib/node_modules`
