@@ -1,6 +1,8 @@
 [user]
 	name = Drew Nall
 	email = devnall@gmail.com
+[includeIf "gitdir:~/Work/"]
+  path = ~/Work/.gitconfig
 [credential]
 	helper = osxkeychain
 [push]
@@ -25,3 +27,5 @@
   old = red bold
   new = green bold
   whitespace = red reverse
+[url "git@github.com:"]
+	insteadOf = https://github.com/
