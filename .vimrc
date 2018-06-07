@@ -178,8 +178,15 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
+  " For all text files set 'textwidth' to 78 characters, wrap at whitespace.
   autocmd FileType text setlocal textwidth=78
+  autocmd FileType text setlocal nolist wrap linebreak breakat&vim
+
+  " .markdown and .md are markdown files
+  au! BufRead,BufNewFile *.markdown set filetype=mkd
+  au! BufRead,BufNewFile *.md set filetype=mkd
+  autocmd FileType mkd setlocal textwidth=78
+  autocmd FileType mkd setlocal nolist wrap linebreak breakat&vim
 
   " Open NERDTree automatically when vim starts with no file specified
   autocmd StdinReadPre * let s:std_in=1
