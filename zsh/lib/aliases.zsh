@@ -52,6 +52,11 @@ if [[ `uname` == 'Darwin' ]]; then
   alias free="top -l 1 -s 0 | grep PhysMem"
 fi
 
+# Use GNU date instead of old date shipped w/ MacOS
+if [ -f ${brew_path}/bin/gdate ]; then
+  alias date="gdate"
+fi
+
 # Get IP Addresses
 # TODO: Turn this into a function that can handle different OSes
 alias ip='echo "External IP:   " `dig +short myip.opendns.com @resolver1.opendns.com` && echo "Ethernet (en3):" `ipconfig getifaddr en3` && echo "Wireless (en0):" `ipconfig getifaddr en0`'
