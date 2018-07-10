@@ -53,15 +53,16 @@ Plugin 'groovy.vim'
 
 " Stuff to try out
 "Plugin 'tpope/vim-fugitive'
+"Plugin 'airblade/vim-gitgutter'
 "Plugin 'godlygeek/tabular'
 "Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-speeddating'
 "Plugin 'ervandew/supertab'
 "Plugin 'vim-scripts/YankRing.vim'
-""Bundle "http://github.com/thinca/vim-quickrun.git"
-""Bundle "http://github.com/mattn/gist-vim.git"
-"Bundle "Townk/vim-autoclose"
-""Bundle "Lokaltog/vim-easymotion"
+"Plugin 'vim-quickrun'
+"Plugin 'gist-vim'
+"Plugin 'townk/vim-autoclose'
+"Plugin 'lokaltog/vim-easymotion'
 "Plugin 'jmcantrell/vim-virtualenv'
 
 " non-github repos
@@ -183,10 +184,10 @@ if has("autocmd")
   autocmd FileType text setlocal nolist wrap linebreak breakat&vim
 
   " .markdown and .md are markdown files
-  au! BufRead,BufNewFile *.markdown set filetype=mkd
-  au! BufRead,BufNewFile *.md set filetype=mkd
-  autocmd FileType mkd setlocal textwidth=78
-  autocmd FileType mkd setlocal nolist wrap linebreak breakat&vim
+""  au! BufRead,BufNewFile *.markdown set filetype=mkd
+""  au! BufRead,BufNewFile *.md set filetype=mkd
+  autocmd FileType markdown setlocal textwidth=78
+  autocmd FileType markdown setlocal nolist wrap linebreak breakat&vim
 
   " Open NERDTree automatically when vim starts with no file specified
   autocmd StdinReadPre * let s:std_in=1
