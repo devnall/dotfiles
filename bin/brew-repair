@@ -1,0 +1,10 @@
+#!/usr/bin/env/zsh
+
+# Repair brew repository via hard reset
+
+set -euo pipefail
+
+cd -- "$(brew --repo)"
+git fetch
+git reset --hard origin/master
+brew update
