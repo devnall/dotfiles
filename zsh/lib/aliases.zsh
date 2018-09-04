@@ -53,6 +53,11 @@ if [[ -f ${brew_path}/bin/bat ]]; then
   alias less="bat"
 fi
 
+# if prettyping is installed, use it instead of ping
+if [[ -f ${brew_path}/bin/prettyping ]]; then
+  alias ping="prettyping --nolegend"
+fi
+
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
   alias free="top -l 1 -s 0 | grep PhysMem"
