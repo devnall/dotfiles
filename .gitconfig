@@ -15,6 +15,7 @@
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 [pager]
 	diff = diff-so-fancy | less --tabs=4 -RFX
+	show = diff-so-fancy | less --tabs=4 -RFX
 [color "diff-highlight"]
 	oldNormal = red bold
   oldHighlight = red bold 52
