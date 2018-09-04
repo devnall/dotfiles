@@ -58,6 +58,11 @@ if [[ -f ${brew_path}/bin/prettyping ]]; then
   alias ping="prettyping --nolegend"
 fi
 
+# if htop is installed, use it instead of top
+if [[ -f ${brew_path}/bin/htop ]]; then
+  alias top="htop"
+fi
+
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
   alias free="top -l 1 -s 0 | grep PhysMem"
