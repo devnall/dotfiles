@@ -47,30 +47,35 @@ if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
 
-# `bat` is a better/fancier `cat`
+# If bat is installed, use it instead of cat/less
 if [[ -f ${brew_path}/bin/bat ]]; then
   alias cat="bat"
   alias less="bat"
 fi
 
-# if prettyping is installed, use it instead of ping
+# If prettyping is installed, use it instead of ping
 if [[ -f ${brew_path}/bin/prettyping ]]; then
   alias ping="prettyping --nolegend"
 fi
 
-# if htop is installed, use it instead of top
+# If htop is installed, use it instead of top
 if [[ -f ${brew_path}/bin/htop ]]; then
   alias top="htop"
+fi
+
+# If GNU date is installed, use it instead of old date shipped w/ MacOS
+if [ -f ${brew_path}/bin/gdate ]; then
+  alias date="gdate"
+fi
+
+# If ncdu is installed, use it instead of du
+if [[ -f ${brew_path}/bin/ncdu ]]; then
+  du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 fi
 
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
   alias free="top -l 1 -s 0 | grep PhysMem"
-fi
-
-# Use GNU date instead of old date shipped w/ MacOS
-if [ -f ${brew_path}/bin/gdate ]; then
-  alias date="gdate"
 fi
 
 # Get IP Addresses
