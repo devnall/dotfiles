@@ -47,6 +47,12 @@ if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
 
+# `bat` is a better/fancier `cat`
+if [[ -f ${brew_path}/bin/bat ]]; then
+  alias cat="bat"
+  alias less="bat"
+fi
+
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
   alias free="top -l 1 -s 0 | grep PhysMem"
