@@ -12,14 +12,11 @@ bindkey '^S' history-incremental-search-forward
 
 ## If MacOS, determine homebrew path
 if [[ `uname` == 'Darwin' ]]; then
-  if [ -d /usr/local/bin/homebrew ]; then
-    export brew_path="/usr/local/bin/homebrew"
-  elif [ -d /Users/dnall/homebrew ]; then
-    export brew_path="/Users/dnall/homebrew"
-  elif [ -d /usr/local/Cellar ]; then
-    export brew_path="/usr/local/Cellar"
+  which brew
+  if [[ $? -ne 0 ]]; then
+    echo "ERROR: Homebrew not installed or not in $PATH"
   else
-    echo "ERROR: Unable to locate homebrew directory"
+    export brew_path=`which brew`
   fi
 fi
 
