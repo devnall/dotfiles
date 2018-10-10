@@ -16,6 +16,8 @@ if [[ `uname` == 'Darwin' ]]; then
     export brew_path="/usr/local/bin/homebrew"
   elif [ -d /Users/dnall/homebrew ]; then
     export brew_path="/Users/dnall/homebrew"
+  elif [ -d /usr/local/Cellar ]; then
+    export brew_path="/usr/local/Cellar"
   else
     echo "ERROR: Unable to locate homebrew directory"
   fi

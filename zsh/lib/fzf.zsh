@@ -10,7 +10,9 @@ fi
 
 # Key bindings
 # ------------
-source "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh"
+if [ -f "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
+  source "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh"
+fi
 
 
 #export FZF_DEFAULT_COMMAND="fd . $HOME"
