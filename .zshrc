@@ -149,3 +149,6 @@ prompt devnall
 
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /Users/dnall/homebrew/Cellar/terraform/0.11.8/bin/terraform terraform
