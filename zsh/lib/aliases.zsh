@@ -8,7 +8,8 @@ alias _='sudo'
 
 if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
-  alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
+  #alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
+  alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | bat'
   if [[ -f ${brew_path}/bin/colorls ]]; then
     alias l='colorls -lA --sd --gs'
     alias ll='colorls -l --sd --gs'
@@ -48,10 +49,10 @@ if hash fd 2>/dev/null; then
 fi
 
 # If bat is installed, use it instead of cat/less
-if [[ -f ${brew_path}/bin/bat ]]; then
-  alias cat="bat"
-  alias less="bat"
-fi
+#if [[ -f ${brew_path}/bin/bat ]]; then
+#  alias cat="bat"
+#  alias less="bat"
+#fi
 
 # If prettyping is installed, use it instead of ping
 if [[ -f ${brew_path}/bin/prettyping ]]; then
@@ -98,6 +99,7 @@ alias glg="g hist"
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
+alias kubectl="/usr/local/bin/kubectl"  # Use old version of kubectl so it works with CSP stuff :eyeroll:
 
 # Weather and moon phase
 alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
