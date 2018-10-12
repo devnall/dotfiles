@@ -11,12 +11,12 @@ bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
 
 ## If MacOS, determine homebrew path
-if [[ `uname` == 'Darwin' ]]; then
-  which brew
-  if [[ $? -ne 0 ]]; then
-    echo "ERROR: Homebrew not installed or not in $PATH"
+if [[ $(uname) == 'Darwin' ]]; then
+  if which brew >/dev/null; then
+    export brew_binary=$(which brew)
+    export brew_path=$(dirname $brew_binary)
   else
-    export brew_path=`which brew`
+    echo "ERROR: Homebrew not installed or not in $PATH"
   fi
 fi
 
