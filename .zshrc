@@ -18,6 +18,7 @@ setopt HIST_VERIFY              # Show command with history expansion to user be
 ## Source other zsh config files
 source "$HOME"/.dotfiles/zsh/lib/path.zsh
 source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
+source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
 source "$HOME"/.dotfiles/zsh/lib/completions.zsh
@@ -50,7 +51,6 @@ zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
 ## zsh-users
 zplug "zsh-users/zsh-syntax-highlighting"
