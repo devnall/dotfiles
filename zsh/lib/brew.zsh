@@ -1,3 +1,6 @@
+# Homebrew Cask in userspace
+export HOMEBREW_CASK_OPTS="--appdir=/Users/dnall/Applications"
+
 function brewupd() {
   echo "---> Updating brews"
   brew update
