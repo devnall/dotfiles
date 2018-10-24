@@ -58,6 +58,7 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
 ## other
 zplug "supercrabtree/k"
+zplug "wfxr/forgit", defer:1
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
