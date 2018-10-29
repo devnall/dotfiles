@@ -15,11 +15,12 @@ if [ -f "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
 fi
 
 
-#export FZF_DEFAULT_COMMAND="fd . $HOME"
-export FZF_DEFAULT_COMMAND="fd --type file --follow --hidden --exclude .git --color=always . $HOME"
+#export FZF_DEFAULT_COMMAND="fd --type file --follow --hidden --exclude .git --color=always . $HOME"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_DEFAULT_OPTS="--ansi"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type directory --exclude .git --color=always . $HOME"
+export FZF_ALT_C_COMMAND="fd --type directory --hidden --exclude .git --color=always . $HOME"
+
 
 # Aliases
 # -------
