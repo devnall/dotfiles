@@ -1,0 +1,30 @@
+" Settings
+let newtaburl = "https://www.duckduckgo.com/";
+let homeurl = "https://www.duckduckgo.com/";
+map "shift+d" scrollHalfPageDown
+map "shift+u" scrollHalfPageUp
+let blacklists = ["*://mail.google.com/*"]
+
+" Unmap defaults
+unmap "e"
+unmap "shift+e"
+unmap "g ?"
+unmap "g t"
+unmap "g shift+t"
+unmap "g 0"
+unmap "g $"
+unmap "g x shift+t"
+unmap "g x t"
+unmap "g x 0"
+unmap "g x $"
+unmap "shift+,"
+unmap "shift+."
+
+" Keybinds
+map "down" scrollDown
+map "up" scrollUp
+map "left" scrollLeft
+map "right" scrollRight
+map "space" scrollFullPageDown
+map "shift+d" scrollFullPageDown
+map "shift+u" scrollFullPageUp
