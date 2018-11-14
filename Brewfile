@@ -2,7 +2,7 @@
 # Brewfile                                  #
 # Install homebrew packages                 #
 # Maintainer: Drew Nall <drewnall@gmail.com #
-# Last Updated: July 27, 2015               #
+# Last Updated: 20181114                    #
 #############################################
 
 # Usage:
@@ -20,16 +20,12 @@
 tap "caskroom/cask"
 tap "hombrew/boneyard"
 tap "homebrew/bundle"
-tap "homebrew/dupes"
 tap "homebrew/core"
-tap "homebrew/head-only"
-tap "homebrew/versions"
 tap "homebrew/command-not-found"
+tap "wata727/tflint"
 
 # Install some brew-related stuff
-brew "brew-cask"
 brew "brew-cask-completion"
-brew "brew-desc"
 
 # Install shells and completion
 brew "bash"
@@ -38,50 +34,56 @@ brew "zsh"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
-brew "mobile-shell"
+# brew "mobile-shell"
 
 # Install vim
 brew "vim"
 brew "macvim"
+brew "neovim"
 
 # Install command line utilities
 brew "ack"
 brew "awscli"
-brew "catimg"
+brew "bat"
+#brew "catimg"
 brew "ccat"
-brew "colordiff"
+#brew "colordiff"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
-brew "docker-completion"
 brew "doitlive"
 brew "elinks"
 brew "fd"
+brew "fzf"
 brew "gist"
-brew "git", args: ['without-completions']
+#brew "git", args: ['without-completions']
+brew "git"
+brew "gnu-tar"
+brew "gnupg"
 brew "grc"
-brew "gpg"
-brew "gpg-agent"
 brew "grep"
+brew "gzip"
 brew "htop-osx"
 brew "httpie"
 brew "httpstat"
-brew "hub"
+#brew "hub"
 brew "iftop"
+brew "inetutils"
 brew "ipcalc"
 brew "jq"
-brew "kubernetes-cli"
-brew "mas"
+#brew "mas"
 brew "ncdu"
 brew "neofetch"
-brew "openssl"
-brew "pcre"
+brew "nmap"
 brew "pdfgrep"
-brew "pv"
+brew "pidof"
+brew "prettyping"
 brew "python"
-brew "readline"
+brew "python@2"
+#brew "readline"
 brew "reattach-to-user-namespace"
 brew "rename"
+brew "ripgrep"
 brew "shellcheck"
 brew "ssh-copy-id"
 brew "terminal-notifier"
@@ -97,19 +99,34 @@ brew "xz"
 brew "youtube-dl"
 brew "zplug"
 
+# Work-specific CLI utilities
+
+brew "blackbox"
+brew "gnupg@2.1"
+brew "kubectx"
+brew "kubernetes-cli"
+brew "packer"
+brew "pinentry"
+brew "pinentry-mac"
+brew "terraform"
+brew "terraform_landscape"
+brew "tflint"
+
+
+
 # Install cask apps
 cask '1password'
 cask 'alfred'
-cask 'appzapper'
+#cask 'appzapper'
 cask 'atom'
 cask 'bartender'
-cask 'daisydisk'
+#cask 'daisydisk'
 cask 'day-o'
 cask 'disk-inventory-x'
 cask 'divvy'
 cask 'docker'
 cask 'dropbox'
-cask 'evernote'
+#cask 'evernote'
 cask 'fantastical'
 cask 'firefox'
 cask 'flux'
@@ -117,18 +134,21 @@ cask 'google-chrome'
 cask 'google-cloud-sdk'
 cask 'iina'
 cask 'iterm2'
-cask 'karabiner'
+#cask 'karabiner'
 cask 'keepingyouawake'
-cask 'keycastr'
+#cask 'keycastr'
 cask 'kindle'
-cask 'macdown'
-cask 'mactracker'
-cask 'marked'
-cask 'seil'
+#cask 'macdown'
+#cask 'mactracker'
+#cask 'marked'
+cask 'remember-the-milk'
+cask 'rocket'
+#cask 'seil'
 cask 'sip'
-cask 'sonos'
+#cask 'sonos'
 cask 'sound-control'
 cask 'spotify'
+cask 'steam'
 cask 'the-archive-browser'
 cask 'the-unarchiver'
 cask 'viscosity'
