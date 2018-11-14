@@ -21,11 +21,12 @@ source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
 source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
-source "$HOME"/.dotfiles/zsh/lib/completions.zsh
 source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
 if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
+
+eval $(thefuck --alias)
 
 ## Secrets!
 if [ -f /Users/dnall/.dotfiles/secrets.txt ]
@@ -59,6 +60,7 @@ zplug "zsh-users/zsh-autosuggestions"
 ## other
 zplug "supercrabtree/k"
 zplug "wfxr/forgit", defer:1
+#zplug "jedahan/ripz"
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
@@ -71,11 +73,15 @@ fi
 # Source plugins and add commands to PATH
 zplug load
 
+# Config files that need to be loaded after zplug, for whatever reason
+source "$HOME"/.dotfiles/zsh/lib/completions.zsh
+
 # Load prompt
 autoload -U promptinit && promptinit
 prompt devnall 
 
+autoload -U +X bashcompinit && bashcompinit
+
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
 
-autoload -U +X bashcompinit && bashcompinit

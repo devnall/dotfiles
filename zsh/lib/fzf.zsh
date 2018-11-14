@@ -14,8 +14,6 @@ if [ -f "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
   source "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh"
 fi
 
-
-#export FZF_DEFAULT_COMMAND="fd --type file --follow --hidden --exclude .git --color=always . $HOME"
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_DEFAULT_OPTS="--ansi"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

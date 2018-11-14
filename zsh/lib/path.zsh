@@ -11,8 +11,11 @@ fi
 # gem-installed stuff
 if [ -d "/Users/dnall/.gem/ruby/2.0.0/bin" ]; then
   PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
-fi
-if [ -d /usr/local/opt/ruby/bin ]; then
+elif [ -d "/Users/dnall/.gem/ruby/2.3.0/bin" ]; then
+  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
+elif [ -d "/Users/dnall/.gem/ruby/2.5.0/bin" ]; then
+  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
+elif [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
 PATH="${brew_path}/opt/ruby/bin:${PATH}"
