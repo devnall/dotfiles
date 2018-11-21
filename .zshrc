@@ -80,8 +80,6 @@ source "$HOME"/.dotfiles/zsh/lib/completions.zsh
 autoload -U promptinit && promptinit
 prompt devnall 
 
-autoload -U +X bashcompinit && bashcompinit
-
+# Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
-
