@@ -1,17 +1,17 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */Users/dnall/homebrew/opt/fzf/bin* ]]; then
-  export PATH="$PATH:/Users/dnall/homebrew/opt/fzf/bin"
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+  export PATH="$PATH:/usr/local/opt/fzf/bin"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/Users/dnall/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-if [ -f "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
-  source "/Users/dnall/homebrew/opt/fzf/shell/key-bindings.zsh"
+if [ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]; then
+  source "/usr/local/opt/fzf/shell/key-bindings.zsh"
 fi
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!{.git,node_modules}/*" 2> /dev/null'
