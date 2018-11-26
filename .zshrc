@@ -53,6 +53,7 @@ zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
+zplug "plugins/z", from:oh-my-zsh
 ## zsh-users
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
@@ -60,7 +61,7 @@ zplug "zsh-users/zsh-autosuggestions"
 ## other
 zplug "supercrabtree/k"
 zplug "wfxr/forgit", defer:1
-#zplug "jedahan/ripz"
+zplug "andrewferrier/fzf-z"
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
