@@ -21,5 +21,5 @@ function bubu() {
   echo "---> Running brew doctor"
   brew doctor
   echo "---> Pruning old brew symlinks"
-  brew prune
+  brew cleanup
 }
