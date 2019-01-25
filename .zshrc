@@ -49,7 +49,9 @@ fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 #
 ## from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/command-not-found", from:oh-my-zsh
+# This is making it take ~9sec for zsh to start :(
+# Leaving it here to remind myself to never re-enable it
+#zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
