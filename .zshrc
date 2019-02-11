@@ -86,3 +86,11 @@ prompt devnall
 # Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
+
+# Not sure if these 2 lines are needed.
+# They were enabled on intermediate laptop and everything worked well,
+# but I think the compinit was an attempt to deal with the command-not-found zplug problem
+# and I have assume the terraform bit is command completion?
+# If no problems with these commented out next time I check, delete them.
+#autoload -U +X bashcompinit && bashcompinit
+#complete -o nospace -C /usr/local/Cellar/terraform/0.11.11/bin/terraform terraform
