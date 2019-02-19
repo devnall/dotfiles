@@ -23,6 +23,10 @@ PATH="${brew_path}/opt/ruby/bin:${PATH}"
 if [ -d "/Users/dnall/.npm-packages/bin" ]; then
   PATH="${PATH}:/Users/dnall/.npm-packages/bin"
 fi
+# Add pip installed stuff to PATH (Python3)
+if [ -d "/Users/dnall/Library/Python/3.7/bin" ]; then
+  PATH="${PATH}:/Users/dnall/Library/Python/3.7/bin"
+fi
 
 # /usr/local bin dirs
 PATH="/usr/local/bin:${PATH}"
