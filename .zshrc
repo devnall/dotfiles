@@ -86,3 +86,6 @@ prompt devnall
 # Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
+
+#autoload -U +X bashcompinit && bashcompinit
+#complete -o nospace -C /usr/local/Cellar/terraform/0.11.11/bin/terraform terraform
