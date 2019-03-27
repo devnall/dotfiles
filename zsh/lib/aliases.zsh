@@ -47,22 +47,22 @@ if hash fd 2>/dev/null; then
 fi
 
 # If prettyping is installed, use it instead of ping
-if [[ -f "$HOME/homebrew/bin/prettyping" ]]; then
+if [[ -f "$HOME/homebrew/bin/prettyping" || -f "/usr/local/bin/prettyping" ]]; then
   alias ping="prettyping --nolegend"
 fi
 
 # If htop is installed, use it instead of top
-if [[ -f "$HOME/homebrew/bin/htop" ]]; then
+if [[ -f "$HOME/homebrew/bin/htop" || -f "/usr/local/bin/prettyping" ]]; then
   alias top="htop"
 fi
 
 # If GNU date is installed, use it instead of old date shipped w/ MacOS
-if [ -f "$HOME"/homebrew/bin/gdate ]; then
+if [[ -f "$HOME"/homebrew/bin/gdate || -f "/usr/local/bin/gdate" ]]; then
   alias date="gdate"
 fi
 
 # If ncdu is installed, use it instead of du
-if [[ -f "$HOME/homebrew/bin/ncdu" ]]; then
+if [[ -f "$HOME/homebrew/bin/ncdu" || -f "/usr/local/bin/ncdu" ]]; then
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 fi
 
