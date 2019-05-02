@@ -96,3 +96,8 @@ alias kubectl="/usr/local/bin/kubectl"  # Use old version of kubectl so it works
 # Weather and moon phase
 alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
 alias moon="curl -s wttr.in/Moon | head -n 23"
+
+# Open current terminal path in Finder.app
+if [[ `uname` == 'Darwin' ]]; then
+  alias finder="open ./"
+fi
