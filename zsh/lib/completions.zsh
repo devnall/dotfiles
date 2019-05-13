@@ -19,6 +19,6 @@ if [ -f /usr/local/bin/kubectl ]; then
   source <(kubectl completion zsh)
 fi
 
-# TODO: Re-do this so that it doesn't have to be edited each time tf upgrades
-#complete -o nospace -C /usr/local/Cellar/terraform/0.11.11/bin/terraform terraform
-# should be able to just run `terraform -install-autocomplete` once and not need this anymore?
+# Note: should be able to just run `terraform -install-autocomplete` once 
+# but I'm not sure if brew does that on install/upgrade. Need to test.
+complete -o nospace -C /usr/local/bin/terraform terraform
