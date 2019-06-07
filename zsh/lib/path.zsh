@@ -32,6 +32,11 @@ fi
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
 
+# If homebrew curl is installed, use it instead of MacOS default curl
+if [ -d "/usr/local/opt/curl/bin" ]; then
+  PATH="${PATH}:/usr/local/opt/curl/bin"
+fi
+
 ## If MacOS, determine homebrew path and add to PATH
 #if [[ $(uname) == 'Darwin' ]]; then
 #  if which brew >/dev/null; then
