@@ -21,6 +21,7 @@ source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
 source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
+source "$HOME"/.dotfiles/zsh/lib/functions.zsh
 if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
