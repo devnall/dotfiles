@@ -17,7 +17,6 @@ setopt HIST_VERIFY              # Show command with history expansion to user be
 
 ## Source other zsh config files
 source "$HOME"/.dotfiles/zsh/lib/path.zsh
-source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
 source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
@@ -56,14 +55,15 @@ zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
-## zsh-users
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-autosuggestions"
 ## other
-zplug "supercrabtree/k"
+#zplug "supercrabtree/k"
+zplug "devnall/k"
 zplug "wfxr/forgit", defer:1
 zplug "andrewferrier/fzf-z"
+## zsh-users
+zplug "zsh-users/zsh-history-substring-search"
+#zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 # If any plugins aren't installed, install them
 if ! zplug check --verbose; then
@@ -77,7 +77,9 @@ fi
 zplug load
 
 # Config files that need to be loaded after zplug, for whatever reason
+source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
 source "$HOME"/.dotfiles/zsh/lib/completions.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Load prompt
 autoload -U promptinit && promptinit

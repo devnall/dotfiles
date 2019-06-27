@@ -46,6 +46,11 @@ if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
 
+# If my fork of k is installed (via zplug), alias sane defaults to `k`
+if [[ `declare -f k_default > /dev/null; echo $?` -eq 0 ]]; then
+  alias k="k_default -Ah"
+fi
+
 # If prettyping is installed, use it instead of ping
 if [[ -f "$HOME/homebrew/bin/prettyping" || -f "/usr/local/bin/prettyping" ]]; then
   alias ping="prettyping --nolegend"
