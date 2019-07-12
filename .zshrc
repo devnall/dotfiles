@@ -26,6 +26,8 @@ if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
 
+export EDITOR="vim"
+
 eval $(thefuck --alias)
 
 ## Secrets!
