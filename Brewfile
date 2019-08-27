@@ -38,7 +38,7 @@ brew "zsh-syntax-highlighting"
 
 # Install vim
 brew "vim"
-brew "macvim"
+#brew "macvim"
 brew "neovim"
 
 # Install command line utilities
@@ -46,13 +46,13 @@ brew "ack"
 brew "awscli"
 brew "bat"
 #brew "catimg"
-brew "ccat"
+#brew "ccat"
 #brew "colordiff"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
 brew "doitlive"
-brew "elinks"
+#brew "elinks"
 brew "fd"
 brew "fzf"
 brew "gist"
@@ -65,7 +65,7 @@ brew "grep"
 brew "gzip"
 brew "htop-osx"
 brew "httpie"
-brew "httpstat"
+#brew "httpstat"
 #brew "hub"
 brew "iftop"
 brew "inetutils"
@@ -75,39 +75,39 @@ brew "jq"
 brew "ncdu"
 brew "neofetch"
 brew "nmap"
-brew "pdfgrep"
-brew "pidof"
+#brew "pdfgrep"
+#brew "pidof"
 brew "prettyping"
 brew "python"
 brew "python@2"
 #brew "readline"
 brew "reattach-to-user-namespace"
-brew "rename"
+#brew "rename"
 brew "ripgrep"
 brew "shellcheck"
 brew "ssh-copy-id"
-brew "terminal-notifier"
+#brew "terminal-notifier"
 brew "thefuck"
 brew "tldr"
 brew "tmux"
 brew "tree"
 brew "unrar"
-brew "watch"
+#brew "watch"
 brew "wget"
 brew "wifi-password"
-brew "xz"
+#brew "xz"
 brew "youtube-dl"
 brew "zplug"
 
 # Work-specific CLI utilities
 
-brew "blackbox"
-brew "gnupg@2.1"
+#brew "blackbox"
+#brew "gnupg@2.1"
 brew "kubectx"
 brew "kubernetes-cli"
 brew "packer"
-brew "pinentry"
-brew "pinentry-mac"
+#brew "pinentry"
+#brew "pinentry-mac"
 brew "terraform"
 brew "terraform_landscape"
 brew "tflint"
@@ -118,14 +118,14 @@ brew "tflint"
 cask '1password'
 cask 'alfred'
 #cask 'appzapper'
-cask 'atom'
+#cask 'atom'
 cask 'bartender'
 #cask 'daisydisk'
-cask 'day-o'
-cask 'disk-inventory-x'
+#cask 'day-o'
+#cask 'disk-inventory-x'
 cask 'divvy'
 cask 'docker'
-cask 'dropbox'
+#cask 'dropbox'
 #cask 'evernote'
 cask 'fantastical'
 cask 'firefox'
@@ -134,29 +134,29 @@ cask 'google-chrome'
 cask 'google-cloud-sdk'
 cask 'iina'
 cask 'iterm2'
+cask 'itsycal'
 #cask 'karabiner'
 cask 'keepingyouawake'
 #cask 'keycastr'
 cask 'kindle'
 #cask 'macdown'
 #cask 'mactracker'
-#cask 'marked'
-cask 'remember-the-milk'
-cask 'rocket'
+#cask 'remember-the-milk'
+#cask 'rocket'
 #cask 'seil'
-cask 'sip'
+#cask 'sip'
 #cask 'sonos'
 cask 'sound-control'
 cask 'spotify'
 cask 'steam'
-cask 'the-archive-browser'
-cask 'the-unarchiver'
-cask 'viscosity'
+#cask 'the-archive-browser'
+#cask 'the-unarchiver'
+#cask 'viscosity'
 cask 'vlc'
 
 # Install stuff from Mac App Store via mas
-mas 'iStat Mini', id:927292435
-mas 'Degrees Pro', id: 951510024
-mas 'Copied', id: 1026349850
-mas 'Pixelmator', id: 407963104
-mas 'Tweetbot', id: 557168941
+#mas 'iStat Mini', id:927292435
+#mas 'Degrees Pro', id: 951510024
+#mas 'Copied', id: 1026349850
+#mas 'Pixelmator', id: 407963104
+#mas 'Tweetbot', id: 557168941
