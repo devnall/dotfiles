@@ -20,6 +20,7 @@ The (deprecated) stuff isn't really being used in my current environment but I'm
 Requirements
 ------------
 
-For vim to work, first install Vundle:
+Symlink `.zshrc`, `.vimrc`, and `.tmux.conf` into ~
 
+For vim to work, first install Vundle:
 `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle`
