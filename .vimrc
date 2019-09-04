@@ -223,6 +223,9 @@ imap jj <Esc>	" jj instead of escape in insert mode
 nnoremap <space> :nohlsearch<CR>/<BS>	      " space unhighlights search results
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Allow saving of files as sudo when I forgot to start vim w/ sudo
+cmap W!! w !sudo tee > /dev/null %
+
 " Enable format on save for terraform files
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
