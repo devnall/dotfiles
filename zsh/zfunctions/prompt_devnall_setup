@@ -11,7 +11,7 @@ zstyle ':vcs_info:git*' actionformats ' %b|%a' 'x%R'
 autoload colors && colors
 
 # color vars
-eval my_gray='$FG[237]'
+eval my_gray='$FG[243]'
 eval my_orange='$FG[214]'
 
 # Functions to build git-aware prompt(s)
@@ -81,10 +81,19 @@ suspended_jobs() {
     echo ""
   else
 #    print -P "%F{214}✱%f"
-    echo "%F{214}✱%f"
+    echo " %F{214}✱%f"
   fi
 }
 
+# aws-vault context
+function _ps1_vault() {
+  if [ -n "$AWS_VAULT" ]; then
+    echo "%F{214}$AWS_VAULT%f%F{247}@aws%f"
+  fi
+}
+
+# If root set prompt caret to red
+# TODO: Fix this
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
@@ -100,6 +109,6 @@ precmd() {
   #print -P "\n$(git_check) %F{39}%~ $(git_dirty)%F{my_gray}${vcs_info_msg_0_}%f $(git_arrows) $(suspended_jobs)"
 }
 
-export PROMPT="${suspended_jobs}%(?.%F{10}.%F{10})❯%f "
+export PROMPT="%(?.%F{10}.%F{10})❯%f "
 [[ -n "$SSH_CLIENT" ]] && export PROMPT="[%n@%M] $PROMPT" #TODO: figure out if this works the way I want it to, I don't think it does?
-export RPROMPT=''
+export RPROMPT="$(_ps1_vault)"

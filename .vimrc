@@ -49,7 +49,7 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'Markdown'
 Plugin 'git.zip'
 Plugin 'groovy.vim'
-"Plugin '/Users/dnall/homebrew/bin/fzf'
+"Plugin '/Users/drew/homebrew/bin/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'vim-ruby/vim-ruby'
 

@@ -4,28 +4,28 @@
 
 
 # Rust/Cargo binaries
-if [ -d /Users/dnall/.cargo/bin ]; then
-  PATH="/Users/dnall/.cargo/bin:${PATH}"
+if [ -d /Users/drew/.cargo/bin ]; then
+  PATH="/Users/drew/.cargo/bin:${PATH}"
 fi
 
 # gem-installed stuff
-if [ -d "/Users/dnall/.gem/ruby/2.0.0/bin" ]; then
-  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
-elif [ -d "/Users/dnall/.gem/ruby/2.3.0/bin" ]; then
-  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
-elif [ -d "/Users/dnall/.gem/ruby/2.5.0/bin" ]; then
-  PATH="${PATH}:/Users/dnall/.gem/ruby/2.0.0/bin"
+if [ -d "/Users/drew/.gem/ruby/2.0.0/bin" ]; then
+  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
+elif [ -d "/Users/drew/.gem/ruby/2.3.0/bin" ]; then
+  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
+elif [ -d "/Users/drew/.gem/ruby/2.5.0/bin" ]; then
+  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
 elif [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
 PATH="${brew_path}/opt/ruby/bin:${PATH}"
 # Add npm installed stuff to PATH
-if [ -d "/Users/dnall/.npm-packages/bin" ]; then
-  PATH="${PATH}:/Users/dnall/.npm-packages/bin"
+if [ -d "/Users/drew/.npm-packages/bin" ]; then
+  PATH="${PATH}:/Users/drew/.npm-packages/bin"
 fi
 # Add pip installed stuff to PATH (Python3)
-if [ -d "/Users/dnall/Library/Python/3.7/bin" ]; then
-  PATH="${PATH}:/Users/dnall/Library/Python/3.7/bin"
+if [ -d "/Users/drew/Library/Python/3.7/bin" ]; then
+  PATH="${PATH}:/Users/drew/Library/Python/3.7/bin"
 fi
 
 # /usr/local bin dirs

@@ -32,7 +32,7 @@ source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
 source "$HOME"/.dotfiles/zsh/lib/directory_nav.zsh
 source "$HOME"/.dotfiles/zsh/lib/history.zsh
-if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
+if [ -f "$HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
 
@@ -41,9 +41,9 @@ export EDITOR="vim"
 eval $(thefuck --alias)
 
 ## Secrets!
-if [ -f /Users/dnall/.dotfiles/secrets.txt ]
+if [ -f /Users/drew/.dotfiles/secrets.txt ]
 then
-  source /Users/dnall/.dotfiles/secrets.txt
+  source /Users/drew/.dotfiles/secrets.txt
 fi
 
 ## zplug
