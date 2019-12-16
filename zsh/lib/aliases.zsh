@@ -106,3 +106,7 @@ alias moon="curl -s wttr.in/Moon | head -n 23"
 if [[ `uname` == 'Darwin' ]]; then
   alias finder="open ./"
 fi
+
+# Suffix aliases
+# Allow you to do someting like `alias -s md=vim`; then just entering a file that ends in .md `$ README.md` will open it in vim
+# Could also do stuff like `alias -s html=w3m` to open *.html files in w3m browser or even `alias -s org=w3m` to open sites ending in `.org` in w3m
