@@ -93,7 +93,7 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
 # Custom git aliases (override git plugin)
-alias glg="g hist"
+#alias glg="g hist"
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
@@ -107,3 +107,7 @@ alias moon="curl -s wttr.in/Moon | head -n 23"
 if [[ `uname` == 'Darwin' ]]; then
   alias finder="open ./"
 fi
+
+# Suffix aliases
+# Allow you to do someting like `alias -s md=vim`; then just entering a file that ends in .md `$ README.md` will open it in vim
+# Could also do stuff like `alias -s html=w3m` to open *.html files in w3m browser or even `alias -s org=w3m` to open sites ending in `.org` in w3m
