@@ -45,6 +45,7 @@ alias ssr="ssh -l root"
 if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
 fi
+alias ports='netstat -tulan' # show open ports
 
 # If my fork of k is installed (via zplug), alias sane defaults to `k`
 if [[ `declare -f k_default > /dev/null; echo $?` -eq 0 ]]; then
