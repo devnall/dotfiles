@@ -43,7 +43,6 @@ Plugin 'tpope/vim-repeat'
 Plugin 'rizzatti/dash.vim'
 Plugin 'mileszs/ack.vim'
 "Plugin 'kien/ctrlp.vim'
-Plugin 'dougireton/vim-chef'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'hashivim/vim-terraform'
 Plugin 'tmux-plugins/vim-tmux'
@@ -52,6 +51,7 @@ Plugin 'git.zip'
 Plugin 'groovy.vim'
 "Plugin '/Users/dnall/homebrew/bin/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'vim-ruby/vim-ruby'
 
 " Stuff to try out
 "Plugin 'tpope/vim-fugitive'
@@ -81,9 +81,10 @@ Plugin 'junegunn/fzf.vim'
 "let g:CommandTMatchWindowAtTop=1   " Show window at top
 
 " Plugins no longer used but may need in future
-"Plugin 'puppetlabs/puppet-syntax-vim'
 "Plugin 'rizzatti/dash.vim'
+"Plugin 'puppetlabs/puppet-syntax-vim'
 "Plugin 'ajf/puppet-vim'
+"Plugin 'dougireton/vim-chef'
 
 " All Plugins must be added before the following line
 call vundle#end()
