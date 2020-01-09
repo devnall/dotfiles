@@ -1,0 +1,3 @@
+function dbuild() {
+  docker build . -t $1 --build-arg GITHUB_TOKEN=$GITHUB_TOKEN  --build-arg SIDEKIQPRO_AUTH=$SIDEKIQPRO_AUTH
+}
