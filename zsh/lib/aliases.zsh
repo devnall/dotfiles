@@ -37,10 +37,6 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias pu="pushd"
 alias po="popd"
-alias ..='cd ..'
-alias -g ...='../..'
-alias -g ....='../../..'
-alias -g .....='../../../..'
 alias ssr="ssh -l root"
 if hash fd 2>/dev/null; then
   alias find='echo "No! Use fd instead! So. Much. Faster."'
@@ -98,7 +94,6 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
-alias kubectl="/usr/local/bin/kubectl"  # Use old version of kubectl so it works with CSP stuff :eyeroll:
 
 # Weather and moon phase
 alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
