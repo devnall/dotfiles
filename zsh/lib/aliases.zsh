@@ -10,6 +10,7 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
   # TODO: modularize this path
+  # TODO: replace colorls w/ k
   if [[ -f "$HOME/homebrew/bin/colorls" ]]; then
     alias l='colorls -lA --sd --gs'
     alias ll='colorls -l --sd --gs'
