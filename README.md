@@ -24,3 +24,8 @@ Symlink `.zshrc`, `.vimrc`, and `.tmux.conf` into ~
 
 For vim to work, first install Vundle:
 `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle`
+
+TODOs
+-----
+
+* Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
