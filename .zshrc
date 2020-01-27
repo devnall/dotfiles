@@ -15,6 +15,16 @@ setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming h
 setopt HIST_IGNORE_SPACE        # Dont record an entry starting with a space.
 setopt HIST_VERIFY              # Show command with history expansion to user before running it
 
+## Directory navigation
+
+DIRSTACKSIZE="12"               # Maximum number of entries in directory stack
+setopt autopushd                # Make `cd` act like `pushd`
+setopt pushdminus               # Swap meanings of `-` and `+` when specifying a directory in the stack
+setopt pushdsilent              # Don't print the directory stack on every `cd`
+setopt pushdtohome              # push to $HOME when no argument is given to `cd`
+setopt pushdignoredups          # ignore duplicate entries in directory stack
+setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
+
 ## Source other zsh config files
 source "$HOME"/.dotfiles/zsh/lib/path.zsh
 source "$HOME"/.dotfiles/zsh/lib/git.zsh
