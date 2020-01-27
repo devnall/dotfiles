@@ -19,9 +19,8 @@ setopt HIST_VERIFY              # Show command with history expansion to user be
 source "$HOME"/.dotfiles/zsh/lib/path.zsh
 source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
-source "$HOME"/.dotfiles/zsh/lib/clipboard.zsh
 source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
-source "$HOME"/.dotfiles/zsh/lib/functions.zsh
+source "$HOME"/.dotfiles/zsh/lib/directory_nav.zsh
 if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
