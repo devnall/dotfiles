@@ -9,6 +9,9 @@ compinit
 autoload -U +X bashcompinit
 bashcompinit
 
+# Change text color for zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
+
 # AWS cli completions
 if [ -f /usr/local/share/zsh/site-functions/aws_zsh_completer.sh ]; then
   source /usr/local/share/zsh/site-functions/aws_zsh_completer.sh
