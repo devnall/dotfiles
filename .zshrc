@@ -31,6 +31,7 @@ source "$HOME"/.dotfiles/zsh/lib/git.zsh
 source "$HOME"/.dotfiles/zsh/lib/brew.zsh
 source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
 source "$HOME"/.dotfiles/zsh/lib/directory_nav.zsh
+source "$HOME"/.dotfiles/zsh/lib/history.zsh
 if [ -f "HOME"/.dotfiles/zsh/lib/local.zsh ]; then
   source "$HOME"/.dotfiles/zsh/lib/local.zsh
 fi
@@ -53,8 +54,6 @@ elif [ -d /usr/local/opt/zplug ]; then
 fi
 
 source $ZPLUG_HOME/init.zsh
-
-fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
 
 ## Plugins
 #
@@ -92,6 +91,14 @@ zplug load
 source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
 source "$HOME"/.dotfiles/zsh/lib/completions.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Set fpath (function path) and source function files
+# TODO: I don't think explicitly sourcing the files should be necessary if 
+# they're in fpath but without sourcing them explicitly, I had to execute a function
+# twice before it would start working. Revisit/fix?
+fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
+source "$HOME"/.dotfiles/zsh/zfunctions/color_list
+source "$HOME"/.dotfiles/zsh/zfunctions/clipboard
 
 # Load prompt
 autoload -U promptinit && promptinit
