@@ -1,7 +1,5 @@
 " vimrc file
 "
-" Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: May 31, 2018
 
 set nocompatible " be iMproved, required
 filetype off
