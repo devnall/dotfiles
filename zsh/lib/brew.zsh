@@ -1,5 +1,5 @@
 # Homebrew Cask in userspace
-export HOMEBREW_CASK_OPTS="--appdir=/Users/drew/Applications"
+export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
 
 function brewupd() {
   echo "---> Updating brews"

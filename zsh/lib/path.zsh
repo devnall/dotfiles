@@ -4,28 +4,28 @@
 
 
 # Rust/Cargo binaries
-if [ -d /Users/drew/.cargo/bin ]; then
-  PATH="/Users/drew/.cargo/bin:${PATH}"
+if [ -d "${HOME}"/.cargo/bin ]; then
+  PATH="${HOME}/.cargo/bin:${PATH}"
 fi
 
 # gem-installed stuff
-if [ -d "/Users/drew/.gem/ruby/2.0.0/bin" ]; then
-  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
-elif [ -d "/Users/drew/.gem/ruby/2.3.0/bin" ]; then
-  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
-elif [ -d "/Users/drew/.gem/ruby/2.5.0/bin" ]; then
-  PATH="${PATH}:/Users/drew/.gem/ruby/2.0.0/bin"
+if [ -d "${HOME}/.gem/ruby/2.0.0/bin" ]; then
+  PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
+elif [ -d "${HOME}/.gem/ruby/2.3.0/bin" ]; then
+  PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
+elif [ -d "${HOME}/.gem/ruby/2.5.0/bin" ]; then
+  PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
 elif [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
 PATH="${brew_path}/opt/ruby/bin:${PATH}"
 # Add npm installed stuff to PATH
-if [ -d "/Users/drew/.npm-packages/bin" ]; then
-  PATH="${PATH}:/Users/drew/.npm-packages/bin"
+if [ -d "${HOME}/.npm-packages/bin" ]; then
+  PATH="${PATH}:${HOME}/.npm-packages/bin"
 fi
 # Add pip installed stuff to PATH (Python3)
-if [ -d "/Users/drew/Library/Python/3.7/bin" ]; then
-  PATH="${PATH}:/Users/drew/Library/Python/3.7/bin"
+if [ -d "${HOME}/Library/Python/3.7/bin" ]; then
+  PATH="${PATH}:${HOME}/Library/Python/3.7/bin"
 fi
 
 # /usr/local bin dirs
@@ -47,11 +47,11 @@ fi
 #  fi
 #fi
 
-PATH="$HOME/homebrew/bin:${PATH}"
-PATH="$HOME/homebrew/sbin:${PATH}"
-PATH="$HOME/homebrew/opt:${PATH}"
+PATH="${HOME}/homebrew/bin:${PATH}"
+PATH="${HOME}/homebrew/sbin:${PATH}"
+PATH="${HOME}/homebrew/opt:${PATH}"
 
 # My ~/bin dir
-if [ -d "$HOME/bin" ]; then
-  PATH="$HOME/bin:${PATH}"
+if [ -d "${HOME}/bin" ]; then
+  PATH="${HOME}/bin:${PATH}"
 fi

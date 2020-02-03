@@ -1,8 +1,7 @@
 # zsh-completions
-#fpath=(/Users/drew/homebrew/share/zsh-completions $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 zstyle ':completion:*' completer _complete _ignored
-zstyle :compinstall filename '/Users/drew/.dotfiles/zsh/lib/completions.zsh'
+zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
 autoload -Uz compinit
 compinit

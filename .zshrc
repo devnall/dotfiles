@@ -4,7 +4,7 @@
 
 
 ## History config
-HISTFILE="$HOME/.zsh_history"
+HISTFILE="${HOME}/.zsh_history"
 HISTSIZE="500000"
 SAVEHIST="500000"
 setopt EXTENDED_HISTORY         # Write the history file in the ":start:elapsed;command" format.
@@ -26,14 +26,14 @@ setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
 ## Source other zsh config files
-source "$HOME"/.dotfiles/zsh/lib/path.zsh
-source "$HOME"/.dotfiles/zsh/lib/git.zsh
-source "$HOME"/.dotfiles/zsh/lib/brew.zsh
-source "$HOME"/.dotfiles/zsh/lib/fzf.zsh
-source "$HOME"/.dotfiles/zsh/lib/directory_nav.zsh
-source "$HOME"/.dotfiles/zsh/lib/history.zsh
-if [ -f "$HOME"/.dotfiles/zsh/lib/local.zsh ]; then
-  source "$HOME"/.dotfiles/zsh/lib/local.zsh
+source "${HOME}"/.dotfiles/zsh/lib/path.zsh
+source "${HOME}"/.dotfiles/zsh/lib/git.zsh
+source "${HOME}"/.dotfiles/zsh/lib/brew.zsh
+source "${HOME}"/.dotfiles/zsh/lib/fzf.zsh
+source "${HOME}"/.dotfiles/zsh/lib/directory_nav.zsh
+source "${HOME}"/.dotfiles/zsh/lib/history.zsh
+if [ -f "${HOME}"/.dotfiles/zsh/lib/local.zsh ]; then
+  source "${HOME}"/.dotfiles/zsh/lib/local.zsh
 fi
 
 export EDITOR="vim"
@@ -41,14 +41,14 @@ export EDITOR="vim"
 eval $(thefuck --alias)
 
 ## Secrets!
-if [ -f /Users/drew/.dotfiles/secrets.txt ]
+if [ -f "${HOME}"/.dotfiles/secrets.txt ]
 then
-  source /Users/drew/.dotfiles/secrets.txt
+  source "${HOME}"/.dotfiles/secrets.txt
 fi
 
 ## zplug
-if [ -d "$HOME/homebrew/opt/zplug" ]; then
-  export ZPLUG_HOME="$HOME/homebrew/opt/zplug"
+if [ -d "${HOME}/homebrew/opt/zplug" ]; then
+  export ZPLUG_HOME="${HOME}/homebrew/opt/zplug"
 elif [ -d /usr/local/opt/zplug ]; then
   export ZPLUG_HOME="/usr/local/opt/zplug"
 fi
@@ -88,17 +88,17 @@ fi
 zplug load
 
 # Config files that need to be loaded after zplug, for whatever reason
-source "$HOME"/.dotfiles/zsh/lib/aliases.zsh
-source "$HOME"/.dotfiles/zsh/lib/completions.zsh
+source "${HOME}"/.dotfiles/zsh/lib/aliases.zsh
+source "${HOME}"/.dotfiles/zsh/lib/completions.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Set fpath (function path) and source function files
 # TODO: I don't think explicitly sourcing the files should be necessary if 
 # they're in fpath but without sourcing them explicitly, I had to execute a function
 # twice before it would start working. Revisit/fix?
-fpath=( "$HOME/.dotfiles/zsh/zfunctions" $fpath )
-source "$HOME"/.dotfiles/zsh/zfunctions/color_list
-source "$HOME"/.dotfiles/zsh/zfunctions/clipboard
+fpath=( "${HOME}/.dotfiles/zsh/zfunctions" $fpath )
+source "${HOME}"/.dotfiles/zsh/zfunctions/color_list
+source "${HOME}"/.dotfiles/zsh/zfunctions/clipboard
 
 # Load prompt
 autoload -U promptinit && promptinit
