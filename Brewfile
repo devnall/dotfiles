@@ -1,8 +1,6 @@
 #############################################
 # Brewfile                                  #
 # Install homebrew packages                 #
-# Maintainer: Drew Nall <drewnall@gmail.com #
-# Last Updated: 20181114                    #
 #############################################
 
 # Usage:
@@ -17,12 +15,9 @@
 
 
 # Tap some repos
-tap "caskroom/cask"
-tap "hombrew/boneyard"
 tap "homebrew/bundle"
+tap "caskroom/cask"
 tap "homebrew/core"
-tap "homebrew/command-not-found"
-tap "wata727/tflint"
 
 # Install some brew-related stuff
 brew "brew-cask-completion"
@@ -31,62 +26,50 @@ brew "brew-cask-completion"
 brew "bash"
 brew "bash-completion"
 brew "zsh"
+brew "zplug"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
 brew "zsh-syntax-highlighting"
-# brew "mobile-shell"
 
 # Install vim
 brew "vim"
-#brew "macvim"
 brew "neovim"
 
 # Install command line utilities
 brew "ack"
 brew "awscli"
+brew "bandwhich"
 brew "bat"
-#brew "catimg"
-#brew "ccat"
-#brew "colordiff"
+brew "bluetoothconnector"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
-brew "doitlive"
-#brew "elinks"
+#brew "doitlive"
 brew "fd"
 brew "fzf"
 brew "gist"
-#brew "git", args: ['without-completions']
 brew "git"
+brew "github/gh/gh"
 brew "gnu-tar"
 brew "gnupg"
 brew "grc"
 brew "grep"
 brew "gzip"
-brew "htop-osx"
+brew "htop"
 brew "httpie"
-#brew "httpstat"
-#brew "hub"
 brew "iftop"
 brew "inetutils"
 brew "ipcalc"
 brew "jq"
-#brew "mas"
 brew "ncdu"
 brew "neofetch"
 brew "nmap"
-#brew "pdfgrep"
-#brew "pidof"
 brew "prettyping"
 brew "python"
-brew "python@2"
-#brew "readline"
 brew "reattach-to-user-namespace"
-#brew "rename"
 brew "ripgrep"
 brew "shellcheck"
 brew "ssh-copy-id"
-#brew "terminal-notifier"
 brew "thefuck"
 brew "tldr"
 brew "tmux"
@@ -95,68 +78,49 @@ brew "unrar"
 brew "watch"
 brew "wget"
 brew "wifi-password"
-#brew "xz"
 brew "youtube-dl"
-brew "zplug"
 
 # Work-specific CLI utilities
 
+brew "ansible"
+brew "aws-iam-authenticator"
 #brew "blackbox"
-#brew "gnupg@2.1"
+brew "brew-gem"
+brew "gem-rubocop"
+brew "helm"
 brew "kubectx"
 brew "kubernetes-cli"
+brew "minikube"
 brew "packer"
-#brew "pinentry"
-#brew "pinentry-mac"
+brew "rbenv"
+brew "datawire/blackbird/telepresence"
 brew "terraform"
+brew "devnall/custom/terraform@0.12.18"
 brew "terraform_landscape"
 brew "tflint"
-
+brew "yarn"
 
 
 # Install cask apps
-cask '1password'
 cask 'alfred'
-#cask 'appzapper'
-#cask 'atom'
+cask 'aws-vault'
 cask 'bartender'
-#cask 'daisydisk'
-#cask 'day-o'
-#cask 'disk-inventory-x'
+cask 'brave-browser'
 cask 'divvy'
 cask 'docker'
-#cask 'dropbox'
-#cask 'evernote'
-cask 'fantastical'
-cask 'firefox'
-cask 'flux'
 cask 'google-chrome'
 cask 'google-cloud-sdk'
 cask 'iina'
 cask 'iterm2'
 cask 'itsycal'
-#cask 'karabiner'
 cask 'keepingyouawake'
-#cask 'keycastr'
+cask 'keybase'
+cask 'keycastr'
 cask 'kindle'
-#cask 'macdown'
-#cask 'mactracker'
-#cask 'remember-the-milk'
-#cask 'rocket'
-#cask 'seil'
-#cask 'sip'
-#cask 'sonos'
+cask 'marked'
+cask 'osxfuse'
+cask 'overkill'
 cask 'sound-control'
 cask 'spotify'
 cask 'steam'
-#cask 'the-archive-browser'
-#cask 'the-unarchiver'
-#cask 'viscosity'
 cask 'vlc'
-
-# Install stuff from Mac App Store via mas
-#mas 'iStat Mini', id:927292435
-#mas 'Degrees Pro', id: 951510024
-#mas 'Copied', id: 1026349850
-#mas 'Pixelmator', id: 407963104
-#mas 'Tweetbot', id: 557168941
