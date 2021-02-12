@@ -108,4 +108,7 @@ prompt devnall
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
 
+# Trying out Starship prompt (starship.rs)
+eval "$(starship init zsh)"
+
 autoload -U +X bashcompinit && bashcompinit
