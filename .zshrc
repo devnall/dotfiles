@@ -100,10 +100,6 @@ fpath=( "${HOME}/.dotfiles/zsh/zfunctions" $fpath )
 source "${HOME}"/.dotfiles/zsh/zfunctions/color_list
 source "${HOME}"/.dotfiles/zsh/zfunctions/clipboard
 
-# Load prompt
-autoload -U promptinit && promptinit
-prompt devnall 
-
 # Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
@@ -112,3 +108,11 @@ ssh-add -K ~/.ssh/id_rsa &> /dev/null
 eval "$(starship init zsh)"
 
 autoload -U +X bashcompinit && bashcompinit
+
+# Starship prompt
+if [[ -f "/usr/local/bin/starship" ]]; then
+  eval "$(starship init zsh)"
+else
+  autoload -U promptinit && promptinit
+  prompt devnall
+fi
