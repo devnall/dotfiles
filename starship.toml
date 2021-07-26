@@ -1,4 +1,208 @@
-# Inserts a blank line between shell prompts
+# Spaceship Prompt Config
+#
+# Requires a nerd font
+
+# prompt-wide config options
 add_newline = true
 
+# Order
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$docker_context\
+$package\
+$golang\
+$kubernetes\
+$helm\
+$python\
+$ruby\
+$terraform\
+$vagrant\
+$aws\
+$env_var\
+$custom\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
 
+[aws]
+symbol = " "
+style = "bold yellow"
+
+[battery]
+disabled = true
+
+[character]
+success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
+error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
+vicmd_symbol ="[](bold green)[❯](bold blue)"
+
+[cmake]
+disabled = true
+
+[cmd_duration]
+show_notifications = true
+min_time_to_notify = 30_000
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[directory]
+truncation_length = 5
+read_only = ""
+read_only_style = "bold red"
+home_symbol = " ~"
+
+[docker_context]
+symbol = " "
+style = "bold blue"
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[git_branch]
+symbol = " "
+style = "bold green"
+
+[git_metrics]
+disabled = false
+added_style = "green"
+
+[git_status]
+style = "white dimmed"
+conflicted = ""
+ahead = ""
+behind = ""
+diverged = "נּ"
+untracked = ""
+stashed = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
+
+[golang]
+symbol = ""
+
+[helm]
+symbol = "ﴱ"
+
+[java]
+disabled = true
+
+[jobs]
+symbol = " "
+style = "bold red"
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true 
+symbol = "k8sﴱ "
+style = "blue"
+
+[lua]
+disabled = true
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[openstack]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+symbol = " "
+style = "green"
+
+[rlang]
+disabled = true
+
+[red]
+disabled = true
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = ""
+
+[scala]
+disabled = true
+
+[singularity]
+disabled = true
+
+[swift]
+disabled = true
+
+[terraform]
+symbol = "TF  "
+
+[vlang]
+disabled = true
+
+[vcsh]
+disabled = true
+
+[zig]
+disabled = true
+
+
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
