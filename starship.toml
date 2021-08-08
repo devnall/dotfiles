@@ -52,7 +52,7 @@ vicmd_symbol ="[](bold green)[❯](bold blue)"
 disabled = true
 
 [cmd_duration]
-show_notifications = true
+show_notifications = false
 min_time_to_notify = 30_000
 
 [conda]
