@@ -1,7 +1,0 @@
-" vimrc file
-"
-" Maintainer: Drew Nall <drewnall@gmail.com>
-" Last updated: January 22, 2016
-
-set nocompatible
-filetype off
