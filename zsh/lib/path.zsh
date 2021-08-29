@@ -15,6 +15,8 @@ elif [ -d "${HOME}/.gem/ruby/2.3.0/bin" ]; then
   PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
 elif [ -d "${HOME}/.gem/ruby/2.5.0/bin" ]; then
   PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
+elif [ -d "${HOME}/.gem/ruby/3.0.0/bin" ]; then
+  PATH="/${PATH}:${HOME}/.gem/ruby/3.0.0/bin"
 elif [ -d /usr/local/opt/ruby/bin ]; then
   PATH="/usr/local/opt/ruby/bin:${PATH}"
 fi
