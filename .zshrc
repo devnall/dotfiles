@@ -26,15 +26,9 @@ setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
 ## Source other zsh config files
-source "${HOME}"/.dotfiles/zsh/lib/path.zsh
-source "${HOME}"/.dotfiles/zsh/lib/git.zsh
-source "${HOME}"/.dotfiles/zsh/lib/brew.zsh
-source "${HOME}"/.dotfiles/zsh/lib/fzf.zsh
-source "${HOME}"/.dotfiles/zsh/lib/directory_nav.zsh
-source "${HOME}"/.dotfiles/zsh/lib/history.zsh
-if [ -f "${HOME}"/.dotfiles/zsh/lib/local.zsh ]; then
-  source "${HOME}"/.dotfiles/zsh/lib/local.zsh
-fi
+for zsh_file in ~/.dotfiles/zsh/lib/*.zsh; do
+  source "$zsh_file"
+done
 
 export EDITOR="vim"
 
