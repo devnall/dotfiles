@@ -33,6 +33,11 @@ function avl() {
   fi
 }
 
+function wfh() {
+  ave cr-prod-admin bingo aws allow
+  ave cr-stage-admin bingo aws allow
+}
+
 ## docker stuff
 [ -s "/Users/drew/.docercfg" ] && . "/Users/drew/.dockercfg"
 
