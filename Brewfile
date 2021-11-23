@@ -102,12 +102,15 @@ brew "yarn"
 
 
 # Install cask apps
+cask '1password'
 cask 'alfred'
 cask 'aws-vault'
 cask 'bartender'
 cask 'brave-browser'
 cask 'divvy'
+cask 'discord'
 cask 'docker'
+cask 'firefox'
 cask 'google-chrome'
 cask 'google-cloud-sdk'
 cask 'iina'
@@ -118,10 +121,33 @@ cask 'keepingyouawake'
 cask 'keybase'
 cask 'keycastr'
 cask 'kindle'
+cask 'lens'
 cask 'marked'
+cask 'obsidian'
 cask 'osxfuse'
 cask 'overkill'
+cask 'slack'
 cask 'sound-control'
 cask 'spotify'
 cask 'steam'
+cask 'the-archiver'
+cask 'virtualbox'
+cask 'visual-studio-code'
 cask 'vlc'
+cask 'zoom'
+
+# App Store Apps
+# 1Password
+# Be Focused Pro
+# Bear
+# Dark Mode for Safari
+# Day One
+# Deliveries
+# ExifPurge
+# Fantastical
+# GarageBand
+# Logic Pro
+# Paprika Recipe Manager
+# Pi Stats
+# Pixelmator
+#
