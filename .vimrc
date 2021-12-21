@@ -13,6 +13,7 @@ endif
 call plug#begin()
 Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
@@ -25,6 +26,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'airblade/vim-gitgutter'
 Plug 'markstory/vim-zoomwin'
+Plug 'mhartington/oceanic-next'
 
 " Stuff to try out
 "Plugin 'ctrlpvim/ctrlp.vim'
@@ -41,8 +43,9 @@ Plug 'markstory/vim-zoomwin'
 "Plugin 'vim-scripts/gist-vim'
 "Plugin 'lokaltog/vim-easymotion'
 "Plugin 'jmcantrell/vim-virtualenv'
-"Plugin 'mhartington/oceanic-next'
 ""Plugin 'tomtom/tcomment_vim'
+
+"let g:nord_cursor_line_number_background = 1
 
 "Zoomwin Options
 noremap MLocalLeader o :ZoomWin<CR>
@@ -230,18 +233,20 @@ let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
-"let g:airline_theme='papercolor'
 let g:airline_powerline_fonts=1
 let g:airline#extenstions#syntastic#enabled=1
 "let g:airline#extensions#whitespace#show_message = 1
-let g:airline_theme='nord'
-"let g:oceanic_next_terminal_bold = 1
-"let g:oceanic_next_terminal_italic = 1
+"let g:airline_theme='nord'
+let g:airline_theme='oceanicnext'
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
 
 " Syntastic config
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+set cursorline
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
