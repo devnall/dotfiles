@@ -208,8 +208,6 @@ let g:terraform_fmt_on_save=1
 "set background=dark
 "colors ir_black
 "
-"set background=dark
-
 "call togglebg#map("<F5>")
 
 " Fake 256 colors for OSX Terminal.app
@@ -220,10 +218,17 @@ else
   set background=light
 endif
 
+if (has("termguicolors"))
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+set background=dark
 "let g:solarized_termtrans = 1
 "colorscheme solarized
-"colorscheme OceanicNext
-colorscheme nord
+colorscheme OceanicNext
+"colorscheme nord
 
 " vim-airline statusline config
 let g:airline_left_sep=''
