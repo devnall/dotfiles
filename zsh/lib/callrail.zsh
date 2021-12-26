@@ -46,7 +46,7 @@ function dbuild() {
 }
 
 ## nvm stuff
-export NVM_DIR="${HOME}/.nvm"
+export NVM_DIR="$HOME/.nvm"
 
 # this loads nvm
 [ -s "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh" ] && . "${HOMEBREW_PREFIX}/opt/nvm/nvm.sh" 
