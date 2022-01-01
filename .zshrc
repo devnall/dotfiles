@@ -114,3 +114,5 @@ eval "$(starship init zsh)"
 #  autoload -U promptinit && promptinit
 #  prompt devnall
 #fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
