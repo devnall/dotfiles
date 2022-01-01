@@ -10,10 +10,10 @@ fi
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
-autoload -Uz compinit
-compinit
-autoload -U +X bashcompinit
-bashcompinit
+#autoload -Uz compinit
+#compinit
+#autoload -U +X bashcompinit
+#bashcompinit
 
 # Change text color for zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
