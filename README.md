@@ -22,6 +22,11 @@ Requirements
 
 Symlink `.zshrc`, `.vimrc`, and `.tmux.conf` into ~
 
+Call brew's shellenv in .zprofile:
+MacOS ARM: `echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile`
+MacOS Intel: `echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile`
+Linux: `echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zprofile`
+
 For vim to work, first install Vundle:
 `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle`
 
