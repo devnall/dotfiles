@@ -115,4 +115,8 @@ eval "$(starship init zsh)"
 #  prompt devnall
 #fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ -f "${HOME}/.dotfiles/zsh/lib/fzf.zsh" ]]; then
+  source "${HOME}/.dotfiles/zsh/lib/fzf.zsh"
+elif [[ -f "${HOME}/.fzf.zsh" ]]; then
+  source "${HOME}/.fzf.zsh"
+fi
