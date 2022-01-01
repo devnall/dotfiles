@@ -16,6 +16,10 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
     alias ll='colorls -l --sd --gs'
     alias la='colorls -A --sd --gs'
     alias lsa='colorls -la --sd --gs'
+  elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
+    alias l='exa -laFh --color-scale --icons --git'
+    alias ll='exa -laFh --color-scale --icons --git'
+    alias la='exa -aFh --color-scale'
   else
     alias l='ls -lAhF ${ls_colorflag}'
     alias ll='ls -lhF ${ls_colorflag}'
