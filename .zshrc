@@ -63,7 +63,8 @@ zplug "andrewferrier/fzf-z"
 ## zsh-users
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zdharma-continuum/fast-syntax-highlighting"
+#zplug "zsh-users/zsh-syntax-highlighting", defer:2
 # This is making it take ~9sec for zsh to start :(
 # Leaving it here to remind myself to never re-enable it
 #zplug "plugins/command-not-found", from:oh-my-zsh

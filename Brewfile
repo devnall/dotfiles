@@ -29,7 +29,7 @@ brew "zsh"
 brew "zplug"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
-brew "zsh-syntax-highlighting"
+brew "zsh-fast-syntax-highlighting"
 
 # Install vim
 brew "vim"
