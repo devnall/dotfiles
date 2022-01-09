@@ -56,8 +56,7 @@ zplug "plugins/extract", from:oh-my-zsh
 zplug "plugins/thefuck", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 ## other
-#zplug "supercrabtree/k"
-zplug "devnall/k"
+#zplug "devnall/k"
 zplug "wfxr/forgit", defer:1
 zplug "andrewferrier/fzf-z"
 ## zsh-users
