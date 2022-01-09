@@ -160,8 +160,6 @@ if has("autocmd")
   autocmd FileType text setlocal nolist wrap linebreak breakat&vim
 
   " .markdown and .md are markdown files
-""  au! BufRead,BufNewFile *.markdown set filetype=mkd
-""  au! BufRead,BufNewFile *.md set filetype=mkd
   autocmd FileType markdown setlocal textwidth=78
   autocmd FileType markdown setlocal nolist wrap linebreak breakat&vim
 
@@ -192,10 +190,8 @@ endif
 let mapleader = ","
 map <F2> :NERDTreeToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
-"map <F3> :CommandT<CR>
 imap jj <Esc>	" jj instead of escape in insert mode
 nnoremap <space> :nohlsearch<CR>/<BS>	      " space unhighlights search results
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Allow saving of files as sudo when I forgot to start vim w/ sudo
 cmap W!! w !sudo tee > /dev/null %
@@ -203,12 +199,6 @@ cmap W!! w !sudo tee > /dev/null %
 " Enable format on save for terraform files
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
-
-" Make it pretty by defining color scheme and other visual niceties
-"set background=dark
-"colors ir_black
-"
-"call togglebg#map("<F5>")
 
 " Fake 256 colors for OSX Terminal.app
 if ! has("gui_running")
@@ -225,10 +215,7 @@ if (has("termguicolors"))
 endif
 
 set background=dark
-"let g:solarized_termtrans = 1
-"colorscheme solarized
-colorscheme OceanicNext
-"colorscheme nord
+colorscheme nord
 
 " vim-airline statusline config
 let g:airline_left_sep=''
@@ -240,9 +227,8 @@ let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
 let g:airline_powerline_fonts=1
 let g:airline#extenstions#syntastic#enabled=1
-"let g:airline#extensions#whitespace#show_message = 1
-"let g:airline_theme='nord'
-let g:airline_theme='oceanicnext'
+let g:airline#extensions#whitespace#show_message = 1
+let g:airline_theme='nord'
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 
@@ -260,7 +246,6 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1    "show all errors from all defined checkers
 
 let g:syntastic_sh_checkers = ['shellcheck']
-let g:syntastic_chef_checkers = ['foodcritic']
 let g:syntastic_Dockerfile_checkers = ['dockerfile_lint']
 let g:syntastic_JSON_checkers = ['jsonlint']
 let g:syntastic_Markdown_checkers = ['mdl', 'proselint']
