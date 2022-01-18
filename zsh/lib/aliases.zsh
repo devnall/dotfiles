@@ -9,14 +9,7 @@ alias _='sudo'
 if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
-  # TODO: modularize this path
-  # TODO: replace colorls w/ k
-  if [[ -f "$HOME/homebrew/bin/colorls" ]]; then
-    alias l='colorls -lA --sd --gs'
-    alias ll='colorls -l --sd --gs'
-    alias la='colorls -A --sd --gs'
-    alias lsa='colorls -la --sd --gs'
-  elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
+  if [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
     alias l='exa -laFh --color-scale --icons --git'
     alias ll='exa -laFh --color-scale --icons --git'
     alias la='exa -aFh --color-scale'
