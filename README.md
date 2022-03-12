@@ -1,7 +1,7 @@
 /dev/nall's dotfiles
 ====================
 
-A bunch of dotfiles for my environment, including:
+A bunch of dotfiles for my environment and config files for my tools, including:
 
 * zsh
 
@@ -29,3 +29,6 @@ TODOs
 -----
 
 * Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
+* Setup chez moi or similar for better dotfile management/setup
+* Document/update the brewfile stuff
+* Consolidate my separate `vim` repo into this one

@@ -1,0 +1,102 @@
+playlist_files:
+  - file: config/playlists.yml
+  - git: meisnate12/Playlists
+libraries:                                      # Library mappings must have a colon (:) placed after them
+  Movies:
+    metadata_path:
+      - file: config/Movies.yml
+  TV Shows-NOTYET:
+    metadata_path:
+      - file: config/TV Shows.yml
+settings:                                       # Can be individually specified per library as well
+  cache: true
+  cache_expiration: 60
+  asset_directory: config/assets
+  asset_folders: true
+  asset_depth: 0
+  create_asset_folders: false
+  dimensional_asset_rename: false
+  download_url_assets: false
+  show_missing_season_assets: false
+  show_missing_episode_assets: false
+  show_asset_not_needed: true
+  sync_mode: append
+  minimum_items: 1
+  default_collection_order:
+  delete_below_minimum: true
+  delete_not_scheduled: false
+  run_again_delay: 2
+  missing_only_released: false
+  only_filter_missing: false
+  show_unmanaged: true
+  show_filtered: false
+  show_options: false
+  show_missing: true
+  show_missing_assets: true
+  save_missing: true
+  tvdb_language: eng
+  ignore_ids:
+  ignore_imdb_ids:
+  item_refresh_delay: 0
+  verify_ssl: true
+  playlist_sync_to_users: all
+  custom_repo:
+webhooks:                                       # Can be individually specified per library as well
+  error:
+  run_start:
+  run_end:
+  changes:
+plex:                                           # Can be individually specified per library as well; REQUIRED for the script to run
+  url: http://192.168.1.10:32400
+  token: TKK8aP3qjnt5fWrAxoxY
+  timeout: 60
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+tmdb:                                           # REQUIRED for the script to run
+  apikey: 89457d16efc4113acb10ccb5d4309b73
+  language: en
+tautulli:                                       # Can be individually specified per library as well
+  url: http://192.168.1.10:8181
+  apikey: 85b7b1bc104f459eb695ec3cb4abc3a4
+omdb:
+  apikey: ac8b524b
+radarr:                                         # Can be individually specified per library as well
+  url: http://192.168.1.10:7878
+  token: ca1aa99e923f4d398cf392f9f3fe0e27
+  add_missing: false
+  add_existing: false
+  root_folder_path: /movies
+  monitor: true
+  availability: announced
+  quality_profile: HD-1080p
+  tag:
+  search: false
+  radarr_path:
+  plex_path:
+sonarr:                                         # Can be individually specified per library as well
+  url: http://192.168.1.10:8989
+  token: 661f5b2039814d4cb3643b574d7f5028
+  add_missing: false
+  add_existing: false
+  root_folder_path: /tv
+  monitor: all
+  quality_profile: HD-1080p
+  language_profile: English
+  series_type: standard
+  season_folder: true
+  tag:
+  search: false
+  cutoff_search: false
+  sonarr_path:
+  plex_path:
+trakt:
+  client_id: e3aefe2a9f53a1a824a3c52811827d986511df7f4cb2a47d6fdf613af1b04447
+  client_secret: d303271710676634b5f8214a07991d0fa8c418ce3e0724fee25b1db57ae2be1d
+  authorization:
+    access_token: bc5cfd3c2249e4e9e141c9a7066aaa6e006907dc91661aaf56fbe757d08bc8b1
+    token_type: Bearer
+    expires_in: 7889237
+    refresh_token: 9259d035dd4145ff78f4b168ba4aa77bac81278b35c1c55e97c366d9dd3cb9cf
+    scope: public
+    created_at: 1645562690
