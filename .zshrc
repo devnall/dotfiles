@@ -25,6 +25,8 @@ setopt pushdtohome              # push to $HOME when no argument is given to `cd
 setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
+eval "$(sheldon source)"
+
 ## Source other zsh config files
 for zsh_file in ~/.dotfiles/zsh/lib/*.zsh; do
   source "$zsh_file"
@@ -40,45 +42,6 @@ then
   source "${HOME}"/.dotfiles/secrets.txt
 fi
 
-## zplug
-if [ -d "${HOMEBREW_PREFIX}/opt/zplug" ]; then
-  export ZPLUG_HOME="${HOMEBREW_PREFIX}/opt/zplug"
-fi
-
-source "$ZPLUG_HOME"/init.zsh
-
-## Plugins
-#
-## from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
-#zplug "plugins/docker", from:oh-my-zsh
-zplug "plugins/extract", from:oh-my-zsh
-zplug "plugins/thefuck", from:oh-my-zsh
-zplug "plugins/z", from:oh-my-zsh
-## other
-#zplug "devnall/k"
-zplug "wfxr/forgit", defer:1
-zplug "andrewferrier/fzf-z"
-## zsh-users
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zdharma-continuum/fast-syntax-highlighting"
-#zplug "zsh-users/zsh-syntax-highlighting", defer:2
-# This is making it take ~9sec for zsh to start :(
-# Leaving it here to remind myself to never re-enable it
-#zplug "plugins/command-not-found", from:oh-my-zsh
-
-# If any plugins aren't installed, install them
-if ! zplug check --verbose; then
-  printf "Install plugins? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
-fi
-
-# Source plugins and add commands to PATH
-zplug load
-
 # Config files that need to be loaded after zplug, for whatever reason
 source "${HOME}"/.dotfiles/zsh/lib/aliases.zsh
 source "${HOME}"/.dotfiles/zsh/lib/completions.zsh
@@ -89,6 +52,7 @@ elif [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; the
 else
   echo "zsh-autosuggestions not installed or not getting sourced"
 fi
+
 
 # Set fpath (function path) and source function files
 # TODO: I don't think explicitly sourcing the files should be necessary if 
@@ -102,21 +66,19 @@ source "${HOME}"/.dotfiles/zsh/zfunctions/clipboard
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
 
-# Trying out Starship prompt (starship.rs)
-eval "$(starship init zsh)"
-
-#autoload -U +X bashcompinit && bashcompinit
-
 # Starship prompt
-#if [[ -f "/usr/local/bin/starship" ]]; then
-#  eval "$(starship init zsh)"
-#else
-#  autoload -U promptinit && promptinit
-#  prompt devnall
-#fi
+if command -v starship > /dev/null; then
+  eval "$(starship init zsh)"
+else
+  autoload -U promptinit && promptinit
+  prompt devnall
+fi
 
 if [[ -f "${HOME}/.dotfiles/zsh/lib/fzf.zsh" ]]; then
   source "${HOME}/.dotfiles/zsh/lib/fzf.zsh"
 elif [[ -f "${HOME}/.fzf.zsh" ]]; then
   source "${HOME}/.fzf.zsh"
 fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
