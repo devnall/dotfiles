@@ -26,6 +26,7 @@ export FZF_DEFAULT_OPTS="--ansi"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type directory --hidden --exclude .git --color=always . $HOME"
 
+bindkey "ç" fzf-cd-widget
 
 # Aliases
 # -------
