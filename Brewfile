@@ -44,6 +44,7 @@ brew "bluetoothconnector"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
+brew "dog"
 #brew "doitlive"
 brew "fd"
 brew "fzf"
@@ -126,6 +127,7 @@ cask 'marked'
 cask 'obsidian'
 cask 'osxfuse'
 cask 'overkill'
+cask 'pika'
 cask 'slack'
 cask 'sound-control'
 cask 'spotify'
