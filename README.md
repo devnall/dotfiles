@@ -15,18 +15,21 @@ The stuff in archive/ isn't really being used in my current environment but I'm 
 Requirements
 ------------
 
-Homebrew installed
-Most of the stuff in the Brewfile installed
+- Homebrew installed
+- Most of the stuff in the Brewfile installed
 
-Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.ackrc`, `.gitconfig` into ~
-Symlink `starship.toml` into ~/.config
+- Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.ackrc`, `.gitconfig` into ~
+- Symlink `starship.toml` into ~/.config
 
-Call brew's shellenv in .zprofile:
+- Call brew's shellenv in .zprofile:
+
 MacOS ARM: `echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile`
+
 MacOS Intel: `echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile`
+
 Linux: `echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zprofile`
 
-For vim to work, first install vim-plug:
+- For vim to work, first install vim-plug:
 ```
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

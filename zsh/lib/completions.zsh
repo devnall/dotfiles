@@ -35,10 +35,6 @@ if [ -f /usr/local/bin/kubectl ]; then
   source <(kubectl completion zsh)
 fi
 
-# Note: should be able to just run `terraform -install-autocomplete` once 
-# but I'm not sure if brew does that on install/upgrade. Need to test.
-complete -o nospace -C /usr/local/bin/terraform terraform
-
 # Some functions, like _apt and _dpkg, are very slow. 
 # You can use a cache in order to proxy the list of results (like the list of available debian packages) 
 # Use a cache:
