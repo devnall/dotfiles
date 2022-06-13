@@ -265,11 +265,29 @@ function work_in_progress() {
 #
 # Aliases
 # (sorted alphabetically)
-#
+
+# Subset of aliases that should only be used if not using forgit plugin <githhub.com/wfxr/forgit>
+function forgit_alias_check() {
+  if ! command -v forgit::info > /dev/null; then
+    alias ga='git add'
+    alias glo='git log --oneline --decorate'
+    alias grh='git reset'
+    alias gcf='git config --list'
+    alias gcb='git checkout -b'
+    alias gco='git checkout'
+    alias gss='git status -s'
+    alias grb='git rebase'
+  fi
+}
+
+forgit_alias_check
+
+# Other aliases
+# TODO: I never use most of these, should clean them up
+
 
 alias g='git'
 
-alias ga='git add'
 alias gaa='git add --all'
 
 alias gb='git branch'
@@ -282,14 +300,11 @@ alias gca!='git commit -v -a --amend'
 alias gcam='git commit -a -m'
 alias gcsm='git commit -s -m'
 
-alias gcb='git checkout -b'
 
-alias gcf='git config --list'
 
 alias gcl='git clone --recurse-submodules'
 
 alias gcm='git checkout master'
-alias gco='git checkout'
 
 alias gf='git fetch'
 alias gfa='git fetch --all --prune'
@@ -309,7 +324,6 @@ alias glgp='git log --stat -p'
 alias glgg='git log --graph'
 alias glgga='git log --graph --decorate --all'
 alias glgm='git log --graph --max-count=10'
-alias glo='git log --oneline --decorate'
 alias glg="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 alias glols="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat"
@@ -332,14 +346,12 @@ alias gpv='git push -v'
 
 alias gr='git remote -v'
 alias gra='git remote add'
-alias grb='git rebase'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbd='git rebase develop'
 alias grbi='git rebase -i'
 alias grbm='git rebase master'
 alias grbs='git rebase --skip'
-alias grh='git reset'
 alias grhh='git reset --hard'
 alias grm='git rm'
 alias grmc='git rm --cached'
@@ -354,7 +366,6 @@ alias grv='git remote -v'
 alias gsb='git status -sb'
 alias gsh='git show'
 alias gsps='git show --pretty=short --show-signature'
-alias gss='git status -s'
 alias gst='git status'
 alias gsta='git stash save'
 alias gstaa='git stash apply'
