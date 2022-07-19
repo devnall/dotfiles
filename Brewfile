@@ -40,6 +40,7 @@ brew "btop"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
+brew "dog"
 brew "exa"
 brew "fd"
 brew "fzf"
@@ -101,6 +102,7 @@ cask 'lens'
 cask 'marked'
 cask 'obsidian'
 cask 'overkill'
+cask 'pika'
 cask 'slack'
 cask 'spotify'
 cask 'steam'
