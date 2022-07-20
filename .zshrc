@@ -2,6 +2,15 @@
 ## .zshrc                                    ##
 ###############################################
 
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+: "${XDG_DATA_HOME:=$HOME/.local/share}"
+
+if [ "$(uname -m)" = "arm64" ]; then
+  : "${HOMEBREW_PREFIX:=/opt/homebrew}"
+  if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
+    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  fi
+fi
 
 ## History config
 HISTFILE="${HOME}/.zsh_history"
@@ -25,7 +34,11 @@ setopt pushdtohome              # push to $HOME when no argument is given to `cd
 setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
-eval "$(sheldon source)"
+if command -v sheldon > /dev/null; then
+  export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon_zsh"
+  export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon_zsh"
+  eval "$(sheldon source)"
+fi
 
 ## Source other zsh config files
 for zsh_file in ~/.dotfiles/zsh/lib/*.zsh; do
@@ -34,7 +47,9 @@ done
 
 export EDITOR="vim"
 
-eval "$(thefuck --alias)"
+if command -v thefuck > /dev/null; then
+  eval "$(thefuck --alias)"
+fi
 
 ## Secrets!
 if [ -f "${HOME}"/.dotfiles/secrets.txt ]
@@ -45,10 +60,8 @@ fi
 # Config files that need to be loaded after zplug, for whatever reason
 source "${HOME}"/.dotfiles/zsh/lib/aliases.zsh
 source "${HOME}"/.dotfiles/zsh/lib/completions.zsh
-if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
   echo "zsh-autosuggestions not installed or not getting sourced"
 fi
@@ -81,4 +94,4 @@ elif [[ -f "${HOME}/.fzf.zsh" ]]; then
 fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
+complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
