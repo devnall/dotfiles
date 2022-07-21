@@ -7,9 +7,12 @@
 
 if [ "$(uname -m)" = "arm64" ]; then
   : "${HOMEBREW_PREFIX:=/opt/homebrew}"
-  if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
-    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
-  fi
+elif [ "$(uname -m)" = "x86_64" ]; then
+  : "${HOMEBREW_PREFIX:=/usr/local}"
+fi
+
+if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 ## History config
