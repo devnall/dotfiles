@@ -1,12 +1,26 @@
 # zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+#$fpath=(/usr/local/share/zsh-completions $fpath)
+if type brew &>/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
+#if type brew &>/dev/null; then
+#  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+#
+#  autoload -Uz compinit
+#  compinit
+#fi
+
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
-autoload -Uz compinit
-compinit
-autoload -U +X bashcompinit
-bashcompinit
+#autoload -Uz compinit
+#compinit
+#autoload -U +X bashcompinit
+#bashcompinit
 
 # Change text color for zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
@@ -20,10 +34,6 @@ fi
 if [ -f /usr/local/bin/kubectl ]; then
   source <(kubectl completion zsh)
 fi
-
-# Note: should be able to just run `terraform -install-autocomplete` once 
-# but I'm not sure if brew does that on install/upgrade. Need to test.
-complete -o nospace -C /usr/local/bin/terraform terraform
 
 # Some functions, like _apt and _dpkg, are very slow. 
 # You can use a cache in order to proxy the list of results (like the list of available debian packages) 

@@ -16,98 +16,78 @@
 
 # Tap some repos
 tap "homebrew/bundle"
-tap "caskroom/cask"
+tap "homebrew/cask"
 tap "homebrew/core"
 
 # Install some brew-related stuff
 brew "brew-cask-completion"
 
-# Install shells and completion
-brew "bash"
-brew "bash-completion"
+# Install core shells and completion
 brew "zsh"
 brew "zplug"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
-brew "zsh-syntax-highlighting"
+brew "zsh-fast-syntax-highlighting"
 
 # Install vim
 brew "vim"
-brew "neovim"
 
-# Install command line utilities
+# Install core command line utilities
 brew "ack"
 brew "awscli"
-brew "bandwhich"
 brew "bat"
-brew "bluetoothconnector"
+brew "btop"
 brew "coreutils"
 brew "curl"
 brew "diff-so-fancy"
-#brew "doitlive"
+brew "dog"
+brew "exa"
 brew "fd"
 brew "fzf"
 brew "gist"
 brew "git"
-brew "github/gh/gh"
+brew "gh"
 brew "gnu-tar"
-brew "gnupg"
 brew "grc"
 brew "grep"
 brew "gzip"
 brew "htop"
 brew "httpie"
-brew "iftop"
 brew "inetutils"
-brew "ipcalc"
 brew "jq"
 brew "ncdu"
-brew "neofetch"
 brew "nmap"
 brew "prettyping"
-brew "python"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
+brew "sheldon"
 brew "shellcheck"
 brew "ssh-copy-id"
+brew "starship"
 brew "thefuck"
 brew "tldr"
 brew "tmux"
 brew "tree"
-brew "unrar"
 brew "watch"
 brew "wget"
-brew "wifi-password"
 brew "youtube-dl"
 
 # Work-specific CLI utilities
-
 brew "ansible"
-brew "aws-iam-authenticator"
-#brew "blackbox"
-brew "brew-gem"
-brew "gem-rubocop"
+brew "aws-vault"
 brew "helm"
-brew "kubectx"
 brew "kubernetes-cli"
-brew "minikube"
+brew "kubectx"
 brew "packer"
-brew "rbenv"
-brew "datawire/blackbird/telepresence"
 brew "terraform"
-brew "devnall/custom/terraform@0.12.18"
 brew "terraform_landscape"
 brew "tflint"
-brew "yarn"
-
 
 # Install cask apps
-cask 'alfred'
-cask 'aws-vault'
-cask 'bartender'
 cask 'brave-browser'
-cask 'divvy'
+cask 'discord'
 cask 'docker'
+cask 'firefox'
 cask 'google-chrome'
 cask 'google-cloud-sdk'
 cask 'iina'
@@ -118,10 +98,65 @@ cask 'keepingyouawake'
 cask 'keybase'
 cask 'keycastr'
 cask 'kindle'
+cask 'lens'
 cask 'marked'
-cask 'osxfuse'
+cask 'obsidian'
 cask 'overkill'
-cask 'sound-control'
+cask 'pika'
+cask 'slack'
 cask 'spotify'
 cask 'steam'
+cask 'virtualbox'
+cask 'visual-studio-code'
 cask 'vlc'
+cask 'zoom'
+
+# App Store Apps
+# 1Password
+# Be Focused Pro
+# Bear
+# Day One
+# Deliveries
+# ExifPurge
+# Fantastical
+# GarageBand
+# Logic Pro
+# Paprika Recipe Manager
+# Pi Stats
+# Pixelmator
+
+# Other Apps to install
+# Alfred.app
+# Bartender
+
+
+# Install additional shells and completion
+brew "bash"
+brew "bash-completion"
+
+# Install optional command line utilities
+brew "bandwhich"
+brew "bluetoothconnector"
+brew "doitlive"
+brew "fx"
+brew "gnupg"
+brew "iftop"
+brew "ipcalc"
+brew "neofetch"
+brew "python"
+brew "wifi-password"
+
+# Old Work-specific CLI utilities
+brew "aws-iam-authenticator"
+brew "blackbox"
+brew "brew-gem"
+brew "gem-rubocop"
+brew "minikube"
+brew "rbenv"
+brew "datawire/blackbird/telepresence"
+brew "datawire/blackbird/telepresence-arm64"
+brew "devnall/custom/terraform@0.12.18"
+brew "yarn"
+
+# Old casks
+# cask 'divvy'
