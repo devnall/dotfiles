@@ -1,8 +1,8 @@
 # Plex-Meta-Manager Config Files
 
-https://github.com/meisnate12/Plex-Meta-Manager
-https://github.com/meisnate12/Plex-Meta-Manager-Configs
-https://metamanager.wiki/
+- https://github.com/meisnate12/Plex-Meta-Manager
+- https://github.com/meisnate12/Plex-Meta-Manager-Configs
+- https://metamanager.wiki/
 
 Symlink/copy YAML files to ~/.config/plex-meta-manager/
 
