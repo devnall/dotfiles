@@ -38,8 +38,8 @@ setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
 if command -v sheldon > /dev/null; then
-  export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon_zsh"
-  export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon_zsh"
+  export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon"
+  export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon"
   eval "$(sheldon source)"
 fi
 
