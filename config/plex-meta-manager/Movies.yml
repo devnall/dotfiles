@@ -40,13 +40,39 @@ templates:
 
 # Collections
 collections:
+# Holiday Collections
+# (Uncomment when the holiday is coming up; re-comment and delete collection after)
+##  Christmas:
+##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/111696}
+##    trakt_list:
+##      - https://trakt.tv/users/movistapp/lists/christmas-movies
+##      - https://trakt.tv/users/2borno2b/lists/christmas-movies-extravanganza
+##      - https://trakt.tv/users/pualani78/lists/christmas-2020
+##      - https://trakt.tv/users/veninjak/lists/complete-christmas-2021-copy
+##    imdb_list:
+##      - https://www.imdb.com/list/ls025976544/
+##      - https://www.imdb.com/list/ls003863000/
+##      - https://www.imdb.com/list/ls027454200/
+##      - https://www.imdb.com/list/ls027886673/
+##      - https://www.imdb.com/list/ls097998599/
+##    summary: Christmas film is a genre that revolves around the plot involving Christmas.
+##  Halloween:
+##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/27316}
+##    trakt_list:
+##      - https://trakt.tv/users/kairbear08/lists/halloween
+##      - https://trakt.tv/users/mybicycle/lists/halloween
+##      - https://trakt.tv/users/jayinftl/lists/halloween
+##      - https://trakt.tv/users/roswellgeek/lists/halloween
+##    summary: Halloween film is a genre that revolves around the plot involving Halloween.
 # Curated Collections
   Trakt.tv Trending Movies:
     trakt_trending: 50
     sort_title: +++++++++_Trakt Trending
+    sync_mode: sync
   IMDb Top 250 Movies:
     imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250&sort=user_rating,desc
     sort_title: ++++++++_IMDb Top 250#
+    sync_mode: sync
 # Series Collections
   Batman Collection:
     imdb_list: https://www.imdb.com/list/ls538146335
@@ -94,7 +120,11 @@ collections:
   Karate Kid Collection:
     template: {name: Series, collection: 8580, summary: 8580, poster: https://theposterdb.com/api/assets/107163}
   Matrix Collection:
-    template: {name: Series, collection: 2344, summary: 2344, poster: https://theposterdb.com/api/assets/12041}
+##    template: {name: Series, collection: 2344, summary: 2344, poster: https://theposterdb.com/api/assets/12041}
+    imdb_list: https://www.imdb.com/list/ls538275786
+    sort_title: ++++++_Matrix Collection
+    summary: "A collection of Matrix movies"
+    url_poster: https://theposterdb.com/api/assets/12041
   Rocky Collection:
     imdb_list: https://www.imdb.com/list/ls538195566/
     sort_title: ++++++_Rocky Collection
@@ -157,30 +187,6 @@ collections:
   Walt Disney Pictures:
     template: {name: Studio, studio: "Walt Disney Pictures", poster: https://theposterdb.com/api/assets/16549}
     summary: "Walt Disney Pictures is an American film production studio and subsidiary of The Walt Disney Studios, which is owned by The Walt Disney Company. The studio is the flagship producer of live-action feature films within Disney Studios."
-# Holiday Collections
-# (Uncomment when the holiday is coming up; re-comment and delete collection after)
-##  Christmas:
-##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/111696}
-##    trakt_list:
-##      - https://trakt.tv/users/movistapp/lists/christmas-movies
-##      - https://trakt.tv/users/2borno2b/lists/christmas-movies-extravanganza
-##      - https://trakt.tv/users/pualani78/lists/christmas-2020
-##      - https://trakt.tv/users/veninjak/lists/complete-christmas-2021-copy
-##    imdb_list:
-##      - https://www.imdb.com/list/ls025976544/
-##      - https://www.imdb.com/list/ls003863000/
-##      - https://www.imdb.com/list/ls027454200/
-##      - https://www.imdb.com/list/ls027886673/
-##      - https://www.imdb.com/list/ls097998599/
-##    summary: Christmas film is a genre that revolves around the plot involving Christmas.
-##  Halloween:
-##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/27316}
-##    trakt_list:
-##      - https://trakt.tv/users/kairbear08/lists/halloween
-##      - https://trakt.tv/users/mybicycle/lists/halloween
-##      - https://trakt.tv/users/jayinftl/lists/halloween
-##      - https://trakt.tv/users/roswellgeek/lists/halloween
-##    summary: Halloween film is a genre that revolves around the plot involving Halloween.
 # Genre Collections
   Action:
     template: {name: Genre, genre: Action, poster: https://theposterdb.com/api/assets/52018}
