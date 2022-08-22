@@ -44,6 +44,7 @@ if command -v sheldon > /dev/null; then
 fi
 
 ## Source other zsh config files
+# TODO: Need to figure out a way to only source callrail.zsh on work machines.
 for zsh_file in ~/.dotfiles/zsh/lib/*.zsh; do
   source "$zsh_file"
 done
