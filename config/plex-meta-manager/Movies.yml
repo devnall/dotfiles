@@ -1,0 +1,327 @@
+# https://github.com/meisnate12/Plex-Meta-Manager
+
+# Movie Collections
+
+# Templates
+templates:
+  Series:
+    tmdb_collection: <<collection>>
+    tmdb_summary: <<summary>>
+    url_poster: <<poster>>
+    sort_title: ++++++_<<collection_name>>
+    collection_order: release
+  Studio:
+    plex_search:
+      studio: <<studio>>
+    url_poster: <<poster>>
+    sort_title: ++++++_<<collection_name>>
+    collection_order: alpha
+  Holiday:
+    url_poster: <<poster>>
+    sort_title: ++++++_<<collection_name>>
+    collection_order: release
+  Genre:
+    plex_search:
+      genre: <<genre>>
+    url_poster: <<poster>>
+    sort_title: ++++_<<collection_name>>
+    collection_order: alpha
+  Decade:
+    plex_search:
+      decade: <<year>>
+    url_poster: <<poster>>
+    sort_title: +++_<<collection_name>>
+    collection_order: release
+  People:
+    actor: tmdb
+    tmdb_person: <<person>>
+    sort_title: ++_<<collection_name>>
+    collection_order: release
+
+# Collections
+collections:
+# Holiday Collections
+# (Uncomment when the holiday is coming up; re-comment and delete collection after)
+##  Christmas:
+##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/111696}
+##    trakt_list:
+##      - https://trakt.tv/users/movistapp/lists/christmas-movies
+##      - https://trakt.tv/users/2borno2b/lists/christmas-movies-extravanganza
+##      - https://trakt.tv/users/pualani78/lists/christmas-2020
+##      - https://trakt.tv/users/veninjak/lists/complete-christmas-2021-copy
+##    imdb_list:
+##      - https://www.imdb.com/list/ls025976544/
+##      - https://www.imdb.com/list/ls003863000/
+##      - https://www.imdb.com/list/ls027454200/
+##      - https://www.imdb.com/list/ls027886673/
+##      - https://www.imdb.com/list/ls097998599/
+##    summary: Christmas film is a genre that revolves around the plot involving Christmas.
+##  Halloween:
+##    template: {name: Holiday, poster: https://theposterdb.com/api/assets/27316}
+##    trakt_list:
+##      - https://trakt.tv/users/kairbear08/lists/halloween
+##      - https://trakt.tv/users/mybicycle/lists/halloween
+##      - https://trakt.tv/users/jayinftl/lists/halloween
+##      - https://trakt.tv/users/roswellgeek/lists/halloween
+##    summary: Halloween film is a genre that revolves around the plot involving Halloween.
+# Curated Collections
+  Trakt.tv Trending Movies:
+    trakt_trending: 50
+    sort_title: +++++++++_Trakt Trending
+    sync_mode: sync
+  IMDb Top 250 Movies:
+    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250&sort=user_rating,desc
+    sort_title: ++++++++_IMDb Top 250#
+    sync_mode: sync
+# Series Collections
+  Batman Collection:
+    imdb_list: https://www.imdb.com/list/ls538146335
+    sort_title: ++++++_Batman Collection
+    summary: "A collection of movies featuring DC Comics' Batman"
+  Jason Bourne Collection:
+    imdb_list: https://www.imdb.com/list/ls538146217/
+    sort_title: ++++++_Jason Bourne Collection
+    summary: "A collection of movies featuring Jason Bourne"
+  Fast & Furious Collection:
+    imdb_list: https://www.imdb.com/list/ls538146490/
+    sort_title: ++++++_Fast and Furious Collection
+    summary: "A collection of Fast & Furious movies and spinoffs"
+    url_poster: https://theposterdb.com/api/assets/1070
+  Fifty Shades Trilogy:
+    imdb_list: https://www.imdb.com/list/ls538146994/
+    sort_title: ++++++_Fifty Shades of Grey Trilogy
+    summary: "A collection of the Fifty Shades of Grey trilogy"
+  The Godfather Collection:
+    plex_search: 
+      all:
+        title: 
+          - "The Godfather"
+          - "The Godfather: Part II"
+          - "The Godfather: Parth III"
+          - "The Godfather, Coda: The Death of Michael Corleone"
+          - "The Godfather Saga"
+    sort_title: ++++++_Godfather Collection
+    summary: "A collection of the Godfather movies and various re-edits or re-releases"
+  Wizarding World Collection:
+    imdb_list: https://www.imdb.com/list/ls538148108/
+    sort_title: ++++++_Wizarding World Collection
+    summary: "A collection of movies set in The Wizarding World of Harry Potter."
+  Middle Earth Collection:
+    imdb_list: https://www.imdb.com/list/ls538148291/
+    plex_all: true
+    filters:
+      title.is: "The Hobbit, or There and Back Again"
+    sort_title: ++++++_Middle Earth Collection
+    summary: "A collection of movies set in J.R.R. Tolkein's Middle Earth"
+  Indiana Jones Collection:
+    template: {name: Series, collection: 84, summary: 84, poster: https://theposterdb.com/api/assets/10361}
+  John Wick Collection:
+    template: {name: Series, collection: 404609, summary: 404609, poster: https://theposterdb.com/api/assets/17550}
+  Karate Kid Collection:
+    template: {name: Series, collection: 8580, summary: 8580, poster: https://theposterdb.com/api/assets/107163}
+  Matrix Collection:
+##    template: {name: Series, collection: 2344, summary: 2344, poster: https://theposterdb.com/api/assets/12041}
+    imdb_list: https://www.imdb.com/list/ls538275786
+    sort_title: ++++++_Matrix Collection
+    summary: "A collection of Matrix movies"
+    url_poster: https://theposterdb.com/api/assets/12041
+  Rocky Collection:
+    imdb_list: https://www.imdb.com/list/ls538195566/
+    sort_title: ++++++_Rocky Collection
+    summary: "A collection of Rocky and Creed movies"
+    url_poster: https://theposterdb.com/api/assets/23969
+  Spider-Man Collection:
+    imdb_list: https://www.imdb.com/list/ls538190543
+    sort_title: ++++++_Spider-Man Collection
+    summary: "A collection of movies featuring Marvel Entertainment's Spider-Man"
+    url_poster: https://theposterdb.com/api/assets/67358
+  Star Wars Collection:
+    imdb_list: https://www.imdb.com/list/ls538190137/
+    sort_title: ++++++_Star Wars Collection
+    summary: "A collection of features set in the Star Wars universe"
+    url_poster: https://theposterdb.com/api/assets/39137
+  Terminator Collection:
+    template: {name: Series, collection: 528, summary: 528, poster: https://theposterdb.com/api/assets/13194}
+  Thor Collection:
+    template: {name: Series, collection: 131296, summary: 131296, poster: https://theposterdb.com/api/assets/29370}
+  Iron Man Collection:
+    template: {name: Series, collection: 131292, summary: 131292, poster: https://theposterdb.com/api/assets/114052}
+  Twilight Collection:
+    template: {name: Series, collection: 33514, summary: 33514, poster: https://theposterdb.com/api/assets/44199}
+  Hunger Games Collection:
+    template: {name: Series, collection: 131635, summary: 131635, poster: https://theposterdb.com/api/assets/31012}
+  James Bond Collection:
+    template: {name: Series, collection: 645, summary: 645, poster: https://theposterdb.com/api/assets/115662}
+  X-Men Collection:
+    imdb_list: https://www.imdb.com/list/ls538190244/
+    sort_title: ++++++_X-Men Collection
+    summary: "A collection of movies featuring The X-Men and spinoffs"
+    url_poster: https://theposterdb.com/api/assets/6486
+  Mission Impossible:
+    template: {name: Series, collection: 87359, summary: 87359, poster: https://theposterdb.com/api/assets/65202}
+  Pirates of the Caribbean:
+    template: {name: Series, collection: 295, summary: 295, poster: https://theposterdb.com/api/assets/71934}
+  Jurassic Park:
+    template: {name: Series, collection: 328, summary: 328, poster: https://theposterdb.com/api/assets/45080}
+  Harry Potter:
+    template: {name: Series, collection: 1241, summary: 1241, poster: https://theposterdb.com/api/assets/737}
+# Studio Collections
+  Studio Ghibli:
+    template: {name: Studio, studio: "Studio Ghibli", poster: https://theposterdb.com/api/assets/32223}
+    summary: "Studio Ghibli Inc. is a Japanese film studio headquartered in Koganei, Tokyo. The studio is best known for its animated feature films."
+  DC Extended Universe:
+    template: {name: Studio, studio: "DC Extended Universe", poster: https://theposterdb.com/api/assets/92689}
+    summary: "The DC Extended Universe (DCEU) is a series of superhero films distributed by Warner Bros. and based on characters that appear in DC Comics."
+  Marvel Cinematic Universe:
+    template: {name: Studio, studio: "Marvel Enterprise, Marvel Entertainment, Marvel Studios", poster: https://theposterdb.com/api/assets/5912}
+    summary: "The Marvel Cinematic Universe (MCU) is a series of superhero films distributed by Disney and based on characters that appear in Marvel comics."
+  DreamWorks Animation:
+    template: {name: Studio, studio: "DreamWorks Animation, DreamWorks Pictures", poster: https://theposterdb.com/api/assets/52723}
+    summary: "DreamWorks Animation LLC (also simply known as DreamWorks) is an American animation studio and a subsidiary of Universal Pictures. It is based in Glendale, California and produces animated feature films, television programs, and online virtual games."
+  Pixar:
+    template: {name: Studio, studio: Pixar, poster: https://theposterdb.com/api/assets/38226}
+    summary: "Pixar Animation Studios, commonly known as Pixar, is an American computer animation studio and a subsidiary of The Walt Disney Company." 
+  Walt Disney Animation Studios:
+    template: {name: Studio, studio: "Walt Disney Animation Studios", poster: https://theposterdb.com/api/assets/6016}
+    summary: "Walt Disney Animation Studios (WDAS) or Disney Animation is an American studio that creates animated features and short films for The Walt Disney Company."
+  Walt Disney Pictures:
+    template: {name: Studio, studio: "Walt Disney Pictures", poster: https://theposterdb.com/api/assets/16549}
+    summary: "Walt Disney Pictures is an American film production studio and subsidiary of The Walt Disney Studios, which is owned by The Walt Disney Company. The studio is the flagship producer of live-action feature films within Disney Studios."
+# Genre Collections
+  Action:
+    template: {name: Genre, genre: Action, poster: https://theposterdb.com/api/assets/52018}
+    summary: Action movie collection
+  Adventure:
+    template: {name: Genre, genre: Adventure, poster: https://theposterdb.com/api/assets/52218}
+    summary: Adventure movie collection
+  Animation:
+    template: {name: Genre, genre: Animation, poster: https://theposterdb.com/api/assets/120090}
+    summary: Animated movie collection
+##  Anime:
+##    template: {name: Genre, genre: Anime, poster: https://theposterdb.com/api/assets/126743}
+##    summary: Japanese Animation movie collection
+  Biography:
+    template: {name: Genre, genre: Biography, poster: https://theposterdb.com/api/assets/60369}
+    summary: Biography and Biopic movie collection
+  Comedy:
+    template: {name: Genre, genre: Comedy, poster: https://theposterdb.com/api/assets/51397}
+    summary: Comedy movie collection
+  Crime:
+    template: {name: Genre, genre: Crime, poster: https://theposterdb.com/api/assets/53057}
+    imdb_list:
+      - https://www.imdb.com/list/ls026270180/
+      - https://www.imdb.com/list/ls000093502/
+    summary: Crime movie collection
+##  Documentary:
+##    template: {name: Genre, genre: Documentary, poster: https://theposterdb.com/api/assets/51430}
+##    summary: Documentary movie collection
+  Drama:
+    template: {name: Genre, genre: Drama, poster: https://theposterdb.com/api/assets/52016}
+    summary: Drama movie collection
+  Family:
+    template: {name: Genre, genre: Family, poster: https://theposterdb.com/api/assets/53059}
+    summary: Family movie collection
+  Fantasy:
+    template: {name: Genre, genre: Fantasy, poster: https://theposterdb.com/api/assets/51476}
+    imdb_list:
+    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=fantasy
+      limit: 100
+    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=fantasy&sort=user_rating,desc
+      limit: 100
+    summary: Fantasy movie collection
+  History:
+    template: {name: Genre, genre: History, poster: https://theposterdb.com/api/assets/58022}
+    summary: History movie collection
+  Horror:
+    template: {name: Genre, genre: Horror, poster: https://theposterdb.com/api/assets/51475}
+    summary: Horror movie collection
+##  Martial Arts:
+##    template: {name: Genre, poster: https://theposterdb.com/api/assets/51773}
+##    imdb_list:
+##      - https://www.imdb.com/list/ls000099643/
+##      - https://www.imdb.com/list/ls068611186/
+##      - https://www.imdb.com/list/ls068378513/
+##      - https://www.imdb.com/list/ls090404120/
+##    summary: Martial Arts movie collection
+##  Music:
+##    template: {name: Genre, poster: https://theposterdb.com/api/assets/51398}
+##    imdb_list:
+##    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=music
+##      limit: 200
+##    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=music&sort=user_rating,desc
+##      limit: 200
+##    summary: Music movie collection
+  Musical:
+    template: {name: Genre, genre: Musical, poster: https://theposterdb.com/api/assets/51427}
+    summary: Musical movie collection
+##  Mystery:
+##    template: {name: Genre, genre: Mystery, poster: https://theposterdb.com/api/assets/53060}
+##    summary: Mystery movie collection
+  Romance:
+    template: {name: Genre, genre: Romance, poster: https://theposterdb.com/api/assets/53062}
+    summary: Romance movie collection
+  Science Fiction:
+    template: {name: Genre, genre: Science Fiction, poster: https://theposterdb.com/api/assets/51772}
+    summary: Science Fiction (Sci-Fi) movie collection
+##  Short:
+##    template: {name: Genre, genre: Short, poster: https://theposterdb.com/api/assets/53063}
+##    summary: Short movie collection
+  Sports:
+    template: {name: Genre, genre: Sport, poster: https://theposterdb.com/api/assets/60371}
+    imdb_list:
+    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=sport
+      limit: 200
+    - url: https://www.imdb.com/search/title/?title_type=feature&release_date=1990-01-01,&user_rating=5.0,10.0&num_votes=100000,&genres=sport&sort=user_rating,desc
+      limit: 200
+    summary: Sport movie collection
+##  Stand Up Comedy:
+##    template: {name: Genre, poster: https://theposterdb.com/api/assets/49137}
+##    imdb_list:
+##      - https://www.imdb.com/list/ls070221411/
+##      - https://www.imdb.com/list/ls086584751/
+##      - https://www.imdb.com/list/ls086022668/
+##      - https://www.imdb.com/list/ls049792208/
+##    summary: Stand-up Comedy collection
+##  Sword and Sorcery:
+##    template: {name: Genre, poster: https://theposterdb.com/api/assets/74604}
+##    imdb_list: https://www.imdb.com/list/ls022909805
+##    summary: Sword and Sorcery film is a sub-genre of Fantasy that tend to be more plot-driven. These films rely on heavy action and battle scenes. Common themes in Sword and Sorcery films include a rescue mission, saving a princess, and battling a fantastical monster. The worlds and characters in these films are often much less developed than in other fantasy sub-genres. Of all the Fantasy sub-genres, Sword and Sorcery is most likely to be geared towards a younger audience, as many of these films are animated.
+  Thriller:
+    template: {name: Genre, genre: Thriller, poster: https://theposterdb.com/api/assets/52019}
+    summary: Thriller movie collection
+  War:
+    template: {name: Genre, genre: War, poster: https://theposterdb.com/api/assets/51477}
+    summary: War movie collection
+  Western:
+    template: {name: Genre, genre: Western, poster: https://theposterdb.com/api/assets/51774}
+    summary: Western movie collection
+# Decade Collections
+  1930's Movies:
+    template: {name: Decade, year: 1930, poster: https://theposterdb.com/api/assets/105675}
+  1940's Movies:
+    template: {name: Decade, year: 1940, poster: https://theposterdb.com/api/assets/105676}
+  1950's Movies: 
+    template: {name: Decade, year: 1950, oster: https://theposterdb.com/api/assets/105677}
+  1960's Movies:
+    template: {name: Decade, year: 1960, poster: https://theposterdb.com/api/assets/105331}
+  1970's Movies:
+    template: {name: Decade, year: 1970, poster: https://theposterdb.com/api/assets/105332}
+  1980's Movies:
+    template: {name: Decade, year: 1980, poster: https://theposterdb.com/api/assets/105333}
+  1990's Movies:
+    template: {name: Decade, year: 1990, poster: https://theposterdb.com/api/assets/105334}
+  2000's Movies:
+    plex_search:
+      decade: 2000
+    sort_title: +++_Decade
+    collection_order: alpha
+  2010's Movies:
+    plex_search:
+      decade: 2010
+    sort_title: +++_Decade
+    collection_order: alpha
+  2020's Movies:
+    plex_search:
+      decade: 2020
+    sort_title: +++_Decade
+    collection_order: alpha
