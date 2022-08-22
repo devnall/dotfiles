@@ -1,3 +1,4 @@
+# This is Git's per-user configuration file
 [user]
   name = Drew Nall
   email = devnall@gmail.com
@@ -15,6 +16,7 @@
   editor = /usr/bin/vim
 [alias]
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
 [pager]
   diff = diff-so-fancy | less --tabs=4 -RFX
   show = diff-so-fancy | less --tabs=4 -RFX

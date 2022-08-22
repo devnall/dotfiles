@@ -9,13 +9,10 @@ alias _='sudo'
 if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
-  # TODO: modularize this path
-  # TODO: replace colorls w/ k
-  if [[ -f "$HOME/homebrew/bin/colorls" ]]; then
-    alias l='colorls -lA --sd --gs'
-    alias ll='colorls -l --sd --gs'
-    alias la='colorls -A --sd --gs'
-    alias lsa='colorls -la --sd --gs'
+  if [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
+    alias l='exa -laFh --color-scale --icons --git'
+    alias ll='exa -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
+    alias la='exa -aFh --color-scale'
   else
     alias l='ls -lAhF ${ls_colorflag}'
     alias ll='ls -lhF ${ls_colorflag}'
@@ -51,28 +48,36 @@ if [[ `declare -f k_default > /dev/null; echo $?` -eq 0 ]]; then
 fi
 
 # If prettyping is installed, use it instead of ping
-if [[ -f "$HOME/homebrew/bin/prettyping" || -f "/usr/local/bin/prettyping" ]]; then
+if [[ -f "$HOMEBREW_PREFIX/bin/prettyping" ]]; then
   alias ping="prettyping --nolegend"
 fi
 
-# If htop is installed, use it instead of top
-if [[ -f "$HOME/homebrew/bin/htop" || -f "/usr/local/bin/prettyping" ]]; then
+# If btop or htop is installed, use it instead of top
+if [[ -f "$HOMEBREW_PREFIX/bin/btop" ]]; then
+  alias top="btop"
+elif [[ -f "$HOMEBREW_PREFIX/bin/htop" ]]; then
   alias top="htop"
 fi
 
 # If GNU date is installed, use it instead of old date shipped w/ MacOS
-if [[ -f "$HOME"/homebrew/bin/gdate || -f "/usr/local/bin/gdate" ]]; then
+if [[ -f "$HOMEBREW_PREFIX/bin/gdate" ]]; then
   alias date="gdate"
 fi
 
 # If ncdu is installed, use it instead of du
-if [[ -f "$HOME/homebrew/bin/ncdu" || -f "/usr/local/bin/ncdu" ]]; then
+if [[ -f "$HOMEBREW_PREFIX/bin/ncdu" ]]; then
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 fi
 
 # No `free` command on OSX, here's a hacky substitute
 if [[ `uname` == 'Darwin' ]]; then
   alias free="/usr/bin/top -l 1 -s 0 | grep PhysMem"
+fi
+
+if command -v bat > /dev/null; then
+  alias bat='bat --theme="Nord"'
+  alias batp='bat -p --theme="Nord"'
+  alias bat_='bat --show-all --theme="Nord"'
 fi
 
 # Get IP Addresses

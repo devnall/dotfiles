@@ -1,0 +1,237 @@
+---
+version: "2.1"
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker:beta
+    hostname: death
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - VERSION=docker
+      - UMASK_SET=22 #optional
+      - PLEX_CLAIM=claim-LU1pwbBLCYRafzbGsz9Y #optional
+      - ADVERTISE_IP="http://192.168.1.10:32400"
+      - ALLOWED_NETWORKS=192.168.1.0/24,172.16.0.0/16
+    volumes:
+      - "/home/dnall/.plex:/config"
+      - "/tmp:/transcode"
+      - "/mnt/video/Movies:/movies"
+      - "/mnt/video/Documentaries - Movies:/movie-docs"
+      - "/mnt/video/TV Shows:/tv"
+      - "/mnt/video/Documentaries - TV:/tv-docs" 
+      - "/mnt/video/Instructional:/instructional"
+      - "/mnt/video/Shorts:/shorts"
+      - "/mnt/video/Stand-Up Comedy:/stand-up"
+      - "/mnt/music:/music"
+      - "/mnt/diskstation/Books/AudioBooks:/audiobooks"
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    restart: unless-stopped
+#  plex:
+#    image: linuxserver/plex
+#    container_name: plex
+#    network_mode: host
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/New_York
+#      - VERSION=docker
+#      - UMASK_SET=22 #optional
+#      - PLEX_CLAIM=claim-LU1pwbBLCYRafzbGsz9Y #optional
+#      - ADVERTISE_IP="http://192.168.1.10:32400"
+#    volumes:
+#      - "/home/dnall/.plex:/config"
+#      - "/mnt/video/Movies:/movies"
+#      - "/mnt/video/Documentaries - Movies:/movie-docs"
+#      - "/mnt/video/TV Shows:/tv"
+#      - "/mnt/video/Documentaries - TV:/tv-docs" 
+#      - "/mnt/video/Instructional:/instructional"
+#      - "/mnt/video/Shorts:/shorts"
+#      - "/mnt/video/Stand-Up Comedy:/stand-up"
+#      - "/mnt/music:/music"
+#      - "/mnt/diskstation/Books/AudioBooks:/audiobooks"
+#    ports:
+#      - "32400:32400"
+#    restart: unless-stopped
+  tautulli:
+    image: linuxserver/tautulli
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - "/home/dnall/.tautulli:/config"
+      - "/home/dnall/.plex/Library/Application Support/Plex Media Server/Logs:/logs:ro"
+    ports:
+      - "8181:8181"
+  #  synclounge:
+  #      image: linuxserver/synclounge
+  #      container_name: synclounge
+  #      environment:
+  #        - TZ=America/New_York
+  #        - EXTERNAL_URL=24.125.227.169
+  #        - EXTERNAL_SERVER_PORT=8089 #optional
+  #        - AUTOJOIN_ENABLED=false #optional
+  #      ports:
+  #        - 8088:8088
+  #        - 8089:8089
+  #      restart: unless-stopped
+  #  kitana:
+  #    image: pannal/kitana:latest
+  #    container_name: kitana
+  #    environment:
+  #      - PUID=1000
+  #      - PGID=1000
+  #      - TZ=America/New_York
+  #    volumes:
+  #      - "/home/dnall/config/kitana:/app/data"
+  #    ports:
+  #      - 31337:31337
+  #    links:
+  #      - plex
+  #    command: -B 0.0.0.0:31337 -p /kitana -P
+  #    restart: unless-stopped
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+    volumes:
+      - "/home/dnall/.transmission:/config"
+      - "/home/dnall/downloads:/downloads"
+      - "/home/dnall/.transmission/watch:/watch"
+      - "/mnt/diskstation:/diskstation"
+      - "/mnt/video:/video"
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    restart: unless-stopped
+  sabnzbd:
+    image: linuxserver/sabnzbd
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - "/home/dnall/.sabnzbd:/config"
+      - "/home/dnall/downloads:/downloads"
+      - "/home/dnall/downloads/incomplete:/incomplete"
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    restart: unless-stopped
+  nzbhydra2:
+    image: linuxserver/nzbhydra2
+    container_name: nzbhydra2
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - "/home/dnall/.nzbhydra2:/config"
+      - "/home/dnall/downloads:/downloads"
+    ports:
+      - "5076:5076"
+    restart: unless-stopped
+  radarr:
+    image: linuxserver/radarr:nightly
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - UMASK_SET=022 #optional
+    volumes:
+      - "/home/dnall/.radarr:/config"
+      - "/mnt/video/Movies:/movies"
+      - "/mnt/video/Documentaries - Movies:/movie-docs"
+      - "/home/dnall/downloads:/downloads"
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+#  jackett:
+#    image: linuxserver/jackett
+#    container_name: jackett
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/New_York
+#      - AUTO_UPDATE=true #optional
+#    volumes:
+#      - "/home/dnall/.jackett:/config"
+#      - "/home/dnall/downloads:/downloads"
+#    ports:
+#      - "9117:9117"
+#    restart: unless-stopped
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - UMASK_SET=022 #optional
+    volumes:
+      - "/home/dnall/.sonarr:/config"
+      - "/mnt/video/TV Shows:/tv"
+      - "/mnt/video/Documentaries - TV:/tv-docs"
+      - "/home/dnall/downloads:/downloads"
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+#  calibre:
+#    image: linuxserver/calibre
+#    container_name: calibre
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/New_York
+#      - UMASK_SET=022 #optional
+#    volumes:
+#      - "/home/dnall/.calibre:/config"
+#      - "/mnt/diskstation/Books:/books"
+#    ports:
+#      - "8082:8080"
+#      - "8081:8081"
+  mylar3:
+    image: ghcr.io/linuxserver/mylar3
+    container_name: mylar3
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - "/home/dnall/.mylar3:/config"
+      - "/mnt/diskstation/Books/Comics/Unsorted:/comics"
+      - "/home/dnall/downloads/comics:/downloads"
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - "/home/dnall/.heimdall:/config"
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped

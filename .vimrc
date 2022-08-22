@@ -1,90 +1,66 @@
 " vimrc file
-"
 
 set nocompatible " be iMproved, required
 filetype off
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" Alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" Install vim-plug to the "autoload" directory if it isn't already:
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" Brief Vundle help
-" :PluginList         - lists configured plugins
-" :PluginInstall      - installs plugins
-" :PluginUpdate       - update installed plugins
-" :PluginSearch foo   - searches for foo; append `!` to refresh local cache
-" :PluginClean        - confirms removal of unused plugins; append `!` to auto-approve
-"
-" See `:h vundle` for more details or wiki for FAQ
-
-" Bundles go here:
-" See the Vundle readme for different supported plugin formats
-" Keep plugin calls between vundle#begin and vundle#end
-
-" Let Vundle manage Vundle. Required!
-Plugin 'gmarik/Vundle.vim'
-
-" Github repo bundles
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'mhartington/oceanic-next'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Raimondi/delimitMate'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-repeat'
-Plugin 'rizzatti/dash.vim'
-Plugin 'mileszs/ack.vim'
-"Plugin 'kien/ctrlp.vim'
-Plugin 'ekalinin/Dockerfile.vim'
-"Plugin 'hashivim/vim-terraform'
-Plugin 'tmux-plugins/vim-tmux'
-Plugin 'Markdown'
-Plugin 'git.zip'
-Plugin 'groovy.vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'vim-ruby/vim-ruby'
+call plug#begin()
+Plug 'arcticicestudio/nord-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'raimondi/delimitmate'
+Plug 'plasticboy/vim-markdown'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'hashivim/vim-terraform'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'junegunn/fzf.vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'airblade/vim-gitgutter'
+Plug 'markstory/vim-zoomwin'
+Plug 'mhartington/oceanic-next'
 
 " Stuff to try out
+"Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'mileszs/ack.vim'
+"Plugin 'tpope/vim-git'
+"Plugin 'tpope/vim-repeat'
 "Plugin 'tpope/vim-fugitive'
-"Plugin 'airblade/vim-gitgutter'
 "Plugin 'godlygeek/tabular'
 "Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-speeddating'
 "Plugin 'ervandew/supertab'
 "Plugin 'vim-scripts/YankRing.vim'
-"Plugin 'vim-quickrun'
-"Plugin 'gist-vim'
-"Plugin 'townk/vim-autoclose'
+"Plugin 'thinca/vim-quickrun'
+"Plugin 'vim-scripts/gist-vim'
 "Plugin 'lokaltog/vim-easymotion'
 "Plugin 'jmcantrell/vim-virtualenv'
+""Plugin 'tomtom/tcomment_vim'
 
-" non-github repos
-" Bundle "ZoomWin"
-" noremap MLocalLeader o :ZoomWin<CR>
-" vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
-" inoremap <LocalLeader>o <C-O>:ZoomWin<CR>
-" noremap <C-W>+o :ZoomWin<CR>
+"let g:nord_cursor_line_number_background = 1
+
+"Zoomwin Options
+noremap MLocalLeader o :ZoomWin<CR>
+vnoremap <LocalLeader>o <C-C>:ZoomWin<CR>
+inoremap <LocalLeader>o <C-O>:ZoomWin<CR>
+noremap <C-W>+o :ZoomWin<CR>
 "
-" Bundle "tComment"
+" tcomment Options
 " nnoremap // :TComment<CR>
 " vnoremap // :TComment<CR>
-"
 "let g:CommandTMatchWindowAtTop=1   " Show window at top
 
 " Plugins no longer used but may need in future
-"Plugin 'rizzatti/dash.vim'
-"Plugin 'puppetlabs/puppet-syntax-vim'
-"Plugin 'ajf/puppet-vim'
-"Plugin 'dougireton/vim-chef'
 
-" All Plugins must be added before the following line
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 " To ignore plugin indent change, instead use:
@@ -184,8 +160,6 @@ if has("autocmd")
   autocmd FileType text setlocal nolist wrap linebreak breakat&vim
 
   " .markdown and .md are markdown files
-""  au! BufRead,BufNewFile *.markdown set filetype=mkd
-""  au! BufRead,BufNewFile *.md set filetype=mkd
   autocmd FileType markdown setlocal textwidth=78
   autocmd FileType markdown setlocal nolist wrap linebreak breakat&vim
 
@@ -216,10 +190,8 @@ endif
 let mapleader = ","
 map <F2> :NERDTreeToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
-"map <F3> :CommandT<CR>
 imap jj <Esc>	" jj instead of escape in insert mode
 nnoremap <space> :nohlsearch<CR>/<BS>	      " space unhighlights search results
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Allow saving of files as sudo when I forgot to start vim w/ sudo
 cmap W!! w !sudo tee > /dev/null %
@@ -227,14 +199,6 @@ cmap W!! w !sudo tee > /dev/null %
 " Enable format on save for terraform files
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
-
-" Make it pretty by defining color scheme and other visual niceties
-"set background=dark
-"colors ir_black
-"
-"set background=dark
-
-call togglebg#map("<F5>")
 
 " Fake 256 colors for OSX Terminal.app
 if ! has("gui_running")
@@ -244,9 +208,14 @@ else
   set background=light
 endif
 
-let g:solarized_termtrans = 1
-colorscheme solarized
-"colorscheme OceanicNext
+if (has("termguicolors"))
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+set background=dark
+colorscheme nord
 
 " vim-airline statusline config
 let g:airline_left_sep=''
@@ -256,18 +225,19 @@ let g:airline_detect_paste=1
 let g:airline_detect_crypt=1
 let g:airline_detect_iminsert=0
 let g:airline_inactive_collapse=1
-"let g:airline_theme='papercolor'
 let g:airline_powerline_fonts=1
 let g:airline#extenstions#syntastic#enabled=1
-"let g:airline#extensions#whitespace#show_message = 1
-let g:airline_theme='oceanicnext'
-"let g:oceanic_next_terminal_bold = 1
-"let g:oceanic_next_terminal_italic = 1
+let g:airline#extensions#whitespace#show_message = 1
+let g:airline_theme='nord'
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
 
 " Syntastic config
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+set cursorline
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -276,7 +246,6 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1    "show all errors from all defined checkers
 
 let g:syntastic_sh_checkers = ['shellcheck']
-let g:syntastic_chef_checkers = ['foodcritic']
 let g:syntastic_Dockerfile_checkers = ['dockerfile_lint']
 let g:syntastic_JSON_checkers = ['jsonlint']
 let g:syntastic_Markdown_checkers = ['mdl', 'proselint']
