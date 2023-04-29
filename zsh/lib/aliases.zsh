@@ -20,7 +20,7 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
     alias lsa='ls -lahF ${ls_colorflag}'
   fi
 else # Linux
-  colorflag="--color"
+  ls_colorflag="--color"
   alias l='ls -lAhF ${ls_colorflag}'
   alias ll='ls -lhF ${ls_colorflag}'
   alias la='ls -AhF ${ls_colorflag}'
@@ -33,6 +33,7 @@ alias rm='rm -i'
 alias du='du -h'
 alias cp='cp -i'
 alias mv='mv -i'
+alias mkdir='mkdir -p'
 alias pu="pushd"
 alias po="popd"
 alias ssr="ssh -l root"
