@@ -17,8 +17,9 @@ fi
 
 ## History config
 HISTFILE="${HOME}/.zsh_history"
-HISTSIZE="500000"
-SAVEHIST="500000"
+HISTSIZE="50000"
+SAVEHIST="50000"
+setopt appendhistory
 setopt EXTENDED_HISTORY         # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY       # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY            # Share history between all sessions.
