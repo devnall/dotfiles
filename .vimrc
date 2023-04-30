@@ -27,6 +27,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'airblade/vim-gitgutter'
 Plug 'markstory/vim-zoomwin'
 Plug 'mhartington/oceanic-next'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Stuff to try out
 "Plugin 'ctrlpvim/ctrlp.vim'
