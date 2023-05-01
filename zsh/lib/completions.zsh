@@ -1,11 +1,11 @@
 # zsh-completions
 #$fpath=(/usr/local/share/zsh-completions $fpath)
-if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
+#if type brew &>/dev/null; then
+#  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+#
+#  autoload -Uz compinit
+#  compinit
+#fi
 
 #if type brew &>/dev/null; then
 #  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -18,7 +18,7 @@ zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
 #autoload -Uz compinit
-#compinit
+compinit
 #autoload -U +X bashcompinit
 #bashcompinit
 
