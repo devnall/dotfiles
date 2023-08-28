@@ -95,6 +95,7 @@ cask 'iina'
 cask 'imageoptim'
 cask 'iterm2'
 cask 'itsycal'
+cask "json-viewer"
 cask 'keepingyouawake'
 cask 'keybase'
 cask 'keycastr'
@@ -149,16 +150,16 @@ brew "python"
 brew "wifi-password"
 
 # Old Work-specific CLI utilities
-brew "aws-iam-authenticator"
-brew "blackbox"
-brew "brew-gem"
-brew "gem-rubocop"
-brew "minikube"
-brew "rbenv"
-brew "datawire/blackbird/telepresence"
-brew "datawire/blackbird/telepresence-arm64"
-brew "devnall/custom/terraform@0.12.18"
-brew "yarn"
+#brew "aws-iam-authenticator"
+#brew "blackbox"
+#brew "brew-gem"
+#brew "gem-rubocop"
+#brew "minikube"
+#brew "rbenv"
+#brew "datawire/blackbird/telepresence"
+#brew "datawire/blackbird/telepresence-arm64"
+#brew "devnall/custom/terraform@0.12.18"
+#brew "yarn"
 
 # Old casks
 # cask 'divvy'
