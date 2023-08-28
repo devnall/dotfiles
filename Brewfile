@@ -69,6 +69,7 @@ brew "thefuck"
 brew "tldr"
 brew "tmux"
 brew "tree"
+brew "urlview" #required for tmux-urlview plugin
 brew "watch"
 brew "wget"
 brew "youtube-dl"
