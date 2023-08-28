@@ -17,7 +17,7 @@
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
-#autoload -Uz compinit
+autoload -Uz compinit
 compinit
 #autoload -U +X bashcompinit
 #bashcompinit
