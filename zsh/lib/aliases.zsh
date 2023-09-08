@@ -9,10 +9,15 @@ alias _='sudo'
 if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
-  if [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
+  if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
     alias l='eza -laFh --color-scale --icons --git'
     alias ll='eza -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
     alias la='eza -aFh --color-scale'
+  elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
+    alias l='exa -laFh --color-scale --icons --git'
+    alias ll='exa -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
+    alias la='exa -aFh --color-scale'
+    echo 'exa is deprecated, switch to eza'
   else
     alias l='ls -lAhF ${ls_colorflag}'
     alias ll='ls -lhF ${ls_colorflag}'
