@@ -82,6 +82,9 @@ if command -v bat > /dev/null; then
   alias bat_='bat --show-all --theme="Nord"'
 fi
 
+# Retrain my youtube-dl muscle memory
+alias youtube-dl='echo "Use yt-dlp instead!"'
+
 # Get IP Addresses
 # TODO: Turn this into a function that can handle different OSes
 alias ip='echo "External IP:   " `dig +short myip.opendns.com @resolver1.opendns.com` && echo "Ethernet (en3):" `ipconfig getifaddr en3` && echo "Wireless (en0):" `ipconfig getifaddr en0`'
