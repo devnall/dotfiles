@@ -71,7 +71,7 @@ disabled = true
 truncation_length = 5
 read_only = ""
 read_only_style = "bold red"
-home_symbol = " ~"
+home_symbol = " ~"
 
 [docker_context]
 symbol = " "
