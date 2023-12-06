@@ -49,11 +49,6 @@ alias ports='netstat -tulan' # show open ports
 alias k8='kubectl'
 alias cls='printf "\033c"'   # clear screen
 
-# If my fork of k is installed (via zplug), alias sane defaults to `k`
-if [[ `declare -f k_default > /dev/null; echo $?` -eq 0 ]]; then
-  alias k="k_default -Ah"
-fi
-
 # If prettyping is installed, use it instead of ping
 if [[ -f "$HOMEBREW_PREFIX/bin/prettyping" ]]; then
   alias ping="prettyping --nolegend"
