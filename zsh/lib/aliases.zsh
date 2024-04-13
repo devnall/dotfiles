@@ -10,9 +10,10 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
   if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
-    alias l='eza -lah -F --color-scale size --icons --git'
-    alias ll='eza -lah -F --time-style=long-iso --group --binary --color-scale size --icons --git --group-directories-first'
-    alias la='eza -ah -F --color-scale age'
+    alias l='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first'
+    alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias lt='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first --tree --level=3'
   elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
     alias l='exa -laFh --color-scale --icons --git'
     alias ll='exa -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
