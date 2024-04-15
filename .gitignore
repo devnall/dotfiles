@@ -4,6 +4,7 @@
 # git config --global core.excludesfile '~/.gitignore'
 
 secrets.txt
+config/iTerm2.prefs/com.googlecode.iterm2.plist
 
 #
 # Vagrant stuff

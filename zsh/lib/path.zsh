@@ -8,6 +8,11 @@ if [ -d "${HOME}"/.cargo/bin ]; then
   PATH="${HOME}/.cargo/bin:${PATH}"
 fi
 
+# Golang binaries
+if [ -d "${HOME}"/go/bin ]; then
+  PATH="${HOME}/go/bin:${PATH}"
+fi
+
 # gem-installed stuff
 # this should probably be a case statement to handle multiple installed versions?
 if [ -d "${HOME}/.gem/ruby/2.0.0/bin" ]; then
