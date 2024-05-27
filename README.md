@@ -49,3 +49,4 @@ TODOs
 * Try out atuin for cross-system shell history
 * Try out alacritty as an iTerm2 replacement?
 * Figure out my ongoing compinit/completion woes
+
