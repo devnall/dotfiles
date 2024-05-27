@@ -5,6 +5,7 @@
 : "${XDG_CONFIG_HOME:=$HOME/.config}"
 : "${XDG_DATA_HOME:=$HOME/.local/share}"
 
+# Set $HOMEBREW_PREFIX based on Mac architecture
 if [ "$(uname -m)" = "arm64" ]; then
   : "${HOMEBREW_PREFIX:=/opt/homebrew}"
 elif [ "$(uname -m)" = "x86_64" ]; then
@@ -100,3 +101,5 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+
+eval "$(zoxide init zsh)"

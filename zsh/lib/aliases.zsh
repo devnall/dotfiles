@@ -34,6 +34,11 @@ else # Linux
   alias lsal='ls -lahF ${ls_colorflag} | less -R'
 fi
 
+# Directory navigation
+if [[ -f "$HOMEBREW_PREFIX/bin/zoxide" ]]; then
+  alias cd="z"
+fi
+
 # Other
 alias rm='rm -i'
 alias du='du -h'
@@ -81,6 +86,7 @@ if command -v bat > /dev/null; then
   alias bat='bat --theme="Nord"'
   alias batp='bat -p --theme="Nord"'
   alias bat_='bat --show-all --theme="Nord"'
+  alias cat='bat --paging=never --theme="Nord"'
 fi
 
 # Retrain my youtube-dl muscle memory
