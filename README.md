@@ -10,6 +10,8 @@ A bunch of dotfiles for my environment and config files for my tools, including:
 
 These are a work in progress (and likely always will be) and are in dire need of a cleanup.
 
+These config files are managed by [chezmoi](https://www.chezmoi.io/).
+
 The stuff in archive/ isn't really being used in my current environment but I'm keeping it around in case I end up on an old box without the new hotness.
 
 Requirements
@@ -38,7 +40,12 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 TODOs
 -----
 
-* Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
 * Setup chez moi or similar for better dotfile management/setup
+* Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
 * Document/update the brewfile stuff
 * Consolidate my separate `vim` repo into this one
+* Improve readme/docs
+* Switch from sheldon to zinit for zsh plugin management?
+* Try out atuin for cross-system shell history
+* Try out alacritty as an iTerm2 replacement?
+* Figure out my ongoing compinit/completion woes
