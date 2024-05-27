@@ -19,11 +19,24 @@
   autocrlf = input
   safecrlf = true
   editor = vim
-  pager = diff-so-fancy
+#  pager = diff-so-fancy
+  pager = delta
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true   # use n and N to move between diff sections
+  side-by-side = true
+  syntax-theme = zenburn
+
+  # delta detects terminal colors automatically; set on e of these to disable auto-detection
+  #dark = true
+  #light = true
+[diff]
+  colorMoved = default
 [pager]
-  diff = diff-so-fancy | less --tabs=4 -RFX
-  show = diff-so-fancy | less --tabs=4 -RFX
+#  diff = diff-so-fancy | less --tabs=4 -RFX
+#  show = diff-so-fancy | less --tabs=4 -RFX
 [init]
   defaultBranch = main
 [color]
@@ -51,6 +64,7 @@
 [merge]
   log = true
   ff = false
+  conflictstyle = diff3
 [url "git@github.com:"]
   insteadOf = https://github.com/
   insteadOf = "gh:"
