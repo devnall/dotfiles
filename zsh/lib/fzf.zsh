@@ -21,6 +21,12 @@ if [ -f "$FZF_PATH/shell/key-bindings.zsh" ]; then
   source "$FZF_PATH/shell/key-bindings.zsh"
 fi
 
+# Shell integration
+# -----------------
+source <(fzf --zsh)
+
+# Command keybinds
+# ----------------
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --no-ignore'
 export FZF_DEFAULT_OPTS="--ansi"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
