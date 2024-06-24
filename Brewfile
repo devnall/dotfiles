@@ -50,7 +50,6 @@ brew "git"
 brew "git-delta"
 brew "gh"
 brew "gnu-tar"
-brew "grc"
 brew "grep"
 brew "gzip"
 brew "htop"
@@ -83,16 +82,17 @@ brew "kubernetes-cli"
 brew "kubectx"
 brew "packer"
 brew "terraform"
-brew "terraform_landscape"
 brew "tflint"
 
 # Install cask apps
+cask '1password'
+cask '1password-cli'
 cask 'brave-browser'
 cask 'discord'
 cask 'docker'
 cask 'firefox'
 cask 'google-chrome'
-cask 'google-cloud-sdk'
+#cask 'google-cloud-sdk'
 cask 'iina'
 cask 'imageoptim'
 cask 'iterm2'

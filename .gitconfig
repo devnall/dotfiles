@@ -1,7 +1,8 @@
 # This is Git's per-user configuration file
 [user]
-  name = Drew Nall
-  email = devnall@gmail.com
+  name = 
+  email = 
+  signingkey = 
 [credential]
   helper = osxkeychain
 [alias]
@@ -74,5 +75,9 @@
   insteadOf = "gst:"
   pushInsteadOf = "gist:"
   pushInsteadOf = "git://gist.github.com"
+[include]
+  path = ~/.dotfiles/config/git/.gitconfig-user
 [includeIf "gitdir:~/Work/"]
-  path = ~/Work/.gitconfig
+  path = ~/.dotfiles/config/git/.gitconfig-work
+[gpg]
+	format = ssh
