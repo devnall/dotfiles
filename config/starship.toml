@@ -93,7 +93,8 @@ disabled = true
 disabled = true
 
 [git_branch]
-symbol = " "
+format = "[$symbol on $branch(:$remote_branch) ]($style)"
+symbol = ""
 style = "bold green"
 
 [git_metrics]
@@ -118,6 +119,11 @@ symbol = ""
 
 [helm]
 symbol = "ﴱ"
+
+[hostname]
+ssh_only = true
+format = "[$ssh_symbol$hostname ]"
+ssh_symbol = " "
 
 [java]
 disabled = true
