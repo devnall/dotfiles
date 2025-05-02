@@ -4,33 +4,26 @@
 #############################################
 
 # Usage:
-# See http://robots.thoughtbot.com/brewfile-a-gemfile-but-for-homebrew
-# To use the Brewfile, tap hombrew/bundle to install the command,
-# then run it in a directory containing a brewfile.
+# See https://docs.brew.sh/Brew-Bundle-and-Brewfile
 # 
-# > brew tap homebrew/bundle
 # > brew bundle
-#
-# Or use the brewfile.sh wrapper
 
-
-# Tap some repos
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
 
 # Install some brew-related stuff
 brew "brew-cask-completion"
 
 # Install core shells and completion
 brew "zsh"
+brew "zoxide"
 brew "zplug"
+brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-history-substring-search"
 brew "zsh-fast-syntax-highlighting"
 
 # Install vim
 brew "vim"
+brew "neovim"
 
 # Install core command line utilities
 brew "ack"
@@ -41,7 +34,7 @@ brew "coreutils"
 brew "curl"
 brew "delta"
 brew "diff-so-fancy"
-brew "dog"
+brew "doggo"
 brew "eza"
 brew "fd"
 brew "fzf"
@@ -55,7 +48,10 @@ brew "gzip"
 brew "htop"
 brew "httpie"
 brew "inetutils"
+brew "ipcalc"
 brew "jq"
+brew "lazydocker"
+brew "lazygit"
 brew "ncdu"
 brew "nmap"
 brew "prettyping"
@@ -66,55 +62,65 @@ brew "shellcheck"
 brew "ssh-copy-id"
 brew "starship"
 brew "thefuck"
-brew "tldr"
+brew "tealdeer"
 brew "tmux"
 brew "tree"
 #brew "urlview" #required for tmux-urlview plugin
 brew "watch"
 brew "wget"
-brew "youtube-dl"
+brew "xz"
+brew "yt-dlp"
 
 # Work-specific CLI utilities
 brew "ansible"
 brew "aws-vault"
 brew "helm"
 brew "kubernetes-cli"
+brew "kube-capacity"
 brew "kubectx"
-brew "packer"
-brew "terraform"
+#brew "packer"
+brew "ruby"
+brew "tenv"
+#brew "terraform"
 brew "tflint"
 
+tap "robscott/tap"
+brew "robscott/tap/kube-capacity"
+
 # Install cask apps
-cask '1password'
-cask '1password-cli'
-cask 'brave-browser'
-cask 'discord'
+#cask '1password'
+#cask '1password-cli'
+#cask 'brave-browser'
+#cask 'discord'
+cask 'alacritty'
 cask 'docker'
 cask 'firefox'
-cask 'google-chrome'
+#cask 'google-chrome'
 #cask 'google-cloud-sdk'
 cask 'iina'
 cask 'imageoptim'
 cask 'iterm2'
 cask 'itsycal'
+cask "jordanbaird-ice"
 cask "json-viewer"
 cask 'keepingyouawake'
-cask 'keybase'
-cask 'keycastr'
-cask 'kindle'
+#cask 'keybase'
+#cask 'keycastr'
+#cask 'kindle'
 cask 'lens'
-cask 'marked'
-cask 'obsidian'
-cask 'overkill'
+#cask 'marked'
+#cask 'obsidian'
+#cask 'overkill'
 cask 'pika'
 cask 'shottr'
-cask 'slack'
+#cask 'slack'
 cask 'spotify'
 cask 'steam'
 cask 'virtualbox'
 cask 'visual-studio-code'
-cask 'vlc'
-cask 'zoom'
+cask 'vscodium'
+#cask 'vlc'
+#cask 'zoom'
 
 # App Store Apps
 # 1Password
@@ -141,14 +147,12 @@ brew "bash-completion"
 
 # Install optional command line utilities
 brew "bandwhich"
-brew "bluetoothconnector"
-brew "doitlive"
-brew "fx"
-brew "gnupg"
+#brew "bluetoothconnector"
+#brew "doitlive"
+#brew "fx"
+#brew "gnupg"
 brew "iftop"
-brew "ipcalc"
-brew "neofetch"
-brew "python"
+#brew "python"
 brew "wifi-password"
 
 # Old Work-specific CLI utilities
