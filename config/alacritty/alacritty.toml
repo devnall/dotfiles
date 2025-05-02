@@ -1,0 +1,48 @@
+
+[env]
+TERM = "xterm-256color"
+
+[bell]
+animation = "EaseOutQuart"
+color = "0xf43753"
+duration = 200
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[font]
+size = 14.0
+
+[font.normal]
+family = "SauceCodePro Nerd Font Mono"
+style = "Regular"
+
+[window]
+padding.x = 8
+padding.y = 5
+decorations = "Buttonless"
+opacity = 0.90
+blur = true
+#option_as_alt = "Both"
+
+[scrolling]
+history = 25000
+
+[cursor]
+blink_interval = 750 #default
+blink_timeout = 5 #default
+unfocused_hollow = true
+
+vi_mode_style.blinking = "On"
+
+[mouse]
+hide_when_typing = true
+
+[general]
+import = [
+# "~/.config/alacritty/themes/tender.toml"
+#  "~/.config/alacritty/themes/gotham.toml"
+#  "~/.config/alacritty/themes/material_ocean.toml"
+  "~/.config/alacritty/themes/darknall.toml"
+#  "~/.config/alacritty/themes/nord.toml"
+]
