@@ -6,6 +6,8 @@ eval "$(rbenv init -)"
 ## aws-vault stuff
 
 export AWS_VAULT_KEYCHAIN_NAME=login
+export AWS_PROFILE="cr-prod"
+export AWS_REGION=us-east-1
 
 function _ps1_value() {
   if [ -z "$AWS_VAULT" ]; then
@@ -19,9 +21,9 @@ export PS1="[$(_ps1_value)]\$ "
 
 function ave() {
   if [ $# -eq 0 ]; then
-    aws-vault exec -- cr-prod-admin
+    aws-vault exec --duration=12h -- cr-prod-admin
   else
-    aws-vault exec -- "$@"
+    aws-vault exec --duration=12h --  "$@"
   fi
 }
 
