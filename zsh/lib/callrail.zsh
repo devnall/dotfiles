@@ -35,10 +35,11 @@ function avl() {
   fi
 }
 
-function wfh() {
-  ave cr-prod-admin bingo aws allow
-  ave cr-stage-admin bingo aws allow
-}
+# Shouldn't need this anymore, prob safe to delete
+#function wfh() {
+#  ave cr-prod-admin bingo aws allow
+#  ave cr-stage-admin bingo aws allow
+#}
 
 ## docker stuff
 [ -s "/Users/dnall/.dockercfg" ] && . "/Users/dnall/.dockercfg"
