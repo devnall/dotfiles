@@ -87,6 +87,21 @@ brew "tflint"
 tap "robscott/tap"
 brew "robscott/tap/kube-capacity"
 
+## CallRail local dev stuff
+#brew "rbenv"
+#brew "nvm"
+#brew "yarn"
+#brew "libpq", link: true
+#brew "libsndfile"
+#brew "redis"
+#brew "rabbitmq"
+#tap "puma/puma"
+#brew "puma/puma/puma-dev"
+#brew "shared-mime-info"
+#brew "libsodium"
+
+
+
 # Install cask apps
 #cask '1password'
 #cask '1password-cli'
