@@ -57,9 +57,24 @@ fi
 #  fi
 #fi
 
-PATH="${HOME}/homebrew/bin:${PATH}"
-PATH="${HOME}/homebrew/sbin:${PATH}"
-PATH="${HOME}/homebrew/opt:${PATH}"
+if [ -d "${HOME}/homebrew/bin" ]; then
+  PATH="${HOME}/homebrew/bin:${PATH}"
+fi
+if [ -d "/opt/homebrew/bin" ]; then
+  PATH="/opt/homebrew/bin:${PATH}"
+fi
+if [ -d "${HOME}/homebrew/sbin" ]; then
+  PATH="${HOME}/homebrew/sbin:${PATH}"
+fi
+if [ -d "/opt/homebrew/sbin" ]; then
+  PATH="/opt/homebrew/sbin:${PATH}"
+fi
+if [ -d "${HOME}/homebrew/opt" ]; then
+  PATH="${HOME}/homebrew/opt:${PATH}"
+fi
+if [ -d "/opt/homebrew/opt" ]; then
+  PATH="/opt/homebrew/opt:${PATH}"
+fi
 
 # My ~/bin dir
 if [ -d "${HOME}/bin" ]; then
