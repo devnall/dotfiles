@@ -71,21 +71,21 @@ brew "wget"
 brew "xz"
 brew "yt-dlp"
 
-# Work-specific CLI utilities
-brew "ansible"
-brew "aws-vault"
-brew "helm"
-brew "kubernetes-cli"
-brew "kube-capacity"
-brew "kubectx"
+## Work-specific CLI utilities
+## Uncomment on work machines
+#tap "robscott/tap"
+#brew "ansible"
+#brew "aws-vault"
+#brew "helm"
+#brew "kubernetes-cli"
+#brew "kube-capacity"
+#brew "kubectx"
 #brew "packer"
-brew "ruby"
-brew "tenv"
+#brew "ruby"
+#brew "tenv"
 #brew "terraform"
-brew "tflint"
-
-tap "robscott/tap"
-brew "robscott/tap/kube-capacity"
+#brew "tflint"
+#brew "robscott/tap/kube-capacity"
 
 ## CallRail local dev stuff
 #brew "rbenv"
@@ -117,39 +117,35 @@ cask 'imageoptim'
 cask 'iterm2'
 cask 'itsycal'
 cask "jordanbaird-ice"
-cask "json-viewer"
 cask 'keepingyouawake'
-#cask 'keybase'
-#cask 'keycastr'
 #cask 'kindle'
-cask 'lens'
-#cask 'marked'
-#cask 'obsidian'
-#cask 'overkill'
+cask 'obsidian'
 cask 'pika'
 cask 'shottr'
-#cask 'slack'
 cask 'spotify'
 cask 'steam'
-cask 'virtualbox'
+#cask 'virtualbox'
 cask 'visual-studio-code'
 cask 'vscodium'
 #cask 'vlc'
 #cask 'zoom'
+
+## Work casks
+## Uncomment on work machines
+#cask 'lens'
 
 # App Store Apps
 # 1Password
 # Be Focused Pro
 # Bear
 # Day One
-# Deliveries
-# ExifPurge
 # Fantastical
 # GarageBand
 # Logic Pro
 # Paprika Recipe Manager
+# Parcels
 # Pi Stats
-# Pixelmator
+# Slack
 
 # Other Apps to install
 # Alfred.app
@@ -169,18 +165,3 @@ brew "bandwhich"
 brew "iftop"
 #brew "python"
 brew "wifi-password"
-
-# Old Work-specific CLI utilities
-#brew "aws-iam-authenticator"
-#brew "blackbox"
-#brew "brew-gem"
-#brew "gem-rubocop"
-#brew "minikube"
-#brew "rbenv"
-#brew "datawire/blackbird/telepresence"
-#brew "datawire/blackbird/telepresence-arm64"
-#brew "devnall/custom/terraform@0.12.18"
-#brew "yarn"
-
-# Old casks
-# cask 'divvy'
