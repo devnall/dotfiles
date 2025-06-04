@@ -65,3 +65,7 @@ PATH="${HOME}/homebrew/opt:${PATH}"
 if [ -d "${HOME}/bin" ]; then
   PATH="${HOME}/bin:${PATH}"
 fi
+
+if [[ -d "/opt/homebrew/" ]]; then
+  PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+fi
