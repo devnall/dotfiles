@@ -18,7 +18,7 @@ Requirements
 - Homebrew installed
 - Most of the stuff in the Brewfile installed
 
-- Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.ackrc`, `.gitconfig` into ~
+- Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.gitconfig` into ~
 - Symlink `starship.toml` into ~/.config
 
 - Call brew's shellenv in .zprofile:

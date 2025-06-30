@@ -1,0 +1,2 @@
+# Don't let ripgrep vomit really long lines to my terminal; show a preview instead
+--max-columns=150
