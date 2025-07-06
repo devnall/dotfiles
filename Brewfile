@@ -26,7 +26,7 @@ brew "vim"
 brew "neovim"
 
 # Install core command line utilities
-brew "ack"
+#brew "ack"
 brew "awscli"
 brew "bat"
 brew "btop"
