@@ -8,17 +8,25 @@ A bunch of dotfiles for my environment and config files for my tools, including:
 * tmux
 * starship prompt
 
-These are a work in progress (and likely always will be) and are in dire need of a cleanup.
+Managed by [dotbot](https://github.com/anishathalye/dotbot).
 
-The stuff in archive/ isn't really being used in my current environment but I'm keeping it around in case I end up on an old box without the new hotness.
+See StuffIUse.md for a list of tools and apps that I use.
+
+These are a work in progress (and likely always will be).
 
 Requirements
 ------------
 
+To setup a new machine:
+```
+git clone git@github.com:devnall/dotfiles.git --recursive
+cd dotfiles && ./install
+```
+
 - Homebrew installed
 - Most of the stuff in the Brewfile installed
 
-- Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.gitconfig` into ~
+- Symlink `.gitconfig` into ~
 - Symlink `starship.toml` into ~/.config
 
 - Call brew's shellenv in .zprofile:
@@ -39,6 +47,5 @@ TODOs
 -----
 
 * Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
-* Setup chez moi or similar for better dotfile management/setup
 * Document/update the brewfile stuff
 * Consolidate my separate `vim` repo into this one
