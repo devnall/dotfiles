@@ -1,0 +1,66 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean: ['~', '~/bin']
+
+- link:
+    ~/.zshrc:
+      path: zsh/zshrc.zsh
+      force: true
+    ~/.config/zsh/lib:
+      path: zsh/lib
+      force: true
+    ~/.config/zsh/zfunctions:
+      path: zsh/zfunctions
+      force: true
+
+    ~/.config/tmux/.tmux.conf:
+      path: tmux/tmux.conf
+      force: true
+
+    ~/.vimrc:
+      path: vim/vimrc
+    ~/.config/nvim:
+      path: nvim
+      force: true
+
+    ~/.bashrc:
+      path: bash/bashrc
+      force: true
+
+    ~/.config/ghostty:
+      path: ghostty
+      force: true
+
+    ~/.config/alacritty:
+      path: alacritty
+      force: true
+
+    ~/.config/sheldon:
+      path: sheldon
+      force: true
+
+    ~/.config/starship.toml:
+      path: starship/starship.toml
+
+    ~/bin:
+      glob: true
+      path: scripts/*
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    -
+     command: ./macos/setup-homebrew.sh
+     description: Installing Homebrew and essential packages
+     stdout: true
+    -
+     description: Downloading vim-plug to ~/.vim/autoload/plug.vim
+     command: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+     stdout: true
+    -
+     command: ./git/set-gitconfig.sh
+     description: Configuring git
+     stdout: true
+     quiet: false
