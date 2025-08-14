@@ -17,13 +17,13 @@
       force: true
 
     ~/.config/tmux/.tmux.conf:
-      path: tmux/tmux.conf
+      path: config/tmux/tmux.conf
       force: true
 
     ~/.vimrc:
-      path: vim/vimrc
+      path: config/vim/vimrc
     ~/.config/nvim:
-      path: nvim
+      path: config/nvim
       force: true
 
     ~/.bashrc:
@@ -31,36 +31,31 @@
       force: true
 
     ~/.config/ghostty:
-      path: ghostty
+      path: config/ghostty
       force: true
 
     ~/.config/alacritty:
-      path: alacritty
+      path: config/alacritty
       force: true
 
     ~/.config/sheldon:
-      path: sheldon
+      path: config/sheldon
       force: true
 
     ~/.config/starship.toml:
-      path: starship/starship.toml
+      path: config/starship/starship.toml
 
     ~/bin:
       glob: true
-      path: scripts/*
+      path: bin/*
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     -
-     command: ./macos/setup-homebrew.sh
+     command: ./config/macos/setup-homebrew.sh
      description: Installing Homebrew and essential packages
      stdout: true
     -
      description: Downloading vim-plug to ~/.vim/autoload/plug.vim
      command: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
      stdout: true
-    -
-     command: ./git/set-gitconfig.sh
-     description: Configuring git
-     stdout: true
-     quiet: false
