@@ -45,6 +45,9 @@
     ~/.config/starship.toml:
       path: config/starship/starship.toml
 
+    ~/.config/bat/config:
+      path: config/bat/config
+
     ~/bin:
       glob: true
       path: bin/*
