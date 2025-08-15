@@ -4,8 +4,9 @@
 
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
---theme-light="Monokai Extended Light"
---theme-dark="Nord"
+--theme="Coldark-Cold"
+#--theme-light="Monokai Extended Light"
+#--theme-dark="Nord"
 
 # Specify when to use colored output. Automatic mode enables colors if an
 # interactive terminal is detected, colors are automatically disabled if
