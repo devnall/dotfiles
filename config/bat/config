@@ -2,11 +2,13 @@
 # a command-line option that you want to pass to `bat` by default. You can
 # run `bat --help` to get a list of all possible configuration options.
 
-# Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
-# for a list of all available themes
---theme="Coldark-Cold"
-#--theme-light="Monokai Extended Light"
-#--theme-dark="Nord"
+# Use MacOS Light/Dark theme
+--theme="auto:system"
+#
+# Specify desired theme(s). Run `bat --list-themes` for a list of all available themes
+#--theme="Coldark-Cold"
+--theme-light="Monokai Extended Light"
+--theme-dark="Nord"
 
 # Specify when to use colored output. Automatic mode enables colors if an
 # interactive terminal is detected, colors are automatically disabled if
