@@ -8,10 +8,6 @@
 # 
 # > brew bundle
 
-
-# Install some brew-related stuff
-brew "brew-cask-completion"
-
 # Install core shells and completion
 brew "zsh"
 brew "zoxide"
