@@ -3,7 +3,15 @@
       relink: true
       create: true
 
-- clean: ['~', '~/bin']
+- clean: ['~', '~/bin', '~/.config']
+
+- clean:
+  ~/:
+    force: true
+  ~/.config:
+    recursive: true
+  ~/.bin:
+    recursive: true
 
 - link:
     ~/.zshrc:
@@ -16,7 +24,7 @@
       path: zsh/zfunctions
       force: true
 
-    ~/.config/tmux/.tmux.conf:
+    ~/.config/tmux/tmux.conf:
       path: config/tmux/tmux.conf
       force: true
 
