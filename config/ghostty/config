@@ -1,2 +1,24 @@
-font-family = "SauceCodePro Nerd Font Mono"
+# themes
 theme = dark:darknall,light:rose-pine-dawn
+
+# font
+font-family = "SauceCodePro Nerd Font Mono"
+font-size = 15
+font-thicken = true
+
+# clipboard
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+
+# window
+window-padding-y = 0
+
+# mouse
+mouse-hide-while-typing = true
+
+# titlebar
+macos-titlebar-style = hidden
+
+# update
+auto-update-channel = stable
