@@ -35,7 +35,7 @@
       force: true
 
     ~/.bashrc:
-      path: bash/bashrc
+      path: config/bash/bashrc
       force: true
 
     ~/.config/ghostty:
