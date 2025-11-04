@@ -1,5 +1,5 @@
 # themes
-theme = dark:darknall,light:rose-pine-dawn
+theme = dark:darknall,light:"Rose Pine Dawn"
 
 # font
 font-family = "SauceCodePro Nerd Font Mono"
@@ -18,7 +18,7 @@ window-padding-y = 0
 mouse-hide-while-typing = true
 
 # titlebar
-macos-titlebar-style = hidden
+macos-titlebar-style = transparent
 
 # update
 auto-update-channel = stable
