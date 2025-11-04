@@ -3,8 +3,6 @@
       relink: true
       create: true
 
-- clean: ['~', '~/bin', '~/.config']
-
 - link:
     ~/.zshrc:
       path: zsh/zshrc.zsh
@@ -47,6 +45,9 @@
 
     ~/.config/bat/config:
       path: config/bat/config
+
+    ~/.config/btop:
+      path: config/btop
 
     ~/bin:
       glob: true
