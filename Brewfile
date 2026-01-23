@@ -69,9 +69,11 @@ brew "yt-dlp"
 
 ## Work-specific CLI utilities
 ## Uncomment on work machines
+#tap aws/tap
 #tap "robscott/tap"
 #brew "ansible"
 #brew "aws-vault"
+#brew "eks-node-viewer"
 #brew "helm"
 #brew "kubernetes-cli"
 #brew "kube-capacity"
