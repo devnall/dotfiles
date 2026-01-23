@@ -71,7 +71,11 @@ disabled = true
 truncation_length = 5
 read_only = ""
 read_only_style = "bold red"
-home_symbol = " ~"
+home_symbol = ' ~'
+
+[directory.substitutions]
+# Show the icon if in base ~ dir but don't show it when in subdirs
+" ~/" = "~/"
 
 [docker_context]
 symbol = " "
@@ -139,9 +143,16 @@ disabled = true
 disabled = true
 
 [kubernetes]
-disabled = true 
-symbol = "k8sﴱ "
-style = "blue"
+disabled = false
+symbol = "ﴱ"
+style    = "fg:#3DA2FF"       # kube-ish bright blue
+format   = "[$symbol $context:$namespace]($style) "
+# only show if auth'ed to AWS
+detect_env_vars = ['AWS_VAULT']
+
+[[kubernetes.contexts]]
+context_pattern = "prod"
+style = "fg:#E16C58"
 
 [lua]
 disabled = true
