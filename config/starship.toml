@@ -16,7 +16,6 @@ $git_state\
 $git_metrics\
 $git_status\
 $docker_context\
-$package\
 $golang\
 $kubernetes\
 $helm\
@@ -30,7 +29,6 @@ $custom\
 $cmd_duration\
 $line_break\
 $jobs\
-$battery\
 $time\
 $status\
 $shell\
@@ -40,32 +38,14 @@ $character"""
 symbol = " "
 style = "bold yellow"
 
-[battery]
-disabled = true
-
 [character]
 success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
 error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
 vicmd_symbol ="[](bold green)[❯](bold blue)"
 
-[cmake]
-disabled = true
-
 [cmd_duration]
 show_notifications = false
 min_time_to_notify = 30_000
-
-[conda]
-disabled = true
-
-[crystal]
-disabled = true
-
-[dart]
-disabled = true
-
-[deno]
-disabled = true
 
 [directory]
 truncation_length = 5
@@ -80,21 +60,6 @@ home_symbol = ' ~'
 [docker_context]
 symbol = " "
 style = "bold blue"
-
-[dotnet]
-disabled = true
-
-[elixir]
-disabled = true
-
-[elm]
-disabled = true
-
-[erlang]
-disabled = true
-
-[gcloud]
-disabled = true
 
 [git_branch]
 format = "[$symbol on $branch(:$remote_branch) ]($style)"
@@ -129,18 +94,9 @@ ssh_only = true
 format = "[$ssh_symbol$hostname ]"
 ssh_symbol = " "
 
-[java]
-disabled = true
-
 [jobs]
 symbol = " "
 style = "bold red"
-
-[julia]
-disabled = true
-
-[kotlin]
-disabled = true
 
 [kubernetes]
 disabled = false
@@ -154,70 +110,15 @@ detect_env_vars = ['AWS_VAULT']
 context_pattern = "prod"
 style = "fg:#E16C58"
 
-[lua]
-disabled = true
-
-[nim]
-disabled = true
-
-[nix_shell]
-disabled = true
-
-[nodejs]
-disabled = true
-
-[ocaml]
-disabled = true
-
-[openstack]
-disabled = true
-
-[perl]
-disabled = true
-
-[php]
-disabled = true
-
-[purescript]
-disabled = true
-
 [python]
 symbol = " "
 style = "green"
 
-[rlang]
-disabled = true
-
-[red]
-disabled = true
-
 [ruby]
 symbol = " "
 
-[rust]
-symbol = ""
-
-[scala]
-disabled = true
-
-[singularity]
-disabled = true
-
-[swift]
-disabled = true
-
 [terraform]
 symbol = "TF  "
-
-[vlang]
-disabled = true
-
-[vcsh]
-disabled = true
-
-[zig]
-disabled = true
-
 
 
 # Disable the package module, hiding it from the prompt completely
