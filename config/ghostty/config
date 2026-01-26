@@ -1,5 +1,5 @@
 # themes
-theme = dark:darknall,light:rose-pine-dawn
+theme = dark:darknall,light:"Rose Pine Dawn"
 
 # font
 font-family = "SauceCodePro Nerd Font Mono"
@@ -7,7 +7,7 @@ font-size = 15
 font-thicken = true
 
 # quick terminal
-keybind = global:cmd+grave_accent=toggle_quick_terminal
+#keybind = global:cmd+grave_accent=toggle_quick_terminal
 
 # clipboard
 clipboard-read = allow
