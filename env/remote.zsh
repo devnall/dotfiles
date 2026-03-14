@@ -1,6 +1,8 @@
 # Remote/server shell config — sourced when ~/.remote marker exists
 # Goal: muscle-memory-friendly, zero external dependencies required
 
+export STARSHIP_CONFIG=~/.config/starship-remote.toml
+
 # System ls fallback (no eza on most servers)
 if ! command -v eza > /dev/null; then
   alias l='ls -lahF'
