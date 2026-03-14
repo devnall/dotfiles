@@ -11,7 +11,7 @@
 #  FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
 #fi
 
-FPATH="~/.zsh/completion:$FPATH"
+FPATH="$HOME/.zsh/completion:$FPATH"
 
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
@@ -25,12 +25,12 @@ compinit
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
 
 # AWS cli completions
-if [ -f /usr/local/share/zsh/site-functions/aws_zsh_completer.sh ]; then
-  source /usr/local/share/zsh/site-functions/aws_zsh_completer.sh
+if [ -f $HOMEBREW_PREFIX/share/zsh/site-functions/aws_zsh_completer.sh ]; then
+  source $HOMEBREW_PREFIX/share/zsh/site-functions/aws_zsh_completer.sh
 fi
 
 # kubectl completions
-if [ -f /usr/local/bin/kubectl ]; then
+if command -v kubectl &> /dev/null; then
   source <(kubectl completion zsh)
 fi
 
