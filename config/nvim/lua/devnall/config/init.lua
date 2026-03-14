@@ -1,0 +1,5 @@
+require("devnall.config.options")
+--require("devnall.config.cmds")
+--require("devnall.config.autocmds")
+require("devnall.config.lazy")
+--require("devnall.config.keymaps")
