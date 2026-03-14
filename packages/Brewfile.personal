@@ -3,7 +3,6 @@
 # Sourced by install when ~/.personal marker exists
 
 #brew "mas"            # Mac App Store CLI
-brew "lazygit"        # Terminal UI for git
 
 # Casks
 cask "iina"
