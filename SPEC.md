@@ -13,7 +13,7 @@ dotfiles/
 ├── .gitignore
 ├── SPEC.md
 ├── dotbot/                   # Git submodule
-├── install.conf.yaml         # Dotbot config
+├── install.config.yaml       # Dotbot config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
 ├── archive/                  # Deprecated configs — to be reviewed/culled
@@ -34,7 +34,9 @@ dotfiles/
 │   └── zfunctions/           # Autoloaded zsh functions
 ├── env/
 │   ├── work.zsh              # Work-specific shell overrides
-│   └── personal.zsh          # Personal-specific shell overrides
+│   ├── personal.zsh          # Personal-specific shell overrides
+│   ├── remote.zsh            # Remote server baseline overrides
+│   └── remote-full.zsh       # Remote servers with Homebrew + full tool suite
 ├── packages/
 │   ├── Brewfile.universal    # Installed on all machines
 │   ├── Brewfile.work         # Installed on work machines only
@@ -60,8 +62,8 @@ dotfiles/
 ### 2.1 Configuration Management (Dotbot)
 
 - **Tool:** Use `dotbot` for symlinking and bootstrapping.
-- **Idempotency:** The `install` script and `install.conf.yaml` execution must be 100% idempotent. Running the install script multiple times must yield the exact same system state without errors or duplications.
-- **Symlink targets:** `install.conf.yaml` must symlink at minimum: `~/.zshrc`, `~/.bashrc`, `~/.config/nvim`, and all tool configs under `config/` to their correct XDG locations.
+- **Idempotency:** The `install` script and `install.config.yaml` execution must be 100% idempotent. Running the install script multiple times must yield the exact same system state without errors or duplications.
+- **Symlink targets:** `install.config.yaml` must symlink at minimum: `~/.zshrc`, `~/.bashrc`, `~/.config/nvim`, and all tool configs under `config/` to their correct XDG locations.
 
 ### 2.2 Shell Environment
 
@@ -77,13 +79,18 @@ dotfiles/
 
 ### 2.3 Environment Separation (Work vs. Personal)
 
-- **Detection:** A marker file approach — `~/.work` or `~/.personal` is touched during machine setup. No hostname detection or `.env.local` inspection for environment type.
-- **Shell loader:** Sources `env/work.zsh` or `env/personal.zsh` based on marker file existence. If neither marker exists, only universal config loads.
+- **Detection:** A marker file approach — one of `~/.work`, `~/.personal`, `~/.remote-full`, or `~/.remote` is touched during machine setup. No hostname detection or `.env.local` inspection for environment type.
+- **Shell loader:** Sources the corresponding `env/*.zsh` file based on marker file existence. If no marker exists, only universal config loads.
 - **Dotbot install:** Runs `brew bundle --file=packages/Brewfile.work` or `Brewfile.personal` based on the same marker file.
 - **Brewfiles:**
   - `Brewfile.universal` — always installed
   - `Brewfile.work` — installed when `~/.work` exists
   - `Brewfile.personal` — installed when `~/.personal` exists
+- **Marker files:**
+  - `~/.work` — work machine (full macOS setup)
+  - `~/.personal` — personal machine (full macOS setup)
+  - `~/.remote-full` — Linux server with Homebrew and full tool suite installed
+  - `~/.remote` — minimal Linux server (no Homebrew; skips Brewfiles entirely)
 
 ### 2.4 Secrets Management
 
@@ -129,10 +136,10 @@ dotfiles/
 
 ## 4. Acceptance Criteria
 
-1. `install.conf.yaml` successfully symlinks `~/.zshrc`, `~/.bashrc`, `~/.config/nvim`, and all tool configs to their correct locations.
+1. `install.config.yaml` successfully symlinks `~/.zshrc`, `~/.bashrc`, `~/.config/nvim`, and all tool configs to their correct locations.
 2. Shell starts without errors on macOS with zsh.
 3. Non-interactive subshells do not emit prompt escape codes or extraneous output.
 4. `brew bundle --file=packages/Brewfile.universal` installs cleanly; work/personal Brewfiles install conditionally based on marker file (`~/.work` or `~/.personal`).
 5. Neovim opens without blocking errors even when LSPs are absent.
 6. `~/.env.local` and `~/.secrets.local` are sourced silently if present, silently skipped if absent.
-7. `~/.work` or `~/.personal` marker file controls which env config and Brewfile loads; if neither exists, only universal config loads.
+7. Marker file controls which env config loads: `~/.work` → `env/work.zsh`, `~/.personal` → `env/personal.zsh`, `~/.remote-full` → `env/remote-full.zsh`, `~/.remote` → `env/remote.zsh`; if none exists, only universal config loads.

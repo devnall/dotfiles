@@ -33,14 +33,16 @@ git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
 Touch a marker file before running the installer — this controls which env config and Brewfile load:
 
 ```sh
-touch ~/.work      # work machine
+touch ~/.work         # work machine (full macOS setup)
 # or
-touch ~/.personal  # personal machine
+touch ~/.personal     # personal machine (full macOS setup)
 # or
-touch ~/.remote    # remote/server (skips Homebrew; see Remote/Server Setup below)
+touch ~/.remote-full  # Linux server with Homebrew + full tool suite
+# or
+touch ~/.remote       # minimal Linux server (skips Homebrew; see Remote/Server Setup below)
 ```
 
-If neither exists, only the universal config loads. You can switch at any time and re-run `./install`.
+If none exists, only the universal config loads. You can switch at any time and re-run `./install`.
 
 ### 4. Run the installer
 
@@ -74,10 +76,11 @@ export AWS_DEFAULT_REGION=us-east-1
 ### Environment separation
 
 ```
-~/.work exists     → sources env/work.zsh + installs packages/Brewfile.work
-~/.personal exists → sources env/personal.zsh + installs packages/Brewfile.personal
-~/.remote exists   → sources env/remote.zsh + skips Homebrew/Brewfiles entirely
-neither exists     → only universal config loads
+~/.work exists         → sources env/work.zsh + installs packages/Brewfile.work
+~/.personal exists     → sources env/personal.zsh + installs packages/Brewfile.personal
+~/.remote-full exists  → sources env/remote-full.zsh (Linux server with Homebrew + full tool suite)
+~/.remote exists       → sources env/remote.zsh + skips Homebrew/Brewfiles entirely
+none exists            → only universal config loads
 ```
 
 The marker file is checked at shell startup (for env sourcing) and at install time (for Brewfiles). To switch machine type: remove the old marker, touch the new one, re-run `./install`.
@@ -174,7 +177,8 @@ dotfiles/
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists
-│   └── remote.zsh            # Sourced when ~/.remote exists (Linux servers)
+│   ├── remote-full.zsh       # Sourced when ~/.remote-full exists (Linux + Homebrew)
+│   └── remote.zsh            # Sourced when ~/.remote exists (minimal Linux servers)
 ├── packages/
 │   ├── Brewfile.universal    # Installed on every machine
 │   ├── Brewfile.work         # Installed when ~/.work exists
