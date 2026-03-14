@@ -16,13 +16,10 @@ $git_state\
 $git_metrics\
 $git_status\
 $docker_context\
-$golang\
 $kubernetes\
 $helm\
 $python\
-$ruby\
 $terraform\
-$vagrant\
 $aws\
 $env_var\
 $custom\
@@ -35,13 +32,13 @@ $shell\
 $character"""
 
 [aws]
-symbol = " "
-style = "bold yellow"
+symbol = " "
+style = "bold #ddbc44"
 
 [character]
-success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
-error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
-vicmd_symbol ="[](bold green)[❯](bold blue)"
+success_symbol = "[❯](bold #087fab)[❯](bold #6ab4c2)[❯](bold #38c9a7)"
+error_symbol = "[✖](bold #e16c58)[✖](bold #e16c58)[❯](bold #e16c58)"
+vicmd_symbol ="[](bold #38c9a7)[❯](bold #087fab)"
 
 [cmd_duration]
 show_notifications = false
@@ -49,74 +46,72 @@ min_time_to_notify = 30_000
 
 [directory]
 truncation_length = 5
-read_only = ""
+read_only = ""
 read_only_style = "bold red"
-home_symbol = ' ~'
+home_symbol = ' ~'
+style = "#6ab4c2"
 
 [directory.substitutions]
 # Show the icon if in base ~ dir but don't show it when in subdirs
-" ~/" = "~/"
+" ~/" = "~/"
 
 [docker_context]
-symbol = " "
-style = "bold blue"
+symbol = " "
+style = "#257994"
 
 [git_branch]
 format = "[$symbol on $branch(:$remote_branch) ]($style)"
-symbol = ""
-style = "bold green"
+symbol = ""
+style = "bold #38c9a7"
 
 [git_metrics]
 disabled = false
-added_style = "green"
+added_style = "bold #38c9a7"
+deleted_style = "bold #e16c58"
 
 [git_status]
-style = "white dimmed"
-conflicted = ""
-ahead = ""
-behind = ""
-diverged = "נּ"
-untracked = ""
-stashed = ""
-modified = ""
-staged = ""
-renamed = ""
-deleted = ""
-
-[golang]
-symbol = ""
+style = "#c6e0df dimmed"
+conflicted = ""
+ahead = ""
+behind = ""
+diverged = "נּ"
+untracked = ""
+stashed = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
 
 [helm]
 symbol = "ﴱ"
+style = "#6ab4c2"
 
 [hostname]
 ssh_only = true
 format = "[$ssh_symbol$hostname]($style) "
-ssh_symbol = " "
+ssh_symbol = " "
 
 [jobs]
-symbol = " "
-style = "bold red"
+symbol = " "
+style = "bold #e16c58"
 
 [kubernetes]
 disabled = false
 symbol = "ﴱ"
-style    = "fg:#3DA2FF"       # kube-ish bright blue
+style    = "#087fab"
 format   = "[$symbol $context:$namespace]($style) "
 
 [[kubernetes.contexts]]
 context_pattern = "prod"
-style = "fg:#E16C58"
+style = "#e16c58"
 
 [python]
-symbol = " "
-style = "green"
-
-[ruby]
-symbol = " "
+symbol = " "
+style = "#38c9a7"
 
 [terraform]
-symbol = "TF  "
+symbol = "TF  "
+style = "#cca2c0"
 
 
 # Disable the package module, hiding it from the prompt completely

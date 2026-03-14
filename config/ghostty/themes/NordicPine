@@ -1,0 +1,22 @@
+background = #0f111a
+foreground = #c6e0df
+cursor-color = #c6e0df
+cursor-text = #0f111a
+selection-background = #232a3b
+selection-foreground = #e4f5f4
+palette = 0=#1c2030    # black
+palette = 1=#bb2938    # red
+palette = 2=#26a98b    # green
+palette = 3=#ddbc44    # yellow
+palette = 4=#257994    # blue
+palette = 5=#cca2c0    # magenta
+palette = 6=#33859d    # cyan
+palette = 7=#c6e0df    # white
+palette = 8=#343b51    # bright black
+palette = 9=#e16c58    # bright red
+palette = 10=#38c9a7   # bright green
+palette = 11=#e6cc6f   # bright yellow
+palette = 12=#087fab   # bright blue
+palette = 13=#ffd2f8   # bright magenta
+palette = 14=#6ab4c2   # bright cyan
+palette = 15=#e4f5f4   # bright white

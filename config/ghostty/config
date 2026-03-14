@@ -1,5 +1,5 @@
 # themes
-theme = dark:darknall,light:"Rose Pine Dawn"
+theme = dark:NordicPine,light:AlpineDawn
 
 # font
 font-family = "SauceCodePro Nerd Font Mono"
