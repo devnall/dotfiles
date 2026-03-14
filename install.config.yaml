@@ -56,11 +56,11 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     -
-     command: ./config/macos/setup-homebrew.sh
+     command: '[[ ! -f ~/.remote ]] && ./config/macos/setup-homebrew.sh || true'
      description: Installing Homebrew and essential packages
      stdout: true
     -
-     command: brew bundle --file=packages/Brewfile.universal
+     command: '[[ ! -f ~/.remote ]] && brew bundle --file=packages/Brewfile.universal || true'
      description: Install universal Homebrew packages
      stdout: true
     -
