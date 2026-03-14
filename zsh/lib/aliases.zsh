@@ -108,6 +108,9 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
 # Custom git aliases (override git plugin)
 #alias glg="g hist"
+if command -v lazygit > /dev/null; then
+  alias lg='lazygit'
+fi
 
 # kubectl stuff
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
