@@ -1,0 +1,23 @@
+# Personal Brewfile — personal machine extras
+# Run: brew bundle --file=packages/Brewfile.personal
+# Sourced by install when ~/.personal marker exists
+
+#brew "mas"            # Mac App Store CLI
+
+# Casks
+cask "iina"
+cask "imageoptim"
+cask "itsycal"
+cask "jordanbaird-ice"
+cask "raycast"
+cask "steam"
+
+# cask "vscodium"
+# cask "pika"
+# cask "shottr"
+# cask "keepingyouawake"
+# cask "brave-browser"
+# cask "discord"
+# cask "iina"
+# cask "virtualbox"
+# cask "vscodium"

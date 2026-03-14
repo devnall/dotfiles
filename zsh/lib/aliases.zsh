@@ -83,10 +83,9 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 if command -v bat > /dev/null; then
-  alias bat='bat --theme="Nord"'
-  alias batp='bat -p --theme="Nord"'
-  alias bat_='bat --show-all --theme="Nord"'
-  alias cat='bat --paging=never --theme="Nord"'
+  alias batp='bat -p'
+  alias bat_='bat --show-all'
+  alias cat='bat --paging=never'
 fi
 
 # Retrain my youtube-dl muscle memory

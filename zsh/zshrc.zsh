@@ -46,10 +46,17 @@ if command -v sheldon > /dev/null; then
 fi
 
 ## Source other zsh config files
-# TODO: Need to figure out a way to only source callrail.zsh on work machines.
-for zsh_file in ~/.dotfiles/zsh/lib/*.zsh; do
+for zsh_file in ~/.config/zsh/lib/*.zsh; do
+  [[ ${zsh_file:t} == work.zsh ]] && continue
   source "$zsh_file"
 done
+
+DOTFILES="${HOME}/.dotfiles"
+if [[ -f "${HOME}/.work" ]]; then
+  [[ -f "${DOTFILES}/env/work.zsh" ]] && source "${DOTFILES}/env/work.zsh"
+elif [[ -f "${HOME}/.personal" ]]; then
+  [[ -f "${DOTFILES}/env/personal.zsh" ]] && source "${DOTFILES}/env/personal.zsh"
+fi
 
 export EDITOR="vim"
 
@@ -57,19 +64,8 @@ if command -v thefuck > /dev/null; then
   eval "$(thefuck --alias)"
 fi
 
-## Secrets!
-if [ -f "${HOME}"/.dotfiles/secrets.txt ]
-then
-  source "${HOME}"/.dotfiles/secrets.txt
-fi
-
-# Config files that need to be loaded after zplug, for whatever reason
-source "${HOME}"/.dotfiles/zsh/lib/aliases.zsh
-source "${HOME}"/.dotfiles/zsh/lib/completions.zsh
 if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-else
-  echo "zsh-autosuggestions not installed or not getting sourced"
 fi
 
 
@@ -78,28 +74,36 @@ fi
 # they're in fpath but without sourcing them explicitly, I had to execute a function
 # twice before it would start working. Revisit/fix?
 #fpath=( "${HOME}/.dotfiles/zsh/zfunctions" "$fpath" )
-source "${HOME}"/.dotfiles/zsh/zfunctions/color_list
-source "${HOME}"/.dotfiles/zsh/zfunctions/clipboard
+source "${HOME}"/.config/zsh/zfunctions/color_list
+source "${HOME}"/.config/zsh/zfunctions/clipboard
 
 # Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
 
 # Starship prompt
-if command -v starship > /dev/null; then
-  eval "$(starship init zsh)"
-else
-  autoload -U promptinit && promptinit
-  prompt devnall
+if [[ $- == *i* ]]; then
+  if command -v starship > /dev/null; then
+    eval "$(starship init zsh)"
+  else
+    autoload -U promptinit && promptinit
+    prompt devnall
+  fi
 fi
 
-if [[ -f "${HOME}/.dotfiles/zsh/lib/fzf.zsh" ]]; then
-  source "${HOME}/.dotfiles/zsh/lib/fzf.zsh"
+if [[ -f "${HOME}/.config/zsh/lib/fzf.zsh" ]]; then
+  source "${HOME}/.config/zsh/lib/fzf.zsh"
 elif [[ -f "${HOME}/.fzf.zsh" ]]; then
   source "${HOME}/.fzf.zsh"
 fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+if command -v terraform > /dev/null; then
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+fi
 
 eval "$(zoxide init zsh)"
+
+if [[ -f "${HOME}/.env.local" ]]; then source "${HOME}/.env.local"; fi
+if [[ -f "${HOME}/.secrets.local" ]]; then source "${HOME}/.secrets.local"; fi
+
