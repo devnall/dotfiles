@@ -1,6 +1,8 @@
-# Spaceship Prompt Config — remote/server variant
+# Starship Prompt Config — remote/server variant
 #
 # Requires a nerd font
+
+palette = "nordicpine"
 
 add_newline = true
 
@@ -14,12 +16,11 @@ $git_state\
 $git_metrics\
 $git_status\
 $docker_context\
-$golang\
 $helm\
 $python\
 $ruby\
+$nodejs\
 $terraform\
-$vagrant\
 $aws\
 $env_var\
 $custom\
@@ -33,12 +34,12 @@ $character"""
 
 [aws]
 symbol = " "
-style = "bold yellow"
+style = "bold aws_col"
 
 [character]
-success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
-error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
-vicmd_symbol ="[](bold green)[❯](bold blue)"
+success_symbol = "[❯](bold char_1)[❯](bold char_2)[❯](bold char_3)"
+error_symbol = "[✖](bold char_err)[✖](bold char_err)[❯](bold char_err)"
+vicmd_symbol = "[](bold char_3)[❯](bold char_1)"
 
 [cmd_duration]
 show_notifications = false
@@ -49,25 +50,29 @@ truncation_length = 5
 read_only = ""
 read_only_style = "bold red"
 home_symbol = " ~"
+style = "bold dir"
 
 [directory.substitutions]
 " ~/" = "~/"
 
 [docker_context]
 symbol = " "
-style = "bold blue"
+style = "bold docker_col"
+format = "[$symbol$context]($style) "
+only_with_files = true
 
 [git_branch]
 format = "[$symbol on $branch(:$remote_branch) ]($style)"
 symbol = ""
-style = "bold green"
+style = "bold branch"
 
 [git_metrics]
 disabled = false
-added_style = "green"
+added_style = "bold git_add"
+deleted_style = "bold git_del"
 
 [git_status]
-style = "white dimmed"
+style = "git_status"
 conflicted = ""
 ahead = ""
 behind = ""
@@ -79,11 +84,10 @@ staged = ""
 renamed = ""
 deleted = ""
 
-[golang]
-symbol = ""
-
 [helm]
-symbol = "ﴱ"
+symbol = "⎈ "
+style = "bold helm_col"
+format = "[$symbol($version )]($style)"
 
 [hostname]
 ssh_only = true
@@ -92,20 +96,59 @@ ssh_symbol = " "
 
 [jobs]
 symbol = " "
-style = "bold red"
+style = "bold jobs_col"
 
 [kubernetes]
 disabled = true
 
+[nodejs]
+symbol = " "
+style = "bold node_col"
+format = "[$symbol($version )]($style)"
+detect_files = ['package.json', '.node-version', '.nvmrc']
+detect_folders = ['node_modules']
+
 [python]
 symbol = " "
-style = "green"
+style = "bold python_col"
+format = "[$symbol($version )(\\($virtualenv\\) )]($style)"
+detect_extensions = ['py']
+detect_files = ['requirements.txt', '.python-version', 'pyproject.toml', 'setup.py', 'setup.cfg', 'tox.ini', 'Pipfile', 'poetry.lock']
+detect_folders = ['.venv', 'venv']
 
 [ruby]
 symbol = " "
+style = "bold ruby_col"
+format = "[$symbol($version )]($style)"
+detect_files = ['Gemfile', '.ruby-version', '.rvmrc', 'Rakefile']
+detect_extensions = ['rb']
+detect_folders = []
 
 [terraform]
-symbol = "TF  "
+symbol = "󱁢 "
+style = "bold tf_col"
+format = "[$symbol$workspace]($style) "
 
 [package]
 disabled = true
+
+[palettes.nordicpine]
+dir        = "#6ab4c2"
+branch     = "#38c9a7"
+git_add    = "#38c9a7"
+git_del    = "#e16c58"
+git_status = "#c6e0df"
+aws_col    = "#ddbc44"
+k8s_col    = "#087fab"
+k8s_prod   = "#e16c58"
+docker_col = "#257994"
+helm_col   = "#6ab4c2"
+tf_col     = "#cca2c0"
+python_col = "#38c9a7"
+ruby_col   = "#e16c58"
+node_col   = "#38c9a7"
+char_1     = "#087fab"
+char_2     = "#6ab4c2"
+char_3     = "#38c9a7"
+char_err   = "#e16c58"
+jobs_col   = "#e16c58"

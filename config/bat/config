@@ -7,8 +7,8 @@
 #
 # Specify desired theme(s). Run `bat --list-themes` for a list of all available themes
 #--theme="Coldark-Cold"
---theme-light="Monokai Extended Light"
---theme-dark="Nord"
+--theme-light="rose-pine-dawn"
+--theme-dark="base16"
 
 # Specify when to use colored output. Automatic mode enables colors if an
 # interactive terminal is detected, colors are automatically disabled if
