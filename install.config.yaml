@@ -17,6 +17,12 @@
     ~/.config/tmux/tmux.conf:
       path: config/tmux/tmux.conf
       force: true
+    ~/.config/tmux/tmux-nordic.conf:
+      path: config/tmux/tmux-nordic.conf
+      force: true
+    ~/.config/tmux/tmux-alpine.conf:
+      path: config/tmux/tmux-alpine.conf
+      force: true
 
     ~/.vimrc:
       path: config/vim/vimrc
@@ -42,6 +48,9 @@
 
     ~/.config/starship.toml:
       path: config/starship/starship.toml
+
+    ~/.config/starship-light.toml:
+      path: config/starship/starship-light.toml
 
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
