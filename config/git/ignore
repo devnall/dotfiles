@@ -70,9 +70,36 @@ dump.rdb
 Thumbs.db
 
 #
-# Secrets!
-secrets.txt
+# Secrets / local overrides
+*secrets*
+*.key
+*.local
+.env
+.env*
 
 #
-# Local files
-local.zsh
+# Editors
+.idea/
+.vscode/
+*.code-workspace
+
+#
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+#
+# macOS extended attributes
+.AppleDouble
+.LSOverride
+Icon
+
+#
+# Node
+.npm/
+.pnpm-store/
+
+#
+# Git identity (keep untracked)
+.gitconfig-user

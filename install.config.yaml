@@ -52,6 +52,13 @@
     ~/.config/btop:
       path: config/btop
 
+    ~/.gitconfig:
+      path: config/git/config
+      force: true
+    ~/.config/git/ignore:
+      path: config/git/ignore
+      force: true
+
     ~/bin:
       glob: true
       path: bin/*
