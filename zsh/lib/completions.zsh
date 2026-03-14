@@ -8,11 +8,10 @@
 #fi
 
 #if type brew &>/dev/null; then
-#  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-#
-#  autoload -Uz compinit
-#  compinit
+#  FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
 #fi
+
+FPATH="~/.zsh/completion:$FPATH"
 
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
