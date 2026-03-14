@@ -23,7 +23,7 @@ fi
 
 # Shell integration
 # -----------------
-source <(fzf --zsh)
+source <(fzf --zsh 2>/dev/null)
 
 # Command keybinds
 # ----------------
