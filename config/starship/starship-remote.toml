@@ -14,9 +14,12 @@ $git_state\
 $git_metrics\
 $git_status\
 $docker_context\
+$golang\
 $helm\
 $python\
+$ruby\
 $terraform\
+$vagrant\
 $aws\
 $env_var\
 $custom\
@@ -30,12 +33,12 @@ $character"""
 
 [aws]
 symbol = " "
-style = "bold #ddbc44"
+style = "bold yellow"
 
 [character]
-success_symbol = "[❯](bold #087fab)[❯](bold #6ab4c2)[❯](bold #38c9a7)"
-error_symbol = "[✖](bold #e16c58)[✖](bold #e16c58)[❯](bold #e16c58)"
-vicmd_symbol ="[](bold #38c9a7)[❯](bold #087fab)"
+success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
+error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
+vicmd_symbol ="[](bold green)[❯](bold blue)"
 
 [cmd_duration]
 show_notifications = false
@@ -46,27 +49,25 @@ truncation_length = 5
 read_only = ""
 read_only_style = "bold red"
 home_symbol = " ~"
-style = "#6ab4c2"
 
 [directory.substitutions]
 " ~/" = "~/"
 
 [docker_context]
 symbol = " "
-style = "#257994"
+style = "bold blue"
 
 [git_branch]
 format = "[$symbol on $branch(:$remote_branch) ]($style)"
 symbol = ""
-style = "bold #38c9a7"
+style = "bold green"
 
 [git_metrics]
 disabled = false
-added_style = "bold #38c9a7"
-deleted_style = "bold #e16c58"
+added_style = "green"
 
 [git_status]
-style = "#c6e0df dimmed"
+style = "white dimmed"
 conflicted = ""
 ahead = ""
 behind = ""
@@ -78,9 +79,11 @@ staged = ""
 renamed = ""
 deleted = ""
 
+[golang]
+symbol = ""
+
 [helm]
 symbol = "ﴱ"
-style = "#6ab4c2"
 
 [hostname]
 ssh_only = true
@@ -89,18 +92,20 @@ ssh_symbol = " "
 
 [jobs]
 symbol = " "
-style = "bold #e16c58"
+style = "bold red"
 
 [kubernetes]
 disabled = true
 
 [python]
 symbol = " "
-style = "#38c9a7"
+style = "green"
+
+[ruby]
+symbol = " "
 
 [terraform]
 symbol = "TF  "
-style = "#cca2c0"
 
 [package]
 disabled = true
