@@ -14,19 +14,19 @@ foreground = #575279
 cursor-color = #575279
 selection-background = #f2e9e1
 selection-foreground = #575279
-palette = 0=#f2e9e1    # black (overlay)
-palette = 1=#b4637a    # red (love)
-palette = 2=#286983    # green (pine)
-palette = 3=#ea9d34    # yellow (gold)
-palette = 4=#286983    # blue (pine)
-palette = 5=#907aa9    # magenta (iris)
-palette = 6=#56949f    # cyan (foam)
-palette = 7=#575279    # white (base fg)
-palette = 8=#9893a5    # bright black (muted)
-palette = 9=#b4637a    # bright red (love)
-palette = 10=#286983   # bright green (pine)
-palette = 11=#ea9d34   # bright yellow (gold)
-palette = 12=#56949f   # bright blue (foam)
-palette = 13=#907aa9   # bright magenta (iris)
-palette = 14=#56949f   # bright cyan (foam)
-palette = 15=#575279   # bright white (base fg)
+palette = 0=#f2e9e1
+palette = 1=#b4637a
+palette = 2=#286983
+palette = 3=#ea9d34
+palette = 4=#286983
+palette = 5=#907aa9
+palette = 6=#56949f
+palette = 7=#575279
+palette = 8=#9893a5
+palette = 9=#b4637a
+palette = 10=#286983
+palette = 11=#ea9d34
+palette = 12=#56949f
+palette = 13=#907aa9
+palette = 14=#56949f
+palette = 15=#575279
