@@ -56,6 +56,8 @@ if [[ -f "${HOME}/.work" ]]; then
   [[ -f "${DOTFILES}/env/work.zsh" ]] && source "${DOTFILES}/env/work.zsh"
 elif [[ -f "${HOME}/.personal" ]]; then
   [[ -f "${DOTFILES}/env/personal.zsh" ]] && source "${DOTFILES}/env/personal.zsh"
+elif [[ -f "${HOME}/.remote" ]]; then
+  [[ -f "${DOTFILES}/env/remote.zsh" ]] && source "${DOTFILES}/env/remote.zsh"
 fi
 
 export EDITOR="vim"
@@ -79,7 +81,11 @@ source "${HOME}"/.config/zsh/zfunctions/clipboard
 
 # Load ssh-agent and add private key because OSX
 eval "$(ssh-agent -s)" &> /dev/null
-ssh-add -K ~/.ssh/id_rsa &> /dev/null
+if [[ "$(uname)" == "Darwin" ]]; then
+  ssh-add -K ~/.ssh/id_rsa &> /dev/null
+else
+  ssh-add ~/.ssh/id_rsa &> /dev/null
+fi
 
 # Starship prompt
 if [[ $- == *i* ]]; then

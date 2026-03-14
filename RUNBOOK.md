@@ -36,6 +36,8 @@ Touch a marker file before running the installer — this controls which env con
 touch ~/.work      # work machine
 # or
 touch ~/.personal  # personal machine
+# or
+touch ~/.remote    # remote/server (skips Homebrew; see Remote/Server Setup below)
 ```
 
 If neither exists, only the universal config loads. You can switch at any time and re-run `./install`.
@@ -74,6 +76,7 @@ export AWS_DEFAULT_REGION=us-east-1
 ```
 ~/.work exists     → sources env/work.zsh + installs packages/Brewfile.work
 ~/.personal exists → sources env/personal.zsh + installs packages/Brewfile.personal
+~/.remote exists   → sources env/remote.zsh + skips Homebrew/Brewfiles entirely
 neither exists     → only universal config loads
 ```
 
@@ -87,6 +90,61 @@ All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical
 
 - **Neovim** (`config/nvim/`) — lazy.nvim-based IDE setup, used on desktop machines
 - **Vim** (`config/vim/vimrc`) — minimal, no plugins, safe to use on any remote server with stock vim
+
+---
+
+## Remote/Server Setup
+
+For Linux servers accessed via SSH — same muscle memory, no Homebrew required.
+
+### 1. Clone the repo
+
+```sh
+git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
+```
+
+### 2. Set the remote marker
+
+```sh
+touch ~/.remote
+```
+
+Do this **before** running `./install`. The marker causes Homebrew setup and all Brewfile installs to be skipped entirely.
+
+### 3. Run the installer
+
+```sh
+cd ~/.dotfiles && ./install
+```
+
+This creates all symlinks. Homebrew and Brewfile steps are skipped.
+
+### What you get
+
+| Feature | Behavior |
+|---------|----------|
+| zsh history, dirstack, setopt | all portable |
+| `zsh/lib/aliases.zsh` | Darwin-specific blocks skip via `uname` checks |
+| `zsh/lib/git.zsh` | git aliases work everywhere |
+| `zsh/lib/fzf.zsh` | skips silently if fzf not installed |
+| starship prompt | skips if not installed; falls back to system prompt |
+| zoxide, thefuck | skip if not installed (guarded with `command -v`) |
+| ssh-agent | works; `-K` Keychain flag is Darwin-only |
+| Homebrew PATH | harmless on Linux (`/usr/local` typically exists) |
+| Brewfile installs | skipped via `~/.remote` guard |
+
+### Optional nice-to-haves (single-binary installs)
+
+```sh
+# starship — cross-platform prompt
+curl -sS https://starship.rs/install.sh | sh
+
+# fzf — fuzzy finder
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+
+# zoxide — smarter cd
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+```
 
 ---
 
@@ -115,7 +173,8 @@ dotfiles/
 ├── archive/                  # Deprecated scripts — review and cull periodically
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
-│   └── personal.zsh          # Sourced when ~/.personal exists
+│   ├── personal.zsh          # Sourced when ~/.personal exists
+│   └── remote.zsh            # Sourced when ~/.remote exists (Linux servers)
 ├── packages/
 │   ├── Brewfile.universal    # Installed on every machine
 │   ├── Brewfile.work         # Installed when ~/.work exists

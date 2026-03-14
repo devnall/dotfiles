@@ -2,6 +2,12 @@
 #
 # Install homebrew and essential packages
 
+# Skip on Linux unless ~/.remote-full opt-in exists
+if [[ "$(uname)" != "Darwin" ]] && [[ ! -f ~/.remote-full ]]; then
+  echo "Skipping Homebrew setup (not Darwin, no ~/.remote-full opt-in)"
+  exit 0
+fi
+
 if ! type brew > /dev/null 2>&1; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
