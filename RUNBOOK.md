@@ -54,7 +54,27 @@ This will:
 - Create all symlinks (zshrc, nvim, tmux, ghostty, starship, bat, btop, etc.)
 - Run `brew bundle` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file
 
-### 5. Set up local overrides
+### 5. Set up git identity
+
+Git config includes `config/git/.gitconfig-user` for your personal identity. That file is
+gitignored — copy the template and fill it in:
+
+```sh
+cp ~/.dotfiles/config/git/.gitconfig-user.example ~/.dotfiles/config/git/.gitconfig-user
+```
+
+Then edit `~/.dotfiles/config/git/.gitconfig-user`:
+
+```ini
+[user]
+  name = Your Name
+  email = you@example.com
+  signingkey = YOUR_SSH_KEY_PATH_OR_GPG_ID
+```
+
+This file is excluded from git tracking. The template (`.gitconfig-user.example`) is what's committed to the repo.
+
+### 6. Set up local overrides
 
 Create these files — both are gitignored and sourced at the end of every shell session:
 
@@ -290,3 +310,4 @@ Drop it in `bin/` — Dotbot glob-symlinks the whole directory to `~/bin`, so it
 - **Non-secret machine config** (tool paths, env vars, region defaults) goes in `~/.env.local`.
 - Both are covered by the `*.local` gitignore pattern and sourced silently at shell startup.
 - If you accidentally commit a secret: rotate it immediately, then scrub it from git history.
+- **Git identity** (`name`, `email`, `signingkey`) lives in `config/git/.gitconfig-user` — gitignored, never tracked. Copy from `config/git/.gitconfig-user.example` on each new machine.
