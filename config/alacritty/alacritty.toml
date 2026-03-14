@@ -43,6 +43,6 @@ import = [
 # "~/.config/alacritty/themes/tender.toml"
 #  "~/.config/alacritty/themes/gotham.toml"
 #  "~/.config/alacritty/themes/material_ocean.toml"
-  "~/.config/alacritty/themes/darknall.toml"
+  "~/.config/alacritty/themes/nordic_pine.toml"
 #  "~/.config/alacritty/themes/nord.toml"
 ]

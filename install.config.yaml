@@ -81,3 +81,7 @@
      command: '[[ -f ~/.personal ]] && brew bundle --file=packages/Brewfile.personal || true'
      description: Install personal Homebrew packages
      stdout: true
+    -
+     command: 'mkdir -p "$(bat --config-dir)/themes" && curl -sL https://github.com/rose-pine/bat/raw/main/themes/rose-pine-dawn.tmTheme -o "$(bat --config-dir)/themes/rose-pine-dawn.tmTheme" && bat cache --build'
+     description: Install Rose Pine Dawn bat theme
+     stdout: true
