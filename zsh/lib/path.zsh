@@ -13,22 +13,11 @@ if [ -d "${HOME}"/go/bin ]; then
   PATH="${HOME}/go/bin:${PATH}"
 fi
 
-# gem-installed stuff
-# this should probably be a case statement to handle multiple installed versions?
-if [ -d "${HOME}/.gem/ruby/2.0.0/bin" ]; then
-  PATH="${PATH}:${HOME}/.gem/ruby/2.0.0/bin"
-elif [ -d "${HOME}/.gem/ruby/2.3.0/bin" ]; then
-  PATH="${PATH}:${HOME}/.gem/ruby/2.3.0/bin"
-elif [ -d "${HOME}/.gem/ruby/2.5.0/bin" ]; then
-  PATH="${PATH}:${HOME}/.gem/ruby/2.5.0/bin"
-elif [ -d "${HOME}/.gem/ruby/2.7.0/bin" ]; then
-  PATH="${PATH}:${HOME}/.gem/ruby/2.7.0/bin"
-elif [ -d "${HOME}/.gem/ruby/3.0.0/bin" ]; then
-  PATH="/${PATH}:${HOME}/.gem/ruby/3.0.0/bin"
-elif [ -d /usr/local/opt/ruby/bin ]; then
-  PATH="/usr/local/opt/ruby/bin:${PATH}"
-fi
-PATH="${brew_path}/opt/ruby/bin:${PATH}"
+# gem-installed stuff — find the newest installed Ruby gem bin dir
+for ruby_gem_bin in "${HOME}"/.gem/ruby/*/bin(N); do
+  PATH="${PATH}:${ruby_gem_bin}"
+done
+unset ruby_gem_bin
 # Add npm installed stuff to PATH
 if [ -d "${HOME}/.npm-packages/bin" ]; then
   PATH="${PATH}:${HOME}/.npm-packages/bin"
@@ -47,15 +36,6 @@ if [ -d "/usr/local/opt/curl/bin" ]; then
   PATH="${PATH}:/usr/local/opt/curl/bin"
 fi
 
-## If MacOS, determine homebrew path and add to PATH
-#if [[ $(uname) == 'Darwin' ]]; then
-#  if which brew >/dev/null; then
-#    export brew_binary=$(which brew)
-#    export brew_path=$(dirname $brew_binary)
-#  else
-#    echo "ERROR: Homebrew not installed or not in $PATH"
-#  fi
-#fi
 
 if [ -d "${HOME}/homebrew/bin" ]; then
   PATH="${HOME}/homebrew/bin:${PATH}"
@@ -81,6 +61,8 @@ if [ -d "${HOME}/bin" ]; then
   PATH="${HOME}/bin:${PATH}"
 fi
 
-if [[ -d "/opt/homebrew/" ]]; then
-  PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+
+# For Claude Code
+if [[ -d "${HOME}/.local/bin" ]]; then
+  PATH="${HOME}/.local/bin:$PATH"
 fi

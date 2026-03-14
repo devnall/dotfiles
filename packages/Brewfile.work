@@ -1,0 +1,36 @@
+# Work Brewfile — Work-specific tools
+# Run: brew bundle --file=packages/Brewfile.work
+# Sourced by install when ~/.work marker exists
+
+brew "ansible"
+brew "aws-vault"
+brew "helm"
+brew "kubernetes-cli"
+brew "kubectx"        # switch k8s contexts
+brew "nvm"
+brew "s3scanner"      # s3 bucket scanner
+brew "terraform"
+brew "tflint"         # terraform linter
+brew "yarn"
+
+# https://github.com/robscott/kube-capacity
+tap "robscott/tap"
+brew "robscott/tap/kube-capacity"
+
+brew "k9s"            # Kubernetes TUI
+
+cask "lens"
+
+# 20260313 - TODO: Delete anything still here in a year
+# brew "tfswitch"       # terraform version manager
+# brew "libpq", link: true
+# brew "libsndfile"
+# tap "puma/puma"
+# brew "puma/puma/puma-dev"
+# brew "doitlive"  # terminal demo tool
+# brew "fx"  # json viewer
+# brew "gnupg"
+#brew "chamber"        # SSM parameter store CLI
+
+# cask "google-cloud-sdk"
+# cask "zoom"
