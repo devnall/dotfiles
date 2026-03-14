@@ -1,0 +1,30 @@
+# Alacritty Theme - /dark/nall
+# Based on Gotham with a splash of Material_Oceanic and a bunch of modifications
+
+# Default colors
+[colors.primary]
+background = '#0f111a'
+foreground = '#98d1ce'
+
+# Normal colors
+[colors.normal]
+black = '#0f111a'
+red = '#bb2938'
+green = '#26a98b'
+yellow = '#ddbc44'
+blue = '#195465'
+#magenta = '#4e5165'
+magenta = '#5c6391'
+cyan = '#33859d'
+white = '#98d1ce'
+
+# Bright colors
+[colors.bright]
+black = '#10151b'
+red = '#e16c58'
+green = '#38c9a7'
+yellow = '#e6cc6f'
+blue = '#087fab'
+magenta = '#9898a0'
+cyan = '#6ab4c2'
+white = '#d3ebe9'
