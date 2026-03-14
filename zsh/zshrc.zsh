@@ -81,12 +81,10 @@ fi
 source "${HOME}"/.config/zsh/zfunctions/color_list
 source "${HOME}"/.config/zsh/zfunctions/clipboard
 
-# Load ssh-agent and add private key because OSX
-eval "$(ssh-agent -s)" &> /dev/null
+# Load ssh-agent and add private key (macOS only)
 if [[ "$(uname)" == "Darwin" ]]; then
+  eval "$(ssh-agent -s)" &> /dev/null
   ssh-add -K ~/.ssh/id_rsa &> /dev/null
-else
-  ssh-add ~/.ssh/id_rsa &> /dev/null
 fi
 
 # Starship prompt
