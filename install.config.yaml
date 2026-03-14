@@ -1,0 +1,73 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- link:
+    ~/.zshrc:
+      path: zsh/zshrc.zsh
+      force: true
+    ~/.config/zsh/lib:
+      path: zsh/lib
+      force: true
+    ~/.config/zsh/zfunctions:
+      path: zsh/zfunctions
+      force: true
+
+    ~/.config/tmux/tmux.conf:
+      path: config/tmux/tmux.conf
+      force: true
+
+    ~/.vimrc:
+      path: config/vim/vimrc
+    ~/.config/nvim:
+      path: config/nvim
+      force: true
+
+    ~/.bashrc:
+      path: config/bash/bashrc
+      force: true
+
+    ~/.config/ghostty:
+      path: config/ghostty
+      force: true
+
+    ~/.config/alacritty:
+      path: config/alacritty
+      force: true
+
+    ~/.config/sheldon:
+      path: config/sheldon
+      force: true
+
+    ~/.config/starship.toml:
+      path: config/starship/starship.toml
+
+    ~/.config/bat/config:
+      path: config/bat/config
+
+    ~/.config/btop:
+      path: config/btop
+
+    ~/bin:
+      glob: true
+      path: bin/*
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    -
+     command: ./config/macos/setup-homebrew.sh
+     description: Installing Homebrew and essential packages
+     stdout: true
+    -
+     command: brew bundle --file=packages/Brewfile.universal
+     description: Install universal Homebrew packages
+     stdout: true
+    -
+     command: '[[ -f ~/.work ]] && brew bundle --file=packages/Brewfile.work || true'
+     description: Install work Homebrew packages
+     stdout: true
+    -
+     command: '[[ -f ~/.personal ]] && brew bundle --file=packages/Brewfile.personal || true'
+     description: Install personal Homebrew packages
+     stdout: true

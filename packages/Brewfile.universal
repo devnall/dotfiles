@@ -1,0 +1,110 @@
+# Universal Brewfile — install on every machine
+# Run: brew bundle --file=packages/Brewfile.universal
+
+# Shells and completion
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-history-substring-search"
+brew "zsh-fast-syntax-highlighting"
+brew "bash"
+brew "bash-completion"
+
+# Core CLI utilities
+brew "awscli"
+brew "bat"            # better cat
+brew "btop"           # better top
+brew "coreutils"
+brew "curl"
+brew "delta"          # 
+brew "diff-so-fancy"  # 
+brew "docker"
+brew "docker-completion"
+brew "doggo"
+brew "eza"            # better ls
+brew "fd"             # better find
+brew "fzf"            # fuzzy finder
+brew "gawk"
+brew "gnu-sed"
+brew "gnu-tar"
+brew "grep"
+brew "gzip"
+brew "htop"
+brew "lazydocker"     # docker TUI
+brew "mole"           # MacOS maintenance TUI
+brew "ncdu"
+brew "nmap"
+brew "prettyping"
+brew "reattach-to-user-namespace"
+brew "ripgrep"        # better grep
+brew "rustscan"       # portscanner
+brew "sheldon"        # zsh plugin manager
+brew "ssh-copy-id"
+brew "starship"       # cross-shell prompt
+brew "thefuck"
+brew "tealdeer"
+brew "tmux"           # terminal multiplexer
+brew "wifi-password"  # display current wifi password
+brew "wtfis"
+brew "xz"
+brew "yt-dlp"
+brew "zoxide"
+
+# Git
+brew "gist"
+brew "git"
+brew "git-delta"      # better git diffs
+brew "gh"             # GitHub CLI
+brew "lazygit"        # TUI git client
+
+# Editors
+brew "neovim"
+brew "vim"
+
+# Dev tools
+brew "jq"             # JSON processor
+brew "yq"             # YAML processor
+brew "wget"
+brew "httpie"
+brew "mise"           # version and venv manager
+brew "mkcert"         # local HTTPS certs
+brew "shellcheck"
+
+# Languages
+brew "go"
+brew "node"
+brew "nvm"
+brew "python"
+brew "rbenv"          # Ruby version manager
+brew "ruby"
+brew "rust"           # via rustup usually, but listed for reference
+
+# Casks
+cask "1password"
+cask "1password-cli"
+#cask "docker"
+cask "firefox"
+cask "flameshot"
+cask "ghostty"
+cask "google-chrome"
+cask "obsidian"
+cask "thaw"                # menubar manager
+cask "visual-studio-code"
+cask "vlc"
+
+# Install in Mac App Store
+# TODO: Can I automate this with https://github.com/mas-cli/mas
+# 1Password
+
+# Quarentined 20260313 - Delete if still commented in 6 months
+# brew "inetutils"
+# brew "ipcalc"
+# brew "tree"
+# brew "urlview"  # required for tmux-urlview plugin
+# brew "watch"
+# brew "mas"            # Mac App Store CLI
+# brew "mackup"         # app settings backup
+# brew "trash"          # safer rm
+# brew "bandwhich"
+# brew "iftop"
+# brew "ack"
