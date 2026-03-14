@@ -103,8 +103,6 @@ disabled = false
 symbol = "ﴱ"
 style    = "fg:#3DA2FF"       # kube-ish bright blue
 format   = "[$symbol $context:$namespace]($style) "
-# only show if auth'ed to AWS
-detect_env_vars = ['AWS_VAULT']
 
 [[kubernetes.contexts]]
 context_pattern = "prod"
