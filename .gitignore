@@ -75,3 +75,6 @@ Thumbs.db
 .env*
 *secrets*
 *.key
+
+# Git identity (copy from .gitconfig-user.example; keep untracked)
+config/git/.gitconfig-user
