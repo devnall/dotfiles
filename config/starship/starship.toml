@@ -91,7 +91,7 @@ symbol = "ﴱ"
 
 [hostname]
 ssh_only = true
-format = "[$ssh_symbol$hostname ]"
+format = "[$ssh_symbol$hostname]($style) "
 ssh_symbol = " "
 
 [jobs]
