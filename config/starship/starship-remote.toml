@@ -1,0 +1,111 @@
+# Spaceship Prompt Config — remote/server variant
+#
+# Requires a nerd font
+
+add_newline = true
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$docker_context\
+$golang\
+$helm\
+$python\
+$ruby\
+$terraform\
+$vagrant\
+$aws\
+$env_var\
+$custom\
+$cmd_duration\
+$line_break\
+$jobs\
+$time\
+$status\
+$shell\
+$character"""
+
+[aws]
+symbol = " "
+style = "bold yellow"
+
+[character]
+success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
+error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
+vicmd_symbol ="[](bold green)[❯](bold blue)"
+
+[cmd_duration]
+show_notifications = false
+min_time_to_notify = 30_000
+
+[directory]
+truncation_length = 5
+read_only = ""
+read_only_style = "bold red"
+home_symbol = " ~"
+
+[directory.substitutions]
+" ~/" = "~/"
+
+[docker_context]
+symbol = " "
+style = "bold blue"
+
+[git_branch]
+format = "[$symbol on $branch(:$remote_branch) ]($style)"
+symbol = ""
+style = "bold green"
+
+[git_metrics]
+disabled = false
+added_style = "green"
+
+[git_status]
+style = "white dimmed"
+conflicted = ""
+ahead = ""
+behind = ""
+diverged = "נּ"
+untracked = ""
+stashed = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
+
+[golang]
+symbol = ""
+
+[helm]
+symbol = "ﴱ"
+
+[hostname]
+ssh_only = true
+format = "[$ssh_symbol$hostname ]"
+ssh_symbol = " "
+
+[jobs]
+symbol = " "
+style = "bold red"
+
+[kubernetes]
+disabled = true
+
+[python]
+symbol = " "
+style = "green"
+
+[ruby]
+symbol = " "
+
+[terraform]
+symbol = "TF  "
+
+[package]
+disabled = true
