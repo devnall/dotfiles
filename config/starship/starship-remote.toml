@@ -1,11 +1,9 @@
-# Spaceship Prompt Config
+# Spaceship Prompt Config — remote/server variant
 #
 # Requires a nerd font
 
-# prompt-wide config options
 add_newline = true
 
-# Order
 format = """
 $username\
 $hostname\
@@ -17,7 +15,6 @@ $git_metrics\
 $git_status\
 $docker_context\
 $golang\
-$kubernetes\
 $helm\
 $python\
 $ruby\
@@ -35,13 +32,13 @@ $shell\
 $character"""
 
 [aws]
-symbol = " "
+symbol = " "
 style = "bold yellow"
 
 [character]
 success_symbol = "[❯](bold blue)[❯](bold cyan)[❯](bold green)"
 error_symbol = "[✖](bold red)[✖](bold red)[❯](bold red)"
-vicmd_symbol ="[](bold green)[❯](bold blue)"
+vicmd_symbol ="[](bold green)[❯](bold blue)"
 
 [cmd_duration]
 show_notifications = false
@@ -49,21 +46,20 @@ min_time_to_notify = 30_000
 
 [directory]
 truncation_length = 5
-read_only = ""
+read_only = ""
 read_only_style = "bold red"
-home_symbol = ' ~'
+home_symbol = " ~"
 
 [directory.substitutions]
-# Show the icon if in base ~ dir but don't show it when in subdirs
-" ~/" = "~/"
+" ~/" = "~/"
 
 [docker_context]
-symbol = " "
+symbol = " "
 style = "bold blue"
 
 [git_branch]
 format = "[$symbol on $branch(:$remote_branch) ]($style)"
-symbol = ""
+symbol = ""
 style = "bold green"
 
 [git_metrics]
@@ -72,19 +68,19 @@ added_style = "green"
 
 [git_status]
 style = "white dimmed"
-conflicted = ""
-ahead = ""
-behind = ""
-diverged = "נּ"
-untracked = ""
-stashed = ""
-modified = ""
-staged = ""
-renamed = ""
-deleted = ""
+conflicted = ""
+ahead = ""
+behind = ""
+diverged = "נּ"
+untracked = ""
+stashed = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
 
 [golang]
-symbol = ""
+symbol = ""
 
 [helm]
 symbol = "ﴱ"
@@ -92,33 +88,24 @@ symbol = "ﴱ"
 [hostname]
 ssh_only = true
 format = "[$ssh_symbol$hostname]($style) "
-ssh_symbol = " "
+ssh_symbol = " "
 
 [jobs]
-symbol = " "
+symbol = " "
 style = "bold red"
 
 [kubernetes]
-disabled = false
-symbol = "ﴱ"
-style    = "fg:#3DA2FF"       # kube-ish bright blue
-format   = "[$symbol $context:$namespace]($style) "
-
-[[kubernetes.contexts]]
-context_pattern = "prod"
-style = "fg:#E16C58"
+disabled = true
 
 [python]
-symbol = " "
+symbol = " "
 style = "green"
 
 [ruby]
-symbol = " "
+symbol = " "
 
 [terraform]
-symbol = "TF  "
+symbol = "TF  "
 
-
-# Disable the package module, hiding it from the prompt completely
 [package]
 disabled = true

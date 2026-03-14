@@ -43,6 +43,9 @@
     ~/.config/starship.toml:
       path: config/starship/starship.toml
 
+    ~/.config/starship-remote.toml:
+      path: config/starship/starship-remote.toml
+
     ~/.config/bat/config:
       path: config/bat/config
 
