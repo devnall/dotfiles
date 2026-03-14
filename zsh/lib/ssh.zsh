@@ -34,8 +34,8 @@ function push-environment() {
         return 1
     else
         for remotehost in $@; do
-            scp ${HOME}/.dotfiles/remote/.zshrc.remote ${desthost}:${HOME}/.zshrc
-            scp ${HOME}/.dotfiles/remote/.vimrc.remote ${desthost}:${HOME}/.vimrc
+            scp ${HOME}/.dotfiles/remote/.zshrc.remote ${remotehost}:${HOME}/.zshrc
+            scp ${HOME}/.dotfiles/remote/.vimrc.remote ${remotehost}:${HOME}/.vimrc
         done
     fi
 }
