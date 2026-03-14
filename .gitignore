@@ -70,9 +70,8 @@ dump.rdb
 Thumbs.db
 
 #
-# Secrets!
-secrets.txt
-
-#
-# Local files
-local.zsh
+# Secrets and local overrides
+*.local
+.env*
+*secrets*
+*.key

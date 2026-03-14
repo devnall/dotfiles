@@ -1,51 +1,38 @@
-/dev/nall's dotfiles
-====================
+# dotfiles
 
-A bunch of dotfiles for my environment and config files for my tools, including:
+My personal macOS dotfiles. Managed by [Dotbot](https://github.com/anishathalye/dotbot).
 
-* zsh
-* vim
-* tmux
-* starship prompt
+Includes config for zsh, Neovim, vim, tmux, Ghostty, Starship, sheldon, bat, btop, fzf, and more.
 
-Managed by [dotbot](https://github.com/anishathalye/dotbot).
+---
 
-See StuffIUse.md for a list of tools and apps that I use.
+## Install
 
-These are a work in progress (and likely always will be).
-
-Requirements
-------------
-
-To setup a new machine:
-```
-git clone git@github.com:devnall/dotfiles.git --recursive
-cd dotfiles && ./install
+```sh
+git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
+touch ~/.work      # or ~/.personal — controls which env config and Brewfile loads
+cd ~/.dotfiles && ./install
 ```
 
-- Homebrew installed
-- Most of the stuff in the Brewfile installed
+The installer is idempotent — safe to re-run any time after pulling changes.
 
-- Symlink `.gitconfig` into ~
-- Symlink `starship.toml` into ~/.config
+## Local overrides
 
-- Call brew's shellenv in .zprofile:
+Machine-specific config that shouldn't live in the repo goes in two gitignored files:
 
-MacOS ARM: `echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile`
+- `~/.env.local` — PATH additions, non-secret exports (e.g. tool paths, region defaults)
+- `~/.secrets.local` — API keys, tokens, credentials
 
-MacOS Intel: `echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile`
+Both are sourced silently at the end of every shell session.
 
-Linux: `echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zprofile`
+## What's in here
 
-- For vim to work, first install vim-plug:
 ```
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+zsh/            shell config — zshrc entrypoint + modular lib/ files
+config/         tool configs (nvim, tmux, ghostty, starship, bat, btop, ...)
+packages/       Brewfiles — universal, work, and personal
+env/            machine-type shell overrides (work.zsh / personal.zsh)
+bin/            scripts symlinked to ~/bin
 ```
 
-TODOs
------
-
-* Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
-* Document/update the brewfile stuff
-* Consolidate my separate `vim` repo into this one
+See [RUNBOOK.md](RUNBOOK.md) for detailed usage and maintenance notes.

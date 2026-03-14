@@ -47,10 +47,16 @@ fi
 
 ## Source other zsh config files
 for zsh_file in ~/.config/zsh/lib/*.zsh; do
-  # Comment out the next line on work machines, so that file does get sourced
-  [[ ${zsh_file:t} == callrail.zsh ]] && continue
+  [[ ${zsh_file:t} == work.zsh ]] && continue
   source "$zsh_file"
 done
+
+DOTFILES="${HOME}/.dotfiles"
+if [[ -f "${HOME}/.work" ]]; then
+  [[ -f "${DOTFILES}/env/work.zsh" ]] && source "${DOTFILES}/env/work.zsh"
+elif [[ -f "${HOME}/.personal" ]]; then
+  [[ -f "${DOTFILES}/env/personal.zsh" ]] && source "${DOTFILES}/env/personal.zsh"
+fi
 
 export EDITOR="vim"
 
@@ -58,19 +64,8 @@ if command -v thefuck > /dev/null; then
   eval "$(thefuck --alias)"
 fi
 
-## Secrets!
-if [ -f "${HOME}"/.dotfiles/secrets.txt ]
-then
-  source "${HOME}"/.dotfiles/secrets.txt
-fi
-
-# Config files that need to be loaded after zplug, for whatever reason
-source "${HOME}"/.config/zsh/lib/aliases.zsh
-source "${HOME}"/.config/zsh/lib/completions.zsh
 if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-else
-  echo "zsh-autosuggestions not installed or not getting sourced"
 fi
 
 
@@ -87,11 +82,13 @@ eval "$(ssh-agent -s)" &> /dev/null
 ssh-add -K ~/.ssh/id_rsa &> /dev/null
 
 # Starship prompt
-if command -v starship > /dev/null; then
-  eval "$(starship init zsh)"
-else
-  autoload -U promptinit && promptinit
-  prompt devnall
+if [[ $- == *i* ]]; then
+  if command -v starship > /dev/null; then
+    eval "$(starship init zsh)"
+  else
+    autoload -U promptinit && promptinit
+    prompt devnall
+  fi
 fi
 
 if [[ -f "${HOME}/.config/zsh/lib/fzf.zsh" ]]; then
@@ -101,6 +98,12 @@ elif [[ -f "${HOME}/.fzf.zsh" ]]; then
 fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+if command -v terraform > /dev/null; then
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+fi
 
 eval "$(zoxide init zsh)"
+
+if [[ -f "${HOME}/.env.local" ]]; then source "${HOME}/.env.local"; fi
+if [[ -f "${HOME}/.secrets.local" ]]; then source "${HOME}/.secrets.local"; fi
+
