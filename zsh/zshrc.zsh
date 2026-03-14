@@ -56,6 +56,8 @@ if [[ -f "${HOME}/.work" ]]; then
   [[ -f "${DOTFILES}/env/work.zsh" ]] && source "${DOTFILES}/env/work.zsh"
 elif [[ -f "${HOME}/.personal" ]]; then
   [[ -f "${DOTFILES}/env/personal.zsh" ]] && source "${DOTFILES}/env/personal.zsh"
+elif [[ -f "${HOME}/.remote-full" ]]; then
+  [[ -f "${DOTFILES}/env/remote-full.zsh" ]] && source "${DOTFILES}/env/remote-full.zsh"
 elif [[ -f "${HOME}/.remote" ]]; then
   [[ -f "${DOTFILES}/env/remote.zsh" ]] && source "${DOTFILES}/env/remote.zsh"
 fi
