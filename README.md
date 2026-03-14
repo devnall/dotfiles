@@ -1,44 +1,38 @@
-/dev/nall's dotfiles
-====================
+# dotfiles
 
-A bunch of dotfiles for my environment and config files for my tools, including:
+My personal macOS dotfiles. Managed by [Dotbot](https://github.com/anishathalye/dotbot).
 
-* zsh
-* vim
-* tmux
-* starship prompt
+Includes config for zsh, Neovim, vim, tmux, Ghostty, Starship, sheldon, bat, btop, fzf, and more.
 
-These are a work in progress (and likely always will be) and are in dire need of a cleanup.
+---
 
-The stuff in archive/ isn't really being used in my current environment but I'm keeping it around in case I end up on an old box without the new hotness.
+## Install
 
-Requirements
-------------
-
-- Homebrew installed
-- Most of the stuff in the Brewfile installed
-
-- Symlink `.zshrc`, `.vimrc`, `.tmux.conf`, `.ackrc`, `.gitconfig` into ~
-- Symlink `starship.toml` into ~/.config
-
-- Call brew's shellenv in .zprofile:
-
-MacOS ARM: `echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile`
-
-MacOS Intel: `echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile`
-
-Linux: `echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zprofile`
-
-- For vim to work, first install vim-plug:
-```
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```sh
+git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
+touch ~/.work      # or ~/.personal — controls which env config and Brewfile loads
+cd ~/.dotfiles && ./install
 ```
 
-TODOs
------
+The installer is idempotent — safe to re-run any time after pulling changes.
 
-* Cleanup zsh/lib/git.zsh; there are a ton of aliases I never use/remember, probably also some functions that aren't necessary
-* Setup chez moi or similar for better dotfile management/setup
-* Document/update the brewfile stuff
-* Consolidate my separate `vim` repo into this one
+## Local overrides
+
+Machine-specific config that shouldn't live in the repo goes in two gitignored files:
+
+- `~/.env.local` — PATH additions, non-secret exports (e.g. tool paths, region defaults)
+- `~/.secrets.local` — API keys, tokens, credentials
+
+Both are sourced silently at the end of every shell session.
+
+## What's in here
+
+```
+zsh/            shell config — zshrc entrypoint + modular lib/ files
+config/         tool configs (nvim, tmux, ghostty, starship, bat, btop, ...)
+packages/       Brewfiles — universal, work, and personal
+env/            machine-type shell overrides (work.zsh / personal.zsh)
+bin/            scripts symlinked to ~/bin
+```
+
+See [RUNBOOK.md](RUNBOOK.md) for detailed usage and maintenance notes.

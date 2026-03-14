@@ -1,6 +1,10 @@
 # My custom git aliases and configs
 # Heavily cribbed from the git oh-my-zsh lib and plugin
 
+# Setup alias for 1password to interact with github via `gh` cli tool
+if [[ -f "${HOME}/.config/op/plugins.sh" ]]; then
+  source "${HOME}/.config/op/plugins.sh"
+fi
 
 # From oh-my-zsh/lib/git.zsh
 

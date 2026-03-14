@@ -35,6 +35,11 @@ if [ -f /usr/local/bin/kubectl ]; then
   source <(kubectl completion zsh)
 fi
 
+# 1Password CLI completions
+if [ -f $HOMEBREW_PREFIX/bin/op ]; then
+  eval "$(op completion zsh)"; compdef _op op
+fi
+
 # Some functions, like _apt and _dpkg, are very slow. 
 # You can use a cache in order to proxy the list of results (like the list of available debian packages) 
 # Use a cache:

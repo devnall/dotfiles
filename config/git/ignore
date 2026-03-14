@@ -1,7 +1,7 @@
 # Global .gitignore file to keep random crap out of my repos
 #
-# If setting up a new box, will need to copy/link to ~/ then:
-# git config --global core.excludesfile '~/.gitignore'
+# If setting up a new box, will need to copy/link to ~/config/git/ignore then:
+# git config --global core.excludesfile '~/config/git/ignore'
 
 #iTerm plist
 config/iTerm2.prefs/*
@@ -70,8 +70,9 @@ dump.rdb
 Thumbs.db
 
 #
-# Secrets and local overrides
-*.local
-.env*
-*secrets*
-*.key
+# Secrets!
+secrets.txt
+
+#
+# Local files
+local.zsh

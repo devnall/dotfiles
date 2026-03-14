@@ -10,9 +10,10 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
   if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
-    alias l='eza -lah -F --color-scale size --icons --git'
-    alias ll='eza -lah -F --time-style=long-iso --group --binary --color-scale size --icons --git --group-directories-first'
-    alias la='eza -ah -F --color-scale age'
+    alias l='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first'
+    alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias lt='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first --tree --level=3'
   elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
     alias l='exa -laFh --color-scale --icons --git'
     alias ll='exa -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
@@ -31,6 +32,11 @@ else # Linux
   alias la='ls -AhF ${ls_colorflag}'
   alias lsa='ls -lahF ${ls_colorflag}'
   alias lsal='ls -lahF ${ls_colorflag} | less -R'
+fi
+
+# Directory navigation
+if [[ -f "$HOMEBREW_PREFIX/bin/zoxide" ]]; then
+  alias cd="z"
 fi
 
 # Other
@@ -77,9 +83,9 @@ if [[ `uname` == 'Darwin' ]]; then
 fi
 
 if command -v bat > /dev/null; then
-  alias bat='bat --theme="Nord"'
-  alias batp='bat -p --theme="Nord"'
-  alias bat_='bat --show-all --theme="Nord"'
+  alias batp='bat -p'
+  alias bat_='bat --show-all'
+  alias cat='bat --paging=never'
 fi
 
 # Retrain my youtube-dl muscle memory
