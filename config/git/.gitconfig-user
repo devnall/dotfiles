@@ -1,6 +1,0 @@
-# Personal identity — not committed to the dotfiles repo
-# This file is included by config/git/config via [include]
-[user]
-  name = Your Name
-  email = you@example.com
-  signingkey = YOUR_SSH_KEY_PATH_OR_GPG_ID
