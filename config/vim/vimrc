@@ -68,9 +68,6 @@ endif
 " Colors
 if ! has("gui_running")
   set t_Co=256
-  set background=dark
-else
-  set background=light
 endif
 
 if (has("termguicolors"))
@@ -79,8 +76,14 @@ if (has("termguicolors"))
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-set background=dark
-colorscheme desert
+let s:appearance = system('defaults read -g AppleInterfaceStyle 2>/dev/null')
+if s:appearance =~ 'Dark'
+  set background=dark
+  colorscheme desert
+else
+  set background=light
+  colorscheme default
+endif
 
 " Autocmds
 if has("autocmd")
