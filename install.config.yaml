@@ -60,6 +60,8 @@
 
     ~/.config/bat/config:
       path: config/bat/config
+    ~/.config/bat/themes/rose-pine-dawn.tmTheme:
+      path: config/bat/themes/rose-pine-dawn.tmTheme
 
     ~/.config/btop:
       path: config/btop
@@ -94,6 +96,6 @@
      description: Install personal Homebrew packages
      stdout: true
     -
-     command: 'mkdir -p "$(bat --config-dir)/themes" && curl -sL https://github.com/rose-pine/bat/raw/main/themes/rose-pine-dawn.tmTheme -o "$(bat --config-dir)/themes/rose-pine-dawn.tmTheme" && bat cache --build'
-     description: Install Rose Pine Dawn bat theme
+     command: 'bat cache --build'
+     description: Build bat theme cache
      stdout: true
