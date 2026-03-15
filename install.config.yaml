@@ -55,6 +55,9 @@
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
 
+    ~/.ripgreprc:
+      path: config/ripgrep/.ripgreprc
+
     ~/.config/bat/config:
       path: config/bat/config
 
