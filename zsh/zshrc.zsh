@@ -79,12 +79,6 @@ fpath=( "${HOME}/.config/zsh/zfunctions" "$fpath" )
 source "${HOME}"/.config/zsh/zfunctions/color_list
 source "${HOME}"/.config/zsh/zfunctions/clipboard
 
-# Load ssh-agent and add private key (macOS only)
-if [[ "$(uname)" == "Darwin" ]]; then
-  eval "$(ssh-agent -s)" &> /dev/null
-  [[ -f ~/.ssh/id_rsa ]] && ssh-add --apple-use-keychain ~/.ssh/id_rsa &> /dev/null
-fi
-
 # Starship prompt
 if [[ $- == *i* ]]; then
   if command -v starship > /dev/null; then

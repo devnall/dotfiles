@@ -69,6 +69,10 @@
       path: config/git/ignore
       force: true
 
+    ~/.ssh/config:
+      path: config/ssh/config
+      force: true
+
     ~/bin:
       glob: true
       path: bin/*
