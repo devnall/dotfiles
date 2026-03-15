@@ -482,7 +482,7 @@ Populated during execution. Items are added whenever a task surfaces something r
 **Template entries (expanded during execution):**
 
 - [ ] Archive file-by-file keep/kill/relocate decisions (1.1)
-- [ ] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2)
+- [x] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2) — alacritty.toml kept as Phase 5.1 reference; all themes/colors and iTerm2 plist deleted
 - [x] Decide where docker-compose.yml goes (1.3) — scrubbed from git history entirely
 - [ ] Approve `zsh/lib/work.zsh` resolution (2.1)
 - [ ] Review subjective zsh items — unused aliases, etc. (3.1)

@@ -38,10 +38,6 @@
       path: config/ghostty
       force: true
 
-    ~/.config/alacritty:
-      path: config/alacritty
-      force: true
-
     ~/.config/sheldon:
       path: config/sheldon
       force: true
