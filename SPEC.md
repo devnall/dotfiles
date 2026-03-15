@@ -502,12 +502,12 @@ Populated during execution. Items are added whenever a task surfaces something r
 - [x] Git account separation decision (4.1) — single GitHub account confirmed; includeIf removed
 - [x] SSH config architecture decision (4.2) — template approach adopted; config/ssh/config committed; private hosts stay in ~/.ssh/config.local
 - [x] bin/ script keep/remove decisions (5.2) — removed git-wtf, git-up, tmux_clipboard.sh; fixed bugs in brew-repair and curlperf
-- [ ] Cheatsheet tool-by-tool: still using? (6.3)
-- [ ] Copy retired cheatsheets to Obsidian before deletion (6.3)
-- [ ] Decide where `new_mac_setup.md` lives post-merge (6.2)
-- [ ] Decide where `StuffIUse.md` goes (6.4)
-- [ ] Gap items from `config/macos/Brewfile` reconciliation — placement decisions (7.3)
-- [ ] Brewfile audit placement decisions (7.4)
+- [x] Cheatsheet tool-by-tool: still using? (6.3) — alfred/cvim/markdown/npm/vagrant/vim deleted; fzf/tmux updated; git/shell/kubernetes added
+- [x] Copy retired cheatsheets to Obsidian before deletion (6.3) — alfred, markdown copied; cvim/npm/vagrant/vim discarded
+- [x] Decide where `new_mac_setup.md` lives post-merge (6.2) — moved to Obsidian; deleted from repo
+- [x] Decide where `StuffIUse.md` goes (6.4) — moved to Obsidian; deleted from repo
+- [x] Gap items from `config/macos/Brewfile` reconciliation — placement decisions (7.3) — all entries placed; Brewfile deleted
+- [x] Brewfile audit placement decisions (7.4) — all untracked packages reviewed and placed
 
 ---
 

@@ -13,6 +13,9 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 - **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc.
 - **Tmux session templates for Claude Code workflows** — Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
+- **Tmux sync-panes proper toggle** — `prefix e` / `prefix E` turn sync on/off separately. Make it a single toggle: `bind e run "tmux setw synchronize-panes; tmux display-message 'sync-panes: #{?synchronize-panes,ON,OFF}'"`.
+- **Tmux SSH binding tab completion** — `prefix S` opens a prompt to SSH in a new window but has no tab completion. Investigate integrating with known_hosts or fzf for host selection.
+- **Tmux TPM as dotbot submodule** — TPM is cloned manually to `~/.tmux/plugins/tpm`. Consider adding it as a git submodule and symlinking via dotbot so it's portable across machines.
 
 ## Dotbot
 
@@ -40,9 +43,12 @@ TODO: Make 1Password IdentityAgent path in config/ssh/config portable across
 OSes. macOS uses ~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock;
 Linux uses ~/.1password/agent.sock. Consider Match/Host-based conditionals or
 a local override in ~/.ssh/config.local.
-
+TODO: Can I keep ssh.local files in 1Password and manage w/ 1Pass cli for work/personal
 TODO: Remove profile names from env/work.zsh, replace with vars, keep real
 values in secret file. Also keep secret file in 1Password and use 1Password
 CLI tool to make it portable across work/personal machines. Document all of
 that.
+TODO: Can I have custom responses for tldr/tealdeer with my own
+alias/cheatsheet entries?
+TODO: Setup mise, get rid of tfenv and other stuff like it (pyenv? rbenv?)
 
