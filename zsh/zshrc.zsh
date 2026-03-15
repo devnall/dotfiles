@@ -73,10 +73,9 @@ fi
 
 
 # Set fpath (function path) and source function files
-# TODO: I don't think explicitly sourcing the files should be necessary if 
-# they're in fpath but without sourcing them explicitly, I had to execute a function
-# twice before it would start working. Revisit/fix?
-#fpath=( "${HOME}/.dotfiles/zsh/zfunctions" "$fpath" )
+# Note: files are sourced explicitly because autoloading alone required running
+# a function twice before it would register; explicit sourcing avoids this.
+fpath=( "${HOME}/.config/zsh/zfunctions" "$fpath" )
 source "${HOME}"/.config/zsh/zfunctions/color_list
 source "${HOME}"/.config/zsh/zfunctions/clipboard
 
@@ -94,12 +93,6 @@ if [[ $- == *i* ]]; then
     autoload -U promptinit && promptinit
     prompt devnall
   fi
-fi
-
-if [[ -f "${HOME}/.config/zsh/lib/fzf.zsh" ]]; then
-  source "${HOME}/.config/zsh/lib/fzf.zsh"
-elif [[ -f "${HOME}/.fzf.zsh" ]]; then
-  source "${HOME}/.fzf.zsh"
 fi
 
 autoload -U +X bashcompinit && bashcompinit

@@ -47,7 +47,7 @@ _fzf_comprun() {
     cd)           fzf --preview 'eza --tree --color always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo \$' {}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                    "$@" ;;
-    *)            fzf --preview "--preview 'bat -n --color=always --line-range :800 {}'" "$@" ;;
+    *)            fzf --preview 'bat -n --color=always --line-range :800 {}' "$@" ;;
   esac
 }
 

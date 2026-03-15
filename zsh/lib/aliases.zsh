@@ -34,11 +34,6 @@ else # Linux
   alias lsal='ls -lahF ${ls_colorflag} | less -R'
 fi
 
-# Directory navigation
-if [[ -f "$HOMEBREW_PREFIX/bin/zoxide" ]]; then
-  alias cd="z"
-fi
-
 # Other
 alias rm='rm -i'
 alias du='du -h'
@@ -48,9 +43,6 @@ alias mkdir='mkdir -p'
 alias pu="pushd"
 alias po="popd"
 alias ssr="ssh -l root"
-if hash fd 2>/dev/null; then
-  alias find='echo "No! Use fd instead! So. Much. Faster."'
-fi
 alias ports='netstat -tulan' # show open ports
 alias k8='kubectl'
 alias cls='printf "\033c"'   # clear screen
@@ -85,7 +77,6 @@ fi
 if command -v bat > /dev/null; then
   alias batp='bat -p'
   alias bat_='bat --show-all'
-  alias cat='bat --paging=never'
 fi
 
 # Retrain my youtube-dl muscle memory
@@ -94,8 +85,6 @@ alias youtube-dl='echo "Use yt-dlp instead!"'
 # Get IP Addresses
 # TODO: Turn this into a function that can handle different OSes
 alias ip='echo "External IP:   " `dig +short myip.opendns.com @resolver1.opendns.com` && echo "Ethernet (en3):" `ipconfig getifaddr en3` && echo "Wireless (en0):" `ipconfig getifaddr en0`'
-#alias localip='echo "Ethernet (en0):" `ipconfig getifaddr en0` && echo "Wireless (en1):" `ipconfig getifaddr en1`'
-#alias ips='ifconfig -a | perl -nle"/(\d+\.\d+\.\d+\.\d+)/ && print $1"'
 
 # Recursively delete `.DS_Store` files
 alias dscleanup="find . -name '*.DS_Store' -type f -ls -delete"
@@ -106,8 +95,6 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 # Empty the Trash on all mounted volumes and the main HDD
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 
-# Custom git aliases (override git plugin)
-#alias glg="g hist"
 if command -v lazygit > /dev/null; then
   alias lg='lazygit'
 fi

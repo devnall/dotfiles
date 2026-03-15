@@ -22,11 +22,6 @@ unset ruby_gem_bin
 if [ -d "${HOME}/.npm-packages/bin" ]; then
   PATH="${PATH}:${HOME}/.npm-packages/bin"
 fi
-# Add pip installed stuff to PATH (Python3)
-if [ -d "${HOME}/Library/Python/3.7/bin" ]; then
-  PATH="${PATH}:${HOME}/Library/Python/3.7/bin"
-fi
-
 # /usr/local bin dirs
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
