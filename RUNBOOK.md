@@ -293,10 +293,12 @@ sheldon lock --update
 ### Benchmark shell startup time
 
 ```sh
-for i in $(seq 1 5); do time zsh -i -c exit; done
+for i in 1 2 3 4 5; do /usr/bin/time -p zsh -i -c exit 2>&1 | grep real; done
 ```
 
 Run after making zsh config changes to catch regressions. A clean startup should be under ~200ms.
+
+**Baseline (March 2026, M-series Mac):** ~320ms. Main contributors are likely sheldon plugin initialization (fast-syntax-highlighting, forgit, zsh-autosuggestions) and thefuck. Acceptable for now; revisit if it climbs above ~500ms.
 
 ---
 
