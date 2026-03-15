@@ -107,7 +107,21 @@ The marker file is checked at shell startup (for env sourcing) and at install ti
 
 ### zsh lib loading
 
-All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical order, **except** `work.zsh` — that one loads only when `~/.work` exists. If you add a new `zsh/lib/*.zsh` file it will be picked up automatically.
+All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical order. If you add a new `zsh/lib/*.zsh` file it will be picked up automatically. Machine-type-specific config goes in `env/*.zsh` instead.
+
+### SSH config
+
+`config/ssh/config` is symlinked to `~/.ssh/config`. It contains the universal `Host *` block (1Password SSH agent) and an `Include ~/.ssh/config.local` directive.
+
+Machine-specific hosts (private IPs, internal hostnames, jump hosts) go in `~/.ssh/config.local` on each machine — this file is not tracked by dotfiles.
+
+```
+# ~/.ssh/config.local — machine-specific, not committed
+Host myalias
+  HostName example.internal
+  User myuser
+  ForwardAgent yes
+```
 
 ### Editors
 
@@ -152,7 +166,6 @@ This creates all symlinks. Homebrew and Brewfile steps are skipped.
 | `zsh/lib/fzf.zsh` | skips silently if fzf not installed |
 | starship prompt | skips if not installed; falls back to system prompt |
 | zoxide, thefuck | skip if not installed (guarded with `command -v`) |
-| ssh-agent | works; `-K` Keychain flag is Darwin-only |
 | Homebrew PATH | harmless on Linux (`/usr/local` typically exists) |
 | Brewfile installs | skipped via `~/.remote` guard |
 
@@ -211,10 +224,9 @@ dotfiles/
 │   │   ├── directory_nav.zsh
 │   │   ├── fzf.zsh
 │   │   ├── git.zsh
-│   │   ├── history.zsh
+│   │   ├── keybindings.zsh
 │   │   ├── path.zsh
-│   │   ├── ssh.zsh
-│   │   └── work.zsh          # Not auto-sourced; loaded via marker file
+│   │   └── ssh.zsh
 │   └── zfunctions/           # Autoloaded zsh functions
 └── config/
     ├── bash/bashrc           # Minimal bash (remote server baseline)
@@ -224,7 +236,9 @@ dotfiles/
     ├── git/
     ├── macos/                # macOS setup scripts
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback
