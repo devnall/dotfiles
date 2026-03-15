@@ -1,3 +1,32 @@
+# Dotfiles — TODO (Future Phase)
+
+Items that came up during cleanup project planning but are out of scope for the current effort. Add these to your existing dotfiles TODO.md or use this as a standalone tracker.
+
+---
+
+## Rollout & Multi-Machine
+
+- **Multi-machine rollout and testing** — Clone the updated repo on all other machines, run `./install`, verify everything works. Pull in any local customizations (`~/.env.local` contents, useful drift) back into the repo.
+- **Brewfile cross-machine reconciliation** — After rollout, run `brew leaves` / `brew list --cask` / `brew bundle dump` on each machine. Reconcile differences across machines and ensure every package is in the right Brewfile (universal / work / personal).
+
+## Tool Overhauls
+
+- **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc.
+- **Tmux session templates for Claude Code workflows** — Inspired by the old tmuxinator.yaml found in archive. Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
+
+## Dotbot
+
+- **Dotbot deep audit and optimization** — Beyond basic cleanup: evaluate whether the submodule update should be automated/scripted, explore dotbot plugins or conditional directives, optimize `install.config.yaml` structure, ensure RUNBOOK maintenance docs are thorough.
+
+## Repo Presentation
+
+- **License and README polish** — If this is a public repo, consider adding a LICENSE file. Polish the README for external readers (not just future-you).
+
+## Git & Hosting
+
+- **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
+- **GitHub account separation assessment** — Document final decision on single vs separate work/personal GitHub accounts. Current recommendation: stay single-account with `includeIf` path-based identity unless employer requires separation.
+
 TODO: Fix up minimal vim. Needs to at least have a decent colorscheme and not throw errors at start.
 TODO: On all machine types other than "Remote" (that is, on Work, Personal, and Remote-Full machines), if nvim is installed, alias something to it. I have muscle memory to type "vim" but if it's bad form to alias nvim to vim, I should find a new alias -- maybe "e" for "edit"?
 TODO: Archive/remove Alacritty configs.
@@ -6,3 +35,4 @@ TODO: Implement automatic dark/light theme switching on macOS appearance change.
 TODO: See if I can get custom btop NordicPine theme
 TODO: Document my theme palletes independently of shell configs, so that I can use them other places.
 TODO: Figure out 1Password "op" cli tool and the permissions popups for it I keep getting.
+
