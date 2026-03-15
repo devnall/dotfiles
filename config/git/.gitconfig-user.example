@@ -1,6 +1,3 @@
-# Personal identity template — copy to .gitconfig-user and fill in your values
-# .gitconfig-user is gitignored; this example file is what's committed
-# config/git/config includes ~/.dotfiles/config/git/.gitconfig-user via [include]
 [user]
   name = Your Name
   email = you@example.com
