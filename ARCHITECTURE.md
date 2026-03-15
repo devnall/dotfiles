@@ -53,7 +53,9 @@ dotfiles/
     ├── git/
     ├── macos/                # macOS setup/defaults scripts
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback (no plugins, remote-safe)

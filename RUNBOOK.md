@@ -206,6 +206,7 @@ dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── bin/                      # Scripts symlinked to ~/bin
+├── docs/                     # Cheatsheets (fzf, tmux)
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists
@@ -217,7 +218,7 @@ dotfiles/
 │   └── Brewfile.personal     # Installed when ~/.personal exists
 ├── zsh/
 │   ├── zshrc.zsh             # Symlinked to ~/.zshrc
-│   ├── lib/                  # Auto-sourced by zshrc
+│   ├── lib/                  # Auto-sourced by zshrc (alphabetical order)
 │   │   ├── aliases.zsh
 │   │   ├── brew.zsh
 │   │   ├── completions.zsh
@@ -225,8 +226,10 @@ dotfiles/
 │   │   ├── fzf.zsh
 │   │   ├── git.zsh
 │   │   ├── keybindings.zsh
+│   │   ├── local.zsh.template  # Template — copy to local.zsh for per-machine shortcuts
 │   │   ├── path.zsh
-│   │   └── ssh.zsh
+│   │   ├── ssh.zsh
+│   │   └── theme.zsh           # fast-syntax-highlighting styles + color config
 │   └── zfunctions/           # Autoloaded zsh functions
 └── config/
     ├── bash/bashrc           # Minimal bash (remote server baseline)
@@ -280,6 +283,20 @@ git commit -m "update dotbot submodule"
 ```sh
 nvim --headless "+Lazy sync" +qa
 ```
+
+### Update sheldon plugins
+
+```sh
+sheldon lock --update
+```
+
+### Benchmark shell startup time
+
+```sh
+for i in $(seq 1 5); do time zsh -i -c exit; done
+```
+
+Run after making zsh config changes to catch regressions. A clean startup should be under ~200ms.
 
 ---
 

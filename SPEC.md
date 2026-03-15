@@ -19,13 +19,16 @@ This section documents the repo's design decisions, constraints, and acceptance 
 dotfiles/
 ├── .git/
 ├── .gitignore
-├── SPEC.md
+├── ARCHITECTURE.md           # Design reference (authoritative)
+├── SPEC.md                   # Current project task plan
+├── TODO.md                   # Deferred ideas and future work
+├── README.md                 # Quick-start guide
+├── RUNBOOK.md                # Detailed usage and maintenance reference
 ├── dotbot/                   # Git submodule
 ├── install.config.yaml       # Dotbot config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── archive/                  # Deprecated configs — TO BE REMOVED during cleanup
-├── docs/                     # Cheatsheets and reference docs
+├── docs/                     # Cheatsheets (fzf, tmux)
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
@@ -35,16 +38,17 @@ dotfiles/
 │   │   ├── directory_nav.zsh
 │   │   ├── fzf.zsh
 │   │   ├── git.zsh
-│   │   ├── history.zsh
+│   │   ├── keybindings.zsh
+│   │   ├── local.zsh.template  # Template — copy to local.zsh for per-machine shortcuts
 │   │   ├── path.zsh
 │   │   ├── ssh.zsh
-│   │   └── work.zsh          # EXCEPTION: not auto-sourced; loaded only when ~/.work exists
+│   │   └── theme.zsh           # fast-syntax-highlighting styles
 │   └── zfunctions/           # Autoloaded zsh functions
 ├── env/
-│   ├── work.zsh              # Work-specific shell overrides
-│   ├── personal.zsh          # Personal-specific shell overrides
-│   ├── remote.zsh            # Remote server baseline overrides
-│   └── remote-full.zsh       # Remote servers with Homebrew + full tool suite
+│   ├── work.zsh              # Sourced when ~/.work exists
+│   ├── personal.zsh          # Sourced when ~/.personal exists
+│   ├── remote.zsh            # Sourced when ~/.remote exists
+│   └── remote-full.zsh       # Sourced when ~/.remote-full exists
 ├── packages/
 │   ├── Brewfile.universal    # Installed on all machines
 │   ├── Brewfile.work         # Installed on work machines only
@@ -56,8 +60,10 @@ dotfiles/
     ├── ghostty/
     ├── git/
     ├── macos/                # macOS setup scripts
-    ├── nvim/                 # Neovim config (lazy.nvim — stubbed out, overhaul is separate project)
+    ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback (no plugins, remote-safe)
