@@ -29,7 +29,8 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 TODO: Fix up minimal vim. Needs to at least have a decent colorscheme and not throw errors at start.
 TODO: On all machine types other than "Remote" (that is, on Work, Personal, and Remote-Full machines), if nvim is installed, alias something to it. I have muscle memory to type "vim" but if it's bad form to alias nvim to vim, I should find a new alias -- maybe "e" for "edit"?
-TODO: Remove config/alacritty/alacritty.toml once Phase 5.1 Ghostty audit is complete (kept as reference only).
+TODO: Try background-opacity and blur in Ghostty config (e.g. background-opacity = 0.90, window-blur was used in old Alacritty config). See if it works well with the current themes.
+TODO: Save the dark_nord Ghostty theme palette to Obsidian (colors are in config/ghostty/themes/dark_nord), then delete the file from the repo — it's not referenced in the Ghostty config.
 TODO: Try to remove external dependecy in `bat` for the `rose-pine-dawn` theme. Try to create a local copy of the theme. If successful, remove the step from `install.config.yaml` to curl the theme (and any associated documentation that would no longer be relevant).
 TODO: Implement automatic dark/light theme switching on macOS appearance change. Affects tmux and btop (and potentially others). Best approach: `brew install dark-notify` (keith/formulae) + a LaunchAgent that fires callbacks on appearance change — e.g. `tmux source ~/.config/tmux/tmux.conf` and a btop config patcher. Design the solution holistically across all affected tools before implementing. Alternately, consider a native polling approach to reduce external dependencies.
 TODO: See if I can get custom btop NordicPine theme
