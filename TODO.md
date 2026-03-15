@@ -35,4 +35,8 @@ TODO: Implement automatic dark/light theme switching on macOS appearance change.
 TODO: See if I can get custom btop NordicPine theme
 TODO: Document my theme palletes independently of shell configs, so that I can use them other places.
 TODO: Figure out 1Password "op" cli tool and the permissions popups for it I keep getting.
+TODO: Remove profile names from env/work.zsh, replace with vars, keep real
+values in secret file. Also keep secret file in 1Password and use 1Password
+CLI tool to make it portable across work/personal machines. Document all of
+that.
 
