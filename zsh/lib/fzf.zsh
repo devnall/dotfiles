@@ -15,15 +15,15 @@ fi
 # ---------------
 [[ $- == *i* ]] && source "$FZF_PATH/shell/completion.zsh" 2> /dev/null
 
-# Key bindings
-# ------------
-if [ -f "$FZF_PATH/shell/key-bindings.zsh" ]; then
-  source "$FZF_PATH/shell/key-bindings.zsh"
+# Key bindings + shell integration (ZLE required — skip in non-interactive/no-TTY contexts)
+# ------------------------------------------------------------------------------------------
+if [[ -t 1 ]]; then
+  if [ -f "$FZF_PATH/shell/key-bindings.zsh" ]; then
+    source "$FZF_PATH/shell/key-bindings.zsh"
+  fi
+  source <(fzf --zsh 2>/dev/null)
+  bindkey "ç" fzf-cd-widget
 fi
-
-# Shell integration
-# -----------------
-source <(fzf --zsh 2>/dev/null)
 
 # Command keybinds
 # ----------------
@@ -33,8 +33,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :800 {}'"
 export FZF_ALT_C_COMMAND="fd --type directory --hidden --exclude .git --color=always . $HOME"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-
-bindkey "ç" fzf-cd-widget
 
 # Function to do some advanced customization of fzf options based on context
 # The first argument is the name of the command

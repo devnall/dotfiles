@@ -39,7 +39,7 @@ setopt pushdtohome              # push to $HOME when no argument is given to `cd
 setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
-if command -v sheldon > /dev/null; then
+if command -v sheldon > /dev/null && [[ -t 1 ]]; then
   export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon"
   export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon"
   eval "$(sheldon source)"
@@ -89,9 +89,11 @@ if [[ $- == *i* ]]; then
   fi
 fi
 
-autoload -U +X bashcompinit && bashcompinit
-if command -v terraform > /dev/null; then
-  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+if [[ -t 1 ]]; then
+  autoload -U +X bashcompinit && bashcompinit
+  if command -v terraform > /dev/null; then
+    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+  fi
 fi
 
 eval "$(zoxide init zsh)"
