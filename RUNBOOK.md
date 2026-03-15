@@ -206,7 +206,7 @@ dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── bin/                      # Scripts symlinked to ~/bin
-├── docs/                     # Cheatsheets (fzf, tmux)
+├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists

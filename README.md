@@ -44,7 +44,7 @@ config/         tool configs (nvim, tmux, ghostty, starship, bat, btop, ...)
 packages/       Brewfiles — universal, work, and personal
 env/            machine-type shell overrides (work.zsh / personal.zsh / remote*.zsh)
 bin/            scripts symlinked to ~/bin
-docs/           cheatsheets (fzf, tmux)
+docs/           cheatsheets (fzf, tmux, git, shell, kubernetes)
 ```
 
 See [RUNBOOK.md](RUNBOOK.md) for detailed usage and maintenance notes.

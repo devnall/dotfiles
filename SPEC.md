@@ -28,7 +28,7 @@ dotfiles/
 ├── install.config.yaml       # Dotbot config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── docs/                     # Cheatsheets (fzf, tmux)
+├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
