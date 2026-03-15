@@ -13,7 +13,7 @@ elif [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
-  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 ## History config

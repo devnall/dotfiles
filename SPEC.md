@@ -262,6 +262,8 @@ Claude Code surfaces the contents of `env/personal.zsh`, `env/work.zsh`, `env/re
 
 *Depends on:* 2.1 (work.zsh resolution) should be decided first.
 
+**Note for 3.3:** `zsh/lib/history.zsh` only contains history-substring-search keybindings — the actual history settings (HISTFILE, HISTSIZE, setopt) live in `zshrc.zsh`. Consider whether the keybindings belong here or should move into the Sheldon plugin definition for history-substring-search, since the keybindings are meaningless without that plugin.
+
 #### 3.3 — Sheldon plugin reconciliation
 **Type:** Claude Code → human review
 
@@ -324,6 +326,9 @@ Human makes the final architecture decision.
 **Type:** Claude Code per-tool → human review for preferences
 
 Go through each config directory one at a time. For each, check: no cruft, no conflicts, settings follow current best practices, themes are intentional.
+
+**Pre-audit cleanup:**
+- Delete `config/alacritty/` (the `alacritty.toml` kept from Phase 1.2 as a reference). Cross-check any relevant settings against Ghostty config first, then `git rm -r config/alacritty/`.
 
 **Tools to audit:**
 - **bat** — config, themes, syntax mappings
