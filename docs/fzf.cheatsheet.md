@@ -1,13 +1,29 @@
 # fzf Cheatsheet
 
-CTRL+T - find files and directories inside the current directory. Inserts the selection into the command prompt.
-CTRL+R - search your shell history and paste into the command line.
-ALT+C - find and change into (sub)directory
+## Key Bindings
 
-`<command> ** <TAB>` - contextural fuzzy find completion for relevant command
-e.g. `vim ** <TAB>` will give you files and directories (the default for most commands) and let you multi-select them, but if you `ssh ** <TAB>` it'll provide a list of hostnames in you `~/.ssh/known_hosts`, and if you `cd ** <TAB>` it will only offer directories and only allow single selection, since those are the valid arguments to `cd`.
+- `CTRL+T` — find files/directories in the current directory; insert selection into command prompt. Previews files with bat (syntax highlighted).
+- `CTRL+R` — search shell history; paste selection into command line.
+- `ALT+C` (or `ç` on macOS) — fuzzy find and cd into a subdirectory. Previews directory tree with eza.
 
-## Reference:
+## Tab Completion
+
+`<command> ** <TAB>` — context-aware fuzzy completion:
+
+| Command | Behavior | Preview |
+|---------|----------|---------|
+| `vim ** <TAB>` | files and directories (default); multi-select | bat (syntax highlighted) |
+| `cd ** <TAB>` | directories only; single select | eza tree |
+| `ssh ** <TAB>` | hostnames from `~/.ssh/known_hosts` | dig output |
+| `export ** <TAB>` | shell variables | variable value |
+| `unset ** <TAB>` | shell variables | variable value |
+
+## Aliases
+
+- `preview` — open fzf with bat syntax-highlighted preview (`fzf --preview 'bat --color "always" {}'`)
+
+## Reference
+
 - [fzf](https://junegunn.github.io/fzf/)
 - [fzf GitHub Repo](https://github.com/junegunn/fzf)
 - [A Practical Guide to fzf: Shell Integration](https://thevaluable.dev/fzf-shell-integration/)
