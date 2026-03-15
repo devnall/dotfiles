@@ -7,9 +7,9 @@ brew "aws-vault"
 brew "helm"
 brew "kubernetes-cli"
 brew "kubectx"        # switch k8s contexts
-brew "nvm"
 brew "s3scanner"      # s3 bucket scanner
 brew "terraform"
+brew "tfenv"          # terraform version manager
 brew "tflint"         # terraform linter
 brew "yarn"
 
@@ -34,3 +34,4 @@ cask "lens"
 
 # cask "google-cloud-sdk"
 # cask "zoom"
+# cask "json-viewer"    # JSON viewer app

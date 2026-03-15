@@ -13,7 +13,7 @@ elif [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
-  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 ## History config
@@ -39,7 +39,7 @@ setopt pushdtohome              # push to $HOME when no argument is given to `cd
 setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
-if command -v sheldon > /dev/null; then
+if command -v sheldon > /dev/null && [[ -t 1 ]]; then
   export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon"
   export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon"
   eval "$(sheldon source)"
@@ -47,7 +47,6 @@ fi
 
 ## Source other zsh config files
 for zsh_file in ~/.config/zsh/lib/*.zsh; do
-  [[ ${zsh_file:t} == work.zsh ]] && continue
   source "$zsh_file"
 done
 
@@ -74,18 +73,11 @@ fi
 
 
 # Set fpath (function path) and source function files
-# TODO: I don't think explicitly sourcing the files should be necessary if 
-# they're in fpath but without sourcing them explicitly, I had to execute a function
-# twice before it would start working. Revisit/fix?
-#fpath=( "${HOME}/.dotfiles/zsh/zfunctions" "$fpath" )
+# Note: files are sourced explicitly because autoloading alone required running
+# a function twice before it would register; explicit sourcing avoids this.
+fpath=( "${HOME}/.config/zsh/zfunctions" "$fpath" )
 source "${HOME}"/.config/zsh/zfunctions/color_list
 source "${HOME}"/.config/zsh/zfunctions/clipboard
-
-# Load ssh-agent and add private key (macOS only)
-if [[ "$(uname)" == "Darwin" ]]; then
-  eval "$(ssh-agent -s)" &> /dev/null
-  [[ -f ~/.ssh/id_rsa ]] && ssh-add --apple-use-keychain ~/.ssh/id_rsa &> /dev/null
-fi
 
 # Starship prompt
 if [[ $- == *i* ]]; then
@@ -97,15 +89,11 @@ if [[ $- == *i* ]]; then
   fi
 fi
 
-if [[ -f "${HOME}/.config/zsh/lib/fzf.zsh" ]]; then
-  source "${HOME}/.config/zsh/lib/fzf.zsh"
-elif [[ -f "${HOME}/.fzf.zsh" ]]; then
-  source "${HOME}/.fzf.zsh"
-fi
-
-autoload -U +X bashcompinit && bashcompinit
-if command -v terraform > /dev/null; then
-  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+if [[ -t 1 ]]; then
+  autoload -U +X bashcompinit && bashcompinit
+  if command -v terraform > /dev/null; then
+    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+  fi
 fi
 
 eval "$(zoxide init zsh)"

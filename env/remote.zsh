@@ -10,6 +10,7 @@ fi
 
 # bat fallback to cat if not available
 if ! command -v bat > /dev/null; then
+  alias bat='cat'
   alias batp='cat'
 fi
 
@@ -22,5 +23,5 @@ fi
 # Simple prompt fallback if starship isn't installed
 # (starship can be installed on Linux as a single curl | sh)
 if ! command -v starship > /dev/null; then
-  autoload -U promptinit && promptinit 2>/dev/null || true
+  PROMPT='%F{green}%n@%m%f:%F{blue}%~%f %# '
 fi

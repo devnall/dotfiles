@@ -31,7 +31,7 @@ dotfiles/
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── docs/                     # Cheatsheets and reference docs
+├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
@@ -53,7 +53,9 @@ dotfiles/
     ├── git/
     ├── macos/                # macOS setup/defaults scripts
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback (no plugins, remote-safe)
@@ -116,9 +118,15 @@ These directives apply to all work on this repo:
 
 ### Directive 1: Interactive Shell Guards
 
-Guard only prompt/theme initialization behind `[[ $- == *i* ]]`. Specifically: `eval "$(starship init zsh)"` and custom prompt fallbacks MUST be wrapped. Aliases, exports, and PATH additions do NOT need wrapping (inert in non-interactive contexts).
+Two levels of guarding apply, depending on what is being loaded:
 
-**Rationale:** Prevents Starship escape codes from leaking into piped output from non-interactive subshells (e.g., vim `:terminal`, tmux job control, `ssh user@host 'cmd'`).
+**`[[ $- == *i* ]]` — interactive shell guard**
+Use for prompt/theme initialization only. Specifically: `eval "$(starship init zsh)"` and custom prompt fallbacks MUST be wrapped. Aliases, exports, and PATH additions do NOT need wrapping (inert in non-interactive contexts).
+
+**`[[ -t 1 ]]` — real TTY guard**
+Use for anything that requires ZLE (the zsh line editor) to be active: plugin loading (sheldon), fzf key-bindings and shell integration, and bashcompinit/completion setup. `zsh -i` sets the `interactive` flag but does NOT activate ZLE without a real terminal — these blocks must be guarded with `[[ -t 1 ]]` (stdout is a terminal) to avoid "can't change option: zle" warnings in non-TTY interactive contexts (e.g., test runners, vim `:terminal`, `ssh user@host 'cmd'`).
+
+**Rationale:** Prevents escape codes and ZLE errors from leaking into piped or non-TTY subshell output.
 
 ### Directive 2: POSIX Alias Safety
 

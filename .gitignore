@@ -3,9 +3,6 @@
 # If setting up a new box, will need to copy/link to ~/ then:
 # git config --global core.excludesfile '~/.gitignore'
 
-#iTerm plist
-config/iTerm2.prefs/*
-
 #
 # Vagrant stuff
 *.box

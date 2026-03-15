@@ -12,7 +12,10 @@ Items that came up during cleanup project planning but are out of scope for the 
 ## Tool Overhauls
 
 - **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc.
-- **Tmux session templates for Claude Code workflows** — Inspired by the old tmuxinator.yaml found in archive. Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
+- **Tmux session templates for Claude Code workflows** — Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
+- **Tmux sync-panes proper toggle** — `prefix e` / `prefix E` turn sync on/off separately. Make it a single toggle: `bind e run "tmux setw synchronize-panes; tmux display-message 'sync-panes: #{?synchronize-panes,ON,OFF}'"`.
+- **Tmux SSH binding tab completion** — `prefix S` opens a prompt to SSH in a new window but has no tab completion. Investigate integrating with known_hosts or fzf for host selection.
+- **Tmux TPM as dotbot submodule** — TPM is cloned manually to `~/.tmux/plugins/tpm`. Consider adding it as a git submodule and symlinking via dotbot so it's portable across machines.
 
 ## Dotbot
 
@@ -29,10 +32,23 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 TODO: Fix up minimal vim. Needs to at least have a decent colorscheme and not throw errors at start.
 TODO: On all machine types other than "Remote" (that is, on Work, Personal, and Remote-Full machines), if nvim is installed, alias something to it. I have muscle memory to type "vim" but if it's bad form to alias nvim to vim, I should find a new alias -- maybe "e" for "edit"?
-TODO: Archive/remove Alacritty configs.
+TODO: Try background-opacity and blur in Ghostty config (e.g. background-opacity = 0.90, window-blur was used in old Alacritty config). See if it works well with the current themes.
+TODO: Save the dark_nord Ghostty theme palette to Obsidian (colors are in config/ghostty/themes/dark_nord), then delete the file from the repo — it's not referenced in the Ghostty config.
 TODO: Try to remove external dependecy in `bat` for the `rose-pine-dawn` theme. Try to create a local copy of the theme. If successful, remove the step from `install.config.yaml` to curl the theme (and any associated documentation that would no longer be relevant).
 TODO: Implement automatic dark/light theme switching on macOS appearance change. Affects tmux and btop (and potentially others). Best approach: `brew install dark-notify` (keith/formulae) + a LaunchAgent that fires callbacks on appearance change — e.g. `tmux source ~/.config/tmux/tmux.conf` and a btop config patcher. Design the solution holistically across all affected tools before implementing. Alternately, consider a native polling approach to reduce external dependencies.
 TODO: See if I can get custom btop NordicPine theme
 TODO: Document my theme palletes independently of shell configs, so that I can use them other places.
 TODO: Figure out 1Password "op" cli tool and the permissions popups for it I keep getting.
+TODO: Make 1Password IdentityAgent path in config/ssh/config portable across
+OSes. macOS uses ~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock;
+Linux uses ~/.1password/agent.sock. Consider Match/Host-based conditionals or
+a local override in ~/.ssh/config.local.
+TODO: Can I keep ssh.local files in 1Password and manage w/ 1Pass cli for work/personal
+TODO: Remove profile names from env/work.zsh, replace with vars, keep real
+values in secret file. Also keep secret file in 1Password and use 1Password
+CLI tool to make it portable across work/personal machines. Document all of
+that.
+TODO: Can I have custom responses for tldr/tealdeer with my own
+alias/cheatsheet entries?
+TODO: Setup mise, get rid of tfenv and other stuff like it (pyenv? rbenv?)
 

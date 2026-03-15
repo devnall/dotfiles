@@ -5,6 +5,7 @@
 #brew "mas"            # Mac App Store CLI
 
 # Casks
+cask "handbrake"      # HandBrake GUI
 cask "iina"
 cask "imageoptim"
 cask "itsycal"
@@ -12,12 +13,18 @@ cask "jordanbaird-ice"
 cask "raycast"
 cask "steam"
 
-# cask "vscodium"
-# cask "pika"
-# cask "shottr"
-# cask "keepingyouawake"
-# cask "brave-browser"
+# Quarantined 20260315 - Delete if still commented in 6 months
+# cask "appzapper"      # app uninstaller
 # cask "discord"
+# cask "halloy"         # IRC client
 # cask "iina"
+# cask "keepingyouawake"
+# cask "openrgb"        # RGB lighting control
+# cask "pika"
+# cask "brave-browser"
+# cask "qflipper"       # Flipper Zero utility
+# cask "shottr"
+# cask "signal"
 # cask "virtualbox"
 # cask "vscodium"
+# cask "zoom"

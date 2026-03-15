@@ -1,0 +1,9 @@
+# SSH config — managed by dotfiles
+# Symlinked to ~/.ssh/config via Dotbot.
+#
+# Machine-specific hosts (private IPs, internal hostnames, etc.) go in
+# ~/.ssh/config.local, which is not tracked by dotfiles.
+Include ~/.ssh/config.local
+
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"

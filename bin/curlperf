@@ -15,4 +15,4 @@ __curlperf() {
     "$1"
 }
 
-[ -n "$#" ] && __curlperf "$1"
+[ "$#" -gt 0 ] && __curlperf "$1"

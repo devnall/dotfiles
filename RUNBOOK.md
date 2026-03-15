@@ -107,7 +107,21 @@ The marker file is checked at shell startup (for env sourcing) and at install ti
 
 ### zsh lib loading
 
-All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical order, **except** `work.zsh` — that one loads only when `~/.work` exists. If you add a new `zsh/lib/*.zsh` file it will be picked up automatically.
+All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical order. If you add a new `zsh/lib/*.zsh` file it will be picked up automatically. Machine-type-specific config goes in `env/*.zsh` instead.
+
+### SSH config
+
+`config/ssh/config` is symlinked to `~/.ssh/config`. It contains the universal `Host *` block (1Password SSH agent) and an `Include ~/.ssh/config.local` directive.
+
+Machine-specific hosts (private IPs, internal hostnames, jump hosts) go in `~/.ssh/config.local` on each machine — this file is not tracked by dotfiles.
+
+```
+# ~/.ssh/config.local — machine-specific, not committed
+Host myalias
+  HostName example.internal
+  User myuser
+  ForwardAgent yes
+```
 
 ### Editors
 
@@ -152,7 +166,6 @@ This creates all symlinks. Homebrew and Brewfile steps are skipped.
 | `zsh/lib/fzf.zsh` | skips silently if fzf not installed |
 | starship prompt | skips if not installed; falls back to system prompt |
 | zoxide, thefuck | skip if not installed (guarded with `command -v`) |
-| ssh-agent | works; `-K` Keychain flag is Darwin-only |
 | Homebrew PATH | harmless on Linux (`/usr/local` typically exists) |
 | Brewfile installs | skipped via `~/.remote` guard |
 
@@ -193,7 +206,7 @@ dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── bin/                      # Scripts symlinked to ~/bin
-├── archive/                  # Deprecated scripts — review and cull periodically
+├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists
@@ -205,17 +218,18 @@ dotfiles/
 │   └── Brewfile.personal     # Installed when ~/.personal exists
 ├── zsh/
 │   ├── zshrc.zsh             # Symlinked to ~/.zshrc
-│   ├── lib/                  # Auto-sourced by zshrc
+│   ├── lib/                  # Auto-sourced by zshrc (alphabetical order)
 │   │   ├── aliases.zsh
 │   │   ├── brew.zsh
 │   │   ├── completions.zsh
 │   │   ├── directory_nav.zsh
 │   │   ├── fzf.zsh
 │   │   ├── git.zsh
-│   │   ├── history.zsh
+│   │   ├── keybindings.zsh
+│   │   ├── local.zsh.template  # Template — copy to local.zsh for per-machine shortcuts
 │   │   ├── path.zsh
 │   │   ├── ssh.zsh
-│   │   └── work.zsh          # Not auto-sourced; loaded via marker file
+│   │   └── theme.zsh           # fast-syntax-highlighting styles + color config
 │   └── zfunctions/           # Autoloaded zsh functions
 └── config/
     ├── bash/bashrc           # Minimal bash (remote server baseline)
@@ -225,7 +239,9 @@ dotfiles/
     ├── git/
     ├── macos/                # macOS setup scripts
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback
@@ -268,13 +284,21 @@ git commit -m "update dotbot submodule"
 nvim --headless "+Lazy sync" +qa
 ```
 
-### Audit archive/
-
-Scripts in `archive/` are no longer on the active path. Review occasionally and delete anything you're confident is dead:
+### Update sheldon plugins
 
 ```sh
-ls ~/.dotfiles/archive/
+sheldon lock --update
 ```
+
+### Benchmark shell startup time
+
+```sh
+for i in 1 2 3 4 5; do /usr/bin/time -p script -q /dev/null zsh -i -c exit 2>&1 | grep real; done
+```
+
+Use `script` to allocate a real PTY — sheldon and fzf key-bindings are guarded behind `[[ -t 1 ]]` and won't load in a plain `zsh -i -c exit` without a terminal, making that command an undercount. Discard the first run (cold cache). A clean startup should be under ~500ms.
+
+**Baseline (March 2026, M-series Mac):** ~320ms (warm cache). Main contributors are sheldon plugin initialization (fast-syntax-highlighting, forgit, zsh-autosuggestions) and thefuck. Revisit if it climbs above ~500ms.
 
 ---
 
