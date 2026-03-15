@@ -495,7 +495,7 @@ Populated during execution. Items are added whenever a task surfaces something r
 - [x] Sheldon plugin keep/remove decisions (3.3) — all 6 plugins confirmed in use; history.zsh renamed to keybindings.zsh
 - [x] Git account separation decision (4.1) — single GitHub account confirmed; includeIf removed
 - [x] SSH config architecture decision (4.2) — template approach adopted; config/ssh/config committed; private hosts stay in ~/.ssh/config.local
-- [ ] bin/ script keep/remove decisions (5.2)
+- [x] bin/ script keep/remove decisions (5.2) — removed git-wtf, git-up, tmux_clipboard.sh; fixed bugs in brew-repair and curlperf
 - [ ] Cheatsheet tool-by-tool: still using? (6.3)
 - [ ] Copy retired cheatsheets to Obsidian before deletion (6.3)
 - [ ] Decide where `new_mac_setup.md` lives post-merge (6.2)
