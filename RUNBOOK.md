@@ -193,7 +193,6 @@ dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── bin/                      # Scripts symlinked to ~/bin
-├── archive/                  # Deprecated scripts — review and cull periodically
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists
@@ -266,14 +265,6 @@ git commit -m "update dotbot submodule"
 
 ```sh
 nvim --headless "+Lazy sync" +qa
-```
-
-### Audit archive/
-
-Scripts in `archive/` are no longer on the active path. Review occasionally and delete anything you're confident is dead:
-
-```sh
-ls ~/.dotfiles/archive/
 ```
 
 ---

@@ -12,7 +12,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 ## Tool Overhauls
 
 - **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc.
-- **Tmux session templates for Claude Code workflows** — Inspired by the old tmuxinator.yaml found in archive. Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
+- **Tmux session templates for Claude Code workflows** — Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
 
 ## Dotbot
 
