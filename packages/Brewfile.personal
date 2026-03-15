@@ -5,7 +5,7 @@
 #brew "mas"            # Mac App Store CLI
 
 # Casks
-cask "handbrake"      # HandBrake GUI
+# cask "handbrake-app" # HandBrake GUI — quarantined 20260315
 cask "iina"
 cask "imageoptim"
 cask "itsycal"

@@ -50,5 +50,9 @@ CLI tool to make it portable across work/personal machines. Document all of
 that.
 TODO: Can I have custom responses for tldr/tealdeer with my own
 alias/cheatsheet entries?
-TODO: Setup mise, get rid of tfenv and other stuff like it (pyenv? rbenv?)
+TODO: Migrate language runtime management to mise — this is now a first-class requirement.
+Scope includes: python, ruby, rust (currently installed ad-hoc or via Homebrew), tfenv/tenv
+(terraform versions), nvm (node), rbenv (ruby). Goal: mise as single source of truth for all
+runtimes; remove redundant version managers and Homebrew-managed language packages. Also
+update Brewfile.universal to remove any remaining Homebrew-managed runtimes once migrated.
 
