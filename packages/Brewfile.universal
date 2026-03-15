@@ -16,20 +16,22 @@ brew "bat"            # better cat
 brew "btop"           # better top
 brew "coreutils"
 brew "curl"
-brew "delta"          # 
-brew "diff-so-fancy"  # 
+brew "diff-so-fancy"
 brew "docker"
 brew "docker-completion"
 brew "doggo"
 brew "eza"            # better ls
 brew "fd"             # better find
+brew "ffmpeg"         # video processing
 brew "fzf"            # fuzzy finder
 brew "gawk"
 brew "gnu-sed"
 brew "gnu-tar"
 brew "grep"
 brew "gzip"
+brew "handbrake"      # HandBrakeCLI
 brew "htop"
+brew "imagemagick"    # image processing
 brew "lazydocker"     # docker TUI
 brew "lazygit"        # git TUI
 brew "mole"           # MacOS maintenance TUI
@@ -40,6 +42,7 @@ brew "reattach-to-user-namespace"
 brew "ripgrep"        # better grep
 brew "rustscan"       # portscanner
 brew "sheldon"        # zsh plugin manager
+brew "shfmt"          # shell script formatter
 brew "ssh-copy-id"
 brew "starship"       # cross-shell prompt
 brew "thefuck"
@@ -55,8 +58,8 @@ brew "zoxide"
 brew "gist"
 brew "git"
 brew "git-delta"      # better git diffs
+brew "git-filter-repo" # git history rewriting
 brew "gh"             # GitHub CLI
-brew "lazygit"        # TUI git client
 
 # Editors
 brew "neovim"
