@@ -109,3 +109,7 @@ cask "vlc"
 # brew "bandwhich"
 # brew "iftop"
 # brew "ack"
+# cask "keepingyouawake"
+# cask "pika"           # color picker
+# cask "shottr"         # screenshot tool
+# cask "vscodium"
