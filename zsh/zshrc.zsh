@@ -47,7 +47,6 @@ fi
 
 ## Source other zsh config files
 for zsh_file in ~/.config/zsh/lib/*.zsh; do
-  [[ ${zsh_file:t} == work.zsh ]] && continue
   source "$zsh_file"
 done
 
