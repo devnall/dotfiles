@@ -486,15 +486,15 @@ Populated during execution. Items are added whenever a task surfaces something r
 
 **Template entries (expanded during execution):**
 
-- [ ] Archive file-by-file keep/kill/relocate decisions (1.1)
+- [x] Archive file-by-file keep/kill/relocate decisions (1.1) — archive/ cleared entirely
 - [x] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2) — alacritty.toml kept as Phase 5.1 reference; all themes/colors and iTerm2 plist deleted
 - [x] Decide where docker-compose.yml goes (1.3) — scrubbed from git history entirely
-- [ ] Approve `zsh/lib/work.zsh` resolution (2.1)
-- [ ] Review subjective zsh items — unused aliases, etc. (3.1)
-- [ ] Review env/ files for correctness (3.2)
-- [ ] Sheldon plugin keep/remove decisions (3.3)
-- [ ] Git account separation decision (4.1)
-- [ ] SSH config architecture decision (4.2)
+- [x] Approve `zsh/lib/work.zsh` resolution (2.1) — useful content migrated to env/work.zsh; file deleted
+- [x] Review subjective zsh items — unused aliases, etc. (3.1) — reviewed and resolved; see commit e69e25b
+- [x] Review env/ files for correctness (3.2) — all four env/ files reviewed; remote.zsh prompt and bat fallback fixed
+- [x] Sheldon plugin keep/remove decisions (3.3) — all 6 plugins confirmed in use; history.zsh renamed to keybindings.zsh
+- [x] Git account separation decision (4.1) — single GitHub account confirmed; includeIf removed
+- [x] SSH config architecture decision (4.2) — template approach adopted; config/ssh/config committed; private hosts stay in ~/.ssh/config.local
 - [ ] bin/ script keep/remove decisions (5.2)
 - [ ] Cheatsheet tool-by-tool: still using? (6.3)
 - [ ] Copy retired cheatsheets to Obsidian before deletion (6.3)
