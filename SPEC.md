@@ -422,7 +422,19 @@ Also update the directory structure in Section A.1 of this SPEC to reflect post-
 
 Run `time zsh -i -c exit` multiple times to get a baseline. If startup is slow (> ~200ms), use `zsh -xv` or `zprof` to trace slow spots and optimize. Document the final benchmark in the RUNBOOK's maintenance section as a reference number.
 
-#### 7.3 — Brewfile audit (current machine only)
+#### 7.3 — Reconcile and retire `config/macos/Brewfile`
+**Type:** Collaborative
+
+`config/macos/Brewfile` is the old unified Brewfile, predating the universal/work/personal split. It must be fully reconciled before deletion.
+
+1. Diff every entry in `config/macos/Brewfile` against `Brewfile.universal`, `Brewfile.work`, and `Brewfile.personal`
+2. Identify any entries not present in any of the three new Brewfiles
+3. Surface the gaps to the human with a recommendation for each (universal / work / personal / skip)
+4. Human decides placement for each gap item
+5. Claude Code updates the appropriate Brewfile(s)
+6. Delete `config/macos/Brewfile` once fully reconciled
+
+#### 7.4 — Brewfile audit (current machine only)
 **Type:** Collaborative
 
 On the current machine:
@@ -437,12 +449,12 @@ On the current machine:
 
 **Note:** Cross-machine reconciliation is a rollout-phase task (see TODO.md). This pass covers the current machine only.
 
-#### 7.4 — Run acceptance criteria
+#### 7.5 — Run acceptance criteria
 **Type:** Claude Code
 
 Verify all acceptance criteria from Section A.4 are met. Document results.
 
-#### 7.5 — Final commit and summary
+#### 7.6 — Final commit and summary
 **Type:** Claude Code
 
 - Ensure all changes are committed with clear messages
@@ -471,7 +483,7 @@ Populated during execution. Items are added whenever a task surfaces something r
 
 - [ ] Archive file-by-file keep/kill/relocate decisions (1.1)
 - [ ] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2)
-- [ ] Decide where docker-compose.yml goes (1.3)
+- [x] Decide where docker-compose.yml goes (1.3) — scrubbed from git history entirely
 - [ ] Approve `zsh/lib/work.zsh` resolution (2.1)
 - [ ] Review subjective zsh items — unused aliases, etc. (3.1)
 - [ ] Review env/ files for correctness (3.2)
@@ -483,7 +495,8 @@ Populated during execution. Items are added whenever a task surfaces something r
 - [ ] Copy retired cheatsheets to Obsidian before deletion (6.3)
 - [ ] Decide where `new_mac_setup.md` lives post-merge (6.2)
 - [ ] Decide where `StuffIUse.md` goes (6.4)
-- [ ] Brewfile placement decisions (7.3)
+- [ ] Gap items from `config/macos/Brewfile` reconciliation — placement decisions (7.3)
+- [ ] Brewfile audit placement decisions (7.4)
 
 ---
 
