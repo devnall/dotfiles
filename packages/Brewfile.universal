@@ -28,7 +28,6 @@ brew "gnu-sed"
 brew "gnu-tar"
 brew "grep"
 brew "gzip"
-# brew "handbrake"    # HandBrakeCLI — quarantined 20260315
 brew "htop"
 brew "imagemagick"    # image processing
 brew "lazydocker"     # docker TUI
@@ -88,7 +87,6 @@ cask "docker-desktop"
 cask "latest"              # app update checker
 cask "1password"
 cask "1password-cli"
-#cask "docker"
 cask "firefox"
 cask "flameshot"
 cask "ghostty"
@@ -105,23 +103,21 @@ cask "vlc"
 # TODO: Can I automate this with https://github.com/mas-cli/mas
 # 1Password
 
-# Quarantined 20260315 - Delete if still commented in 6 months
-# cask "claude-code"         # AI assistant CLI
-# cask "jordanbaird-ice"     # menu bar manager
-
-# Quarantined 20260313 - Delete if still commented in 6 months
-# brew "inetutils"
-# brew "ipcalc"
-# brew "tree"
-# brew "urlview"  # required for tmux-urlview plugin
-# brew "watch"
-# brew "mas"            # Mac App Store CLI
-# brew "mackup"         # app settings backup
-# brew "trash"          # safer rm
-# brew "bandwhich"
-# brew "iftop"
-# brew "ack"
-# cask "keepingyouawake"
-# cask "pika"           # color picker
-# cask "shottr"         # screenshot tool
-# cask "vscodium"
+# Quarantined — delete if still commented after 6 months
+# brew "ack"                   # 20260313
+# brew "bandwhich"             # 20260313
+# brew "handbrake"             # HandBrakeCLI — 20260315
+# brew "inetutils"             # 20260313
+# brew "iftop"                 # 20260313
+# brew "ipcalc"                # 20260313
+# brew "mackup"                # app settings backup — 20260313
+# brew "mas"                   # Mac App Store CLI — 20260313
+# brew "trash"                 # safer rm — 20260313
+# brew "tree"                  # 20260313
+# brew "urlview"               # tmux-urlview plugin dep — 20260313
+# brew "watch"                 # 20260313
+# cask "jordanbaird-ice"       # menu bar manager — 20260315
+# cask "keepingyouawake"       # 20260313
+# cask "pika"                  # color picker — 20260313
+# cask "shottr"                # screenshot tool — 20260313
+# cask "vscodium"              # 20260313

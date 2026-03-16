@@ -8,8 +8,8 @@ brew "helm"
 brew "kubernetes-cli"
 brew "kubectx"        # switch k8s contexts
 brew "s3scanner"      # s3 bucket scanner
-brew "terraform"
-brew "tfenv"          # terraform version manager
+# brew "terraform"    # quarantined 20260315 — migrating to mise
+# brew "tfenv"        # quarantined 20260315 — migrating to mise
 brew "tflint"         # terraform linter
 brew "yarn"
 
@@ -28,25 +28,22 @@ brew "eksctl"         # AWS EKS CLI
 
 cask "lens"
 
-# 20260315 - quarantined — TODO: delete if still commented in a year
-# brew "terraform-docs"  # terraform doc generator
-# brew "pre-commit"      # git hooks framework
-# brew "rabbitmq"        # message broker
-# brew "redis"           # in-memory database
-
-# 20260313 - TODO: Delete anything still here in a year
-# brew "tfswitch"       # terraform version manager
-# brew "libpq", link: true
-# brew "libsndfile"
-# tap "puma/puma"
-# brew "puma/puma/puma-dev"
-# brew "doitlive"  # terminal demo tool
-# brew "fx"  # json viewer
-# brew "gnupg"
-#brew "chamber"        # SSM parameter store CLI
-
-# cask "google-cloud-sdk"
-# cask "zoom"
-# cask "json-viewer"    # JSON viewer app
-# cask "displaylink"    # USB graphics driver
-# cask "virtualbox"     # VM hypervisor
+# Quarantined — delete if still commented after 1 year
+# brew "chamber"               # SSM parameter store CLI — 20260313
+# brew "doitlive"              # terminal demo tool — 20260313
+# brew "fx"                    # json viewer — 20260313
+# brew "gnupg"                 # 20260313
+# brew "libpq", link: true     # 20260313
+# brew "libsndfile"            # 20260313
+# brew "pre-commit"            # git hooks framework — 20260315
+# brew "puma/puma/puma-dev"    # 20260313
+# brew "rabbitmq"              # message broker — 20260315
+# brew "redis"                 # in-memory database — 20260315
+# brew "terraform-docs"        # terraform doc generator — 20260315
+# brew "tfswitch"              # terraform version manager — 20260313
+# tap "puma/puma"              # 20260313
+# cask "displaylink"           # USB graphics driver — 20260315
+# cask "google-cloud-sdk"      # 20260313
+# cask "json-viewer"           # JSON viewer app — 20260315
+# cask "virtualbox"            # VM hypervisor — 20260315
+# cask "zoom"                  # 20260313

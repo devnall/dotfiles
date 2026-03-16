@@ -31,19 +31,34 @@ Items that came up during cleanup project planning but are out of scope for the 
 - **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
 - **GitHub account separation assessment** — Document final decision on single vs separate work/personal GitHub accounts. Current recommendation: stay single-account with `includeIf` path-based identity unless employer requires separation.
 
-## Unsorted
-TODO: Fix up minimal vim. Needs to at least have a decent colorscheme and not throw errors at start.
-TODO: On all machine types other than "Remote" (that is, on Work, Personal, and Remote-Full machines), if nvim is installed, alias something to it. I have muscle memory to type "vim" but if it's bad form to alias nvim to vim, I should find a new alias -- maybe "e" for "edit"?
-TODO: Try background-opacity and blur in Ghostty config (e.g. background-opacity = 0.90, window-blur was used in old Alacritty config). See if it works well with the current themes.
-TODO: Save the dark_nord Ghostty theme palette to Obsidian (colors are in config/ghostty/themes/dark_nord), then delete the file from the repo — it's not referenced in the Ghostty config.
-TODO: Try to remove external dependecy in `bat` for the `rose-pine-dawn` theme. Try to create a local copy of the theme. If successful, remove the step from `install.config.yaml` to curl the theme (and any associated documentation that would no longer be relevant).
-TODO: Implement automatic dark/light theme switching on macOS appearance change. Affects tmux and btop (and potentially others). Best approach: `brew install dark-notify` (keith/formulae) + a LaunchAgent that fires callbacks on appearance change — e.g. `tmux source ~/.config/tmux/tmux.conf` and a btop config patcher. Design the solution holistically across all affected tools before implementing. Alternately, consider a native polling approach to reduce external dependencies.
-TODO: See if I can get custom btop NordicPine theme
-TODO: Document my theme palletes independently of shell configs, so that I can use them other places.
-TODO: Figure out 1Password "op" cli tool and the permissions popups for it I keep getting.
-TODO: Make 1Password IdentityAgent path in config/ssh/config portable across OSes. macOS uses ~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock; Linux uses ~/.1password/agent.sock. Consider Match/Host-based conditionals or a local override in ~/.ssh/config.local.
-TODO: Can I keep ssh.local files in 1Password and manage w/ 1Pass cli for work/personal
-TODO: Remove profile names from env/work.zsh, replace with vars, keep real values in secret file. Also keep secret file in 1Password and use 1Password CLI tool to make it portable across work/personal machines. Document all of that.
-TODO: Can I have custom responses for tldr/tealdeer with my own alias/cheatsheet entries?
-TODO: Migrate language runtime management to mise — this is now a first-class requirement. Scope includes: python, ruby, rust (currently installed ad-hoc or via Homebrew), tfenv/tenv (terraform versions), nvm (node), rbenv (ruby). Goal: mise as single source of truth for all runtimes; remove redundant version managers and Homebrew-managed language packages. Also update Brewfile.universal to remove any remaining Homebrew-managed runtimes once migrated.
-TODO: On each of my 3 primary machines (personal desktop, personal laptop, work laptop), audit /Applications and ~/Applications and sort everything into the same personal/work/universal pattern used in the Brewfiles. Brew cask install the apps I can as part of dotbot's install script. For the ones that can only be installed through the Mac App Store, either use the mas CLI tool to install them or write explicit documents on doing it. 
+## Theming & Appearance
+
+- **Automatic dark/light theme switching** — Implement macOS appearance-change callbacks for tmux, btop, and any other affected tools. Candidate approach: `dark-notify` (keith/formulae) + LaunchAgent. Design holistically across all tools before implementing; alternatively, consider a native polling approach to reduce dependencies.
+- **Document theme palettes independently** — Extract color values from shell/tool configs into a standalone reference (or Obsidian note) so they can be reused in other contexts (scripts, web projects, etc.).
+- **Custom btop NordicPine theme** — Create a custom btop theme from the NordicPine palette.
+- **Ghostty transparency and blur** — Try `background-opacity = 0.90` and window blur in Ghostty config. The old Alacritty config used blur — see if it works well with current themes.
+- **Archive dark_nord Ghostty theme** — Save the palette from `config/ghostty/themes/dark_nord` to Obsidian, then delete from the repo (not referenced in Ghostty config).
+- **Localize bat rose-pine-dawn theme** — The bat theme is currently fetched via curl in `install.config.yaml`. Try bundling a local copy of the `.tmTheme` file instead and remove the curl step.
+
+## Editors
+
+- **Minimal vim cleanup** — Fix the fallback `vimrc` so it has a usable colorscheme and doesn't throw errors on startup.
+- **Neovim alias** — On non-remote machines where neovim is installed, alias it to something convenient. Options: alias `vim` → `nvim` (muscle memory), or use `e` for "edit" if shadowing `vim` feels wrong.
+
+## 1Password & Secrets
+
+- **Learn the `op` CLI** — Figure out the 1Password CLI tool and resolve the recurring permissions popups.
+- **Manage ssh.local via 1Password** — Investigate storing per-machine `~/.ssh/config.local` files in 1Password and deploying them with the `op` CLI.
+- **Secrets management for env/work.zsh** — Replace hardcoded profile names in `env/work.zsh` with variables; keep real values in a secrets file managed by 1Password CLI. Document the workflow.
+
+## Runtime Management
+
+- **Migrate to mise** — First-class requirement. Scope: python, ruby, rust (currently Homebrew or ad-hoc), tfenv/tenv (terraform), nvm (node), rbenv (ruby). Goal: mise as single source of truth for all language runtimes. Once migrated, remove redundant version managers and Homebrew-managed language packages from Brewfiles.
+
+## Applications
+
+- **Audit installed applications** — On each primary machine (personal desktop, personal laptop, work laptop), audit `/Applications` and `~/Applications`. Sort everything into the universal/work/personal Brewfile pattern. For apps only available via the Mac App Store, either automate with the `mas` CLI or document the manual install steps.
+
+## Shell Utilities
+
+- **Custom tealdeer pages** — Investigate whether tealdeer supports custom/local page overrides for documenting personal aliases and cheatsheet entries alongside community pages.
