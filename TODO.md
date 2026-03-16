@@ -26,6 +26,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## Git & Hosting
 
+- **Commit signing across all machines** — Set up SSH-based commit signing on all machines so commits satisfy GitHub's verified signature requirement. Git config already has `gpg.format = ssh`; need to configure `user.signingkey` in each machine's `.gitconfig-user` and enable `commit.gpgsign = true`. Coordinate with the 1Password `op` CLI setup to use 1Password-managed SSH keys for signing.
 - **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
 - **GitHub account separation assessment** — Document final decision on single vs separate work/personal GitHub accounts. Current recommendation: stay single-account with `includeIf` path-based identity unless employer requires separation.
 
