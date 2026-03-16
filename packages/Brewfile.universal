@@ -70,6 +70,7 @@ brew "yq"             # YAML processor
 brew "wget"
 brew "httpie"
 brew "mise"           # version and venv manager
+brew "pipx"           # install Python CLI tools in isolated envs
 brew "mkcert"         # local HTTPS certs
 brew "shellcheck"
 
@@ -94,6 +95,9 @@ cask "ghostty"
 cask "google-chrome"
 cask "obsidian"
 cask "thaw"                # menubar manager
+cask "itsycal"             # menubar calendar
+cask "imageoptim"          # image optimizer
+cask "iina"                # video player
 cask "visual-studio-code"
 cask "vlc"
 
@@ -101,7 +105,11 @@ cask "vlc"
 # TODO: Can I automate this with https://github.com/mas-cli/mas
 # 1Password
 
-# Quarentined 20260313 - Delete if still commented in 6 months
+# Quarantined 20260315 - Delete if still commented in 6 months
+# cask "claude-code"         # AI assistant CLI
+# cask "jordanbaird-ice"     # menu bar manager
+
+# Quarantined 20260313 - Delete if still commented in 6 months
 # brew "inetutils"
 # brew "ipcalc"
 # brew "tree"

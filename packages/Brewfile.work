@@ -17,9 +17,22 @@ brew "yarn"
 tap "robscott/tap"
 brew "robscott/tap/kube-capacity"
 
+tap "aws/tap"
+brew "aws/tap/eks-node-viewer"  # EKS node resource viewer
+
+tap "hashicorp/tap"
+brew "hashicorp/tap/packer"     # machine image building
+
 brew "k9s"            # Kubernetes TUI
+brew "eksctl"         # AWS EKS CLI
 
 cask "lens"
+
+# 20260315 - quarantined — TODO: delete if still commented in a year
+# brew "terraform-docs"  # terraform doc generator
+# brew "pre-commit"      # git hooks framework
+# brew "rabbitmq"        # message broker
+# brew "redis"           # in-memory database
 
 # 20260313 - TODO: Delete anything still here in a year
 # brew "tfswitch"       # terraform version manager
@@ -35,3 +48,5 @@ cask "lens"
 # cask "google-cloud-sdk"
 # cask "zoom"
 # cask "json-viewer"    # JSON viewer app
+# cask "displaylink"    # USB graphics driver
+# cask "virtualbox"     # VM hypervisor
