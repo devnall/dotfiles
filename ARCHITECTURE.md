@@ -56,6 +56,7 @@ dotfiles/
     │   ├── .gitconfig-user.example  # Template for git identity (copy to .gitconfig-user)
     │   └── .gitconfig-user   # Local git identity (gitignored)
     ├── macos/                # macOS setup/defaults scripts
+    ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
@@ -87,7 +88,7 @@ dotfiles/
 
 ### 3.3 Machine-Specific PATH
 
-- **Universal toolchain paths** (Homebrew, Cargo, Go, Ruby gems): defined in `zsh/lib/path.zsh`, guarded with `[[ -d /path ]]` checks.
+- **Universal toolchain paths** (Homebrew, Cargo, Go): defined in `zsh/lib/path.zsh`, guarded with `[[ -d /path ]]` checks. Ruby and Node paths are handled by mise, not manually.
 - **Machine-specific tools** (e.g., LM Studio, Claude Code): go in `~/.env.local`, NOT committed to the repo.
 
 ### 3.4 Environment Separation (Marker Files)
@@ -100,6 +101,15 @@ dotfiles/
   - `~/.personal` — personal machine (full macOS setup)
   - `~/.remote-full` — Linux server with Homebrew and full tool suite
   - `~/.remote` — minimal Linux server (no Homebrew; skips Brewfiles entirely)
+
+### 3.7 Runtime Management (mise)
+
+- [mise](https://mise.jdx.dev/) is the single runtime manager for language toolchains: lua, node, python, ruby, terraform.
+- Global config lives in `config/mise/config.toml`, symlinked to `~/.config/mise/config.toml` via dotbot.
+- Activated in `zshrc.zsh` via `eval "$(mise activate zsh)"`, guarded with `command -v mise`.
+- Per-project overrides: drop a `.mise.toml` in the project root to pin specific versions.
+- **Rust** is managed by rustup, not mise (standard practice for the Rust ecosystem).
+- Legacy managers (nvm, rbenv, tfenv) are quarantined in Brewfiles — mise replaces all of them.
 
 ### 3.5 Secrets Management
 

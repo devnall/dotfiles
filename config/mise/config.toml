@@ -1,0 +1,6 @@
+[tools]
+lua = "latest"
+node = "latest"
+python = "latest"
+ruby = "latest"
+terraform = "latest"

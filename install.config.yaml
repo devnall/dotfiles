@@ -51,6 +51,10 @@
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
 
+    ~/.config/mise/config.toml:
+      path: config/mise/config.toml
+      force: true
+
     ~/.ripgreprc:
       path: config/ripgrep/.ripgreprc
 
