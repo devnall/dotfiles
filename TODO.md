@@ -8,6 +8,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 - **Multi-machine rollout and testing** — Clone the updated repo on all other machines, run `./install`, verify everything works. Pull in any local customizations (`~/.env.local` contents, useful drift) back into the repo.
 - **Brewfile cross-machine reconciliation** — After rollout, run `brew leaves` / `brew list --cask` / `brew bundle dump` on each machine. Reconcile differences across machines and ensure every package is in the right Brewfile (universal / work / personal).
+- **Bootstrap script / new machine wizard** — Consider a `bootstrap` script (or extending `install`) that handles everything dotbot can't. On a fresh clone, if no marker file exists, it should: prompt the user to choose a machine type (work / personal / remote-full / remote) and create the appropriate marker file; stub out `~/.env.local`, `~/.secrets.local`, and `~/.ssh/config.local` with commented placeholders if they don't already exist; run any other first-time setup steps that are currently manual (git identity check, TPM install, etc.). Goal: `git clone && ./bootstrap` should get a new machine to a fully working state with no additional instructions needed.
 
 ## Tool Overhauls
 
