@@ -75,7 +75,7 @@ fi
 # Set fpath (function path) and source function files
 # Note: files are sourced explicitly because autoloading alone required running
 # a function twice before it would register; explicit sourcing avoids this.
-fpath=( "${HOME}/.config/zsh/zfunctions" "$fpath" )
+fpath=( "${HOME}/.config/zsh/zfunctions" "${fpath[@]}" )
 source "${HOME}"/.config/zsh/zfunctions/color_list
 source "${HOME}"/.config/zsh/zfunctions/clipboard
 
