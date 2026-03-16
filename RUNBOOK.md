@@ -98,7 +98,7 @@ export AWS_DEFAULT_REGION=us-east-1
 ```
 ~/.work exists         → sources env/work.zsh + installs packages/Brewfile.work
 ~/.personal exists     → sources env/personal.zsh + installs packages/Brewfile.personal
-~/.remote-full exists  → sources env/remote-full.zsh (Linux server with Homebrew + full tool suite)
+~/.remote-full exists  → sources env/remote-full.zsh + installs packages/Brewfile.universal
 ~/.remote exists       → sources env/remote.zsh + skips Homebrew/Brewfiles entirely
 none exists            → only universal config loads
 ```
@@ -156,6 +156,8 @@ cd ~/.dotfiles && ./install
 
 This creates all symlinks. Homebrew and Brewfile steps are skipped.
 
+**Prerequisites:** `git`, `zsh`, and `python3` must be installed (python3 is required by dotbot).
+
 ### What you get
 
 | Feature | Behavior |
@@ -165,7 +167,8 @@ This creates all symlinks. Homebrew and Brewfile steps are skipped.
 | `zsh/lib/git.zsh` | git aliases work everywhere |
 | `zsh/lib/fzf.zsh` | skips silently if fzf not installed |
 | starship prompt | skips if not installed; falls back to system prompt |
-| zoxide, thefuck | skip if not installed (guarded with `command -v`) |
+| zoxide, thefuck, terraform completions | skip if not installed (guarded with `command -v`) |
+| bat theme cache | skips if bat not installed |
 | Homebrew PATH | harmless on Linux (`/usr/local` typically exists) |
 | Brewfile installs | skipped via `~/.remote` guard |
 
@@ -236,7 +239,7 @@ dotfiles/
     ├── bat/
     ├── btop/
     ├── ghostty/
-    ├── git/
+    ├── git/                  # Git config + identity template (.gitconfig-user.example)
     ├── macos/                # macOS setup scripts
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── ripgrep/
