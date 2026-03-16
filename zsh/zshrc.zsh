@@ -94,7 +94,9 @@ if [[ -t 1 ]] && command -v terraform > /dev/null; then
   complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
 
-eval "$(zoxide init zsh)"
+if command -v zoxide > /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 if [[ -f "${HOME}/.env.local" ]]; then source "${HOME}/.env.local"; fi
 if [[ -f "${HOME}/.secrets.local" ]]; then source "${HOME}/.secrets.local"; fi
