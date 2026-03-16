@@ -478,11 +478,11 @@ Verify all acceptance criteria from Section A.4 are met. Document results.
 
 These tasks happen after the main cleanup is complete. See `TODO.md` for the full future-phase list.
 
-- Clone updated repo on all other machines and test
-- Run `./install` on each and verify
-- Pull in any useful local customizations from each machine
-- Complete cross-machine Brewfile reconciliation
-- Final multi-machine verification of acceptance criteria
+- [x] Clone updated repo on all other machines and test
+- [x] Run `./install` on each and verify
+- [x] Pull in any useful local customizations from each machine
+- [x] Complete cross-machine Brewfile reconciliation
+- [x] Final multi-machine verification of acceptance criteria
 
 ---
 
