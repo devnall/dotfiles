@@ -89,11 +89,9 @@ if [[ $- == *i* ]]; then
   fi
 fi
 
-if [[ -t 1 ]]; then
+if [[ -t 1 ]] && command -v terraform > /dev/null; then
   autoload -U +X bashcompinit && bashcompinit
-  if command -v terraform > /dev/null; then
-    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
-  fi
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
 
 eval "$(zoxide init zsh)"
