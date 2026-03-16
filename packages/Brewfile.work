@@ -7,9 +7,9 @@ brew "aws-vault"
 brew "helm"
 brew "kubernetes-cli"
 brew "kubectx"        # switch k8s contexts
-brew "nvm"
 brew "s3scanner"      # s3 bucket scanner
-brew "terraform"
+# brew "terraform"    # quarantined 20260315 — migrating to mise
+# brew "tfenv"        # quarantined 20260315 — migrating to mise
 brew "tflint"         # terraform linter
 brew "yarn"
 
@@ -17,20 +17,33 @@ brew "yarn"
 tap "robscott/tap"
 brew "robscott/tap/kube-capacity"
 
+tap "aws/tap"
+brew "aws/tap/eks-node-viewer"  # EKS node resource viewer
+
+tap "hashicorp/tap"
+brew "hashicorp/tap/packer"     # machine image building
+
 brew "k9s"            # Kubernetes TUI
+brew "eksctl"         # AWS EKS CLI
 
 cask "lens"
 
-# 20260313 - TODO: Delete anything still here in a year
-# brew "tfswitch"       # terraform version manager
-# brew "libpq", link: true
-# brew "libsndfile"
-# tap "puma/puma"
-# brew "puma/puma/puma-dev"
-# brew "doitlive"  # terminal demo tool
-# brew "fx"  # json viewer
-# brew "gnupg"
-#brew "chamber"        # SSM parameter store CLI
-
-# cask "google-cloud-sdk"
-# cask "zoom"
+# Quarantined — delete if still commented after 1 year
+# brew "chamber"               # SSM parameter store CLI — 20260313
+# brew "doitlive"              # terminal demo tool — 20260313
+# brew "fx"                    # json viewer — 20260313
+# brew "gnupg"                 # 20260313
+# brew "libpq", link: true     # 20260313
+# brew "libsndfile"            # 20260313
+# brew "pre-commit"            # git hooks framework — 20260315
+# brew "puma/puma/puma-dev"    # 20260313
+# brew "rabbitmq"              # message broker — 20260315
+# brew "redis"                 # in-memory database — 20260315
+# brew "terraform-docs"        # terraform doc generator — 20260315
+# brew "tfswitch"              # terraform version manager — 20260313
+# tap "puma/puma"              # 20260313
+# cask "displaylink"           # USB graphics driver — 20260315
+# cask "google-cloud-sdk"      # 20260313
+# cask "json-viewer"           # JSON viewer app — 20260315
+# cask "virtualbox"            # VM hypervisor — 20260315
+# cask "zoom"                  # 20260313

@@ -19,13 +19,16 @@ This section documents the repo's design decisions, constraints, and acceptance 
 dotfiles/
 ├── .git/
 ├── .gitignore
-├── SPEC.md
+├── ARCHITECTURE.md           # Design reference (authoritative)
+├── SPEC.md                   # Current project task plan
+├── TODO.md                   # Deferred ideas and future work
+├── README.md                 # Quick-start guide
+├── RUNBOOK.md                # Detailed usage and maintenance reference
 ├── dotbot/                   # Git submodule
 ├── install.config.yaml       # Dotbot config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── archive/                  # Deprecated configs — TO BE REMOVED during cleanup
-├── docs/                     # Cheatsheets and reference docs
+├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
@@ -35,16 +38,17 @@ dotfiles/
 │   │   ├── directory_nav.zsh
 │   │   ├── fzf.zsh
 │   │   ├── git.zsh
-│   │   ├── history.zsh
+│   │   ├── keybindings.zsh
+│   │   ├── local.zsh.template  # Template — copy to local.zsh for per-machine shortcuts
 │   │   ├── path.zsh
 │   │   ├── ssh.zsh
-│   │   └── work.zsh          # EXCEPTION: not auto-sourced; loaded only when ~/.work exists
+│   │   └── theme.zsh           # fast-syntax-highlighting styles
 │   └── zfunctions/           # Autoloaded zsh functions
 ├── env/
-│   ├── work.zsh              # Work-specific shell overrides
-│   ├── personal.zsh          # Personal-specific shell overrides
-│   ├── remote.zsh            # Remote server baseline overrides
-│   └── remote-full.zsh       # Remote servers with Homebrew + full tool suite
+│   ├── work.zsh              # Sourced when ~/.work exists
+│   ├── personal.zsh          # Sourced when ~/.personal exists
+│   ├── remote.zsh            # Sourced when ~/.remote exists
+│   └── remote-full.zsh       # Sourced when ~/.remote-full exists
 ├── packages/
 │   ├── Brewfile.universal    # Installed on all machines
 │   ├── Brewfile.work         # Installed on work machines only
@@ -56,8 +60,10 @@ dotfiles/
     ├── ghostty/
     ├── git/
     ├── macos/                # macOS setup scripts
-    ├── nvim/                 # Neovim config (lazy.nvim — stubbed out, overhaul is separate project)
+    ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
     └── vim/vimrc             # Minimal vim fallback (no plugins, remote-safe)
@@ -262,6 +268,8 @@ Claude Code surfaces the contents of `env/personal.zsh`, `env/work.zsh`, `env/re
 
 *Depends on:* 2.1 (work.zsh resolution) should be decided first.
 
+**Note for 3.3:** `zsh/lib/history.zsh` only contains history-substring-search keybindings — the actual history settings (HISTFILE, HISTSIZE, setopt) live in `zshrc.zsh`. Consider whether the keybindings belong here or should move into the Sheldon plugin definition for history-substring-search, since the keybindings are meaningless without that plugin.
+
 #### 3.3 — Sheldon plugin reconciliation
 **Type:** Claude Code → human review
 
@@ -324,6 +332,9 @@ Human makes the final architecture decision.
 **Type:** Claude Code per-tool → human review for preferences
 
 Go through each config directory one at a time. For each, check: no cruft, no conflicts, settings follow current best practices, themes are intentional.
+
+**Pre-audit cleanup:**
+- Delete `config/alacritty/` (the `alacritty.toml` kept from Phase 1.2 as a reference). Cross-check any relevant settings against Ghostty config first, then `git rm -r config/alacritty/`.
 
 **Tools to audit:**
 - **bat** — config, themes, syntax mappings
@@ -467,11 +478,11 @@ Verify all acceptance criteria from Section A.4 are met. Document results.
 
 These tasks happen after the main cleanup is complete. See `TODO.md` for the full future-phase list.
 
-- Clone updated repo on all other machines and test
-- Run `./install` on each and verify
-- Pull in any useful local customizations from each machine
-- Complete cross-machine Brewfile reconciliation
-- Final multi-machine verification of acceptance criteria
+- [x] Clone updated repo on all other machines and test
+- [x] Run `./install` on each and verify
+- [x] Pull in any useful local customizations from each machine
+- [x] Complete cross-machine Brewfile reconciliation
+- [x] Final multi-machine verification of acceptance criteria
 
 ---
 
@@ -481,22 +492,22 @@ Populated during execution. Items are added whenever a task surfaces something r
 
 **Template entries (expanded during execution):**
 
-- [ ] Archive file-by-file keep/kill/relocate decisions (1.1)
-- [ ] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2)
+- [x] Archive file-by-file keep/kill/relocate decisions (1.1) — archive/ cleared entirely
+- [x] Confirm nothing worth saving in alacritty/iTerm2 configs (1.2) — alacritty.toml kept as Phase 5.1 reference; all themes/colors and iTerm2 plist deleted
 - [x] Decide where docker-compose.yml goes (1.3) — scrubbed from git history entirely
-- [ ] Approve `zsh/lib/work.zsh` resolution (2.1)
-- [ ] Review subjective zsh items — unused aliases, etc. (3.1)
-- [ ] Review env/ files for correctness (3.2)
-- [ ] Sheldon plugin keep/remove decisions (3.3)
-- [ ] Git account separation decision (4.1)
-- [ ] SSH config architecture decision (4.2)
-- [ ] bin/ script keep/remove decisions (5.2)
-- [ ] Cheatsheet tool-by-tool: still using? (6.3)
-- [ ] Copy retired cheatsheets to Obsidian before deletion (6.3)
-- [ ] Decide where `new_mac_setup.md` lives post-merge (6.2)
-- [ ] Decide where `StuffIUse.md` goes (6.4)
-- [ ] Gap items from `config/macos/Brewfile` reconciliation — placement decisions (7.3)
-- [ ] Brewfile audit placement decisions (7.4)
+- [x] Approve `zsh/lib/work.zsh` resolution (2.1) — useful content migrated to env/work.zsh; file deleted
+- [x] Review subjective zsh items — unused aliases, etc. (3.1) — reviewed and resolved; see commit e69e25b
+- [x] Review env/ files for correctness (3.2) — all four env/ files reviewed; remote.zsh prompt and bat fallback fixed
+- [x] Sheldon plugin keep/remove decisions (3.3) — all 6 plugins confirmed in use; history.zsh renamed to keybindings.zsh
+- [x] Git account separation decision (4.1) — single GitHub account confirmed; includeIf removed
+- [x] SSH config architecture decision (4.2) — template approach adopted; config/ssh/config committed; private hosts stay in ~/.ssh/config.local
+- [x] bin/ script keep/remove decisions (5.2) — removed git-wtf, git-up, tmux_clipboard.sh; fixed bugs in brew-repair and curlperf
+- [x] Cheatsheet tool-by-tool: still using? (6.3) — alfred/cvim/markdown/npm/vagrant/vim deleted; fzf/tmux updated; git/shell/kubernetes added
+- [x] Copy retired cheatsheets to Obsidian before deletion (6.3) — alfred, markdown copied; cvim/npm/vagrant/vim discarded
+- [x] Decide where `new_mac_setup.md` lives post-merge (6.2) — moved to Obsidian; deleted from repo
+- [x] Decide where `StuffIUse.md` goes (6.4) — moved to Obsidian; deleted from repo
+- [x] Gap items from `config/macos/Brewfile` reconciliation — placement decisions (7.3) — all entries placed; Brewfile deleted
+- [x] Brewfile audit placement decisions (7.4) — all untracked packages reviewed and placed
 
 ---
 

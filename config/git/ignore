@@ -1,10 +1,7 @@
 # Global .gitignore file to keep random crap out of my repos
 #
-# If setting up a new box, will need to copy/link to ~/config/git/ignore then:
-# git config --global core.excludesfile '~/config/git/ignore'
-
-#iTerm plist
-config/iTerm2.prefs/*
+# Symlinked to ~/.config/git/ignore via Dotbot; picked up automatically
+# by Git as the global excludes file (no manual git config needed).
 
 #
 # Vagrant stuff

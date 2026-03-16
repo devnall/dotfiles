@@ -38,10 +38,6 @@
       path: config/ghostty
       force: true
 
-    ~/.config/alacritty:
-      path: config/alacritty
-      force: true
-
     ~/.config/sheldon:
       path: config/sheldon
       force: true
@@ -73,6 +69,10 @@
       path: config/git/ignore
       force: true
 
+    ~/.ssh/config:
+      path: config/ssh/config
+      force: true
+
     ~/bin:
       glob: true
       path: bin/*
@@ -96,6 +96,6 @@
      description: Install personal Homebrew packages
      stdout: true
     -
-     command: 'bat cache --build'
+     command: 'command -v bat > /dev/null && bat cache --build || true'
      description: Build bat theme cache
      stdout: true

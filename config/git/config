@@ -1,8 +1,4 @@
 # This is Git's per-user configuration file
-[user]
-  name = 
-  email = 
-  signingkey = 
 [credential]
   helper = osxkeychain
 [alias]
@@ -13,6 +9,7 @@
 [push]
   default = current
   autoSetupRemote = true
+  followTags = true
 [pull]
   rebase = true
 [fetch]
@@ -34,9 +31,8 @@
   autocorrect = prompt
 [core]
   autocrlf = input
-  safecrlf = true
+  safecrlf = warn
   editor = vim
-#  pager = diff-so-fancy
   pager = delta
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
 [interactive]
@@ -47,9 +43,6 @@
   syntax-theme = base16
 [diff]
   colorMoved = default
-[pager]
-#  diff = diff-so-fancy | less --tabs=4 -RFX
-#  show = diff-so-fancy | less --tabs=4 -RFX
 [init]
   defaultBranch = main
 [color]
@@ -58,27 +51,19 @@
   current = yellow reverse
   local = yellow
   remote = green
-
 [color "status"]
   added = yellow
   changed = green
   untracked = cyan
 [merge]
   log = true
-  ff = false
   conflictstyle = zdiff3
 [url "git@github.com:"]
   insteadOf = https://github.com/
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com"
-#[url "git@gist.github.com"]
-  insteadOf = "gst:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com"
 [include]
   path = ~/.dotfiles/config/git/.gitconfig-user
-[includeIf "gitdir:~/Work/"]
-  path = ~/.dotfiles/config/git/.gitconfig-work
 [gpg]
-	format = ssh
+  format = ssh

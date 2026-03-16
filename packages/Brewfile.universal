@@ -16,13 +16,12 @@ brew "bat"            # better cat
 brew "btop"           # better top
 brew "coreutils"
 brew "curl"
-brew "delta"          # 
-brew "diff-so-fancy"  # 
+brew "diff-so-fancy"
 brew "docker"
-brew "docker-completion"
 brew "doggo"
 brew "eza"            # better ls
 brew "fd"             # better find
+brew "ffmpeg"         # video processing
 brew "fzf"            # fuzzy finder
 brew "gawk"
 brew "gnu-sed"
@@ -30,6 +29,7 @@ brew "gnu-tar"
 brew "grep"
 brew "gzip"
 brew "htop"
+brew "imagemagick"    # image processing
 brew "lazydocker"     # docker TUI
 brew "lazygit"        # git TUI
 brew "mole"           # MacOS maintenance TUI
@@ -40,6 +40,7 @@ brew "reattach-to-user-namespace"
 brew "ripgrep"        # better grep
 brew "rustscan"       # portscanner
 brew "sheldon"        # zsh plugin manager
+brew "shfmt"          # shell script formatter
 brew "ssh-copy-id"
 brew "starship"       # cross-shell prompt
 brew "thefuck"
@@ -55,8 +56,8 @@ brew "zoxide"
 brew "gist"
 brew "git"
 brew "git-delta"      # better git diffs
+brew "git-filter-repo" # git history rewriting
 brew "gh"             # GitHub CLI
-brew "lazygit"        # TUI git client
 
 # Editors
 brew "neovim"
@@ -68,6 +69,7 @@ brew "yq"             # YAML processor
 brew "wget"
 brew "httpie"
 brew "mise"           # version and venv manager
+brew "pipx"           # install Python CLI tools in isolated envs
 brew "mkcert"         # local HTTPS certs
 brew "shellcheck"
 
@@ -75,21 +77,25 @@ brew "shellcheck"
 brew "go"
 brew "node"
 brew "nvm"
-brew "python"
-brew "rbenv"          # Ruby version manager
-brew "ruby"
-brew "rust"           # via rustup usually, but listed for reference
+brew "rbenv"          # Ruby version manager — TODO: migrate to mise
+# brew "python"       # managed via mise
+# brew "ruby"         # managed via mise
+# brew "rust"         # managed via rustup/mise
 
 # Casks
+cask "docker-desktop"
+cask "latest"              # app update checker
 cask "1password"
 cask "1password-cli"
-#cask "docker"
 cask "firefox"
 cask "flameshot"
 cask "ghostty"
 cask "google-chrome"
 cask "obsidian"
 cask "thaw"                # menubar manager
+cask "itsycal"             # menubar calendar
+cask "imageoptim"          # image optimizer
+cask "iina"                # video player
 cask "visual-studio-code"
 cask "vlc"
 
@@ -97,15 +103,21 @@ cask "vlc"
 # TODO: Can I automate this with https://github.com/mas-cli/mas
 # 1Password
 
-# Quarentined 20260313 - Delete if still commented in 6 months
-# brew "inetutils"
-# brew "ipcalc"
-# brew "tree"
-# brew "urlview"  # required for tmux-urlview plugin
-# brew "watch"
-# brew "mas"            # Mac App Store CLI
-# brew "mackup"         # app settings backup
-# brew "trash"          # safer rm
-# brew "bandwhich"
-# brew "iftop"
-# brew "ack"
+# Quarantined — delete if still commented after 6 months
+# brew "ack"                   # 20260313
+# brew "bandwhich"             # 20260313
+# brew "handbrake"             # HandBrakeCLI — 20260315
+# brew "inetutils"             # 20260313
+# brew "iftop"                 # 20260313
+# brew "ipcalc"                # 20260313
+# brew "mackup"                # app settings backup — 20260313
+# brew "mas"                   # Mac App Store CLI — 20260313
+# brew "trash"                 # safer rm — 20260313
+# brew "tree"                  # 20260313
+# brew "urlview"               # tmux-urlview plugin dep — 20260313
+# brew "watch"                 # 20260313
+# cask "jordanbaird-ice"       # menu bar manager — 20260315
+# cask "keepingyouawake"       # 20260313
+# cask "pika"                  # color picker — 20260313
+# cask "shottr"                # screenshot tool — 20260313
+# cask "vscodium"              # 20260313

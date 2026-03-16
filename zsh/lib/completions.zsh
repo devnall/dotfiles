@@ -1,25 +1,11 @@
-# zsh-completions
-#$fpath=(/usr/local/share/zsh-completions $fpath)
-#if type brew &>/dev/null; then
-#  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-#
-#  autoload -Uz compinit
-#  compinit
-#fi
+if [[ -d "$HOME/.zsh/completion" ]]; then
+  FPATH="$HOME/.zsh/completion:$FPATH"
+fi
 
-#if type brew &>/dev/null; then
-#  FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
-#fi
-
-FPATH="$HOME/.zsh/completion:$FPATH"
-
-zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
 autoload -Uz compinit
 compinit
-#autoload -U +X bashcompinit
-#bashcompinit
 
 # AWS cli completions
 if [ -f $HOMEBREW_PREFIX/share/zsh/site-functions/aws_zsh_completer.sh ]; then
@@ -36,16 +22,14 @@ if [ -f $HOMEBREW_PREFIX/bin/op ]; then
   eval "$(op completion zsh)"; compdef _op op
 fi
 
-# Some functions, like _apt and _dpkg, are very slow. 
-# You can use a cache in order to proxy the list of results (like the list of available debian packages) 
-# Use a cache:
+# Cache completions for slow sources (e.g. apt, dpkg)
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
-# Fuzzy matching of completions for when you mistype them:
+# Fuzzy matching of completions for when you mistype them
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# Ignore completion functions for commands you don’t have:
+# Ignore completion functions for commands you don't have
 zstyle ':completion:*:functions' ignored-patterns '_*'

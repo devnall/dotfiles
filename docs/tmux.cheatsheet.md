@@ -1,138 +1,90 @@
-# /dev/nall's tmux config cheatsheet
+# tmux Cheatsheet
 
-## Meta keys
-    `
-> prefix
+Prefix key: `C-a`
 
-    ` CTRL+d
+---
 
-> detach client
+## Sessions
 
-## Basic Session, Window, Pane Management
+| Key | Action |
+|-----|--------|
+| `prefix N` | Rename current session |
+| `prefix q` | Kill current session |
+| `prefix Q` | Kill tmux server (nukes all sessions) |
+| `prefix C-d` | Detach from current session |
+| `tmux list-sessions` | List all running sessions |
+| `tmux attach-session -t <name>` | Attach to named session |
 
-### Sessions
+## Windows
 
-    tmux list-sessions 
+| Key | Action |
+|-----|--------|
+| `prefix c` | New window |
+| `prefix ,` | Previous window |
+| `prefix .` | Next window |
+| `prefix <` | Swap window left |
+| `prefix >` | Swap window right |
+| `prefix Space` | Jump to last window |
+| `prefix n` | Rename current window |
+| `prefix X` | Kill current window (with confirm) |
+| `prefix 0-9` | Jump to window by number |
 
-> list all running sessions
+## Panes
 
-    tmux attach-session -t $session_name 
+| Key | Action |
+|-----|--------|
+| `prefix \` | Split horizontally (new pane right) |
+| `prefix \|` | Split horizontally full-width |
+| `prefix -` | Split vertically (new pane below) |
+| `prefix _` | Split vertically full-height |
+| `prefix h/j/k/l` | Move between panes (vim-style) |
+| `prefix C-H/J/K/L` | Resize pane (5 lines) |
+| `prefix +` or `prefix =` | Zoom/unzoom current pane |
+| `prefix x` | Kill current pane |
 
-> attach to an existing session named $session\_name
+## Copy Mode (vi-style)
 
-### Windows
+| Key | Action |
+|-----|--------|
+| `prefix [` | Enter copy mode |
+| `prefix p` | Paste buffer |
+| `v` | Begin selection |
+| `C-v` | Toggle rectangle selection |
+| `y` | Copy selection and exit copy mode |
 
-### Panes
-    ` CTRL+o
+## Sync Panes
 
-> rotate-window
+| Key | Action |
+|-----|--------|
+| `prefix e` | Enable pane synchronization (broadcast input to all panes) |
+| `prefix E` | Disable pane synchronization |
 
-> Poorly named, actually rotates panes within a window. Not super-useful but may as well keep it bound.
+## Misc
 
-    SPACE
+| Key | Action |
+|-----|--------|
+| `prefix r` | Reload tmux config |
+| `prefix R` | Refresh client |
+| `prefix ;` | Open command prompt |
+| `prefix S` | Open SSH to host in new window |
+| `prefix C-a` | Send prefix to nested tmux/screen session |
 
-> Cycle between pane layouts:
+## Plugins (via TPM)
 
-> > * even-horizontal - all panes evenly distributed horizontally
+| Plugin | Purpose |
+|--------|---------|
+| tmux-sensible | Sane defaults |
+| tmux-yank | Clipboard integration in copy mode |
+| tmux-open | Open files/URLs from copy mode |
+| tmux-prefix-highlight | Status bar indicator when prefix is active |
+| tmux-online-status | Status bar online/offline indicator |
+| extrakto | Fuzzy-extract text from pane into prompt |
+| vim-tmux-navigator | Seamless pane navigation between vim and tmux |
 
-> > * even-vertical - all panes evenly distributed vertically
+### TPM Commands
 
-> > * main-horizontal - one main horizontal pane on top, all other panes evenly distributed vertically below
-
-> > * main-vertical - one main vertical pane on left, all other panes evenly distributed horizontally below
-
-> > * tiled - panes distributed evenly (as possible) in rows and columns
-
-
-Meta:
-` send-prefix
-
-Sessions:
-$ command-prompt -I #S "rename-session '%%'"
-( switch-client -p
-) switch-client -n
-
-Windows:
-& confirm-before -p "kill-window #W? (y/n)" kill-windw
-' command-prompt -p index "select-window -t ':%%'"
-, command-prompt -I #W "rename-window '%%'"
-0 select-window -t :0
-1 select-window -t :1
-2 select-window -t :2
-3 select-window -t :3
-4 select-window -t :4
-5 select-window -t :5
-6 select-window -t :6
-7 select-window -t :7
-8 select-window -t :8
-9 select-window -t :9
-E set-window-option synchronize-panes off
-_ split-window -v
-c new-window
-e set-window-option synchronize-panes on
-f command-prompt "find-window '%%'"
-n next-window
-| split-window -h
-r rotate-window -D
-s choose-tree
-w choose-window
-
-Panes:
-C-o rotate-window
-Space next-layout
-! break-pane
-H resize-pane -L 10
-J resize-pane -D 10
-K resize-pane -U 10
-L resize-pane -R 10
-h select-pane -L
-j select-pane -D
-k select-pane -U
-l select-pane -R
-o select-pane -t :.+
-q display-panes
-x confirm-before -p "kill-pane #P? (y/n)" kill-pane
-+ resize-pane -Z
-= resize-pane -Z
-{ swap-pane -U
-} swap-pane -D
-Up select-pane -U
-Down select-pane -D
-Left select-pane -L
-Right select-pane -R
-
-Buffers:
-# list-buffers
-- delete-buffer
-= choose-buffer
-] paste-buffer
-p paste-buffer
-
-Copy Mode:
-[ copy-mode
-
-Utility:
-: command-prompt
-; command-prompt
-? list-keys
-i display-message
-t clock-mode
-~ show-messages
-
-
-M-1 select-layout even-horizontal
-M-2 select-layout even-vertical
-M-3 select-layout main-horizontal
-M-4 select-layout main-vertical
-M-5 select-layout tiled
-M-n next-window -a
-M-o rotate-window -D
-M-p previous-window -a
-M-Up resize-pane -U 5
-M-Down resize-pane -D 5
-M-Left resize-pane -L 5
-M-Right resize-pane -R 5
-C-Up resize-pane -U
-C-Down resize-pane -D
-C-Left resize-pane -L
-C-Right resize-pane -R
+| Command | Action |
+|---------|--------|
+| `prefix I` | Install plugins |
+| `prefix U` | Update plugins |
+| `prefix alt-u` | Remove unlisted plugins |

@@ -41,9 +41,6 @@ else
 	alias df='df -h'
 fi
 
-if [[ $(uname) == 'Darwin' ]]; then
-	alias irb="irb --prompt inf-ruby"
-fi
 
 ##########
 # Bash history
