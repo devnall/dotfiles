@@ -51,6 +51,13 @@
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
 
+    ~/.claude/settings.json:
+      path: config/claude/settings.json
+      force: true
+    ~/.claude/statusline-command.sh:
+      path: config/claude/statusline-command.sh
+      force: true
+
     ~/.config/mise/config.toml:
       path: config/mise/config.toml
       force: true
