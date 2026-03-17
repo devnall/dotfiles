@@ -283,6 +283,26 @@ brew bundle cleanup --file=~/.dotfiles/packages/Brewfile.universal  # shows what
 brew bundle cleanup --force --file=~/.dotfiles/packages/Brewfile.universal  # actually removes them
 ```
 
+### Update tmux plugins
+
+Tmux plugins are managed as git submodules under `config/tmux/plugins/`. To update a single plugin:
+
+```sh
+cd ~/.dotfiles
+git submodule update --remote config/tmux/plugins/<plugin-name>
+git add config/tmux/plugins/<plugin-name>
+git commit -m "⬆️ Update <plugin-name>"
+```
+
+To update all tmux plugins at once:
+
+```sh
+cd ~/.dotfiles
+git submodule update --remote config/tmux/plugins/
+git add config/tmux/plugins/
+git commit -m "⬆️ Update tmux plugins"
+```
+
 ### Update dotbot submodule
 
 ```sh
