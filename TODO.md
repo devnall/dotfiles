@@ -50,10 +50,6 @@ Items that came up during cleanup project planning but are out of scope for the 
 - **Manage ssh.local via 1Password** — Investigate storing per-machine `~/.ssh/config.local` files in 1Password and deploying them with the `op` CLI.
 - **Secrets management for env/work.zsh** — Replace hardcoded profile names in `env/work.zsh` with variables; keep real values in a secrets file managed by 1Password CLI. Document the workflow.
 
-## Runtime Management
-
-- **Migrate to mise** — First-class requirement. Scope: python, ruby, rust (currently Homebrew or ad-hoc), tfenv/tenv (terraform), nvm (node), rbenv (ruby). Goal: mise as single source of truth for all language runtimes. Once migrated, remove redundant version managers and Homebrew-managed language packages from Brewfiles.
-
 ## Applications
 
 - **Audit installed applications** — On each primary machine (personal desktop, personal laptop, work laptop), audit `/Applications` and `~/Applications`. Sort everything into the universal/work/personal Brewfile pattern. For apps only available via the Mac App Store, either automate with the `mas` CLI or document the manual install steps.
@@ -61,3 +57,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 ## Shell Utilities
 
 - **Custom tealdeer pages** — Investigate whether tealdeer supports custom/local page overrides for documenting personal aliases and cheatsheet entries alongside community pages.
+
+## Performance
+
+- **Shell startup time audit** — Benchmark shell startup time on all primary machines (personal desktop, personal laptop, work laptop) using the RUNBOOK method. Target is under ~500ms warm. One laptop is currently 590–690ms after the mise migration. Profile with `zsh -x` or `zprof` to identify the slowest contributors and optimize if needed. **This should be one of the last TODOs worked from this list** — let other changes land first so the audit captures the final steady-state.

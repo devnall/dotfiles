@@ -13,17 +13,6 @@ if [ -d "${HOME}/go/bin" ]; then
   PATH="${HOME}/go/bin:${PATH}"
 fi
 
-# gem-installed stuff — find the newest installed Ruby gem bin dir
-for ruby_gem_bin in "${HOME}"/.gem/ruby/*/bin(N); do
-  PATH="${PATH}:${ruby_gem_bin}"
-done
-unset ruby_gem_bin
-
-# npm global packages
-if [ -d "${HOME}/.npm-packages/bin" ]; then
-  PATH="${PATH}:${HOME}/.npm-packages/bin"
-fi
-
 # My ~/bin dir
 if [ -d "${HOME}/bin" ]; then
   PATH="${HOME}/bin:${PATH}"

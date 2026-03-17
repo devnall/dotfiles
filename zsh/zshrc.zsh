@@ -16,6 +16,10 @@ if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
   export PATH="$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
+if command -v mise > /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
 ## History config
 HISTFILE="${HOME}/.zsh_history"
 HISTSIZE="50000"
@@ -91,7 +95,7 @@ fi
 
 if [[ -t 1 ]] && command -v terraform > /dev/null; then
   autoload -U +X bashcompinit && bashcompinit
-  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+  complete -o nospace -C "$(command -v terraform)" terraform
 fi
 
 if command -v zoxide > /dev/null; then

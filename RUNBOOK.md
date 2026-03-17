@@ -74,7 +74,17 @@ Then edit `~/.dotfiles/config/git/.gitconfig-user`:
 
 This file is excluded from git tracking. The template (`.gitconfig-user.example`) is what's committed to the repo.
 
-### 6. Set up local overrides
+### 6. Install runtimes (mise)
+
+After the installer runs, mise is activated but runtimes aren't installed yet:
+
+```sh
+mise install
+```
+
+This installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, python, ruby, terraform). Verify with `mise ls`.
+
+### 7. Set up local overrides
 
 Create these files — both are gitignored and sourced at the end of every shell session:
 
@@ -241,6 +251,7 @@ dotfiles/
     ├── ghostty/
     ├── git/                  # Git config + identity template (.gitconfig-user.example)
     ├── macos/                # macOS setup scripts
+    ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
@@ -286,6 +297,26 @@ git commit -m "update dotbot submodule"
 ```sh
 nvim --headless "+Lazy sync" +qa
 ```
+
+### Update mise runtimes
+
+```sh
+mise upgrade        # upgrade all installed runtimes to latest
+mise ls             # show currently installed versions
+mise doctor         # health check
+```
+
+### Pin a runtime version per-project
+
+Drop a `.mise.toml` in the project root:
+
+```toml
+[tools]
+node = "20"
+python = "3.12"
+```
+
+Then run `mise install` in that directory. mise activates the correct versions automatically when you `cd` into the project.
 
 ### Update sheldon plugins
 
