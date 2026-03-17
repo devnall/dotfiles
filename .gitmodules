@@ -2,3 +2,21 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "config/tmux/plugins/tmux-prefix-highlight"]
+	path = config/tmux/plugins/tmux-prefix-highlight
+	url = https://github.com/tmux-plugins/tmux-prefix-highlight
+[submodule "config/tmux/plugins/tmux-open"]
+	path = config/tmux/plugins/tmux-open
+	url = https://github.com/tmux-plugins/tmux-open
+[submodule "config/tmux/plugins/tmux-online-status"]
+	path = config/tmux/plugins/tmux-online-status
+	url = https://github.com/tmux-plugins/tmux-online-status
+[submodule "config/tmux/plugins/tmux-yank"]
+	path = config/tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank
+[submodule "config/tmux/plugins/extrakto"]
+	path = config/tmux/plugins/extrakto
+	url = https://github.com/laktak/extrakto
+[submodule "config/tmux/plugins/vim-tmux-navigator"]
+	path = config/tmux/plugins/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
