@@ -57,3 +57,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 ## Shell Utilities
 
 - **Custom tealdeer pages** — Investigate whether tealdeer supports custom/local page overrides for documenting personal aliases and cheatsheet entries alongside community pages.
+
+## Performance
+
+- **Shell startup time audit** — Benchmark shell startup time on all primary machines (personal desktop, personal laptop, work laptop) using the RUNBOOK method. Target is under ~500ms warm. One laptop is currently 590–690ms after the mise migration. Profile with `zsh -x` or `zprof` to identify the slowest contributors and optimize if needed. **This should be one of the last TODOs worked from this list** — let other changes land first so the audit captures the final steady-state.
