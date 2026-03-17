@@ -4,7 +4,7 @@
 >
 > **How to use it:** When starting a new project or task plan (SPEC.md), copy the relevant sections from this file into the spec's context/architecture section so that Claude Code (or any other tool) gets the full picture in a single file. This avoids relying on cross-file references during execution.
 >
-> **This file is not a task plan.** It contains no actionable work items. For current tasks, see SPEC.md. For future ideas, see TODO.md.
+> **This file is not a task plan.** It contains no actionable work items. For current tasks, see SPEC.md. For future ideas, see docs/TODO.md.
 >
 > **When to update this file:** Whenever a design decision changes — new marker types, new directory conventions, new directives, updated acceptance criteria, etc. Keep it in sync with the actual repo state after each project.
 
@@ -22,16 +22,16 @@ This repo consolidates shell and tool configurations into a single, idempotent d
 dotfiles/
 ├── .git/
 ├── .gitignore
-├── ARCHITECTURE.md           # This file — design reference (not consumed by tooling)
-├── SPEC.md                   # Current project task plan
-├── TODO.md                   # Future ideas and deferred work
 ├── README.md                 # Quick-start guide
-├── RUNBOOK.md                # Detailed usage and maintenance reference
+├── SPEC.md                   # Current project task plan
 ├── dotbot/                   # Git submodule
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
+├── docs/                     # Documentation (architecture, runbook, TODO, cheatsheets)
+│   ├── ARCHITECTURE.md       # This file — design reference (not consumed by tooling)
+│   ├── RUNBOOK.md            # Detailed usage and maintenance reference
+│   ├── TODO.md               # Future ideas and deferred work
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
@@ -165,7 +165,7 @@ These should be true at the end of any project that modifies the repo:
 6. `~/.env.local` and `~/.secrets.local` are sourced silently if present, silently skipped if absent.
 7. Marker file controls which env config loads correctly for all four marker types; if none exists, only universal config loads.
 8. No stale symlinks, no orphaned `install.config.yaml` entries, no references to removed files/directories in documentation.
-9. README.md and RUNBOOK.md are accurate and complete reflections of the repo's actual state.
+9. README.md and docs/RUNBOOK.md are accurate and complete reflections of the repo's actual state.
 10. Shell startup time is reasonable (benchmark documented in RUNBOOK).
 
 ---
@@ -182,6 +182,6 @@ These should be true at the end of any project that modifies the repo:
 | `~/.secrets.local` | API keys and tokens (gitignored, not in repo) |
 | `config/git/.gitconfig-user` | Git identity (gitignored, copy from `.gitconfig-user.example`) |
 | `README.md` | Quick-start installation guide |
-| `RUNBOOK.md` | Detailed usage, maintenance, and troubleshooting |
+| `docs/RUNBOOK.md` | Detailed usage, maintenance, and troubleshooting |
 | `SPEC.md` | Current project task plan (rotates per project) |
-| `TODO.md` | Deferred ideas and future work |
+| `docs/TODO.md` | Deferred ideas and future work |

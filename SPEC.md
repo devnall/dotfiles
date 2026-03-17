@@ -19,16 +19,16 @@ This section documents the repo's design decisions, constraints, and acceptance 
 dotfiles/
 ├── .git/
 ├── .gitignore
-├── ARCHITECTURE.md           # Design reference (authoritative)
-├── SPEC.md                   # Current project task plan
-├── TODO.md                   # Deferred ideas and future work
 ├── README.md                 # Quick-start guide
-├── RUNBOOK.md                # Detailed usage and maintenance reference
+├── SPEC.md                   # Current project task plan
 ├── dotbot/                   # Git submodule
 ├── install.config.yaml       # Dotbot config
 ├── install                   # Dotbot bootstrap script
 ├── bin/                      # Global shell scripts (all symlinked to ~/bin)
-├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
+├── docs/                     # Documentation (architecture, runbook, TODO, cheatsheets)
+│   ├── ARCHITECTURE.md       # Design reference (authoritative)
+│   ├── RUNBOOK.md            # Detailed usage and maintenance reference
+│   ├── TODO.md               # Deferred ideas and future work
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
@@ -130,7 +130,7 @@ After all cleanup work is complete, these must all be true:
 6. `~/.env.local` and `~/.secrets.local` are sourced silently if present, silently skipped if absent.
 7. Marker file controls which env config loads correctly for all four marker types; if none exists, only universal config loads.
 8. No stale symlinks, no orphaned `install.config.yaml` entries, no references to removed files/directories in documentation.
-9. README.md and RUNBOOK.md are accurate and complete reflections of the repo's actual state.
+9. README.md and docs/RUNBOOK.md are accurate and complete reflections of the repo's actual state.
 10. Shell startup time is reasonable (benchmark documented).
 
 ---
@@ -152,7 +152,7 @@ Produce a complete file tree of the repo (excluding `.git/`). This is the refere
 **Type:** Claude Code → human review for ambiguous items
 
 Compare the actual repo tree against:
-- The directory structure documented in RUNBOOK.md and this spec (Section A.1)
+- The directory structure documented in docs/RUNBOOK.md and this spec (Section A.1)
 - The tool list in the README.md intro
 - The `zsh/lib/` file list in the RUNBOOK
 - The `config/` subdirectories mentioned in docs
@@ -458,7 +458,7 @@ On the current machine:
 4. Human makes placement decisions (universal / work / personal / don't track)
 5. Claude Code updates Brewfiles
 
-**Note:** Cross-machine reconciliation is a rollout-phase task (see TODO.md). This pass covers the current machine only.
+**Note:** Cross-machine reconciliation is a rollout-phase task (see docs/TODO.md). This pass covers the current machine only.
 
 #### 7.5 — Run acceptance criteria
 **Type:** Claude Code
@@ -470,13 +470,13 @@ Verify all acceptance criteria from Section A.4 are met. Document results.
 
 - Ensure all changes are committed with clear messages
 - Produce a summary of everything that was done
-- Confirm TODO.md and Human Review Checklist are complete
+- Confirm docs/TODO.md and Human Review Checklist are complete
 
 ---
 
 ### Phase 8: Rollout (Post-Cleanup)
 
-These tasks happen after the main cleanup is complete. See `TODO.md` for the full future-phase list.
+These tasks happen after the main cleanup is complete. See `docs/TODO.md` for the full future-phase list.
 
 - [x] Clone updated repo on all other machines and test
 - [x] Run `./install` on each and verify
