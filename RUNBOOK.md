@@ -82,7 +82,7 @@ After the installer runs, mise is activated but runtimes aren't installed yet:
 mise install
 ```
 
-This installs all tools defined in `~/.config/mise/config.toml` (lua, node, python, ruby, terraform). Verify with `mise ls`.
+This installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, python, ruby, terraform). Verify with `mise ls`.
 
 ### 7. Set up local overrides
 

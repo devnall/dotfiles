@@ -88,7 +88,7 @@ dotfiles/
 
 ### 3.3 Machine-Specific PATH
 
-- **Universal toolchain paths** (Homebrew, Cargo, Go): defined in `zsh/lib/path.zsh`, guarded with `[[ -d /path ]]` checks. Ruby and Node paths are handled by mise, not manually.
+- **Universal toolchain paths** (Homebrew, Cargo, Go user binaries): defined in `zsh/lib/path.zsh`, guarded with `[[ -d /path ]]` checks. Ruby, Node, and language runtime paths are handled by mise, not manually.
 - **Machine-specific tools** (e.g., LM Studio, Claude Code): go in `~/.env.local`, NOT committed to the repo.
 
 ### 3.4 Environment Separation (Marker Files)
@@ -104,7 +104,7 @@ dotfiles/
 
 ### 3.7 Runtime Management (mise)
 
-- [mise](https://mise.jdx.dev/) is the single runtime manager for language toolchains: lua, node, python, ruby, terraform.
+- [mise](https://mise.jdx.dev/) is the single runtime manager for language toolchains: go, lua, node, python, ruby, terraform.
 - Global config lives in `config/mise/config.toml`, symlinked to `~/.config/mise/config.toml` via dotbot.
 - Activated in `zshrc.zsh` via `eval "$(mise activate zsh)"`, guarded with `command -v mise`.
 - Per-project overrides: drop a `.mise.toml` in the project root to pin specific versions.

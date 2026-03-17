@@ -74,7 +74,6 @@ brew "mkcert"         # local HTTPS certs
 brew "shellcheck"
 
 # Languages
-brew "go"
 # brew "python"       # managed via mise
 # brew "ruby"         # managed via mise
 # brew "rust"         # managed via rustup/mise
@@ -117,6 +116,7 @@ cask "vlc"
 # cask "keepingyouawake"       # 20260313
 # cask "pika"                  # color picker — 20260313
 # cask "shottr"                # screenshot tool — 20260313
+# brew "go"                     # 20260316 — migrated to mise
 # brew "node"                   # 20260316 — migrated to mise
 # brew "nvm"                    # 20260316 — migrated to mise
 # brew "rbenv"                  # 20260316 — migrated to mise
