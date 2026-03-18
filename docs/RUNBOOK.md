@@ -156,7 +156,10 @@ op read "op://VaultName/Item/field"    # read a single secret value (scriptable)
 ### Editors
 
 - **Neovim** (`config/nvim/`) — lazy.nvim-based IDE setup, used on desktop machines
-- **Vim** (`config/vim/vimrc`) — minimal, no plugins, safe to use on any remote server with stock vim
+- **Vim** (`config/vim/`) — minimal, no plugins, safe to use on any remote server with stock vim. Symlinked as `~/.vim` → `config/vim/` (vim auto-finds `~/.vim/vimrc`)
+  - **Colorscheme:** `nordicpine` — dual-mode (NordicPine dark / AlpineDawn light), auto-detects macOS appearance, defaults to dark on Linux/remote
+  - **Colors directory:** `config/vim/colors/nordicpine.vim` — available automatically via the `~/.vim` symlink
+- **Aliases:** `vim` and `e` are aliased to `nvim` on machines where neovim is installed (interactive shells only; `$EDITOR` remains `vim`)
 
 ---
 
@@ -335,7 +338,10 @@ dotfiles/
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
-    └── vim/vimrc             # Minimal vim fallback
+    └── vim/                  # Minimal vim config (symlinked as ~/.vim)
+        ├── vimrc              # Remote-safe, no plugins
+        └── colors/
+            └── nordicpine.vim # Dual-mode colorscheme (dark/light)
 ```
 
 ---

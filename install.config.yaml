@@ -35,8 +35,9 @@
       path: config/tmux/plugins
       force: true
 
-    ~/.vimrc:
-      path: config/vim/vimrc
+    ~/.vim:
+      path: config/vim
+      force: true
     ~/.config/nvim:
       path: config/nvim
       force: true

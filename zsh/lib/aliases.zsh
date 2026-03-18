@@ -111,6 +111,12 @@ if [[ `uname` == 'Darwin' ]]; then
   alias finder="open ./"
 fi
 
+# Neovim aliases (interactive shell only — EDITOR stays as vim for scripts)
+if command -v nvim > /dev/null; then
+  alias vim='nvim'
+  alias e='nvim'
+fi
+
 # Suffix aliases
 # Allow you to do someting like `alias -s md=vim`; then just entering a file that ends in .md `$ README.md` will open it in vim
 # Could also do stuff like `alias -s html=w3m` to open *.html files in w3m browser or even `alias -s org=w3m` to open sites ending in `.org` in w3m
