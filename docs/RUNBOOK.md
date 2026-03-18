@@ -135,6 +135,24 @@ Host myalias
   ForwardAgent yes
 ```
 
+### 1Password CLI (`op`)
+
+The `op` CLI is installed via Homebrew and shell completions are wired in `zsh/lib/completions.zsh`.
+
+**Common commands:**
+
+```sh
+op vault list                          # list available vaults
+op item list                           # list all items
+op item list --vault Private           # list items in a specific vault
+op item get "Item Name"                # show full item details
+op read "op://VaultName/Item/field"    # read a single secret value (scriptable)
+```
+
+**SSH agent integration:** The 1Password SSH agent is configured in `config/ssh/config` via `IdentityAgent` — see the [SSH config](#ssh-config) section above. Keys are managed in 1Password and served to SSH transparently.
+
+**Touch ID / biometric prompts:** The `op` CLI and SSH agent trigger macOS biometric prompts (Touch ID or password) when accessing secrets. This is expected 1Password security behavior, not a bug or misconfiguration.
+
 ### Editors
 
 - **Neovim** (`config/nvim/`) — lazy.nvim-based IDE setup, used on desktop machines

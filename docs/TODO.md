@@ -45,9 +45,9 @@ _Done: palette reference doc (`docs/color-palettes.md`), btop NordicPine theme, 
 
 ## 1Password & Secrets
 
-- **Learn the `op` CLI** — Figure out the 1Password CLI tool and resolve the recurring permissions popups.
-- **Manage ssh.local via 1Password** — Investigate storing per-machine `~/.ssh/config.local` files in 1Password and deploying them with the `op` CLI.
-- **Secrets management for env/work.zsh** — Replace hardcoded profile names in `env/work.zsh` with variables; keep real values in a secrets file managed by 1Password CLI. Document the workflow.
+- ~~**Learn the `op` CLI**~~ — Done. `op` CLI installed, completions wired, reference added to RUNBOOK. Permissions popups are expected Touch ID behavior.
+- **Manage ssh.local via 1Password** — Deferred/aspirational. No active pain point; `~/.ssh/config.local` is fine as a local file.
+- ~~**Secrets management for env/work.zsh**~~ — Closed. Profile names assessed as not sensitive enough to warrant extraction. If this changes, `op read` + `~/.secrets.local` is the documented pattern.
 
 ## Applications
 
