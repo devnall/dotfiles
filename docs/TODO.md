@@ -11,7 +11,6 @@ Deferred ideas and future improvements.
 ## Tool Overhauls
 
 - **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc. **Note:** vim-tmux-navigator plugin is installed in tmux and works between tmux panes, but integration with neovim panes requires the neovim counterpart plugin — defer full setup to neovim overhaul.
-- **Tmux session templates for Claude Code workflows** — Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
 
 ## Dotbot
 
