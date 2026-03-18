@@ -1,6 +1,6 @@
 # Dotfiles — TODO
 
-Items that came up during cleanup project planning but are out of scope for the current effort. Add these to your existing dotfiles TODO.md or use this as a standalone tracker.
+Deferred ideas and future improvements.
 
 ---
 
