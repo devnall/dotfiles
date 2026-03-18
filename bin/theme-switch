@@ -10,21 +10,27 @@ if [[ "$mode" != "dark" && "$mode" != "light" ]]; then
   exit 1
 fi
 
+# Resolve symlinks for sed -i (macOS sed can't edit symlinks in-place)
+_resolve() { local t; t="$(readlink "$1" 2>/dev/null)" && echo "$t" || echo "$1"; }
+
 # Write state file for shells to read
 mkdir -p ~/.local/state
 echo "$mode" > ~/.local/state/appearance
 
 # Tmux — source the appropriate theme if tmux is running
-if command -v tmux &>/dev/null && tmux list-sessions &>/dev/null; then
+# Use explicit socket path since LaunchAgents don't inherit TMUX env
+tmux_socket="/private/tmp/tmux-$(id -u)/default"
+if [[ -S "$tmux_socket" ]]; then
+  tmux_bin="$(command -v tmux 2>/dev/null || echo /opt/homebrew/bin/tmux)"
   if [[ "$mode" == "dark" ]]; then
-    tmux source-file ~/.config/tmux/tmux-nordic.conf
+    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-nordic.conf
   else
-    tmux source-file ~/.config/tmux/tmux-alpine.conf
+    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-alpine.conf
   fi
 fi
 
 # btop — sed the color_theme line (takes effect on next launch)
-btop_conf="$(readlink -f "$HOME/.config/btop/btop.conf" 2>/dev/null || echo "$HOME/.config/btop/btop.conf")"
+btop_conf="$(_resolve "$HOME/.config/btop/btop.conf")"
 if [[ -f "$btop_conf" ]]; then
   if [[ "$mode" == "dark" ]]; then
     sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/rose-pine-moon.theme\"|" "$btop_conf"
@@ -34,7 +40,7 @@ if [[ -f "$btop_conf" ]]; then
 fi
 
 # starship — switch palette (takes effect on next prompt)
-starship_conf="$(readlink -f "$HOME/.config/starship.toml" 2>/dev/null || echo "$HOME/.config/starship.toml")"
+starship_conf="$(_resolve "$HOME/.config/starship.toml")"
 if [[ -f "$starship_conf" ]]; then
   if [[ "$mode" == "dark" ]]; then
     sed -i '' 's/^palette = "alpinedawn"/palette = "nordicpine"/' "$starship_conf"
