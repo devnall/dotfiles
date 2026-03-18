@@ -29,7 +29,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## Theming & Appearance
 
-- **Automatic dark/light theme switching** — Implement macOS appearance-change callbacks for tmux, btop, and any other affected tools. Candidate approach: `dark-notify` (keith/formulae) + LaunchAgent. Design holistically across all tools before implementing; alternatively, consider a native polling approach to reduce dependencies.
+- ~~**Automatic dark/light theme switching**~~ — Done. `dark-notify` LaunchAgent triggers `bin/theme-switch`, which updates tmux, btop, starship, and writes `~/.local/state/appearance` for shell `precmd` hooks. See RUNBOOK.md for details.
 - **Document theme palettes independently** — Extract color values from shell/tool configs into a standalone reference (or Obsidian note) so they can be reused in other contexts (scripts, web projects, etc.).
 - **Custom btop NordicPine theme** — Create a custom btop theme from the NordicPine palette.
 - **Ghostty transparency and blur** — Try `background-opacity = 0.90` and window blur in Ghostty config. The old Alacritty config used blur — see if it works well with current themes.
@@ -43,6 +43,7 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## 1Password & Secrets
 
+- **1Password SSH agent not available in Claude Code sessions** — Claude Code's shell environment doesn't inherit `SSH_AUTH_SOCK`, so the 1Password SSH agent socket (used for commit signing via `gpg.format = ssh`) is unreachable. Git commits with `commit.gpgsign = true` hang indefinitely waiting for the agent. Workarounds: (1) commit from a regular terminal, (2) set `SSH_AUTH_SOCK` in Claude Code's environment (e.g., via a Claude Code hook or `.env.local`), or (3) investigate whether Claude Code supports inheriting the socket path from the parent shell. The socket path is typically `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`.
 - **Learn the `op` CLI** — Figure out the 1Password CLI tool and resolve the recurring permissions popups.
 - **Manage ssh.local via 1Password** — Investigate storing per-machine `~/.ssh/config.local` files in 1Password and deploying them with the `op` CLI.
 - **Secrets management for env/work.zsh** — Replace hardcoded profile names in `env/work.zsh` with variables; keep real values in a secrets file managed by 1Password CLI. Document the workflow.

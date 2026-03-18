@@ -1,4 +1,4 @@
-# Starship Prompt Config — NordicPine theme
+# Starship Prompt Config — dual palette (NordicPine dark / AlpineDawn light)
 #
 # Requires a nerd font
 
@@ -161,3 +161,24 @@ char_2     = "#6ab4c2"
 char_3     = "#38c9a7"
 char_err   = "#e16c58"
 jobs_col   = "#e16c58"
+
+[palettes.alpinedawn]
+dir        = "#56949f"
+branch     = "#286983"
+git_add    = "#286983"
+git_del    = "#b4637a"
+git_status = "#575279"
+aws_col    = "#ea9d34"
+k8s_col    = "#286983"
+k8s_prod   = "#b4637a"
+docker_col = "#56949f"
+helm_col   = "#56949f"
+tf_col     = "#907aa9"
+python_col = "#286983"
+ruby_col   = "#b4637a"
+node_col   = "#286983"
+char_1     = "#286983"
+char_2     = "#56949f"
+char_3     = "#286983"
+char_err   = "#b4637a"
+jobs_col   = "#b4637a"

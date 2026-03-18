@@ -10,6 +10,10 @@ brew "zsh-fast-syntax-highlighting"
 brew "bash"
 brew "bash-completion"
 
+# Theme switching
+tap "cormacrelf/tap"
+brew "dark-notify"     # macOS appearance change callback
+
 # Core CLI utilities
 brew "awscli"
 brew "bat"            # better cat

@@ -140,6 +140,63 @@ Host myalias
 
 ---
 
+## Theme Switching (Dark/Light)
+
+Automatic dark/light theme switching is driven by `dark-notify`, which listens for macOS appearance changes and calls `bin/theme-switch`.
+
+### How it works
+
+```
+macOS appearance change
+  → dark-notify (LaunchAgent: com.dnall.dark-notify)
+    → bin/theme-switch "dark"|"light"
+      ├─ writes ~/.local/state/appearance
+      ├─ tmux: sources tmux-nordic.conf or tmux-alpine.conf (immediate)
+      ├─ btop: seds color_theme in btop.conf (next launch)
+      └─ starship: seds palette line in starship.toml (next prompt)
+
+Existing shell sessions:
+  → precmd hook in theme.zsh reads ~/.local/state/appearance
+  → re-applies syntax highlighting + autosuggestion colors if changed
+```
+
+### Tools and their response time
+
+| Tool | Switches when |
+|------|---------------|
+| Ghostty | Immediately (native macOS support) |
+| bat | Immediately (`--theme=auto:system`) |
+| tmux | Immediately (theme-switch sources conf) |
+| starship | Next prompt |
+| zsh syntax highlighting | Next prompt |
+| btop | Next launch |
+
+### Troubleshooting
+
+**LaunchAgent not running:**
+```sh
+launchctl list | grep dark-notify
+# If missing:
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist
+```
+
+**Manual trigger:**
+```sh
+~/.dotfiles/bin/theme-switch dark   # or light
+```
+
+**Check state file:**
+```sh
+cat ~/.local/state/appearance
+```
+
+**Logs:**
+```sh
+cat /tmp/dark-notify.log
+```
+
+---
+
 ## Remote/Server Setup
 
 For Linux servers accessed via SSH — same muscle memory, no Homebrew required.
