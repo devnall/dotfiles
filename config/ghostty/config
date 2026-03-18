@@ -20,6 +20,10 @@ window-padding-y = 8,0
 window-padding-balance = true
 window-save-state = always
 
+# transparency & blur — uncomment to try; applies globally to both themes
+# background-opacity = 0.90
+# background-blur-radius = 20
+
 # mouse
 mouse-hide-while-typing = true
 
