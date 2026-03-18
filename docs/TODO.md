@@ -23,18 +23,17 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## Git & Hosting
 
-- **Commit signing across all machines** — Set up SSH-based commit signing on all machines so commits satisfy GitHub's verified signature requirement. Git config already has `gpg.format = ssh`; need to configure `user.signingkey` in each machine's `.gitconfig-user` and enable `commit.gpgsign = true`. Coordinate with the 1Password `op` CLI setup to use 1Password-managed SSH keys for signing.
+- **Commit signing across all machines** — Done on main desktop (`commit.gpgsign = true`, `gpg.format = ssh`, `user.signingkey` configured). Still needs to be set up on both laptops (work + personal). Configure `user.signingkey` in each machine's `.gitconfig-user`. Coordinate with the 1Password `op` CLI setup to use 1Password-managed SSH keys for signing.
 - **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
 - **GitHub account separation assessment** — Document final decision on single vs separate work/personal GitHub accounts. Current recommendation: stay single-account with `includeIf` path-based identity unless employer requires separation.
 
 ## Theming & Appearance
 
-- ~~**Automatic dark/light theme switching**~~ — Done. `dark-notify` LaunchAgent triggers `bin/theme-switch`, which updates tmux, btop, starship, and writes `~/.local/state/appearance` for shell `precmd` hooks. See RUNBOOK.md for details.
 - **Document theme palettes independently** — Extract color values from shell/tool configs into a standalone reference (or Obsidian note) so they can be reused in other contexts (scripts, web projects, etc.).
 - **Custom btop NordicPine theme** — Create a custom btop theme from the NordicPine palette.
 - **Ghostty transparency and blur** — Try `background-opacity = 0.90` and window blur in Ghostty config. The old Alacritty config used blur — see if it works well with current themes.
 - **Archive dark_nord Ghostty theme** — Save the palette from `config/ghostty/themes/dark_nord` to Obsidian, then delete from the repo (not referenced in Ghostty config).
-- **Localize bat rose-pine-dawn theme** — The bat theme is currently fetched via curl in `install.config.yaml`. Try bundling a local copy of the `.tmTheme` file instead and remove the curl step.
+
 
 ## Editors
 
@@ -43,7 +42,6 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## 1Password & Secrets
 
-- **1Password SSH agent not available in Claude Code sessions** — Claude Code's shell environment doesn't inherit `SSH_AUTH_SOCK`, so the 1Password SSH agent socket (used for commit signing via `gpg.format = ssh`) is unreachable. Git commits with `commit.gpgsign = true` hang indefinitely waiting for the agent. Workarounds: (1) commit from a regular terminal, (2) set `SSH_AUTH_SOCK` in Claude Code's environment (e.g., via a Claude Code hook or `.env.local`), or (3) investigate whether Claude Code supports inheriting the socket path from the parent shell. The socket path is typically `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`.
 - **Learn the `op` CLI** — Figure out the 1Password CLI tool and resolve the recurring permissions popups.
 - **Manage ssh.local via 1Password** — Investigate storing per-machine `~/.ssh/config.local` files in 1Password and deploying them with the `op` CLI.
 - **Secrets management for env/work.zsh** — Replace hardcoded profile names in `env/work.zsh` with variables; keep real values in a secrets file managed by 1Password CLI. Document the workflow.
