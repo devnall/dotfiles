@@ -1,8 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -16,6 +12,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
   },
@@ -26,5 +26,6 @@
         "repo": "anthropics/claude-code"
       }
     }
-  }
+  },
+  "model": "opus"
 }
