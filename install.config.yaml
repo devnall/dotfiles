@@ -3,6 +3,14 @@
       relink: true
       create: true
 
+- shell:
+    - command: 'test -f config/btop/btop.conf || cp config/btop/btop.conf.default config/btop/btop.conf'
+      description: Initialize btop.conf from default (no-overwrite)
+    - command: 'test -f config/starship/starship.toml || cp config/starship/starship.toml.default config/starship/starship.toml'
+      description: Initialize starship.toml from default (no-overwrite)
+    - command: 'ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1p-agent.sock"'
+      description: Create no-space symlink for 1Password SSH agent socket
+
 - link:
     ~/.zshrc:
       path: zsh/zshrc.zsh

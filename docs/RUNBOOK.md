@@ -123,6 +123,8 @@ All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical
 
 `config/ssh/config` is symlinked to `~/.ssh/config`. It contains the universal `Host *` block (1Password SSH agent) and an `Include ~/.ssh/config.local` directive.
 
+The `IdentityAgent` path uses `~/.1p-agent.sock` — a no-space symlink created by `./install` pointing to the real 1Password socket at `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`. The symlink is needed because the space in that path breaks `SSH_AUTH_SOCK` sourcing in some env files.
+
 Machine-specific hosts (private IPs, internal hostnames, jump hosts) go in `~/.ssh/config.local` on each machine — this file is not tracked by dotfiles.
 
 ```
