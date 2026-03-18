@@ -76,3 +76,7 @@ Thumbs.db
 
 # Git identity (copy from .gitconfig-user.example; keep untracked)
 config/git/.gitconfig-user
+
+# Live theme-switched configs (mutable at runtime, initialized from *.default)
+config/btop/btop.conf
+config/starship/starship.toml
