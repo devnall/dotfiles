@@ -20,6 +20,12 @@ window-padding-y = 8,0
 window-padding-balance = true
 window-save-state = always
 
+# transparency & blur
+# tried this, marginally preferred it in light mode, didn't like in dark
+# not worth the effort to deal with theme switching but leaving here for future experiments
+# background-opacity = 0.90
+# background-blur-radius = 20
+
 # mouse
 mouse-hide-while-typing = true
 

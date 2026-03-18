@@ -29,10 +29,9 @@ Deferred ideas and future improvements.
 
 ## Theming & Appearance
 
-- **Document theme palettes independently** — Extract color values from shell/tool configs into a standalone reference (or Obsidian note) so they can be reused in other contexts (scripts, web projects, etc.).
-- **Custom btop NordicPine theme** — Create a custom btop theme from the NordicPine palette.
-- **Ghostty transparency and blur** — Try `background-opacity = 0.90` and window blur in Ghostty config. The old Alacritty config used blur — see if it works well with current themes.
-- **Archive dark_nord Ghostty theme** — Save the palette from `config/ghostty/themes/dark_nord` to Obsidian, then delete from the repo (not referenced in Ghostty config).
+- **Ghostty transparency and blur** — ~~Evaluated~~ Rejected. Marginally preferred in light mode (AlpineDawn), but not in dark mode (NordicPine), and not worth the complexity of per-theme switching. Commented-out block left in `config/ghostty/config` for easy future experimentation.
+
+_Done: palette reference doc (`docs/color-palettes.md`), btop NordicPine theme, dark\_nord archived and removed._
 
 
 ## Editors

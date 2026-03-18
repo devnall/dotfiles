@@ -33,7 +33,7 @@ fi
 btop_conf="$(_resolve "$HOME/.config/btop/btop.conf")"
 if [[ -f "$btop_conf" ]]; then
   if [[ "$mode" == "dark" ]]; then
-    sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/rose-pine-moon.theme\"|" "$btop_conf"
+    sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/nordicpine.theme\"|" "$btop_conf"
   else
     sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/rose-pine-dawn.theme\"|" "$btop_conf"
   fi
