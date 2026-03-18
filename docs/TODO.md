@@ -6,7 +6,7 @@ Deferred ideas and future improvements.
 
 ## Rollout & Multi-Machine
 
-- **Bootstrap script / new machine wizard** — Consider a `bootstrap` script (or extending `install`) that handles everything dotbot can't. On a fresh clone, if no marker file exists, it should: prompt the user to choose a machine type (work / personal / remote-full / remote) and create the appropriate marker file; stub out `~/.env.local`, `~/.secrets.local`, and `~/.ssh/config.local` with commented placeholders if they don't already exist; run any other first-time setup steps that are currently manual (git identity check, TPM install, etc.). Goal: `git clone && ./bootstrap` should get a new machine to a fully working state with no additional instructions needed.
+- **macOS defaults & OS customization** — Revisit `defaults write` settings for new machines: Dock config (auto-hide, icon size, remove default apps), keyboard repeat rate, trackpad settings, Finder preferences, screenshot location, etc. Consider reintroducing `config/macos/` with a `defaults.sh` script that bootstrap or install can call on macOS.
 
 ## Tool Overhauls
 

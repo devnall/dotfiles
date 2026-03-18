@@ -104,9 +104,8 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     -
-     command: '([[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]) && ./config/macos/setup-homebrew.sh || true'
-     description: Installing Homebrew and essential packages
-     stdout: true
+     command: 'command -v brew > /dev/null || { echo "⚠ Homebrew not found. Run ./bin/bootstrap first or install manually."; }'
+     description: Verify Homebrew is available
     -
      command: '([[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]) && brew bundle --file=packages/Brewfile.universal || true'
      description: Install universal Homebrew packages
