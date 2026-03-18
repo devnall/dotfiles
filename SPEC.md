@@ -43,7 +43,7 @@ dotfiles/
 │   │   ├── local.zsh.template  # Template — copy to local.zsh for per-machine shortcuts
 │   │   ├── path.zsh
 │   │   ├── ssh.zsh
-│   │   └── theme.zsh           # fast-syntax-highlighting styles
+│   │   └── theme.zsh           # appearance detection + syntax highlighting styles
 │   └── zfunctions/           # Autoloaded zsh functions
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
@@ -66,6 +66,7 @@ dotfiles/
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
+    ├── launchagents/          # macOS LaunchAgent plists (symlinked to ~/Library/LaunchAgents)
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
