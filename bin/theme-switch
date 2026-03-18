@@ -24,7 +24,7 @@ if command -v tmux &>/dev/null && tmux list-sessions &>/dev/null; then
 fi
 
 # btop — sed the color_theme line (takes effect on next launch)
-btop_conf="$HOME/.config/btop/btop.conf"
+btop_conf="$(readlink -f "$HOME/.config/btop/btop.conf" 2>/dev/null || echo "$HOME/.config/btop/btop.conf")"
 if [[ -f "$btop_conf" ]]; then
   if [[ "$mode" == "dark" ]]; then
     sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/rose-pine-moon.theme\"|" "$btop_conf"
@@ -34,7 +34,7 @@ if [[ -f "$btop_conf" ]]; then
 fi
 
 # starship — switch palette (takes effect on next prompt)
-starship_conf="$HOME/.config/starship.toml"
+starship_conf="$(readlink -f "$HOME/.config/starship.toml" 2>/dev/null || echo "$HOME/.config/starship.toml")"
 if [[ -f "$starship_conf" ]]; then
   if [[ "$mode" == "dark" ]]; then
     sed -i '' 's/^palette = "alpinedawn"/palette = "nordicpine"/' "$starship_conf"

@@ -12,7 +12,7 @@ brew "bash-completion"
 
 # Theme switching
 tap "cormacrelf/tap"
-brew "dark-notify"     # macOS appearance change callback
+brew "cormacrelf/tap/dark-notify"     # macOS appearance change callback
 
 # Core CLI utilities
 brew "awscli"
