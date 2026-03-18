@@ -48,9 +48,6 @@
     ~/.config/starship.toml:
       path: config/starship/starship.toml
 
-    ~/.config/starship-light.toml:
-      path: config/starship/starship-light.toml
-
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
 
@@ -87,6 +84,10 @@
       path: config/ssh/config
       force: true
 
+    ~/Library/LaunchAgents/com.dnall.dark-notify.plist:
+      path: config/launchagents/com.dnall.dark-notify.plist
+      force: true
+
     ~/bin:
       glob: true
       path: bin/*
@@ -112,4 +113,12 @@
     -
      command: 'command -v bat > /dev/null && bat cache --build || true'
      description: Build bat theme cache
+     stdout: true
+    -
+     command: |
+       if [[ "$(uname)" == "Darwin" ]] && command -v dark-notify > /dev/null; then
+         launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist 2>/dev/null || true
+         launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist
+       fi
+     description: Load dark-notify LaunchAgent
      stdout: true
