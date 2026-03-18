@@ -63,7 +63,10 @@ dotfiles/
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
     ├── starship/
     ├── tmux/
-    └── vim/vimrc             # Minimal vim fallback (no plugins, remote-safe)
+    └── vim/                  # Minimal vim config (symlinked as ~/.vim)
+        ├── vimrc              # Remote-safe, no plugins
+        └── colors/
+            └── nordicpine.vim # Dual-mode colorscheme (dark/light)
 ```
 
 > **Note:** Update this tree after each cleanup or restructuring project to keep it accurate.
@@ -123,7 +126,7 @@ dotfiles/
 ### 3.6 Editor Configuration
 
 - **Neovim** (`config/nvim/`): lazy.nvim-based. Intended for desktop machines. Must open without blocking errors when an LSP or external tool is missing.
-- **Vim** (`config/vim/vimrc`): Must work on any remote server with stock vim and zero external dependencies. Sensible defaults only.
+- **Vim** (`config/vim/`): Symlinked as `~/.vim` → `config/vim/`. Must work on any remote server with stock vim and zero external dependencies. Includes `nordicpine` colorscheme (dark/light auto-detection).
 
 ---
 

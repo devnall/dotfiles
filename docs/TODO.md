@@ -31,25 +31,7 @@ Deferred ideas and future improvements.
 - **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
 - **GitHub account separation assessment** — Document final decision on single vs separate work/personal GitHub accounts. Current recommendation: stay single-account with `includeIf` path-based identity unless employer requires separation.
 
-## Theming & Appearance
-
-- **Ghostty transparency and blur** — ~~Evaluated~~ Rejected. Marginally preferred in light mode (AlpineDawn), but not in dark mode (NordicPine), and not worth the complexity of per-theme switching. Commented-out block left in `config/ghostty/config` for easy future experimentation.
-
-_Done: palette reference doc (`docs/color-palettes.md`), btop NordicPine theme, dark\_nord archived and removed._
-
-
-## Editors
-
-- **Minimal vim cleanup** — Fix the fallback `vimrc` so it has a usable colorscheme and doesn't throw errors on startup.
-- **Neovim alias** — On non-remote machines where neovim is installed, alias it to something convenient. Options: alias `vim` → `nvim` (muscle memory), or use `e` for "edit" if shadowing `vim` feels wrong.
-
-## 1Password & Secrets
-
-- ~~**Learn the `op` CLI**~~ — Done. `op` CLI installed, completions wired, reference added to RUNBOOK. Permissions popups are expected Touch ID behavior.
-- **Manage ssh.local via 1Password** — Deferred/aspirational. No active pain point; `~/.ssh/config.local` is fine as a local file.
-- ~~**Secrets management for env/work.zsh**~~ — Closed. Profile names assessed as not sensitive enough to warrant extraction. If this changes, `op read` + `~/.secrets.local` is the documented pattern.
-
-## Applications
+# Applications
 
 - **Audit installed applications** — On each primary machine (personal desktop, personal laptop, work laptop), audit `/Applications` and `~/Applications`. Sort everything into the universal/work/personal Brewfile pattern. For apps only available via the Mac App Store, either automate with the `mas` CLI or document the manual install steps.
 
