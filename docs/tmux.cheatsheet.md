@@ -50,14 +50,15 @@ Prefix key: `C-a`
 | `prefix p` | Paste buffer |
 | `v` | Begin selection |
 | `C-v` | Toggle rectangle selection |
-| `y` | Copy selection and exit copy mode |
+| `y` | Copy selection to system clipboard and exit copy mode |
+| `o` | Open URL/file under selection (uses `open` command on macOS) |
+| `e` | Fuzzy-extract text from pane into prompt |
 
 ## Sync Panes
 
 | Key | Action |
 |-----|--------|
-| `prefix e` | Enable pane synchronization (broadcast input to all panes) |
-| `prefix E` | Disable pane synchronization |
+| `prefix e` | Toggle pane synchronization (broadcast input to all panes in window) |
 
 ## Misc
 
@@ -66,25 +67,34 @@ Prefix key: `C-a`
 | `prefix r` | Reload tmux config |
 | `prefix R` | Refresh client |
 | `prefix ;` | Open command prompt |
-| `prefix S` | Open SSH to host in new window |
+| `prefix S` | SSH to host via fzf fuzzy picker (opens in new window); fallback to prompt if fzf unavailable |
 | `prefix C-a` | Send prefix to nested tmux/screen session |
 
-## Plugins (via TPM)
+## Plugins (git submodules)
 
 | Plugin | Purpose |
 |--------|---------|
-| tmux-sensible | Sane defaults |
-| tmux-yank | Clipboard integration in copy mode |
-| tmux-open | Open files/URLs from copy mode |
-| tmux-prefix-highlight | Status bar indicator when prefix is active |
+| tmux-yank | System clipboard integration in copy mode |
+| tmux-open | Open files/URLs from copy mode (with `o` key) |
+| tmux-prefix-highlight | Status bar indicator when prefix is held or in copy mode |
 | tmux-online-status | Status bar online/offline indicator |
-| extrakto | Fuzzy-extract text from pane into prompt |
-| vim-tmux-navigator | Seamless pane navigation between vim and tmux |
+| extrakto | Fuzzy-extract text from pane into prompt (with `e` key in copy mode) |
+| vim-tmux-navigator | Navigate between tmux panes with Ctrl+hjkl (vim integration requires neovim plugin) |
 
-### TPM Commands
+### Plugin Updates
 
-| Command | Action |
-|---------|--------|
-| `prefix I` | Install plugins |
-| `prefix U` | Update plugins |
-| `prefix alt-u` | Remove unlisted plugins |
+Plugins are managed as git submodules. Update individual plugins:
+```bash
+cd ~/.dotfiles
+git submodule update --remote config/tmux/plugins/<plugin-name>
+git add config/tmux/plugins/<plugin-name>
+git commit -m "⬆️ Update <plugin-name>"
+```
+
+Update all plugins at once:
+```bash
+cd ~/.dotfiles
+git submodule update --remote config/tmux/plugins/
+git add config/tmux/plugins/
+git commit -m "⬆️ Update tmux plugins"
+```

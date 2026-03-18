@@ -69,6 +69,7 @@ Thumbs.db
 #
 # Secrets and local overrides
 *.local
+*.local.*
 .env*
 *secrets*
 *.key

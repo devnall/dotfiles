@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# tmux-ssh-fzf — fzf-based SSH host picker for tmux
+# Called by tmux `prefix S` binding via display-popup
+
+set -euo pipefail
+
+hosts=()
+
+# Parse Host entries from SSH configs (skip wildcards and patterns)
+for config in ~/.ssh/config ~/.ssh/config.local; do
+  [[ -f "$config" ]] || continue
+  while IFS= read -r line; do
+    # Match "Host" lines, skip wildcards/patterns
+    if [[ "$line" =~ ^[[:space:]]*Host[[:space:]]+(.*) ]]; then
+      for entry in ${BASH_REMATCH[1]}; do
+        [[ "$entry" == *"*"* || "$entry" == *"?"* || "$entry" == *"!"* ]] && continue
+        hosts+=("$entry")
+      done
+    fi
+  done < "$config"
+done
+
+# Parse hostnames from known_hosts (skip hashed and IP-only entries)
+if [[ -f ~/.ssh/known_hosts ]]; then
+  while IFS=' ' read -r hostfield _rest; do
+    # Skip hashed entries
+    [[ "$hostfield" == "|"* ]] && continue
+    # Split comma-separated hostnames
+    IFS=',' read -ra parts <<< "$hostfield"
+    for part in "${parts[@]}"; do
+      # Strip bracket notation [host]:port
+      part="${part#\[}"
+      part="${part%%\]*}"
+      # Skip bare IPs
+      [[ "$part" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && continue
+      [[ "$part" =~ ^[0-9a-f:]+$ ]] && continue
+      hosts+=("$part")
+    done
+  done < ~/.ssh/known_hosts
+fi
+
+# Deduplicate, sort, and pick via fzf
+host=$(printf '%s\n' "${hosts[@]}" | sort -u | fzf --prompt='ssh> ' --no-multi) || exit 0
+
+# Open SSH in a new tmux window
+tmux new-window -n "$host" "ssh $host"

@@ -23,6 +23,9 @@
     ~/.config/tmux/tmux-alpine.conf:
       path: config/tmux/tmux-alpine.conf
       force: true
+    ~/.config/tmux/plugins:
+      path: config/tmux/plugins
+      force: true
 
     ~/.vimrc:
       path: config/vim/vimrc

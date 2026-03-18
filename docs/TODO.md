@@ -10,11 +10,8 @@ Items that came up during cleanup project planning but are out of scope for the 
 
 ## Tool Overhauls
 
-- **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc.
+- **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc. **Note:** vim-tmux-navigator plugin is installed in tmux and works between tmux panes, but integration with neovim panes requires the neovim counterpart plugin — defer full setup to neovim overhaul.
 - **Tmux session templates for Claude Code workflows** — Investigate whether tmuxinator or plain tmux session scripts would be useful for spinning up Claude Code working environments (e.g., editor + terminal + logs panes).
-- **Tmux sync-panes proper toggle** — `prefix e` / `prefix E` turn sync on/off separately. Make it a single toggle: `bind e run "tmux setw synchronize-panes; tmux display-message 'sync-panes: #{?synchronize-panes,ON,OFF}'"`.
-- **Tmux SSH binding tab completion** — `prefix S` opens a prompt to SSH in a new window but has no tab completion. Investigate integrating with known_hosts or fzf for host selection.
-- **Tmux TPM as dotbot submodule** — TPM is cloned manually to `~/.tmux/plugins/tpm`. Consider adding it as a git submodule and symlinking via dotbot so it's portable across machines.
 
 ## Dotbot
 
