@@ -21,6 +21,10 @@ Deferred ideas and future improvements.
 
 - **License and README polish** — If this is a public repo, consider adding a LICENSE file. Polish the README for external readers (not just future-you).
 
+## CI / Repo Health
+
+- **GitHub Actions + pre-commit scaffolding** — Set up lightweight repo automation: config file linting (YAML, TOML, shell via `shellcheck`), a pre-commit hook for basic sanity checks (trailing whitespace, syntax), and a simple GitHub Actions workflow to run the same checks on push/PR. Keep it minimal — no baroque pipelines, just a safety net that catches obvious mistakes before they land.
+
 ## Git & Hosting
 
 - **Commit signing across all machines** — Done on main desktop (`commit.gpgsign = true`, `gpg.format = ssh`, `user.signingkey` configured). Still needs to be set up on both laptops (work + personal). Configure `user.signingkey` in each machine's `.gitconfig-user`. Coordinate with the 1Password `op` CLI setup to use 1Password-managed SSH keys for signing.
