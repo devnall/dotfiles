@@ -21,7 +21,12 @@ This repo consolidates shell and tool configurations into a single, idempotent d
 ```text
 dotfiles/
 ├── .git/
+├── .github/
+│   └── workflows/
+│       └── lint.yml          # GitHub Actions CI (pre-commit on PRs)
 ├── .gitignore
+├── .pre-commit-config.yaml   # Pre-commit hook definitions
+├── .shellcheckrc             # ShellCheck defaults (shell=bash)
 ├── README.md                 # Quick-start guide
 ├── SPEC.md                   # Current project task plan
 ├── dotbot/                   # Git submodule
@@ -139,6 +144,15 @@ dotfiles/
 - **Identity switching:** `config/git/config` uses `[includeIf "gitdir:~/code/work/"]` to load `.gitconfig-work` (work name, email, signingkey). All other repos use the default `.gitconfig-user` (personal identity). Directory convention: `~/code/work/` for work repos, `~/code/personal/` for personal repos.
 - **Commit signing:** `commit.gpgsign = true` is shared config (in `config/git/config`). `user.signingkey` is per-machine, set in `.gitconfig-user` and `.gitconfig-work`. `gpg.format = ssh` — all machines target 1Password-managed SSH keys for signing.
 - **`allowed_signers`:** Intentionally skipped. GitHub handles signature verification via uploaded signing keys — local verification isn't needed for this workflow.
+
+### 3.9 CI and Linting
+
+- **Pre-commit** (`.pre-commit-config.yaml`) runs all lint checks both locally and in CI. Single source of truth — CI calls `pre-commit run --all-files` via `pre-commit/action`.
+- **Hooks:** trailing-whitespace, end-of-file-fixer, check-yaml, check-added-large-files, shellcheck (scoped to `bin/`, excluding `tunes.js` and `brew-repair`), zsh syntax check (`zsh -n` on all `.zsh` files).
+- **GitHub Actions** (`.github/workflows/lint.yml`) runs on PRs targeting `main`. Uses `ubuntu-latest` (installs zsh via apt).
+- **ShellCheck** (`.shellcheckrc`) defaults to `shell=bash`. No global suppressions — fix or inline-suppress case-by-case.
+- **Dotbot integration:** `./install` runs `pre-commit install` (guarded with `command -v`) to set up local git hooks automatically.
+- **Brewfile:** `pre-commit` is in `Brewfile.universal`.
 
 ---
 

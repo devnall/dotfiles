@@ -128,6 +128,9 @@
      description: Build bat theme cache
      stdout: true
     -
+     command: 'command -v pre-commit > /dev/null && [ -d .git ] && pre-commit install || true'
+     description: Install pre-commit git hooks
+    -
      command: |
        if [[ "$(uname)" == "Darwin" ]] && command -v dark-notify > /dev/null; then
          launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist 2>/dev/null || true

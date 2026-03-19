@@ -18,7 +18,7 @@ Deferred ideas and future improvements.
 
 ## CI / Repo Health
 
-- **GitHub Actions + pre-commit scaffolding** — Set up lightweight repo automation: config file linting (YAML, TOML, shell via `shellcheck`), a pre-commit hook for basic sanity checks (trailing whitespace, syntax), and a simple GitHub Actions workflow to run the same checks on push/PR. Keep it minimal — no baroque pipelines, just a safety net that catches obvious mistakes before they land.
+- ~~**GitHub Actions + pre-commit scaffolding**~~ — Done. Pre-commit hooks (shellcheck, zsh syntax, YAML, whitespace/EOF) with GitHub Actions CI on PRs. `pre-commit install` wired into dotbot.
 
 # Applications
 

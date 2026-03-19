@@ -139,37 +139,26 @@ After all cleanup work is complete, these must all be true:
 
 ---
 
-## Part B: Task Plan — Shell Utilities: Tealdeer Custom Pages + Cheatsheet Browser
+## Part B: Task Plan — GitHub Actions + Pre-commit Scaffolding
 
-### Phase 1: Infrastructure — Tealdeer custom pages directory + Dotbot symlink
+### Phase 1: Pre-commit auto-fix cleanup
+Run trailing-whitespace and end-of-file-fixer on all files. Commit fixes separately.
 
-#### 1.1 — Create `docs/tldr/` directory structure
-**Type:** Claude Code
+### Phase 2: Create new files
+- `.shellcheckrc` — `shell=bash` default
+- `.pre-commit-config.yaml` — pre-commit-hooks, shellcheck-py, local zsh-syntax-check
+- `.github/workflows/lint.yml` — PR-only CI via `pre-commit/action`
 
-Create `docs/tldr/common/` for platform-agnostic custom tealdeer pages.
+### Phase 3: Modify existing files
+- `packages/Brewfile.universal` — add `pre-commit`
+- `packages/Brewfile.work` — remove quarantined `pre-commit`
+- `install.config.yaml` — add guarded `pre-commit install` shell command
 
-#### 1.2 — Add Dotbot symlink in `install.config.yaml`
-**Type:** Claude Code
+### Phase 4: Fix shellcheck findings
+Run shellcheck on `bin/` scripts and fix or inline-suppress findings.
 
-Symlink `docs/tldr` → `~/Library/Application Support/tealdeer/pages`.
-
-### Phase 2: Create `bin/cheat.sh` script
-
-#### 2.1 — Write `bin/cheat.sh`
-**Type:** Claude Code
-
-fzf-powered cheatsheet browser. No args = topic picker with bat preview. With args = cross-file content search with context preview. Graceful fallback without fzf/bat.
-
-### Phase 3: Author tealdeer custom pages
-
-#### 3.1 — Create 5 tldr-format pages in `docs/tldr/common/`
-**Type:** Claude Code
-
-Pages as `*.page.md`: my-shell, my-git, my-tmux, my-fzf, my-vim. Each has 5-8 curated examples from the corresponding cheatsheet.
-
-### Phase 4: Documentation updates
-
-#### 4.1 — Update ARCHITECTURE.md, RUNBOOK.md, TODO.md, SPEC.md
-**Type:** Claude Code
-
-Add docs/tldr to directory tree, add usage sections for tldr and cheat.sh, mark TODO item complete.
+### Phase 5: Documentation updates
+- `docs/ARCHITECTURE.md` — directory tree + section 3.9
+- `docs/RUNBOOK.md` — pre-commit usage section
+- `docs/TODO.md` — strikethrough CI item
+- `SPEC.md` — replace Part B with this plan

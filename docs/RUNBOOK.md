@@ -423,6 +423,39 @@ Then run `mise install` in that directory. mise activates the correct versions a
 sheldon lock --update
 ```
 
+### Pre-commit hooks
+
+Run all checks (same as CI):
+
+```sh
+pre-commit run --all-files
+```
+
+Run a specific hook:
+
+```sh
+pre-commit run shellcheck --all-files
+pre-commit run trailing-whitespace --all-files
+```
+
+Update hook versions:
+
+```sh
+pre-commit autoupdate
+```
+
+Re-install hooks (after clone or if `.git/hooks/pre-commit` is missing):
+
+```sh
+pre-commit install
+```
+
+Bypass hooks for a single commit (use sparingly):
+
+```sh
+git commit --no-verify -m "message"
+```
+
 ### Benchmark shell startup time
 
 ```sh

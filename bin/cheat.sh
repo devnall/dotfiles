@@ -18,9 +18,7 @@ fi
 CHEATSHEET_GLOB="$DOCS_DIR/*.cheatsheet.md"
 
 # Check that at least one cheatsheet exists
-shopt -s nullglob
-files=($CHEATSHEET_GLOB)
-shopt -u nullglob
+mapfile -t files < <(compgen -G "$CHEATSHEET_GLOB")
 if [[ ${#files[@]} -eq 0 ]]; then
   echo "No cheatsheets found in $DOCS_DIR" >&2
   exit 1
@@ -77,14 +75,14 @@ if command -v fzf > /dev/null; then
     | sed "s|^${DOCS_DIR}/||" \
     | fzf --prompt="match> " \
           --delimiter=: \
-          --preview='
-            line=$(echo {} | cut -d: -f2)
-            name=$(echo {} | cut -d: -f1)
-            file="$DOCS_DIR/$name"
-            start=$((line > 5 ? line - 5 : 1))
-            end=$((line + 20))
-            bat --language=markdown --style=plain --color=always --highlight-line "$line" --line-range "$start:$end" "$file" 2>/dev/null || sed -n "${start},${end}p" "$file"
-          ' \
+          --preview="
+            line=\$(echo {} | cut -d: -f2)
+            name=\$(echo {} | cut -d: -f1)
+            file=\"$DOCS_DIR/\$name\"
+            start=\$((line > 5 ? line - 5 : 1))
+            end=\$((line + 20))
+            bat --language=markdown --style=plain --color=always --highlight-line \"\$line\" --line-range \"\$start:\$end\" \"\$file\" 2>/dev/null || sed -n \"\${start},\${end}p\" \"\$file\"
+          " \
           --preview-window=right:70%)
   if [[ -n "$selected" ]]; then
     file="$DOCS_DIR/$(echo "$selected" | cut -d: -f1)"
