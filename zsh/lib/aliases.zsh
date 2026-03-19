@@ -103,7 +103,7 @@ fi
 alias klusters="kubectl config get-contexts | tr -s ' ' | cut -d ' ' -f 2 | sort"
 
 # Weather and moon phase
-alias weather="curl -s wttr.in/Atlanta | head -n 38 | tail -n 37"
+alias weather="curl -s 'wttr.in/Atlanta?u' | head -n 38 | tail -n 37"
 alias moon="curl -s wttr.in/Moon | head -n 23"
 
 # Open current terminal path in Finder.app
