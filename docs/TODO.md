@@ -26,7 +26,7 @@ Deferred ideas and future improvements.
 
 ## Shell Utilities
 
-- **Custom tealdeer pages** — Investigate whether tealdeer supports custom/local page overrides for documenting personal aliases and cheatsheet entries alongside community pages.
+- ~~**Custom tealdeer pages**~~ — Done. Custom pages in `docs/tldr/common/my-*.md`, symlinked via dotbot. `cheat.sh` provides fzf-powered browsing of full cheatsheets.
 
 ## Performance
 

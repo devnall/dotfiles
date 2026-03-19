@@ -97,6 +97,11 @@
       path: config/launchagents/com.dnall.dark-notify.plist
       force: true
 
+    ~/Library/Application Support/tealdeer/pages:
+      path: docs/tldr
+      force: true
+      create: true
+
     ~/bin:
       glob: true
       path: bin/*

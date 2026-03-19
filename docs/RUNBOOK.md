@@ -296,7 +296,7 @@ dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
 ├── bin/                      # Scripts symlinked to ~/bin (includes bootstrap wizard)
-├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
+├── docs/                     # Cheatsheets, tldr custom pages, architecture docs
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
 │   ├── personal.zsh          # Sourced when ~/.personal exists
@@ -458,6 +458,47 @@ Drop a file in `zsh/lib/yourfile.zsh` — it will be sourced automatically next 
 ### New bin script
 
 Drop it in `bin/` — Dotbot glob-symlinks the whole directory to `~/bin`, so it's in PATH after `./install`.
+
+### New tealdeer custom page
+
+Create `docs/tldr/my-<topic>.page.md` following the [tldr page format](https://github.com/tldr-pages/tldr/blob/main/contributing-guides/style-guide.md):
+- `# title` header
+- `> one-line description`
+- `- comment` then `` `command` `` pairs (5-8 examples)
+- Each code block must contain exactly one command (no `cmd1` / `cmd2` splits)
+
+After `./install`, the page is available via `tldr my-<topic>`. Existing pages: my-shell, my-git, my-tmux, my-fzf, my-vim.
+
+---
+
+## Cheatsheet Tools
+
+### `tldr my-<topic>` — Quick reference (tealdeer custom pages)
+
+Curated "greatest hits" from each cheatsheet, accessible via tealdeer:
+
+```sh
+tldr my-git       # top git aliases
+tldr my-shell     # top shell aliases
+tldr my-tmux      # tmux keybindings
+tldr my-fzf       # fzf bindings and completion
+tldr my-vim       # vim keybindings
+tldr --list | grep my-   # list all custom pages
+```
+
+Pages live in `docs/tldr/` as `*.page.md` files and are symlinked to tealdeer's custom pages directory by dotbot.
+
+### `cheat.sh` — Full cheatsheet browser
+
+Browse or search the full `docs/*.cheatsheet.md` files with fzf + bat:
+
+```sh
+cheat.sh              # fzf topic picker → bat render
+cheat.sh grep         # search across all cheatsheets for "grep"
+cheat.sh stash        # find stash-related entries across all files
+```
+
+**Dependencies:** fzf, bat (both in Brewfile.universal). Falls back gracefully: without fzf lists topics; without bat uses cat.
 
 ---
 
