@@ -149,7 +149,7 @@ dotfiles/
 
 - **Pre-commit** (`.pre-commit-config.yaml`) runs all lint checks both locally and in CI. Single source of truth — CI calls `pre-commit run --all-files` via `pre-commit/action`.
 - **Hooks:** trailing-whitespace, end-of-file-fixer, check-yaml, check-added-large-files, shellcheck (scoped to `bin/`, excluding `tunes.js` and `brew-repair`), zsh syntax check (`zsh -n` on all `.zsh` files).
-- **GitHub Actions** (`.github/workflows/lint.yml`) runs on PRs targeting `main`. Uses `ubuntu-latest` (zsh pre-installed).
+- **GitHub Actions** (`.github/workflows/lint.yml`) runs on PRs targeting `main`. Uses `ubuntu-latest` (installs zsh via apt).
 - **ShellCheck** (`.shellcheckrc`) defaults to `shell=bash`. No global suppressions — fix or inline-suppress case-by-case.
 - **Dotbot integration:** `./install` runs `pre-commit install` (guarded with `command -v`) to set up local git hooks automatically.
 - **Brewfile:** `pre-commit` is in `Brewfile.universal`.
