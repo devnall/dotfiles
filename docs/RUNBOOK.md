@@ -15,7 +15,7 @@ git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
 ### 2. Run bootstrap
 
 ```sh
-cd ~/.dotfiles && ./bin/bootstrap
+cd ~/.dotfiles && ./bin/bootstrap.sh
 ```
 
 The bootstrap wizard is interactive and idempotent — it skips anything already done. It handles:

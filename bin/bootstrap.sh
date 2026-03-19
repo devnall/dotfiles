@@ -3,7 +3,7 @@
 # bootstrap — interactive first-time setup wizard for dotfiles
 #
 # Run this once before ./install on a new machine:
-#   git clone --recursive ~/.dotfiles && cd ~/.dotfiles && ./bin/bootstrap && ./install
+#   git clone --recursive ~/.dotfiles && cd ~/.dotfiles && ./bin/bootstrap.sh && ./install
 #
 # Idempotent: already-completed steps are skipped silently.
 
