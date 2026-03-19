@@ -38,4 +38,3 @@ github = 'zsh-users/zsh-history-substring-search'
 
 [plugins.alias-tips]
 github = "djui/alias-tips"
-
