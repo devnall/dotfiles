@@ -139,17 +139,37 @@ After all cleanup work is complete, these must all be true:
 
 ---
 
-## Part B: Task Plan
+## Part B: Task Plan — Shell Utilities: Tealdeer Custom Pages + Cheatsheet Browser
 
-_No active project. This section will be populated when a new project begins._
+### Phase 1: Infrastructure — Tealdeer custom pages directory + Dotbot symlink
 
-<!--
-Template for new projects:
+#### 1.1 — Create `docs/tldr/` directory structure
+**Type:** Claude Code
 
-### Phase N: Phase Name
+Create `docs/tldr/common/` for platform-agnostic custom tealdeer pages.
 
-#### N.1 — Task title
-**Type:** Claude Code | Human | Collaborative
+#### 1.2 — Add Dotbot symlink in `install.config.yaml`
+**Type:** Claude Code
 
-Task description.
--->
+Symlink `docs/tldr` → `~/Library/Application Support/tealdeer/pages`.
+
+### Phase 2: Create `bin/cheat.sh` script
+
+#### 2.1 — Write `bin/cheat.sh`
+**Type:** Claude Code
+
+fzf-powered cheatsheet browser. No args = topic picker with bat preview. With args = cross-file content search with context preview. Graceful fallback without fzf/bat.
+
+### Phase 3: Author tealdeer custom pages
+
+#### 3.1 — Create 5 tldr-format pages in `docs/tldr/common/`
+**Type:** Claude Code
+
+Pages as `*.page.md`: my-shell, my-git, my-tmux, my-fzf, my-vim. Each has 5-8 curated examples from the corresponding cheatsheet.
+
+### Phase 4: Documentation updates
+
+#### 4.1 — Update ARCHITECTURE.md, RUNBOOK.md, TODO.md, SPEC.md
+**Type:** Claude Code
+
+Add docs/tldr to directory tree, add usage sections for tldr and cheat.sh, mark TODO item complete.

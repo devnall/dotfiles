@@ -32,6 +32,9 @@ dotfiles/
 │   ├── ARCHITECTURE.md       # This file — design reference (not consumed by tooling)
 │   ├── RUNBOOK.md            # Detailed usage and maintenance reference
 │   ├── TODO.md               # Future ideas and deferred work
+│   ├── *.cheatsheet.md       # Tool cheatsheets (fzf, tmux, git, shell, vim, kubernetes)
+│   └── tldr/                 # Custom tealdeer pages (symlinked to ~/Library/Application Support/tealdeer/pages)
+│       └── my-*.page.md     # Custom pages: my-git, my-shell, my-tmux, my-fzf, my-vim
 ├── zsh/
 │   ├── zshrc.zsh             # Entrypoint (symlinked to ~/.zshrc)
 │   ├── lib/                  # Modular zsh config files (auto-sourced alphabetically)
