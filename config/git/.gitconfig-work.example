@@ -1,0 +1,12 @@
+# Work identity template — copy to .gitconfig-work and fill in your values
+# .gitconfig-work is gitignored; this example file is what's committed
+# config/git/config includes this via [includeIf "gitdir:~/code/work/"]
+# Only needed on work machines (those with ~/.work marker)
+#
+# signingkey should be your SSH public key string from 1Password:
+#   1Password app → SSH key item → copy public key
+# See docs/RUNBOOK.md "Commit Signing with 1Password SSH Keys" for full setup
+[user]
+  name = Your Name
+  email = you@work-domain.com
+  signingkey = ssh-ed25519 AAAA...

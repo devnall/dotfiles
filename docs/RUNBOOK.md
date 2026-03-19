@@ -25,6 +25,8 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Machine type** — prompts you to choose work / personal / remote-full / remote and creates the marker file (`~/.work`, etc.). Controls which env config and Brewfile load at install time
 - **Homebrew** — offers to install on macOS / remote-full machines
 - **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
+- **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
+- **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
 - **Stub files** — creates `~/.env.local`, `~/.secrets.local`, and `~/.ssh/config.local` with commented templates if they don't exist
 
 ### 3. Run the installer
@@ -51,6 +53,7 @@ Installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, pytho
 |------|---------|
 | `~/.work` / `~/.personal` / `~/.remote-full` / `~/.remote` | Machine type marker (created by bootstrap) |
 | `config/git/.gitconfig-user` | Git identity — name, email, signingkey (gitignored) |
+| `config/git/.gitconfig-work` | Work git identity — work machines only (gitignored) |
 | `~/.env.local` | Machine-specific exports, PATH additions, non-secret config |
 | `~/.secrets.local` | API keys, tokens, credentials — never commit |
 | `~/.ssh/config.local` | Per-machine SSH host entries (not tracked) |
@@ -108,6 +111,44 @@ op read "op://VaultName/Item/field"    # read a single secret value (scriptable)
 **SSH agent integration:** The 1Password SSH agent is configured in `config/ssh/config` via `IdentityAgent` — see the [SSH config](#ssh-config) section above. Keys are managed in 1Password and served to SSH transparently.
 
 **Touch ID / biometric prompts:** The `op` CLI and SSH agent trigger macOS biometric prompts (Touch ID or password) when accessing secrets. This is expected 1Password security behavior, not a bug or misconfiguration.
+
+### Commit Signing with 1Password SSH Keys
+
+All commits are signed (`commit.gpgsign = true` in shared git config, `gpg.format = ssh`). Each machine needs its `user.signingkey` set to the SSH public key string from 1Password.
+
+**Setup (per machine):**
+
+1. Open 1Password → find your SSH key item → copy the public key (starts with `ssh-ed25519 AAAA...`)
+2. Paste it as the `signingkey` value in `config/git/.gitconfig-user`:
+   ```ini
+   [user]
+     name = Your Name
+     email = you@example.com
+     signingkey = ssh-ed25519 AAAA...your-key-here
+   ```
+3. On work machines, do the same in `config/git/.gitconfig-work` with your work email and key
+4. Upload the signing key to GitHub: Settings → SSH and GPG keys → New SSH key → select **Signing Key** as the key type
+5. Verify signing works:
+   ```sh
+   echo "test" | git commit-tree HEAD^{tree}   # should not error
+   git log --show-signature -1                   # or check GitHub for "Verified" badge
+   ```
+
+**Note:** `allowed_signers` is intentionally not configured. GitHub handles signature verification via uploaded signing keys — local `git log --show-signature` won't show "Good signature" without it, but GitHub's Verified badge works.
+
+### Directory Convention (Work / Personal)
+
+Repos are organized by identity under `~/code/`:
+
+```
+~/code/
+├── work/       # Work repos — git uses work identity (name, email, signingkey)
+└── personal/   # Personal repos — git uses personal identity (default)
+```
+
+The `~/code/work/` directory triggers `includeIf` in git config, loading `.gitconfig-work` which overrides `user.name`, `user.email`, and `user.signingkey` for all repos cloned there. Repos anywhere else use the default personal identity from `.gitconfig-user`.
+
+Bootstrap creates these directories automatically (`~/code/work/` only on work machines).
 
 ### Editors
 

@@ -141,7 +141,45 @@ else
   fi
 fi
 
-# --- 6. Stub files ---
+# --- 6. Code directories ---
+
+if [[ -d "$HOME/code/personal" ]]; then
+  skip "~/code/personal/"
+else
+  mkdir -p "$HOME/code/personal"
+  success "Created ~/code/personal/"
+fi
+
+if [[ -f "$HOME/.work" ]]; then
+  if [[ -d "$HOME/code/work" ]]; then
+    skip "~/code/work/"
+  else
+    mkdir -p "$HOME/code/work"
+    success "Created ~/code/work/"
+  fi
+fi
+
+# --- 7. Work git identity template ---
+
+if [[ -f "$HOME/.work" ]]; then
+  GITCONFIG_WORK="$DOTFILES_DIR/config/git/.gitconfig-work"
+  GITCONFIG_WORK_EXAMPLE="$DOTFILES_DIR/config/git/.gitconfig-work.example"
+
+  if [[ -f "$GITCONFIG_WORK" ]]; then
+    skip "Git work identity (config/git/.gitconfig-work)"
+    info "Verify your work name, email, and signingkey are current"
+  else
+    if [[ -f "$GITCONFIG_WORK_EXAMPLE" ]]; then
+      cp "$GITCONFIG_WORK_EXAMPLE" "$GITCONFIG_WORK"
+      success "Created config/git/.gitconfig-work from template"
+      warn "Edit config/git/.gitconfig-work with your work name, email, and signingkey"
+    else
+      error "Template not found: config/git/.gitconfig-work.example"
+    fi
+  fi
+fi
+
+# --- 8. Stub files ---
 
 create_stub() {
   local filepath="$1"
@@ -187,7 +225,7 @@ create_stub "$HOME/.ssh/config.local" \
 #     ForwardAgent yes" \
 "~/.ssh/config.local"
 
-# --- 7. Mise runtimes ---
+# --- 9. Mise runtimes ---
 
 if command -v mise &>/dev/null; then
   read -rp "[→] Run mise install to provision runtimes? [Y/n]: " yn
@@ -200,7 +238,7 @@ if command -v mise &>/dev/null; then
   fi
 fi
 
-# --- 8. Summary ---
+# --- 10. Summary ---
 
 printf '\n%s=== Bootstrap complete ===%s\n\n' "$BOLD" "$RESET"
 
@@ -213,6 +251,13 @@ fi
 if [[ -f "$GITCONFIG_USER" ]] && grep -q 'Your Name' "$GITCONFIG_USER" 2>/dev/null; then
   todos+=("Edit config/git/.gitconfig-user with your name, email, and signingkey")
 fi
+if [[ -f "$HOME/.work" ]]; then
+  GITCONFIG_WORK="${GITCONFIG_WORK:-$DOTFILES_DIR/config/git/.gitconfig-work}"
+  if [[ -f "$GITCONFIG_WORK" ]] && grep -q 'Your Name' "$GITCONFIG_WORK" 2>/dev/null; then
+    todos+=("Edit config/git/.gitconfig-work with your work name, email, and signingkey")
+  fi
+fi
+todos+=("Set up commit signing with 1Password SSH keys — see docs/RUNBOOK.md")
 if [[ -f "$HOME/.env.local" ]] && ! grep -qv '^#' "$HOME/.env.local" 2>/dev/null; then
   todos+=("Add machine-specific config to ~/.env.local")
 fi
