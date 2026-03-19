@@ -139,26 +139,6 @@ After all cleanup work is complete, these must all be true:
 
 ---
 
-## Part B: Task Plan — GitHub Actions + Pre-commit Scaffolding
+## Part B: Task Plan
 
-### Phase 1: Pre-commit auto-fix cleanup
-Run trailing-whitespace and end-of-file-fixer on all files. Commit fixes separately.
-
-### Phase 2: Create new files
-- `.shellcheckrc` — `shell=bash` default
-- `.pre-commit-config.yaml` — pre-commit-hooks, shellcheck-py, local zsh-syntax-check
-- `.github/workflows/lint.yml` — PR-only CI via `pre-commit/action`
-
-### Phase 3: Modify existing files
-- `packages/Brewfile.universal` — add `pre-commit`
-- `packages/Brewfile.work` — remove quarantined `pre-commit`
-- `install.config.yaml` — add guarded `pre-commit install` shell command
-
-### Phase 4: Fix shellcheck findings
-Run shellcheck on `bin/` scripts and fix or inline-suppress findings.
-
-### Phase 5: Documentation updates
-- `docs/ARCHITECTURE.md` — directory tree + section 3.9
-- `docs/RUNBOOK.md` — pre-commit usage section
-- `docs/TODO.md` — strikethrough CI item
-- `SPEC.md` — replace Part B with this plan
+_No active project. Replace this section with the next task plan._

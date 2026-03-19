@@ -16,10 +16,6 @@ Deferred ideas and future improvements.
 
 - **License and README polish** — If this is a public repo, consider adding a LICENSE file. Polish the README for external readers (not just future-you).
 
-## CI / Repo Health
-
-- ~~**GitHub Actions + pre-commit scaffolding**~~ — Done. Pre-commit hooks (shellcheck, zsh syntax, YAML, whitespace/EOF) with GitHub Actions CI on PRs. `pre-commit install` wired into dotbot.
-
 # Applications
 
 - **Audit installed applications** — On each primary machine (personal desktop, personal laptop, work laptop), audit `/Applications` and `~/Applications`. Sort everything into the universal/work/personal Brewfile pattern. For apps only available via the Mac App Store, either automate with the `mas` CLI or document the manual install steps.
