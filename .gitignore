@@ -74,8 +74,9 @@ Thumbs.db
 *secrets*
 *.key
 
-# Git identity (copy from .gitconfig-user.example; keep untracked)
+# Git identity (copy from .gitconfig-*.example; keep untracked)
 config/git/.gitconfig-user
+config/git/.gitconfig-work
 
 # Live theme-switched configs (mutable at runtime, initialized from *.default)
 config/btop/btop.conf

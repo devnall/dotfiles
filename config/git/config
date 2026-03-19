@@ -27,6 +27,7 @@
   sort = version:refname
 [commit]
   verbose = true
+  gpgsign = true
 [help]
   autocorrect = prompt
 [core]
@@ -65,5 +66,7 @@
   pushInsteadOf = "git://github.com"
 [include]
   path = ~/.dotfiles/config/git/.gitconfig-user
+[includeIf "gitdir:~/code/work/"]
+  path = ~/.dotfiles/config/git/.gitconfig-work
 [gpg]
   format = ssh

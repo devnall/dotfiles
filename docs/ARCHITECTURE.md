@@ -54,7 +54,9 @@ dotfiles/
     │   ├── config            # Git config (symlinked to ~/.gitconfig)
     │   ├── ignore            # Global gitignore
     │   ├── .gitconfig-user.example  # Template for git identity (copy to .gitconfig-user)
-    │   └── .gitconfig-user   # Local git identity (gitignored)
+    │   ├── .gitconfig-user   # Local git identity (gitignored)
+    │   ├── .gitconfig-work.example  # Template for work identity (copy to .gitconfig-work)
+    │   └── .gitconfig-work   # Work git identity (gitignored, work machines only)
     ├── macos/                # macOS setup/defaults scripts
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
@@ -128,6 +130,13 @@ dotfiles/
 - **Neovim** (`config/nvim/`): lazy.nvim-based. Intended for desktop machines. Must open without blocking errors when an LSP or external tool is missing.
 - **Vim** (`config/vim/`): Symlinked as `~/.vim` → `config/vim/`. Must work on any remote server with stock vim and zero external dependencies. Includes `nordicpine` colorscheme (dark/light auto-detection).
 
+### 3.8 Git Identity & Commit Signing
+
+- **Single GitHub account:** One GitHub account for both work and personal. Employer doesn't require separation, and `includeIf`-based identity switching gives correct attribution per repo. Revisit only if employer policy changes.
+- **Identity switching:** `config/git/config` uses `[includeIf "gitdir:~/code/work/"]` to load `.gitconfig-work` (work name, email, signingkey). All other repos use the default `.gitconfig-user` (personal identity). Directory convention: `~/code/work/` for work repos, `~/code/personal/` for personal repos.
+- **Commit signing:** `commit.gpgsign = true` is shared config (in `config/git/config`). `user.signingkey` is per-machine, set in `.gitconfig-user` and `.gitconfig-work`. `gpg.format = ssh` — all machines target 1Password-managed SSH keys for signing.
+- **`allowed_signers`:** Intentionally skipped. GitHub handles signature verification via uploaded signing keys — local verification isn't needed for this workflow.
+
 ---
 
 ## 4. Strict Directives
@@ -184,6 +193,7 @@ These should be true at the end of any project that modifies the repo:
 | `~/.env.local` | Machine-specific exports (gitignored, not in repo) |
 | `~/.secrets.local` | API keys and tokens (gitignored, not in repo) |
 | `config/git/.gitconfig-user` | Git identity (gitignored, copy from `.gitconfig-user.example`) |
+| `config/git/.gitconfig-work` | Work git identity (gitignored, copy from `.gitconfig-work.example`, work machines only) |
 | `README.md` | Quick-start installation guide |
 | `docs/RUNBOOK.md` | Detailed usage, maintenance, and troubleshooting |
 | `SPEC.md` | Current project task plan (rotates per project) |

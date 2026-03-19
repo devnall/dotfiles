@@ -1,7 +1,11 @@
 # Personal identity template — copy to .gitconfig-user and fill in your values
 # .gitconfig-user is gitignored; this example file is what's committed
 # config/git/config includes ~/.dotfiles/config/git/.gitconfig-user via [include]
+#
+# signingkey should be your SSH public key string from 1Password:
+#   1Password app → SSH key item → copy public key
+# See docs/RUNBOOK.md "Commit Signing with 1Password SSH Keys" for full setup
 [user]
   name = Your Name
   email = you@example.com
-  signingkey = YOUR_SSH_KEY_PATH_OR_GPG_ID
+  signingkey = ssh-ed25519 AAAA...
