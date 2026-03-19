@@ -69,6 +69,7 @@ brew "vim"
 
 # Dev tools
 brew "jq"             # JSON processor
+brew "pre-commit"     # git hooks framework
 brew "yq"             # YAML processor
 brew "wget"
 brew "httpie"

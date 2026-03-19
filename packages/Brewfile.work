@@ -35,7 +35,6 @@ cask "lens"
 # brew "gnupg"                 # 20260313
 # brew "libpq", link: true     # 20260313
 # brew "libsndfile"            # 20260313
-# brew "pre-commit"            # git hooks framework — 20260315
 # brew "puma/puma/puma-dev"    # 20260313
 # brew "rabbitmq"              # message broker — 20260315
 # brew "redis"                 # in-memory database — 20260315
