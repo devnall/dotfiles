@@ -6,98 +6,54 @@ Detailed reference for setting up, using, and maintaining these dotfiles.
 
 ## New Machine Setup
 
-### 1. Install Homebrew
-
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-Add brew to your shell (follow the post-install instructions, or use the appropriate line below):
-
-```sh
-# Apple Silicon
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-
-# Intel
-echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
-```
-
-### 2. Clone the repo
+### 1. Clone the repo
 
 ```sh
 git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
 ```
 
-### 3. Set machine type
-
-Touch a marker file before running the installer — this controls which env config and Brewfile load:
+### 2. Run bootstrap
 
 ```sh
-touch ~/.work         # work machine (full macOS setup)
-# or
-touch ~/.personal     # personal machine (full macOS setup)
-# or
-touch ~/.remote-full  # Linux server with Homebrew + full tool suite
-# or
-touch ~/.remote       # minimal Linux server (skips Homebrew; see Remote/Server Setup below)
+cd ~/.dotfiles && ./bin/bootstrap.sh
 ```
 
-If none exists, only the universal config loads. You can switch at any time and re-run `./install`.
+The bootstrap wizard is interactive and idempotent — it skips anything already done. It handles:
 
-### 4. Run the installer
+- **Xcode CLT check** (macOS) — warns if missing, prints the install command
+- **Submodules** — initializes `dotbot/` if empty
+- **Machine type** — prompts you to choose work / personal / remote-full / remote and creates the marker file (`~/.work`, etc.). Controls which env config and Brewfile load at install time
+- **Homebrew** — offers to install on macOS / remote-full machines
+- **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
+- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, and `~/.ssh/config.local` with commented templates if they don't exist
+
+### 3. Run the installer
 
 ```sh
-cd ~/.dotfiles && ./install
+./install
 ```
 
 This will:
 - Create all symlinks (zshrc, nvim, tmux, ghostty, starship, bat, btop, etc.)
 - Run `brew bundle` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file
 
-### 5. Set up git identity
-
-Git config includes `config/git/.gitconfig-user` for your personal identity. That file is
-gitignored — copy the template and fill it in:
-
-```sh
-cp ~/.dotfiles/config/git/.gitconfig-user.example ~/.dotfiles/config/git/.gitconfig-user
-```
-
-Then edit `~/.dotfiles/config/git/.gitconfig-user`:
-
-```ini
-[user]
-  name = Your Name
-  email = you@example.com
-  signingkey = YOUR_SSH_KEY_PATH_OR_GPG_ID
-```
-
-This file is excluded from git tracking. The template (`.gitconfig-user.example`) is what's committed to the repo.
-
-### 6. Install runtimes (mise)
-
-After the installer runs, mise is activated but runtimes aren't installed yet:
+### 4. Install runtimes
 
 ```sh
 mise install
 ```
 
-This installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, python, ruby, terraform). Verify with `mise ls`.
+Installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, python, ruby, terraform). Bootstrap offers to run this for you if mise is already available. Verify with `mise ls`.
 
-### 7. Set up local overrides
-
-Create these files — both are gitignored and sourced at the end of every shell session:
+### Quick reference
 
 | File | Purpose |
 |------|---------|
+| `~/.work` / `~/.personal` / `~/.remote-full` / `~/.remote` | Machine type marker (created by bootstrap) |
+| `config/git/.gitconfig-user` | Git identity — name, email, signingkey (gitignored) |
 | `~/.env.local` | Machine-specific exports, PATH additions, non-secret config |
-| `~/.secrets.local` | API keys, tokens, credentials — never commit these |
-
-Example `~/.env.local`:
-```sh
-export PATH="$PATH:$HOME/.cache/lm-studio/bin"
-export AWS_DEFAULT_REGION=us-east-1
-```
+| `~/.secrets.local` | API keys, tokens, credentials — never commit |
+| `~/.ssh/config.local` | Per-machine SSH host entries (not tracked) |
 
 ---
 
@@ -298,7 +254,7 @@ Run it after:
 dotfiles/
 ├── install                   # Dotbot bootstrap script
 ├── install.config.yaml       # Dotbot symlink + shell command config
-├── bin/                      # Scripts symlinked to ~/bin
+├── bin/                      # Scripts symlinked to ~/bin (includes bootstrap wizard)
 ├── docs/                     # Cheatsheets (fzf, tmux, git, shell, kubernetes)
 ├── env/
 │   ├── work.zsh              # Sourced when ~/.work exists
@@ -330,7 +286,6 @@ dotfiles/
     ├── btop/
     ├── ghostty/
     ├── git/                  # Git config + identity template (.gitconfig-user.example)
-    ├── macos/                # macOS setup scripts
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── ripgrep/
