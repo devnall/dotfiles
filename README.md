@@ -1,22 +1,39 @@
 # dotfiles
 
-My personal macOS/zsh-centric dotfiles. Managed by [Dotbot](https://github.com/anishathalye/dotbot).
-
-Includes configs for zsh, Neovim, vim, tmux, Ghostty, Starship, sheldon, bat, btop, fzf, and more.
-
----
+Personal dotfiles for macOS/zsh, managed by [Dotbot](https://github.com/anishathalye/dotbot).
+Includes configs for zsh, tmux, Neovim, Ghostty, Starship, and more.
 
 ## Install
 
+### First-time setup
+
 ```sh
-git clone git@github.com:devnall/dotfiles.git --recursive ~/.dotfiles
-touch ~/.work      # or ~/.personal, ~/.remote-full, ~/.remote — see below
-cd ~/.dotfiles && ./install
+git clone --recursive git@github.com:devnall/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./bin/bootstrap.sh    # Xcode CLT, Homebrew, machine-type marker, git identity, mise
+./install             # symlinks everything, installs Brewfile packages
+```
+
+### Updating
+
+```sh
+cd ~/.dotfiles && git pull && ./install
 ```
 
 The installer is idempotent — safe to re-run any time after pulling changes.
 
-### Machine type markers
+## What's in here
+
+```
+zsh/        shell config — zshrc entrypoint + modular lib/ (aliases, completions, fzf, keybindings, theme, ...)
+config/     tool configs symlinked to ~/.config (git, tmux, nvim, ghostty, starship, bat, btop, mise, sheldon, ...)
+packages/   Brewfiles — universal, work, personal
+env/        machine-type overrides (work/personal/remote)
+bin/        scripts symlinked to ~/bin
+docs/       architecture, runbook, cheatsheets
+```
+
+## Machine types
 
 | Marker | Use case |
 |--------|----------|
@@ -36,15 +53,12 @@ Machine-specific configs that shouldn't live in the repo go in two gitignored fi
 
 Both are sourced silently at the end of every shell session.
 
-## What's in here
+## Documentation
 
-```
-zsh/            shell config — zshrc entrypoint + modular lib/ files
-config/         tool configs (nvim, tmux, ghostty, starship, bat, btop, ...)
-packages/       Brewfiles — universal, work, and personal
-env/            machine-type shell overrides (work.zsh / personal.zsh / remote*.zsh)
-bin/            scripts symlinked to ~/bin
-docs/           documentation (architecture, runbook, TODO, cheatsheets)
-```
+- [Architecture](docs/ARCHITECTURE.md) — design decisions and constraints
+- [Runbook](docs/RUNBOOK.md) — usage, maintenance, troubleshooting
+- Cheatsheets: [fzf](docs/fzf.cheatsheet.md), [git](docs/git.cheatsheet.md), [tmux](docs/tmux.cheatsheet.md), [shell](docs/shell.cheatsheet.md), [vim](docs/vim.cheatsheet.md), [kubernetes](docs/kubernetes.cheatsheet.md)
 
-See [RUNBOOK.md](docs/RUNBOOK.md) for detailed usage and maintenance notes.
+## License
+
+MIT — see [LICENSE](LICENSE).
