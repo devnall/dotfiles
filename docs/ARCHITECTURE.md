@@ -102,6 +102,7 @@ dotfiles/
 - **Remote baseline:** `config/bash/bashrc` provides a minimal `.bashrc` for remote servers — PATH, essential aliases only. No visual elements, does not mirror the full zsh setup.
 - **Entrypoint:** `zsh/zshrc.zsh` is the sole zsh entrypoint. It sources `zsh/lib/*.zsh` directly — no `shell/`, `os/`, or `env/` module tree.
 - **Plugin manager:** Sheldon (`config/sheldon/`) manages zsh plugins. Homebrew dependency. Initialization guarded with `command -v sheldon > /dev/null && [[ -t 1 ]]`.
+- **Terminal font:** `SauceCodePro Nerd Font Mono` is installed via `Brewfile.universal` (`font-sauce-code-pro-nerd-font` cask). Required by Ghostty config and Starship prompt glyphs. Remote machines don't need it — the local terminal renders all glyphs.
 - **Optional tool guards:** Tools that may not be installed on all machines (zoxide, thefuck, terraform, bat) are guarded with `command -v` checks. The installer's `bat cache --build` step is similarly guarded.
 
 ### 3.3 Machine-Specific PATH
