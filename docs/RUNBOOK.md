@@ -276,6 +276,28 @@ curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh 
 
 ---
 
+## Troubleshooting `./install`
+
+The installer is a thin wrapper around dotbot. Most failures are environmental.
+
+**Debug output:**
+```sh
+./install --verbose
+```
+
+**Common failures:**
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `python3: command not found` | dotbot requires Python 3 | Install Python 3 (`brew install python3` or distro package manager) |
+| `fatal: no submodule mapping found` | stale or uninitialized dotbot submodule | `git submodule update --init --recursive` |
+| `Error: <target> already exists and is not a link` | real file at symlink target (and `force` not set) | Back up the file, remove it, re-run `./install` |
+| Link succeeds but points to nothing | config file was moved or deleted in repo | Check `git status` for missing tracked files |
+
+**Safe to re-run:** The installer is idempotent by design — re-running it won't duplicate symlinks, re-install already-installed Homebrew packages, or overwrite user-customizable configs (starship, ripgrep, bat, btop).
+
+---
+
 ## Re-running the Installer
 
 The installer is idempotent — safe to run at any time:
@@ -345,6 +367,12 @@ dotfiles/
 ---
 
 ## Maintenance
+
+### Symlink modes (`force` vs `relink`)
+
+Dotbot's `relink: true` (the default in this repo) removes stale symlinks and recreates them, but will not overwrite a real file at the target path. `force: true` removes whatever is at the target — file, directory, or symlink — and replaces it with the managed symlink.
+
+**Convention:** Use `force: true` for repo-authoritative configs (shell, editors, git, ssh, tmux) where the repo is always the source of truth. Use the default (no `force`) for user-customizable configs (starship, ripgrep, bat, btop) that are initialized from defaults but may be edited locally.
 
 ### Update Homebrew packages
 

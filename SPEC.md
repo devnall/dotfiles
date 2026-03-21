@@ -1,11 +1,11 @@
 # Dotfiles Project Spec
 
-> **Version:** 4.0
+> **Version:** 5.0
 > **Purpose:** Architecture reference and task plan for the `~/.dotfiles` repo. Part A documents design decisions and constraints. Part B holds the current project's task plan (rotates per project).
 >
 > **Repo:** `~/.dotfiles` (Dotbot-managed, macOS/zsh-centric, with Linux remote support)
 >
-> **Previous:** v3.0 cleanup & improvement project — completed. All phases, tasks, and human review items resolved.
+> **Previous:** v4.0 Dotbot deep audit & optimization — completed. Install pipeline cleaned, config reorganized, RUNBOOK docs added.
 
 ---
 
@@ -142,3 +142,5 @@ After all cleanup work is complete, these must all be true:
 ## Part B: Task Plan
 
 _No active project. Replace this section with the next task plan._
+
+> **Previous:** v4.0 Dotbot deep audit & optimization — completed. Install pipeline cleaned, config reorganized, RUNBOOK docs added.
