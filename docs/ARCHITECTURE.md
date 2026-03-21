@@ -68,6 +68,11 @@ dotfiles/
     ├── macos/                # macOS setup/defaults scripts
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
+    │   ├── init.lua           # Bootstrap, leader, module loading
+    │   ├── lazy-lock.json     # Committed plugin lockfile
+    │   └── lua/
+    │       ├── config/        # options, keymaps, autocmds, appearance
+    │       └── plugins/       # One lazy.nvim spec per plugin concern
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
@@ -135,7 +140,7 @@ dotfiles/
 
 ### 3.6 Editor Configuration
 
-- **Neovim** (`config/nvim/`): lazy.nvim-based. Intended for desktop machines. Must open without blocking errors when an LSP or external tool is missing.
+- **Neovim** (`config/nvim/`): Modular lazy.nvim-based config for quick-edits workflow. Structure: `lua/config/` (options, keymaps, autocmds, appearance) + `lua/plugins/` (one spec per concern). Rose Pine Dawn light colorscheme with custom NordicPine dark colorscheme with live theme switching via `ThemeSwitch` command and remote socket. Mason-managed LSP servers, blink.cmp completion, conform.nvim formatting (format on save), Telescope file finding, neo-tree explorer, gitsigns + fugitive, treesitter, which-key, mini.surround + autopairs, vim-tmux-navigator. Must open without blocking errors when an LSP, formatter, or external tool is missing.
 - **Vim** (`config/vim/`): Symlinked as `~/.vim` → `config/vim/`. Must work on any remote server with stock vim and zero external dependencies. Includes `nordicpine` colorscheme (dark/light auto-detection).
 
 ### 3.8 Git Identity & Commit Signing

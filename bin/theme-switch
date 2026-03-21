@@ -39,6 +39,13 @@ if [[ -f "$btop_conf" ]]; then
   fi
 fi
 
+# Neovim — send ThemeSwitch command to all running instances
+for sock in /tmp/nvim-"$(whoami)"-*.sock; do
+  [[ -S "$sock" ]] || continue
+  nvim_bin="$(command -v nvim 2>/dev/null || echo /opt/homebrew/bin/nvim)"
+  "$nvim_bin" --server "$sock" --remote-send "<Cmd>ThemeSwitch $mode<CR>" 2>/dev/null || true
+done
+
 # starship — switch palette (takes effect on next prompt)
 starship_conf="$(_resolve "$HOME/.config/starship.toml")"
 if [[ -f "$starship_conf" ]]; then

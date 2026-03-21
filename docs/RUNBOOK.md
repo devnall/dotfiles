@@ -152,7 +152,7 @@ Bootstrap creates these directories automatically (`~/code/work/` only on work m
 
 ### Editors
 
-- **Neovim** (`config/nvim/`) — lazy.nvim-based IDE setup, used on desktop machines
+- **Neovim** (`config/nvim/`) — modular lazy.nvim-based config (see `docs/nvim.cheatsheet.md` for keymaps)
 - **Vim** (`config/vim/`) — minimal, no plugins, safe to use on any remote server with stock vim. Symlinked as `~/.vim` → `config/vim/` (vim auto-finds `~/.vim/vimrc`)
   - **Colorscheme:** `nordicpine` — dual-mode (NordicPine dark / AlpineDawn light), auto-detects macOS appearance, defaults to dark on Linux/remote
   - **Colors directory:** `config/vim/colors/nordicpine.vim` — available automatically via the `~/.vim` symlink
@@ -172,6 +172,7 @@ macOS appearance change
     → bin/theme-switch "dark"|"light"
       ├─ writes ~/.local/state/appearance
       ├─ tmux: sources tmux-nordic.conf or tmux-alpine.conf (immediate)
+      ├─ neovim: sends ThemeSwitch to all running instances via socket (immediate)
       ├─ btop: seds color_theme in btop.conf (next launch)
       └─ starship: seds palette line in starship.toml (next prompt)
 
@@ -188,6 +189,7 @@ Existing shell sessions:
 | bat | Immediately (`--theme=auto:system`) |
 | tmux | Immediately (theme-switch sources conf) |
 | starship | Next prompt |
+| Neovim | Immediately (theme-switch sends ThemeSwitch via socket) |
 | zsh syntax highlighting | Next prompt |
 | btop | Next launch |
 
@@ -391,10 +393,20 @@ git add dotbot
 git commit -m "update dotbot submodule"
 ```
 
-### Sync Neovim plugins
+### Neovim maintenance
 
 ```sh
-nvim --headless "+Lazy sync" +qa
+nvim --headless "+Lazy sync" +qa    # install/clean/update plugins
+nvim --headless "+MasonUpdate" +qa  # update Mason registries
+nvim --headless "+TSUpdate" +qa     # update treesitter parsers
+```
+
+After updating plugins, commit the lockfile:
+
+```sh
+cd ~/.dotfiles
+git add config/nvim/lazy-lock.json
+git commit -m "⬆️ Update nvim plugin lockfile"
 ```
 
 ### Update mise runtimes
