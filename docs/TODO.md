@@ -4,10 +4,6 @@ Deferred ideas and future improvements.
 
 ---
 
-## Tool Overhauls
-
-- **Neovim config overhaul** — Separate project. Current config is intentionally stubbed out. Full lazy.nvim setup with LSP, treesitter, keymaps, plugins, etc. **Note:** vim-tmux-navigator plugin is installed in tmux and works between tmux panes, but integration with neovim panes requires the neovim counterpart plugin — defer full setup to neovim overhaul.
-
 ## Dotbot
 
 - **Dotbot deep audit and optimization** — Beyond basic cleanup: evaluate whether the submodule update should be automated/scripted, explore dotbot plugins or conditional directives, optimize `install.config.yaml` structure, ensure RUNBOOK maintenance docs are thorough.
@@ -24,3 +20,5 @@ Deferred ideas and future improvements.
 
 - **macOS defaults & OS customization** — Revisit `defaults write` settings for new machines: Dock config (auto-hide, icon size, remove default apps), keyboard repeat rate, trackpad settings, Finder preferences, screenshot location, etc. Consider reintroducing `config/macos/` with a `defaults.sh` script that bootstrap or install can call on macOS.
 - **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
+- **Nerd/Powerline Fonts** - consider keeping terminal font(s) in repo; including install in bootstrap and/or docs
+- TODO: Consistent colors on all machines. Getting some weird issues with directory fg/bg in ls output on remote machines.
