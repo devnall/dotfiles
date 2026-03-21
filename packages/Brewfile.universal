@@ -84,6 +84,7 @@ brew "shellcheck"
 # brew "rust"         # managed via rustup/mise
 
 # Casks
+cask "desktoppr"           # set desktop wallpaper
 cask "docker-desktop"
 cask "latest"              # app update checker
 cask "1password"

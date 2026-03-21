@@ -199,6 +199,9 @@ macOS appearance change
 Existing shell sessions:
   → precmd hook in theme.zsh reads ~/.local/state/appearance
   → re-applies syntax highlighting + autosuggestion colors if changed
+
+Desktop wallpaper (macOS):
+  → desktoppr sets wallpaper from tier 2 folder or tier 1 single image
 ```
 
 ### Tools and their response time
@@ -210,6 +213,7 @@ Existing shell sessions:
 | tmux | Immediately (theme-switch sources conf) |
 | starship | Next prompt |
 | Neovim | Immediately (theme-switch sends ThemeSwitch via socket) |
+| Desktop wallpaper | Immediately (desktoppr) |
 | zsh syntax highlighting | Next prompt |
 | btop | Next launch |
 
@@ -225,6 +229,27 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.pl
 **Manual trigger:**
 ```sh
 ~/.dotfiles/bin/theme-switch dark   # or light
+```
+
+### Wallpapers
+
+**Tier 1 (bootstrap default):** `./install` downloads a default dark + light wallpaper from the [wallpapers repo](https://github.com/devnall/wallpapers/) into `wallpapers/`, which is symlinked to `~/.local/share/wallpapers/`. `theme-switch` picks `dark.jpg` or `light.jpg` based on current mode. Downloads are skipped if the files already exist.
+
+To replace defaults, swap `wallpapers/dark.jpg` / `wallpapers/light.jpg` with your preferred images (`.jpg` or `.png`). Replacements are gitignored and won't be overwritten.
+
+**Tier 2 (folder rotation):** Clone the full wallpapers repo and enable multi-wallpaper rotation:
+
+```sh
+bin/wallpaper-setup
+```
+
+This clones `https://github.com/devnall/wallpapers.git` to `~/Pictures/wallpapers/`, prompts for display type (widescreen/ultrawide), and writes `~/.local/state/display-type`. When the tier 2 folder exists with images, `theme-switch` passes the folder to `desktoppr` for rotation.
+
+**Display type:** Auto-detected per display at runtime (ultrawide = aspect ratio >= 2:1). Mixed setups (ultrawide + widescreen) are handled automatically. Fallback stored at `~/.local/state/display-type` (defaults to `widescreen`).
+
+**Manual set:**
+```sh
+desktoppr ~/.local/share/wallpapers/dark.jpg
 ```
 
 **Check state file:**
@@ -346,6 +371,7 @@ dotfiles/
 │   ├── personal.zsh          # Sourced when ~/.personal exists
 │   ├── remote-full.zsh       # Sourced when ~/.remote-full exists (Linux + Homebrew)
 │   └── remote.zsh            # Sourced when ~/.remote exists (minimal Linux servers)
+├── wallpapers/              # Default dark/light wallpapers (symlinked to ~/.local/share/wallpapers)
 ├── packages/
 │   ├── Brewfile.universal    # Installed on every machine
 │   ├── Brewfile.work         # Installed when ~/.work exists

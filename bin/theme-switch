@@ -55,3 +55,70 @@ if [[ -f "$starship_conf" ]]; then
     sed -i '' 's/^palette = "nordicpine"/palette = "alpinedawn"/' "$starship_conf"
   fi
 fi
+
+# Desktop wallpaper — switch via desktoppr (macOS only)
+# Detects per-display aspect ratio so mixed ultrawide + widescreen setups
+# each get the right wallpaper folder/image.
+if command -v desktoppr &>/dev/null; then
+  wallpaper_repo="$HOME/Pictures/wallpapers"
+  wallpaper_default="$HOME/.local/share/wallpapers"
+  default_display_type="widescreen"
+  [[ -f "$HOME/.local/state/display-type" ]] && default_display_type="$(cat "$HOME/.local/state/display-type")"
+
+  # Build array of display resolutions from system_profiler (index-ordered)
+  display_resolutions=()
+  if command -v system_profiler &>/dev/null; then
+    while IFS= read -r line; do
+      if [[ "$line" =~ ([0-9]+)\ x\ ([0-9]+) ]]; then
+        display_resolutions+=("${BASH_REMATCH[1]}x${BASH_REMATCH[2]}")
+      fi
+    done < <(system_profiler SPDisplaysDataType 2>/dev/null | grep -i "resolution:")
+  fi
+
+  # Classify a resolution as ultrawide (aspect ratio >= 2:1) or widescreen
+  _display_type() {
+    local res="$1"
+    if [[ "$res" =~ ^([0-9]+)x([0-9]+)$ ]]; then
+      local w="${BASH_REMATCH[1]}" h="${BASH_REMATCH[2]}"
+      if (( h > 0 && w * 10 / h >= 20 )); then
+        echo "ultrawide"
+        return
+      fi
+    fi
+    echo "widescreen"
+  }
+
+  # Set wallpaper for a single screen index
+  _set_wallpaper() {
+    local screen_idx="$1" display_type="$2"
+
+    # Tier 2: folder rotation from wallpapers repo
+    local tier2_dir="$wallpaper_repo/$display_type/$mode"
+    if [[ -d "$tier2_dir" ]] && { compgen -G "$tier2_dir/*.jpg" || compgen -G "$tier2_dir/*.png" || compgen -G "$tier2_dir/*.jpeg"; } &>/dev/null; then
+      desktoppr "$screen_idx" "$tier2_dir"
+    else
+      # Tier 1: single image from dotfiles defaults
+      for ext in jpg png; do
+        local wp="$wallpaper_default/$mode.$ext"
+        if [[ -f "$wp" ]]; then
+          desktoppr "$screen_idx" "$wp"
+          break
+        fi
+      done
+    fi
+  }
+
+  if [[ ${#display_resolutions[@]} -gt 0 ]]; then
+    # Per-display: classify each screen and set its wallpaper individually
+    for idx in "${!display_resolutions[@]}"; do
+      # Verify this screen index exists in desktoppr
+      if desktoppr "$idx" &>/dev/null; then
+        dt="$(_display_type "${display_resolutions[$idx]}")"
+        _set_wallpaper "$idx" "$dt"
+      fi
+    done
+  else
+    # Fallback: no resolution data, apply to all screens using default type
+    _set_wallpaper "all" "$default_display_type"
+  fi
+fi

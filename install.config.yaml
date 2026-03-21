@@ -94,6 +94,11 @@
       path: config/claude/statusline-command.sh
       force: true
 
+    # Wallpapers
+    ~/.local/share/wallpapers:
+      path: wallpapers
+      force: true
+
     # macOS-specific
     ~/Library/LaunchAgents/com.dnall.dark-notify.plist:
       path: config/launchagents/com.dnall.dark-notify.plist
@@ -127,6 +132,19 @@
     -
      command: 'command -v bat > /dev/null && bat cache --build || true'
      description: Build bat theme cache
+     stdout: true
+    -
+     command: |
+       wp_dir="wallpapers"
+       base_url="https://raw.githubusercontent.com/devnall/wallpapers/main/widescreen"
+       for pair in "dark.jpg:Minimal_BlackWaves.jpg" "light.jpg:Texture_BrownGradient.jpg"; do
+         local_name="${pair%%:*}"
+         remote_name="${pair##*:}"
+         if [[ ! -f "$wp_dir/$local_name" ]]; then
+           curl -fsSL "$base_url/$remote_name" -o "$wp_dir/$local_name" 2>/dev/null && echo "Downloaded $local_name" || echo "⚠ Failed to download $local_name"
+         fi
+       done
+     description: Download default wallpapers if missing
      stdout: true
     -
      command: 'command -v pre-commit > /dev/null && [ -d .git ] && pre-commit install || true'

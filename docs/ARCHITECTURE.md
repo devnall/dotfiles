@@ -49,6 +49,7 @@ dotfiles/
 │   ├── personal.zsh          # Sourced when ~/.personal exists
 │   ├── remote.zsh            # Sourced when ~/.remote exists
 │   └── remote-full.zsh       # Sourced when ~/.remote-full exists
+├── wallpapers/              # Default dark/light wallpapers (symlinked to ~/.local/share/wallpapers)
 ├── packages/
 │   ├── Brewfile.universal    # Installed on all machines
 │   ├── Brewfile.work         # Installed on work machines only
