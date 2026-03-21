@@ -47,6 +47,26 @@ mise install
 
 Installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, python, ruby, terraform). Bootstrap offers to run this for you if mise is already available. Verify with `mise ls`.
 
+### 5. Apply macOS defaults (optional)
+
+```sh
+bash config/macos/defaults.sh
+```
+
+Applies preferred system preferences: Dock (auto-hide, small icons, no recents), Finder (list view, show hidden files, extensions), keyboard repeat rate, tap-to-click, three-finger drag, screenshot location (`~/Pictures/Screenshots`), Mission Control (no hot corners, stable Spaces), and menu bar clock (24-hour, no date).
+
+The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
+
+**After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
+
+**Backup/restore:** Before running, you can snapshot current values:
+
+```sh
+defaults export com.apple.dock /tmp/dock-backup.plist       # backup
+defaults import com.apple.dock /tmp/dock-backup.plist        # restore
+killall Dock                                                  # apply
+```
+
 ### Quick reference
 
 | File | Purpose |
