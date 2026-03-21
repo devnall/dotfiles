@@ -8,10 +8,15 @@
       description: Initialize btop.conf from default (no-overwrite)
     - command: 'test -f config/starship/starship.toml || cp config/starship/starship.toml.default config/starship/starship.toml'
       description: Initialize starship.toml from default (no-overwrite)
-    - command: 'ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1p-agent.sock"'
-      description: Create no-space symlink for 1Password SSH agent socket
+    - command: '[[ "$(uname)" == "Darwin" ]] && ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1p-agent.sock" || true'
+      description: Create no-space symlink for 1Password SSH agent socket (macOS only)
 
+# Link convention:
+#   force: true  — repo-authoritative config, always overwrite the target
+#   (default)    — user-customizable config initialized from defaults; relink: true
+#                  removes stale symlinks but won't clobber a real file
 - link:
+    # Shell
     ~/.zshrc:
       path: zsh/zshrc.zsh
       force: true
@@ -21,7 +26,25 @@
     ~/.config/zsh/zfunctions:
       path: zsh/zfunctions
       force: true
+    ~/.bashrc:
+      path: config/bash/bashrc
+      force: true
+    ~/.config/sheldon:
+      path: config/sheldon
+      force: true
 
+    # Editors
+    ~/.vim:
+      path: config/vim
+      force: true
+    ~/.config/nvim:
+      path: config/nvim
+      force: true
+
+    # Terminal & multiplexer
+    ~/.config/ghostty:
+      path: config/ghostty
+      force: true
     ~/.config/tmux/tmux.conf:
       path: config/tmux/tmux.conf
       force: true
@@ -35,31 +58,35 @@
       path: config/tmux/plugins
       force: true
 
-    ~/.vim:
-      path: config/vim
-      force: true
-    ~/.config/nvim:
-      path: config/nvim
-      force: true
-
-    ~/.bashrc:
-      path: config/bash/bashrc
-      force: true
-
-    ~/.config/ghostty:
-      path: config/ghostty
-      force: true
-
-    ~/.config/sheldon:
-      path: config/sheldon
-      force: true
-
+    # Prompt & theme
     ~/.config/starship.toml:
       path: config/starship/starship.toml
-
     ~/.config/starship-remote.toml:
       path: config/starship/starship-remote.toml
 
+    # Dev tools
+    ~/.gitconfig:
+      path: config/git/config
+      force: true
+    ~/.config/git/ignore:
+      path: config/git/ignore
+      force: true
+    ~/.ssh/config:
+      path: config/ssh/config
+      force: true
+    ~/.config/mise/config.toml:
+      path: config/mise/config.toml
+      force: true
+    ~/.ripgreprc:
+      path: config/ripgrep/.ripgreprc
+    ~/.config/bat/config:
+      path: config/bat/config
+    ~/.config/bat/themes/rose-pine-dawn.tmTheme:
+      path: config/bat/themes/rose-pine-dawn.tmTheme
+    ~/.config/btop:
+      path: config/btop
+
+    # AI tools
     ~/.claude/settings.json:
       path: config/claude/settings.json
       force: true
@@ -67,47 +94,21 @@
       path: config/claude/statusline-command.sh
       force: true
 
-    ~/.config/mise/config.toml:
-      path: config/mise/config.toml
-      force: true
-
-    ~/.ripgreprc:
-      path: config/ripgrep/.ripgreprc
-
-    ~/.config/bat/config:
-      path: config/bat/config
-    ~/.config/bat/themes/rose-pine-dawn.tmTheme:
-      path: config/bat/themes/rose-pine-dawn.tmTheme
-
-    ~/.config/btop:
-      path: config/btop
-
-    ~/.gitconfig:
-      path: config/git/config
-      force: true
-    ~/.config/git/ignore:
-      path: config/git/ignore
-      force: true
-
-    ~/.ssh/config:
-      path: config/ssh/config
-      force: true
-
+    # macOS-specific
     ~/Library/LaunchAgents/com.dnall.dark-notify.plist:
       path: config/launchagents/com.dnall.dark-notify.plist
       force: true
-
     ~/Library/Application Support/tealdeer/pages:
       path: docs/tldr
       force: true
       create: true
 
+    # Scripts
     ~/bin:
       glob: true
       path: bin/*
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
     -
      command: 'command -v brew > /dev/null || { echo "⚠ Homebrew not found. Run ./bin/bootstrap.sh first or install manually."; }'
      description: Verify Homebrew is available
