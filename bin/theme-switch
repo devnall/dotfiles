@@ -59,7 +59,8 @@ fi
 # Desktop wallpaper — switch via desktoppr (macOS only)
 # Detects per-display aspect ratio so mixed ultrawide + widescreen setups
 # each get the right wallpaper folder/image.
-if command -v desktoppr &>/dev/null; then
+desktoppr_bin="$(command -v desktoppr 2>/dev/null || echo /usr/local/bin/desktoppr)"
+if [[ -x "$desktoppr_bin" ]]; then
   wallpaper_repo="$HOME/Pictures/wallpapers"
   wallpaper_default="$HOME/.local/share/wallpapers"
   default_display_type="widescreen"
@@ -95,13 +96,13 @@ if command -v desktoppr &>/dev/null; then
     # Tier 2: folder rotation from wallpapers repo
     local tier2_dir="$wallpaper_repo/$display_type/$mode"
     if [[ -d "$tier2_dir" ]] && { compgen -G "$tier2_dir/*.jpg" || compgen -G "$tier2_dir/*.png" || compgen -G "$tier2_dir/*.jpeg"; } &>/dev/null; then
-      desktoppr "$screen_idx" "$tier2_dir"
+      "$desktoppr_bin" "$screen_idx" "$tier2_dir"
     else
       # Tier 1: single image from dotfiles defaults
       for ext in jpg png; do
         local wp="$wallpaper_default/$mode.$ext"
         if [[ -f "$wp" ]]; then
-          desktoppr "$screen_idx" "$wp"
+          "$desktoppr_bin" "$screen_idx" "$wp"
           break
         fi
       done
@@ -112,7 +113,7 @@ if command -v desktoppr &>/dev/null; then
     # Per-display: classify each screen and set its wallpaper individually
     for idx in "${!display_resolutions[@]}"; do
       # Verify this screen index exists in desktoppr
-      if desktoppr "$idx" &>/dev/null; then
+      if "$desktoppr_bin" "$idx" &>/dev/null; then
         dt="$(_display_type "${display_resolutions[$idx]}")"
         _set_wallpaper "$idx" "$dt"
       fi
