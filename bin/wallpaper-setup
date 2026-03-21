@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# wallpaper-setup — upgrade from tier 1 (single image) to tier 2 (folder rotation)
+# Clones the wallpapers repo and configures display type for theme-switch
+
+set -euo pipefail
+
+wallpaper_repo="$HOME/Pictures/wallpapers"
+state_dir="$HOME/.local/state"
+
+echo "=== Wallpaper Setup ==="
+echo ""
+
+# Step 1: Clone wallpapers repo if needed
+if [[ -d "$wallpaper_repo" ]]; then
+  echo "Wallpapers repo already exists at $wallpaper_repo"
+else
+  echo "Cloning wallpapers repo to $wallpaper_repo..."
+  git clone https://github.com/devnall/wallpapers.git "$wallpaper_repo"
+  echo "Done."
+fi
+echo ""
+
+# Step 2: Display type detection + fallback
+# theme-switch auto-detects per-display at runtime, but a fallback is stored
+# for environments where system_profiler is unavailable.
+echo "theme-switch auto-detects per-display aspect ratios at runtime."
+echo "Mixed setups (ultrawide + widescreen) are handled automatically."
+echo ""
+echo "The fallback display type is used only when detection is unavailable."
+
+current_fallback="widescreen"
+if [[ -f "$state_dir/display-type" ]]; then
+  current_fallback="$(cat "$state_dir/display-type")"
+fi
+
+echo "  Current fallback: $current_fallback"
+echo ""
+echo "  1) widescreen"
+echo "  2) ultrawide"
+echo ""
+read -rp "Set fallback display type [keep current]: " choice
+case "${choice:-}" in
+  1) current_fallback="widescreen" ;;
+  2) current_fallback="ultrawide" ;;
+  "") ;; # keep current
+  *)
+    echo "Invalid choice, keeping '$current_fallback'."
+    ;;
+esac
+
+mkdir -p "$state_dir"
+echo "$current_fallback" > "$state_dir/display-type"
+echo "Fallback display type: $current_fallback"
+echo ""
+
+# Step 3: Check folder structure
+echo "Checking wallpapers repo folder structure..."
+missing=()
+for dt in widescreen ultrawide; do
+  for m in dark light; do
+    if [[ ! -d "$wallpaper_repo/$dt/$m" ]]; then
+      missing+=("$dt/$m")
+    fi
+  done
+done
+
+if [[ ${#missing[@]} -eq 0 ]]; then
+  echo "Folder structure looks good."
+else
+  echo "Missing folders (create and add wallpapers for tier 2 rotation):"
+  for d in "${missing[@]}"; do
+    echo "  $wallpaper_repo/$d/"
+  done
+  echo ""
+  echo "Expected structure:"
+  echo "  $wallpaper_repo/"
+  echo "  ├── widescreen/"
+  echo "  │   ├── dark/"
+  echo "  │   └── light/"
+  echo "  └── ultrawide/"
+  echo "      ├── dark/"
+  echo "      └── light/"
+fi
+echo ""
+
+# Step 4: Apply current mode
+if [[ -f "$state_dir/appearance" ]]; then
+  current_mode="$(cat "$state_dir/appearance")"
+  echo "Applying current mode ($current_mode)..."
+  theme_switch="$(dirname "$0")/theme-switch"
+  if [[ -x "$theme_switch" ]]; then
+    "$theme_switch" "$current_mode"
+    echo "Done."
+  else
+    echo "Could not find theme-switch. Run manually: theme-switch $current_mode"
+  fi
+else
+  echo "No appearance state found at $state_dir/appearance."
+  echo "Run 'theme-switch dark' or 'theme-switch light' to apply."
+fi

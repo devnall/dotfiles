@@ -81,3 +81,8 @@ config/git/.gitconfig-work
 # Live theme-switched configs (mutable at runtime, initialized from *.default)
 config/btop/btop.conf
 config/starship/starship.toml
+
+# Downloaded wallpaper images (fetched from github at install time)
+wallpapers/*.jpg
+wallpapers/*.png
+wallpapers/*.jpeg

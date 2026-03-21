@@ -225,7 +225,60 @@ create_stub "$HOME/.ssh/config.local" \
 #     ForwardAgent yes" \
 "~/.ssh/config.local"
 
-# --- 9. Mise runtimes ---
+# --- 9. Display type detection (macOS only) ---
+# theme-switch auto-detects per-display aspect ratios at runtime, so this
+# fallback file is only used when system_profiler is unavailable.
+
+STATE_DIR="$HOME/.local/state"
+DISPLAY_TYPE_FILE="$STATE_DIR/display-type"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [[ -f "$DISPLAY_TYPE_FILE" ]]; then
+    skip "Display type fallback: $(cat "$DISPLAY_TYPE_FILE")"
+  else
+    # Detect displays and summarize
+    has_ultrawide=false
+    has_widescreen=false
+    if command -v system_profiler &>/dev/null; then
+      while IFS= read -r line; do
+        if [[ "$line" =~ ([0-9]+)\ x\ ([0-9]+) ]]; then
+          w="${BASH_REMATCH[1]}"
+          h="${BASH_REMATCH[2]}"
+          if (( h > 0 && w * 10 / h >= 20 )); then
+            has_ultrawide=true
+          else
+            has_widescreen=true
+          fi
+        fi
+      done < <(system_profiler SPDisplaysDataType 2>/dev/null | grep -i "resolution:")
+    fi
+
+    if $has_ultrawide && $has_widescreen; then
+      info "Mixed displays detected (ultrawide + widescreen)"
+      info "theme-switch will auto-detect per display at runtime"
+      detected="widescreen"
+    elif $has_ultrawide; then
+      info "Ultrawide display detected"
+      detected="ultrawide"
+    else
+      detected="widescreen"
+    fi
+
+    # Confirm or override
+    read -rp "[→] Set fallback display type to '$detected'? [Y/n/override]: " yn
+    case "$yn" in
+      [Nn]*)
+        if [[ "$detected" == "ultrawide" ]]; then detected="widescreen"; else detected="ultrawide"; fi
+        ;;
+    esac
+
+    mkdir -p "$STATE_DIR"
+    echo "$detected" > "$DISPLAY_TYPE_FILE"
+    success "Display type fallback set: $detected"
+  fi
+fi
+
+# --- 10. Mise runtimes ---
 
 if command -v mise &>/dev/null; then
   read -rp "[→] Run mise install to provision runtimes? [Y/n]: " yn
@@ -238,7 +291,7 @@ if command -v mise &>/dev/null; then
   fi
 fi
 
-# --- 10. Summary ---
+# --- 11. Summary ---
 
 printf '\n%s=== Bootstrap complete ===%s\n\n' "$BOLD" "$RESET"
 
