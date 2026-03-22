@@ -102,9 +102,8 @@ cask "iina"                # video player
 cask "visual-studio-code"
 cask "vlc"
 
-# Install in Mac App Store
-# TODO: Can I automate this with https://github.com/mas-cli/mas
-# 1Password
+# Mac App Store
+brew "mas"               # Mac App Store CLI
 
 # Quarantined — delete if still commented after 6 months
 # brew "ack"                   # 20260313
@@ -114,7 +113,6 @@ cask "vlc"
 # brew "iftop"                 # 20260313
 # brew "ipcalc"                # 20260313
 # brew "mackup"                # app settings backup — 20260313
-# brew "mas"                   # Mac App Store CLI — 20260313
 # brew "trash"                 # safer rm — 20260313
 # brew "tree"                  # 20260313
 # brew "urlview"               # tmux-urlview plugin dep — 20260313

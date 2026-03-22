@@ -7,7 +7,6 @@ cask "raycast"
 cask "steam"
 
 # Quarantined — delete if still commented after 6 months
-# brew "mas"               # Mac App Store CLI — 20260315
 # cask "appzapper"         # app uninstaller — 20260315
 # cask "brave-browser"     # 20260315
 # cask "discord"           # 20260315
