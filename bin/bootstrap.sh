@@ -225,6 +225,15 @@ create_stub "$HOME/.ssh/config.local" \
 #     ForwardAgent yes" \
 "~/.ssh/config.local"
 
+create_stub "$DOTFILES_DIR/packages/Brewfile.local" \
+"# Local Brewfile — machine-specific packages
+# Run: brew bundle --file=packages/Brewfile.local
+# This file is gitignored. Use it for packages you only want on this machine.
+
+# brew \"example\"
+# cask \"example\"" \
+"packages/Brewfile.local"
+
 # --- 9. Display type detection (macOS only) ---
 # theme-switch auto-detects per-display aspect ratios at runtime, so this
 # fallback file is only used when system_profiler is unavailable.
