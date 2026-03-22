@@ -53,7 +53,8 @@ dotfiles/
 ├── packages/
 │   ├── Brewfile.universal    # Installed on all machines
 │   ├── Brewfile.work         # Installed on work machines only
-│   └── Brewfile.personal     # Installed on personal machines only
+│   ├── Brewfile.personal     # Installed on personal machines only
+│   └── Brewfile.local        # Machine-specific (gitignored, create per machine)
 └── config/                   # XDG-style tool configs
     ├── bash/bashrc           # Minimal bash (remote server baseline only)
     ├── bat/

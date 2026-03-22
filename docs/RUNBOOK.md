@@ -27,7 +27,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
 - **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
 - **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
-- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, and `~/.ssh/config.local` with commented templates if they don't exist
+- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, and `packages/Brewfile.local` with commented templates if they don't exist
 
 ### 3. Run the installer
 
@@ -37,7 +37,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 
 This will:
 - Create all symlinks (zshrc, nvim, tmux, ghostty, starship, bat, btop, etc.)
-- Run `brew bundle` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file
+- Run `brew bundle` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file, plus `Brewfile.local` if it exists
 
 ### 4. Install runtimes
 
@@ -375,7 +375,8 @@ dotfiles/
 ├── packages/
 │   ├── Brewfile.universal    # Installed on every machine
 │   ├── Brewfile.work         # Installed when ~/.work exists
-│   └── Brewfile.personal     # Installed when ~/.personal exists
+│   ├── Brewfile.personal     # Installed when ~/.personal exists
+│   └── Brewfile.local        # Machine-specific (gitignored, create per machine)
 ├── zsh/
 │   ├── zshrc.zsh             # Symlinked to ~/.zshrc
 │   ├── lib/                  # Auto-sourced by zshrc (alphabetical order)
@@ -563,6 +564,7 @@ Add to the appropriate Brewfile and run `./install` (or `brew bundle` directly):
 - `packages/Brewfile.universal` — install everywhere
 - `packages/Brewfile.work` — work machines only
 - `packages/Brewfile.personal` — personal machines only
+- `packages/Brewfile.local` — this machine only (gitignored)
 
 ### New zsh config
 

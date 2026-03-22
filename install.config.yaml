@@ -130,6 +130,10 @@
      description: Install personal Homebrew packages
      stdout: true
     -
+     command: '[[ -f packages/Brewfile.local ]] && brew bundle --file=packages/Brewfile.local || true'
+     description: Install local Homebrew packages
+     stdout: true
+    -
      command: 'command -v bat > /dev/null && bat cache --build || true'
      description: Build bat theme cache
      stdout: true
