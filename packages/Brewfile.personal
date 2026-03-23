@@ -3,6 +3,7 @@
 # Sourced by install when ~/.personal marker exists
 
 # Casks
+cask "affinity-photo2"
 cask "discord"
 cask "zen"
 
