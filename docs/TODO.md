@@ -6,7 +6,8 @@ Deferred ideas and future improvements.
 
 ## Applications
 
-- **Audit installed applications** — On each primary machine (personal desktop, personal laptop, work laptop), audit `/Applications` and `~/Applications`. Sort everything into the universal/work/personal Brewfile pattern. For apps only available via the Mac App Store, either automate with the `mas` CLI or document the manual install steps.
+- **Run `brew-audit` on personal laptop and work laptop** — Desktop audit is done (MAS apps tracked, Brewfiles updated, stale formulae cleaned). Run `brew-audit` on the remaining two machines to identify drift and reconcile.
+- **Document non-Homebrew app install steps** — Capture manual-install apps (vendor-specific, non-cask) as new-machine setup documentation. Audio production managers are listed in `Brewfile.personal` as comments; other categories (e.g. SketchUp, Epson drivers) need similar treatment or a RUNBOOK section.
 
 ## Performance
 
