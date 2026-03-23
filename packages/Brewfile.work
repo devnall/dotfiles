@@ -26,6 +26,7 @@ brew "hashicorp/tap/packer"     # machine image building
 brew "k9s"            # Kubernetes TUI
 brew "eksctl"         # AWS EKS CLI
 
+cask "google-drive"
 cask "lens"
 
 # Quarantined — delete if still commented after 1 year
@@ -43,6 +44,5 @@ cask "lens"
 # tap "puma/puma"              # 20260313
 # cask "displaylink"           # USB graphics driver — 20260315
 # cask "google-cloud-sdk"      # 20260313
-# cask "json-viewer"           # JSON viewer app — 20260315
 # cask "virtualbox"            # VM hypervisor — 20260315
 # cask "zoom"                  # 20260313
