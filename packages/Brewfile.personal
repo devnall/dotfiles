@@ -3,22 +3,14 @@
 # Sourced by install when ~/.personal marker exists
 
 # Casks
-cask "raycast"
-cask "steam"
+cask "discord"
+cask "zen"
 
 # Quarantined — delete if still commented after 6 months
 # cask "appzapper"         # app uninstaller — 20260315
-# cask "brave-browser"     # 20260315
-# cask "discord"           # 20260315
 # cask "halloy"            # IRC client — 20260315
 # cask "handbrake"         # HandBrake GUI — 20260315
-# cask "iina"              # 20260315
-# cask "keepingyouawake"   # 20260315
 # cask "openrgb"           # RGB lighting control — 20260315
-# cask "pika"              # 20260315
 # cask "qflipper"          # Flipper Zero utility — 20260315
-# cask "shottr"            # 20260315
 # cask "signal"            # 20260315
-# cask "virtualbox"        # 20260315
-# cask "vscodium"          # 20260315
 # cask "zoom"              # 20260315
