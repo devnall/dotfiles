@@ -22,6 +22,22 @@ mas "Shareful", id: 1522267256
 mas "Steam Link", id: 1246969117
 mas "Unread", id: 1363637349
 
+# Audio production — platform managers (install first, then use to install plugins)
+# Download: Arturia Software Center — arturia.com — Arturia (Pigments, V Collection)
+# Download: IK Product Manager      — ikmultimedia.com — IK (AmpliTube, MODO, T-RackS)
+# Download: iLok License Manager    — ilok.com — required by many plugin vendors
+# Download: Native Access            — native-instruments.com — NI (Kontakt, Komplete)
+# Download: Softube Central          — softube.com — Softube plugins
+# Download: Spitfire Audio           — spitfireaudio.com — Spitfire (LABS, libraries)
+# Download: UA Connect               — uaudio.com — Universal Audio (LUNA, UAD)
+
+# Audio production — standalone apps (not managed by a platform)
+# Download: Focusrite Control 2 — focusrite.com — audio interface driver/mixer
+# Download: KORG opsix native   — korg.com — FM synth
+# Download: Neural DSP          — neuraldsp.com — guitar amp sims
+# Download: RODECaster App      — rode.com — podcast/streaming mixer
+# Download: VCV Rack 2 Free     — vcvrack.com — virtual modular synth
+
 # Quarantined — delete if still commented after 6 months
 # cask "appzapper"         # app uninstaller — 20260315
 # cask "halloy"            # IRC client — 20260315
