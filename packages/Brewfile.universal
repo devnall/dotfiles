@@ -48,6 +48,7 @@ brew "starship"       # cross-shell prompt
 brew "thefuck"
 brew "tealdeer"
 brew "tmux"           # terminal multiplexer
+brew "watch"
 brew "wifi-password"  # display current wifi password
 brew "wtfis"
 brew "xz"
@@ -134,7 +135,6 @@ mas "Xcode", id: 497799835
 # brew "trash"                 # safer rm — 20260313
 # brew "tree"                  # 20260313
 # brew "urlview"               # tmux-urlview plugin dep — 20260313
-# brew "watch"                 # 20260313
 # cask "jordanbaird-ice"       # menu bar manager — 20260315
 # cask "keepingyouawake"       # 20260313
 # cask "pika"                  # color picker — 20260313
