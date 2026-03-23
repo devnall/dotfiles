@@ -6,6 +6,21 @@
 cask "discord"
 cask "zen"
 
+# Mac App Store
+mas "Anytune", id: 722444976
+mas "Day One", id: 1055511498
+mas "Fugue Machine Rubato", id: 6670253122
+mas "Infuse", id: 1136220934
+mas "Kindle", id: 302584613
+mas "Logic Pro", id: 634148309
+mas "MainStage", id: 634159523
+mas "Paprika Recipe Manager 3", id: 1303222628
+mas "Parcel", id: 375589283
+mas "Pi Stats", id: 1514075262
+mas "Shareful", id: 1522267256
+mas "Steam Link", id: 1246969117
+mas "Unread", id: 1363637349
+
 # Quarantined — delete if still commented after 6 months
 # cask "appzapper"         # app uninstaller — 20260315
 # cask "halloy"            # IRC client — 20260315
