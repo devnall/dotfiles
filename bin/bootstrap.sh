@@ -329,6 +329,9 @@ fi
 if [[ -f "$HOME/.ssh/config.local" ]] && ! grep -qv '^#' "$HOME/.ssh/config.local" 2>/dev/null; then
   todos+=("Add host entries to ~/.ssh/config.local")
 fi
+if [[ -f "$HOME/.personal" ]]; then
+  todos+=("Install manually-managed apps — see docs/RUNBOOK.md § Manual applications")
+fi
 
 if [[ ${#todos[@]} -gt 0 ]]; then
   info "TODO:"

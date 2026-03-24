@@ -117,6 +117,8 @@ dotfiles/
 - **Detection:** Marker file approach — one of `~/.work`, `~/.personal`, `~/.remote-full`, or `~/.remote` is touched during machine setup. No hostname detection.
 - **Shell loader:** Sources the corresponding `env/*.zsh` file. If no marker exists, only universal config loads.
 - **Dotbot install:** Runs `brew bundle` for the appropriate Brewfile(s) based on marker.
+- **Mac App Store apps:** Tracked via `mas "Name", id: 123456` entries in Brewfiles. The `mas` CLI is in `Brewfile.universal`.
+- **Manually-installed apps:** Audio production software (Native Instruments, IK Multimedia, etc.) is installed via vendor-specific managers, not Homebrew. Platform managers and standalone apps are documented as `# Download:` comments in `Brewfile.personal`.
 - **Marker definitions:**
   - `~/.work` — work machine (full macOS setup)
   - `~/.personal` — personal machine (full macOS setup)

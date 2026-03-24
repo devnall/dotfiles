@@ -431,13 +431,58 @@ brew bundle --file=~/.dotfiles/packages/Brewfile.universal
 
 ### Check for Brewfile drift
 
-Packages accumulate outside the Brewfile over time. Audit with:
+Run the audit script to get a full drift report:
+
+```sh
+brew-audit
+```
+
+This compares `brew leaves`, `brew list --cask`, and `mas list` against all applicable Brewfiles (auto-detected from marker file). Output is grouped into:
+
+1. Installed formulae not in any Brewfile
+2. Installed casks not in any Brewfile
+3. Installed MAS apps not in any Brewfile
+4. Brewfile entries not installed on this machine
+5. Apps in /Applications not managed by Homebrew or MAS
+
+**When to run:** After major Brewfile changes, when setting up a new machine, or periodically (quarterly).
+
+**Decision framework for each finding:**
+- **Add to Brewfile** — if you want it tracked and installed on new machines
+- **Quarantine** — if unsure; comment it out with a datestamp (delete after 6 months if still unused)
+- **Uninstall** — `brew uninstall <name>` for packages you no longer need
+- **Leave as manual** — for vendor-installed apps (audio production, drivers) that aren't in Homebrew
+
+For targeted drift checks, `brew bundle` commands are also available:
 
 ```sh
 brew bundle check --file=~/.dotfiles/packages/Brewfile.universal
 brew bundle cleanup --file=~/.dotfiles/packages/Brewfile.universal  # shows what would be removed
 brew bundle cleanup --force --file=~/.dotfiles/packages/Brewfile.universal  # actually removes them
 ```
+
+### Mac App Store apps
+
+MAS apps are tracked in Brewfiles using `mas "App Name", id: 123456` syntax. The `mas` CLI is installed via `Brewfile.universal`.
+
+```sh
+mas list                    # list installed MAS apps with IDs
+mas search "App Name"       # find an app's ID
+```
+
+`brew bundle` handles `mas` entries automatically alongside formulae and casks. Requirements:
+- Must be signed into the Mac App Store
+- Paid apps must have been purchased previously (mas cannot buy apps)
+- `mas install` may fail silently for apps with no compatible version; `brew bundle` skips failures without blocking
+
+### Manual applications (personal machines)
+
+Some apps are not available via Homebrew or the Mac App Store and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
+
+- **Audio production platform managers** — install these first, then use them to install individual plugins (Native Access, IK Product Manager, Spitfire Audio, etc.)
+- **Standalone audio apps** — Focusrite Control, Neural DSP, KORG, VCV Rack, etc.
+
+On a new personal machine, check `Brewfile.personal` for the full list of download links after running `./install`.
 
 ### Update tmux plugins
 

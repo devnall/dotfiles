@@ -9,6 +9,7 @@ brew "zsh-history-substring-search"
 brew "zsh-fast-syntax-highlighting"
 brew "bash"
 brew "bash-completion"
+brew "docker-completion"
 
 # Theme switching
 tap "cormacrelf/tap"
@@ -32,6 +33,7 @@ brew "grep"
 brew "gzip"
 brew "htop"
 brew "imagemagick"    # image processing
+brew "ipcalc"
 brew "lazydocker"     # docker TUI
 brew "lazygit"        # git TUI
 brew "mole"           # MacOS maintenance TUI
@@ -48,6 +50,7 @@ brew "starship"       # cross-shell prompt
 brew "thefuck"
 brew "tealdeer"
 brew "tmux"           # terminal multiplexer
+brew "watch"
 brew "wifi-password"  # display current wifi password
 brew "wtfis"
 brew "xz"
@@ -104,11 +107,26 @@ cask "plexamp"
 cask "raycast"
 cask "steam"
 cask "thaw"                # menubar manager
+cask "visual-studio-code"
 cask "vivaldi"
 cask "vlc"
 
 # Mac App Store
 brew "mas"               # Mac App Store CLI
+mas "Bear", id: 1091189122
+mas "Command X", id: 6448461551
+mas "Fantastical", id: 975937182
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "One Thing", id: 1604176982
+mas "Online Check", id: 6504709660
+mas "Slack", id: 803453959
+mas "Tailscale", id: 1475387142
+mas "The Unarchiver", id: 425424353
+mas "TickTick", id: 966085870
+mas "UTC Time", id: 1538245904
+mas "Velja", id: 1607635845
+mas "Xcode", id: 497799835
 
 # Quarantined — delete if still commented after 6 months
 # brew "ack"                   # 20260313
@@ -117,12 +135,10 @@ brew "mas"               # Mac App Store CLI
 # brew "handbrake"             # HandBrakeCLI — 20260315
 # brew "inetutils"             # 20260313
 # brew "iftop"                 # 20260313
-# brew "ipcalc"                # 20260313
 # brew "mackup"                # app settings backup — 20260313
 # brew "trash"                 # safer rm — 20260313
 # brew "tree"                  # 20260313
 # brew "urlview"               # tmux-urlview plugin dep — 20260313
-# brew "watch"                 # 20260313
 # cask "jordanbaird-ice"       # menu bar manager — 20260315
 # cask "keepingyouawake"       # 20260313
 # cask "pika"                  # color picker — 20260313

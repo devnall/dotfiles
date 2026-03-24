@@ -3,14 +3,45 @@
 # Sourced by install when ~/.personal marker exists
 
 # Casks
-cask "discord"
-cask "zen"
+
+# Mac App Store
+mas "Anytune", id: 722444976
+mas "Day One", id: 1055511498
+mas "Fugue Machine Rubato", id: 6670253122
+mas "Infuse", id: 1136220934
+mas "Kindle", id: 302584613
+mas "Logic Pro", id: 634148309
+mas "MainStage", id: 634159523
+mas "Panels", id: 1236567663
+mas "Paprika Recipe Manager 3", id: 1303222628
+mas "Parcel", id: 375589283
+mas "Pi Stats", id: 1514075262
+mas "Shareful", id: 1522267256
+mas "Steam Link", id: 1246969117
+mas "Unread", id: 1363637349
+
+# Audio production — platform managers (install first, then use to install plugins)
+# Download: Arturia Software Center — arturia.com — Arturia (Pigments, V Collection)
+# Download: IK Product Manager      — ikmultimedia.com — IK (AmpliTube, MODO, T-RackS)
+# Download: iLok License Manager    — ilok.com — required by many plugin vendors
+# Download: Native Access            — native-instruments.com — NI (Kontakt, Komplete)
+# Download: Softube Central          — softube.com — Softube plugins
+# Download: Spitfire Audio           — spitfireaudio.com — Spitfire (LABS, libraries)
+# Download: UA Connect               — uaudio.com — Universal Audio (LUNA, UAD)
+
+# Audio production — standalone apps (not managed by a platform)
+# Download: KORG opsix native   — korg.com — FM synth
+# Download: Neural DSP          — neuraldsp.com — guitar amp sims
+# Download: VCV Rack 2 Free     — vcvrack.com — virtual modular synth
 
 # Quarantined — delete if still commented after 6 months
+# cask "affinity-photo2"   # 20260323 - deprecated cask; manage manually
 # cask "appzapper"         # app uninstaller — 20260315
+# cask "discord"           # 20260323 - manual install as needed via Brewfile.local
 # cask "halloy"            # IRC client — 20260315
 # cask "handbrake"         # HandBrake GUI — 20260315
 # cask "openrgb"           # RGB lighting control — 20260315
 # cask "qflipper"          # Flipper Zero utility — 20260315
 # cask "signal"            # 20260315
+# cask "zen"               # 20260323
 # cask "zoom"              # 20260315
