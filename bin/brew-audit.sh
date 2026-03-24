@@ -197,23 +197,20 @@ header "Apps in /Applications not managed by Homebrew or MAS"
 count=0
 
 # Build lookup of managed app names (lowercase, no .app suffix)
-# Use Homebrew's caskroom receipts (fast, no network) + MAS names
+# Use brew JSON metadata for accurate cask→app mapping + MAS names
 managed_apps=$(
   {
-    # Cask apps: read app names from caskroom receipts
-    for cask_dir in "$(brew --prefix)"/Caskroom/*/; do
-      [[ -d "$cask_dir" ]] || continue
-      # Find .app artifacts in the latest version directory
-      latest=$(find "$cask_dir" -maxdepth 1 -mindepth 1 -type d -print 2>/dev/null | sort | tail -1)
-      latest="${latest##*/}"
-      [[ -z "$latest" ]] && continue
-      if [[ -f "$cask_dir/$latest/.metadata" ]]; then
-        # Fall back to cask name (hyphen to space, capitalize)
-        basename "$cask_dir"
-      else
-        basename "$cask_dir"
-      fi
-    done
+    # Cask apps: parse actual .app artifact names from brew metadata
+    brew info --json=v2 --installed --cask 2>/dev/null | \
+      python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for cask in data.get('casks', []):
+    for art in cask.get('artifacts', []):
+        if isinstance(art, dict) and 'app' in art:
+            for app in art['app']:
+                print(app.removesuffix('.app'))
+" 2>/dev/null
 
     # MAS apps: names from mas list
     if [[ -n "$installed_mas" ]]; then
@@ -237,12 +234,9 @@ for app_dir in /Applications ~/Applications; do
     [[ "$app" != *.app ]] && continue
     echo "$name_lower" | grep -qiE "^($skip_apps)$" && continue
 
-    # Normalize for matching: "Docker Desktop" matches cask "docker-desktop"
+    # Check if managed by cask app name or installed cask token
     name_hyphenated="${name_lower// /-}"
-
-    # Check if managed by cask name or app name
     if ! echo "$managed_apps" | grep -qixF "$name_lower" && \
-       ! echo "$managed_apps" | grep -qixF "$name_hyphenated" && \
        ! echo "$installed_casks" | grep -qixF "$name_hyphenated"; then
       finding "$name ($app_dir/)"
       ((count++)) || true
