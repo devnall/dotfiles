@@ -66,8 +66,13 @@ fi
 
 export EDITOR="vim"
 
+# Lazy-load thefuck — avoid ~150ms Python startup on every shell
 if command -v thefuck > /dev/null; then
-  eval "$(thefuck --alias)"
+  fuck() {
+    unfunction fuck
+    eval "$(thefuck --alias)"
+    fuck "$@"
+  }
 fi
 
 if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
