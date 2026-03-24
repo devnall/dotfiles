@@ -32,10 +32,15 @@ mas "Unread", id: 1363637349
 # Audio production — standalone apps (not managed by a platform)
 # Download: KORG opsix native   — korg.com — FM synth
 # Download: Neural DSP          — neuraldsp.com — guitar amp sims
+# Download: Syntorial           — syntorial.com — synth programming tutorial
 # Download: VCV Rack 2 Free     — vcvrack.com — virtual modular synth
 
+# Non-audio — manual install (no Homebrew cask available)
+# Download: Affinity Photo 2    — affinity.serif.com — photo editor (cask deprecated)
+# Download: Aqua Voice          — withaqua.com — speech-to-text
+
+# ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 6 months
-# cask "affinity-photo2"   # 20260323 - deprecated cask; manage manually
 # cask "appzapper"         # app uninstaller — 20260315
 # cask "discord"           # 20260323 - manual install as needed via Brewfile.local
 # cask "halloy"            # IRC client — 20260315

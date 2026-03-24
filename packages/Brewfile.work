@@ -30,6 +30,7 @@ brew "eksctl"         # AWS EKS CLI
 cask "google-drive"
 cask "lens"
 
+# ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 1 year
 # brew "chamber"               # SSM parameter store CLI — 20260313
 # brew "fx"                    # json viewer — 20260313

@@ -129,6 +129,7 @@ mas "UTC Time", id: 1538245904
 mas "Velja", id: 1607635845
 mas "Xcode", id: 497799835
 
+# ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 6 months
 # brew "ack"                   # 20260313
 # brew "bandwhich"             # 20260313
