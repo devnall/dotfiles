@@ -32,10 +32,8 @@ cask "lens"
 
 # Quarantined — delete if still commented after 1 year
 # brew "chamber"               # SSM parameter store CLI — 20260313
-# brew "doitlive"              # terminal demo tool — 20260313
 # brew "fx"                    # json viewer — 20260313
 # brew "gnupg"                 # 20260313
-# brew "ipcalc"                # 20260323
 # brew "libpq", link: true     # 20260313
 # brew "libsndfile"            # 20260313
 # brew "puma/puma/puma-dev"    # 20260313

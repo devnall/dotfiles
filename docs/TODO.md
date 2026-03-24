@@ -6,7 +6,7 @@ Deferred ideas and future improvements.
 
 ## Applications
 
-- **Run `brew-audit` on personal laptop and work laptop** — Desktop audit is done (MAS apps tracked, Brewfiles updated, stale formulae cleaned). Run `brew-audit` on the remaining two machines to identify drift and reconcile.
+- **Improve `brew-audit` section 5 matching** — The /Applications matching uses caskroom directory names, which produces false positives for casks whose directory name doesn't match the app name. Could parse cask JSON metadata or use `brew info --json` (batched) for better accuracy.
 - **Document non-Homebrew app install steps** — Capture manual-install apps (vendor-specific, non-cask) as new-machine setup documentation. Audio production managers are listed in `Brewfile.personal` as comments; other categories (e.g. SketchUp, Epson drivers) need similar treatment or a RUNBOOK section.
 - **Evaluate mackup for app settings backup** — Decide whether to use mackup to backup and sync Mac app settings as part of this repo, find a better alternative, or uninstall it. Currently quarantined in Brewfile.universal but still installed.
 
