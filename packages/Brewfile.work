@@ -4,6 +4,7 @@
 
 brew "ansible"
 brew "aws-vault"
+brew "doitlive"
 brew "helm"
 brew "kubernetes-cli"
 brew "kubectx"        # switch k8s contexts
