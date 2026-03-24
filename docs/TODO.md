@@ -10,6 +10,4 @@ Deferred ideas and future improvements.
 
 ## Someday / Maybe
 
-- **Codeberg setup** — If/when you want to try Codeberg for personal projects: add SSH key, host entry in SSH config, any git host-level config. Low effort.
-- TODO: Consistent colors on all machines. Getting some weird issues with directory fg/bg in ls output on remote machines.
 - TODO: Run `brew doctor` on each machine, since if there's anything to deal with or cleanup
