@@ -17,6 +17,11 @@ if command -v kubectl &> /dev/null; then
   source <(kubectl completion zsh)
 fi
 
+# Docker completions
+if command -v docker &> /dev/null; then
+  source <(docker completion zsh)
+fi
+
 # 1Password CLI completions
 if [ -f $HOMEBREW_PREFIX/bin/op ]; then
   eval "$(op completion zsh)"; compdef _op op
