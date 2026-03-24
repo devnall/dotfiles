@@ -151,3 +151,4 @@ mas "Xcode", id: 497799835
 # cask "vscodium"              # 20260313
 # cask "flameshot"             # 20260322 - migrate to CleanShotX
 # cask "itsycal"              # 20260322 - migrate to Dot
+# brew "zsh-history-substring-search" # 20260324 — replaced by built-in up-line-or-beginning-search
