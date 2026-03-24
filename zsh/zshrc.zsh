@@ -5,15 +5,14 @@
 : "${XDG_CONFIG_HOME:=$HOME/.config}"
 : "${XDG_DATA_HOME:=$HOME/.local/share}"
 
-# Set $HOMEBREW_PREFIX based on Mac architecture
-if [ "$(uname -m)" = "arm64" ]; then
-  : "${HOMEBREW_PREFIX:=/opt/homebrew}"
-elif [ "$(uname -m)" = "x86_64" ]; then
-  : "${HOMEBREW_PREFIX:=/usr/local}"
-fi
-
-if [ -z "$(echo $PATH | grep -o $HOMEBREW_PREFIX/bin)" ]; then
-  export PATH="$HOMEBREW_PREFIX/sbin:$HOMEBREW_PREFIX/bin:$PATH"
+# HOMEBREW_PREFIX, PATH, MANPATH, INFOPATH are set by brew shellenv in zprofile.
+# Fallback for non-login shells where zprofile didn't run.
+if [ -z "$HOMEBREW_PREFIX" ]; then
+  if [ "$(uname -m)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ "$(uname -m)" = "x86_64" ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
 if command -v mise > /dev/null; then

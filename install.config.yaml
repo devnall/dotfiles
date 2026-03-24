@@ -17,6 +17,9 @@
 #                  removes stale symlinks but won't clobber a real file
 - link:
     # Shell
+    ~/.zprofile:
+      path: zsh/zprofile.zsh
+      force: true
     ~/.zshrc:
       path: zsh/zshrc.zsh
       force: true
