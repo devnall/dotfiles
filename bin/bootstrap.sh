@@ -320,6 +320,7 @@ if [[ -f "$HOME/.work" ]]; then
   fi
 fi
 todos+=("Set up commit signing with 1Password SSH keys — see docs/RUNBOOK.md")
+todos+=("Run 'gh auth login' once so gh works in non-TTY contexts (IDE shells, scripts)")
 if [[ -f "$HOME/.env.local" ]] && ! grep -qv '^#' "$HOME/.env.local" 2>/dev/null; then
   todos+=("Add machine-specific config to ~/.env.local")
 fi

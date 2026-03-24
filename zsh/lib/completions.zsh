@@ -22,8 +22,8 @@ if command -v docker &> /dev/null; then
   source <(docker completion zsh)
 fi
 
-# 1Password CLI completions
-if [ -f $HOMEBREW_PREFIX/bin/op ]; then
+# 1Password CLI completions (TTY-only — op invocation triggers biometric prompts)
+if [[ -t 1 ]] && [[ -f $HOMEBREW_PREFIX/bin/op ]]; then
   eval "$(op completion zsh)"; compdef _op op
 fi
 
