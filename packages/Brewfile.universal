@@ -33,6 +33,7 @@ brew "grep"
 brew "gzip"
 brew "htop"
 brew "imagemagick"    # image processing
+brew "ipcalc"
 brew "lazydocker"     # docker TUI
 brew "lazygit"        # git TUI
 brew "mole"           # MacOS maintenance TUI
@@ -99,7 +100,6 @@ cask "ghostty"
 cask "google-chrome"
 cask "iina"                # video player
 cask "imageoptim"          # image optimizer
-brew "ipcalc"
 cask "json-viewer"
 cask "latest"              # app update checker
 cask "obsidian"
