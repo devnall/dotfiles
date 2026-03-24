@@ -137,7 +137,6 @@ mas "Xcode", id: 497799835
 # brew "handbrake"             # HandBrakeCLI — 20260315
 # brew "inetutils"             # 20260313
 # brew "iftop"                 # 20260313
-# brew "mackup"                # app settings backup — 20260313
 # brew "trash"                 # safer rm — 20260313
 # brew "tree"                  # 20260313
 # brew "urlview"               # tmux-urlview plugin dep — 20260313
