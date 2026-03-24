@@ -66,6 +66,7 @@ brew "gh"             # GitHub CLI
 
 # Editors
 brew "neovim"
+brew "tree-sitter-cli" # needed by nvim-treesitter to compile parsers
 brew "vim"
 
 # Dev tools
