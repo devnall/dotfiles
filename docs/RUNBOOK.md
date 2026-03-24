@@ -599,7 +599,7 @@ for i in 1 2 3 4 5; do /usr/bin/time -p script -q /dev/null zsh -i -c exit 2>&1 
 
 Use `script` to allocate a real PTY — sheldon and fzf key-bindings are guarded behind `[[ -t 1 ]]` and won't load in a plain `zsh -i -c exit` without a terminal, making that command an undercount. Discard the first run (cold cache). A clean startup should be under ~500ms.
 
-**Baseline (March 2026, M-series Mac):** ~320ms (warm cache). Main contributors are sheldon plugin initialization (fast-syntax-highlighting, forgit, zsh-autosuggestions) and thefuck. Revisit if it climbs above ~500ms.
+**Baseline (March 2026, M-series Mac):** ~315ms (warm cache). Main contributors are sheldon plugin initialization (fast-syntax-highlighting, forgit, zsh-autosuggestions), mise activate, and starship init. thefuck is lazy-loaded and does not contribute to startup. Revisit if it climbs above ~500ms.
 
 ---
 
