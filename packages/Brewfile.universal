@@ -9,6 +9,7 @@ brew "zsh-history-substring-search"
 brew "zsh-fast-syntax-highlighting"
 brew "bash"
 brew "bash-completion"
+brew "docker-completion"
 
 # Theme switching
 tap "cormacrelf/tap"
@@ -105,16 +106,19 @@ cask "plexamp"
 cask "raycast"
 cask "steam"
 cask "thaw"                # menubar manager
+cask "visual-studio-code"
 cask "vivaldi"
 cask "vlc"
 
 # Mac App Store
 brew "mas"               # Mac App Store CLI
 mas "Bear", id: 1091189122
+mas "Command X", id: 6448461551
 mas "Fantastical", id: 975937182
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "One Thing", id: 1604176982
+mas "Online Check", id: 6504709660
 mas "Slack", id: 803453959
 mas "Tailscale", id: 1475387142
 mas "The Unarchiver", id: 425424353
