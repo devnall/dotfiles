@@ -480,9 +480,12 @@ mas search "App Name"       # find an app's ID
 Some apps are not available via Homebrew or the Mac App Store and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
 
 - **Audio production platform managers** — install these first, then use them to install individual plugins (Native Access, IK Product Manager, Spitfire Audio, etc.)
-- **Standalone audio apps** — Focusrite Control, Neural DSP, KORG, VCV Rack, etc.
+- **Standalone audio apps** — synth tutorials, amp sims, etc.
+- **Non-audio apps** — apps whose Homebrew cask is deprecated or was never available (Affinity Photo 2, Aqua Voice, etc.)
 
-On a new personal machine, check `Brewfile.personal` for the full list of download links after running `./install`.
+Machine-specific manual apps (audio interfaces, hardware utilities) go as `# Download:` comments in `Brewfile.local` on each machine.
+
+On a new personal machine, check `Brewfile.personal` and `Brewfile.local` for the full list of download links after running `./install`.
 
 ### Update tmux plugins
 
