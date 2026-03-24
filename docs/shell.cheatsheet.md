@@ -95,4 +95,4 @@ Directory stack persists for the session (up to 12 entries, no duplicates).
 - Commands starting with a space are not saved to history
 - History is shared across all open sessions in real time
 - `CTRL+R` — fuzzy history search (fzf)
-- Up/Down arrows — history substring search (matches anywhere in the command)
+- Up/Down arrows — search history matching what you've typed so far
