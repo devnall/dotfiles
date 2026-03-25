@@ -29,5 +29,4 @@ These must be respected when editing any shell config:
 | `packages/Brewfile.*` | Homebrew packages (universal, work, personal) |
 | `docs/ARCHITECTURE.md` | Design source of truth |
 | `docs/RUNBOOK.md` | Usage, maintenance, troubleshooting |
-| `docs/TODO.md` | Deferred ideas and future work |
 | `SPEC.md` | Current project task plan (rotates per project) |
