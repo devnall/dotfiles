@@ -6,7 +6,7 @@ _appearance_state_file="$HOME/.local/state/appearance"
 
 _detect_appearance() {
   if [[ -f "$_appearance_state_file" ]]; then
-    cat "$_appearance_state_file"
+    <"$_appearance_state_file"
   elif [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == "Dark" ]]; then
     echo dark
   else
@@ -69,7 +69,7 @@ _apply_theme "$_current_appearance"
 _theme_precmd_hook() {
   local new_appearance
   if [[ -f "$_appearance_state_file" ]]; then
-    new_appearance="$(cat "$_appearance_state_file")"
+    new_appearance="$(<"$_appearance_state_file")"
   else
     return
   fi
