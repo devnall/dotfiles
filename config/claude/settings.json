@@ -26,6 +26,5 @@
         "repo": "anthropics/claude-code"
       }
     }
-  },
-  "model": "opus"
+  }
 }
