@@ -287,7 +287,50 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 fi
 
-# --- 10. Mise runtimes ---
+# --- 10. Wallpapers repo (macOS only) ---
+
+WALLPAPER_REPO="$HOME/Pictures/wallpapers"
+WALLPAPER_REMOTE="devnall/wallpapers"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [[ ! -d "$WALLPAPER_REPO" ]]; then
+    read -rp "[→] Clone wallpapers repo to ~/Pictures/wallpapers? [Y/n]: " yn
+    if [[ "$yn" =~ ^[Nn]$ ]]; then
+      info "Skipped — run 'wallpaper-setup' later for full wallpaper rotation"
+    else
+      git clone "https://github.com/$WALLPAPER_REMOTE.git" "$WALLPAPER_REPO"
+      success "Wallpapers repo cloned"
+    fi
+  else
+    # Validate existing directory
+    healthy=true
+
+    if ! git -C "$WALLPAPER_REPO" rev-parse --is-inside-work-tree &>/dev/null; then
+      warn "~/Pictures/wallpapers exists but is not a git repo"
+      healthy=false
+    else
+      actual_remote="$(git -C "$WALLPAPER_REPO" remote get-url origin 2>/dev/null || echo "")"
+      if [[ "$actual_remote" != *"$WALLPAPER_REMOTE"* ]]; then
+        warn "~/Pictures/wallpapers remote doesn't match expected ($actual_remote)"
+        healthy=false
+      fi
+    fi
+
+    # Check for image files in subdirectories
+    if ! compgen -G "$WALLPAPER_REPO"/*/*.jpg &>/dev/null && \
+       ! compgen -G "$WALLPAPER_REPO"/*/*.png &>/dev/null && \
+       ! compgen -G "$WALLPAPER_REPO"/*/*.jpeg &>/dev/null; then
+      warn "~/Pictures/wallpapers has no images in subdirectories"
+      healthy=false
+    fi
+
+    if $healthy; then
+      skip "Wallpapers repo"
+    fi
+  fi
+fi
+
+# --- 11. Mise runtimes ---
 
 if command -v mise &>/dev/null; then
   read -rp "[→] Run mise install to provision runtimes? [Y/n]: " yn
@@ -300,7 +343,7 @@ if command -v mise &>/dev/null; then
   fi
 fi
 
-# --- 11. Summary ---
+# --- 12. Summary ---
 
 printf '\n%s=== Bootstrap complete ===%s\n\n' "$BOLD" "$RESET"
 
