@@ -75,10 +75,6 @@ if command -v thefuck > /dev/null; then
   }
 fi
 
-if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
 
 # Set fpath (function path) and source function files
 # Note: files are sourced explicitly because autoloading alone required running

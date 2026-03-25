@@ -5,7 +5,11 @@ fi
 zstyle :compinstall filename '$HOME/.dotfiles/zsh/lib/completions.zsh'
 
 autoload -Uz compinit
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # AWS cli completions
 if [ -f $HOMEBREW_PREFIX/share/zsh/site-functions/aws_zsh_completer.sh ]; then

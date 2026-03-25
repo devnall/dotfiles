@@ -1,7 +1,7 @@
 [tools]
-go = "latest"
-lua = "latest"
-node = "latest"
-python = "latest"
-ruby = "latest"
-terraform = "latest"
+go = "1"
+lua = "5"
+node = "25"
+python = "3"
+ruby = "4"
+terraform = "1"

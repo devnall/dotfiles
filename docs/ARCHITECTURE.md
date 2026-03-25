@@ -4,8 +4,7 @@
 >
 > **How to use it:** When starting a new project or task plan (SPEC.md), copy the relevant sections from this file into the spec's context/architecture section so that Claude Code (or any other tool) gets the full picture in a single file. This avoids relying on cross-file references during execution.
 >
-> **This file is not a task plan.** It contains no actionable work items. For current tasks, see SPEC.md. For future ideas, see docs/TODO.md.
->
+> **This file is not a task plan.** It contains no actionable work items. For current tasks, see SPEC.md.>
 > **When to update this file:** Whenever a design decision changes — new marker types, new directory conventions, new directives, updated acceptance criteria, etc. Keep it in sync with the actual repo state after each project.
 
 ---
@@ -36,7 +35,6 @@ dotfiles/
 ├── docs/                     # Documentation (architecture, runbook, TODO, cheatsheets)
 │   ├── ARCHITECTURE.md       # This file — design reference (not consumed by tooling)
 │   ├── RUNBOOK.md            # Detailed usage and maintenance reference
-│   ├── TODO.md               # Future ideas and deferred work
 │   ├── *.cheatsheet.md       # Tool cheatsheets (fzf, tmux, git, shell, vim, kubernetes)
 │   └── tldr/                 # Custom tealdeer pages (symlinked to ~/Library/Application Support/tealdeer/pages)
 │       └── my-*.page.md     # Custom pages: my-git, my-shell, my-tmux, my-fzf, my-vim
@@ -224,4 +222,3 @@ These should be true at the end of any project that modifies the repo:
 | `README.md` | Quick-start installation guide |
 | `docs/RUNBOOK.md` | Detailed usage, maintenance, and troubleshooting |
 | `SPEC.md` | Current project task plan (rotates per project) |
-| `docs/TODO.md` | Deferred ideas and future work |
