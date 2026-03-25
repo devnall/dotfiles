@@ -12,15 +12,15 @@ macOS appearance change
 
 `theme-switch` checks for images at `~/.local/share/wallpapers/` (symlinked here by dotbot). It looks for `dark.jpg`, `dark.png`, `light.jpg`, or `light.png` — first match wins.
 
-Default images (`dark.jpg`, `light.jpg`) are downloaded from the [wallpapers repo](https://github.com/devnall/wallpapers/) at `./install` time. They are gitignored — not stored in this repo.
+Default images (`dark.jpg`, `light.jpg`) are committed to this directory and available immediately after `./install`.
 
 ## Replacing defaults
 
-Swap `dark.jpg` / `light.jpg` with your preferred images. Both `.jpg` and `.png` are supported — just name them `dark.<ext>` / `light.<ext>`. Your replacements are gitignored and won't be overwritten by `./install` (download only runs if the file is missing).
+Swap `dark.jpg` / `light.jpg` with your preferred images. Both `.jpg` and `.png` are supported — just name them `dark.<ext>` / `light.<ext>`.
 
 ## Tier 2: Full wallpaper rotation
 
-For folder-based rotation with multiple wallpapers per mode:
+For folder-based rotation with multiple wallpapers per mode, clone the wallpapers repo (prompted during `bootstrap.sh`, or run manually):
 
 ```sh
 bin/wallpaper-setup
@@ -35,15 +35,10 @@ Source: https://github.com/devnall/wallpapers/
 Expected folder structure:
 ```
 ~/Pictures/wallpapers/
-├── widescreen/
-│   ├── dark/
-│   └── light/
-├── ultrawide/
-│   ├── dark/
-│   └── light/
-└── mobile/
-    ├── dark/
-    └── light/
+├── widescreen-dark/
+├── widescreen-light/
+├── ultrawide-dark/
+└── ultrawide-light/
 ```
 
 ## Display type

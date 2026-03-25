@@ -58,8 +58,8 @@ echo "Checking wallpapers repo folder structure..."
 missing=()
 for dt in widescreen ultrawide; do
   for m in dark light; do
-    if [[ ! -d "$wallpaper_repo/$dt/$m" ]]; then
-      missing+=("$dt/$m")
+    if [[ ! -d "$wallpaper_repo/$dt-$m" ]]; then
+      missing+=("$dt-$m")
     fi
   done
 done
@@ -74,12 +74,10 @@ else
   echo ""
   echo "Expected structure:"
   echo "  $wallpaper_repo/"
-  echo "  ├── widescreen/"
-  echo "  │   ├── dark/"
-  echo "  │   └── light/"
-  echo "  └── ultrawide/"
-  echo "      ├── dark/"
-  echo "      └── light/"
+  echo "  ├── widescreen-dark/"
+  echo "  ├── widescreen-light/"
+  echo "  ├── ultrawide-dark/"
+  echo "  └── ultrawide-light/"
 fi
 echo ""
 

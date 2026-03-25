@@ -94,7 +94,7 @@ if [[ -x "$desktoppr_bin" ]]; then
     local screen_idx="$1" display_type="$2"
 
     # Tier 2: folder rotation from wallpapers repo
-    local tier2_dir="$wallpaper_repo/$display_type/$mode"
+    local tier2_dir="$wallpaper_repo/$display_type-$mode"
     if [[ -d "$tier2_dir" ]] && { compgen -G "$tier2_dir/*.jpg" || compgen -G "$tier2_dir/*.png" || compgen -G "$tier2_dir/*.jpeg"; } &>/dev/null; then
       "$desktoppr_bin" "$screen_idx" "$tier2_dir"
     else

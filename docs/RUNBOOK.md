@@ -28,6 +28,9 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
 - **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
 - **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, and `packages/Brewfile.local` with commented templates if they don't exist
+- **Display type detection** (macOS) — detects ultrawide vs widescreen displays, stores fallback at `~/.local/state/display-type`
+- **Wallpapers repo** (macOS) — prompts to clone the wallpapers repo to `~/Pictures/wallpapers/` for folder-based rotation. Validates existing clones (correct remote, has images)
+- **Mise runtimes** — offers to run `mise install` to provision language toolchains
 
 ### 3. Run the installer
 
@@ -235,19 +238,18 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.pl
 
 ### Wallpapers
 
-**Tier 1 (bootstrap default):** `./install` downloads a default dark + light wallpaper from the [wallpapers repo](https://github.com/devnall/wallpapers/) into `wallpapers/`, which is symlinked to `~/.local/share/wallpapers/`. `theme-switch` picks `dark.jpg` or `light.jpg` based on current mode. Downloads are skipped if the files already exist.
+**Tier 1 (default):** Default dark + light wallpapers (`dark.jpg`, `light.jpg`) are committed to `wallpapers/`, which is symlinked to `~/.local/share/wallpapers/` by dotbot. `theme-switch` picks `dark.jpg` or `light.jpg` based on current mode. To replace defaults, swap with your preferred images (`.jpg` or `.png`).
 
-To replace defaults, swap `wallpapers/dark.jpg` / `wallpapers/light.jpg` with your preferred images (`.jpg` or `.png`). Replacements are gitignored and won't be overwritten.
-
-**Tier 2 (folder rotation):** Clone the full wallpapers repo and enable multi-wallpaper rotation:
+**Tier 2 (folder rotation):** Clone the wallpapers repo for multi-wallpaper rotation. `bootstrap.sh` prompts for this, or run manually:
 
 ```sh
 bin/wallpaper-setup
 ```
 
-This clones `https://github.com/devnall/wallpapers.git` to `~/Pictures/wallpapers/`, prompts for display type (widescreen/ultrawide), and writes `~/.local/state/display-type`. When the tier 2 folder exists with images, `theme-switch` passes the folder to `desktoppr` for rotation.
+This clones `https://github.com/devnall/wallpapers.git` to `~/Pictures/wallpapers/` and validates the folder structure. When a tier 2 folder exists with images, `theme-switch` passes the folder to `desktoppr` for rotation.
 
 **Display type:** Auto-detected per display at runtime (ultrawide = aspect ratio >= 2:1). Mixed setups (ultrawide + widescreen) are handled automatically. Fallback stored at `~/.local/state/display-type` (defaults to `widescreen`).
+
 
 **Manual set:**
 ```sh
