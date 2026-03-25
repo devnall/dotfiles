@@ -1,7 +1,9 @@
 # My custom git aliases and configs
 
 # Setup alias for 1password to interact with github via `gh` cli tool
-if [[ -f "${HOME}/.config/op/plugins.sh" ]]; then
+# Guarded to TTY — non-interactive shells (e.g. IDE/editor subshells) should
+# use gh's own auth token instead of triggering 1Password biometric prompts.
+if [[ -t 1 ]] && [[ -f "${HOME}/.config/op/plugins.sh" ]]; then
   source "${HOME}/.config/op/plugins.sh"
 fi
 

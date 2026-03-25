@@ -132,6 +132,8 @@ op read "op://VaultName/Item/field"    # read a single secret value (scriptable)
 
 **Touch ID / biometric prompts:** The `op` CLI and SSH agent trigger macOS biometric prompts (Touch ID or password) when accessing secrets. This is expected 1Password security behavior, not a bug or misconfiguration.
 
+**`gh` auth in non-TTY shells:** The `op` plugin wrapper for `gh` is guarded behind a TTY check (`[[ -t 1 ]]`) to prevent biometric popups in IDE/editor subshells. This means `gh` in non-interactive contexts uses its own stored token. Run `gh auth login` once per machine to set this up.
+
 ### Commit Signing with 1Password SSH Keys
 
 All commits are signed (`commit.gpgsign = true` in shared git config, `gpg.format = ssh`). Each machine needs its `user.signingkey` set to the SSH public key string from 1Password.
