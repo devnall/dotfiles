@@ -67,6 +67,7 @@ Prefix key: `C-a`
 | `prefix r` | Reload tmux config |
 | `prefix R` | Refresh client |
 | `prefix ;` | Open command prompt |
+| `prefix u` | Fuzzy-search URLs in current pane (fzf popup); open or copy to clipboard |
 | `prefix S` | SSH to host via fzf fuzzy picker (opens in new window); fallback to prompt if fzf unavailable |
 | `prefix C-a` | Send prefix to nested tmux/screen session |
 
@@ -79,6 +80,7 @@ Prefix key: `C-a`
 | tmux-prefix-highlight | Status bar indicator when prefix is held or in copy mode |
 | tmux-online-status | Status bar online/offline indicator |
 | extrakto | Fuzzy-extract text from pane into prompt (with `e` key in copy mode) |
+| tmux-fzf-url | Fuzzy-search and open/copy URLs from current pane (with `prefix u`) |
 | vim-tmux-navigator | Navigate between tmux panes with Ctrl+hjkl (vim integration requires neovim plugin) |
 
 ### Plugin Updates
