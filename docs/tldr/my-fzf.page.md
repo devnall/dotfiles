@@ -26,6 +26,10 @@
 
 `ssh **<TAB>`
 
+- Fuzzy-search URLs in current tmux pane (open or copy):
+
+`C-a u` (in tmux)
+
 - Open fzf with bat syntax-highlighted preview:
 
 `preview`

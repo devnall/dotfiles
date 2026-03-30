@@ -42,6 +42,10 @@
 
 `prefix e`
 
+- Fuzzy-search URLs in current pane (open or copy):
+
+`prefix u`
+
 - Reload tmux config:
 
 `prefix r`
