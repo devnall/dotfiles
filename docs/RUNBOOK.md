@@ -481,8 +481,9 @@ mas search "App Name"       # find an app's ID
 
 ### Manual applications (personal machines)
 
-Some apps are not available via Homebrew or the Mac App Store and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
+Some apps are not available via Homebrew or the Mac App Store, or have stunted features if installed via those routes, and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
 
+- **Tailscale** - the "Standalone Variant" has features unavailable in the MAS version, and gets updates more frequently. Download and install it from https://pkgs.tailscale.com/stable/#macos
 - **Audio production platform managers** — install these first, then use them to install individual plugins (Native Access, IK Product Manager, Spitfire Audio, etc.)
 - **Standalone audio apps** — synth tutorials, amp sims, etc.
 - **Non-audio apps** — apps whose Homebrew cask is deprecated or was never available (Affinity Photo 2, Aqua Voice, etc.)

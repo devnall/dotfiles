@@ -121,7 +121,7 @@ mas "iMovie", id: 408981434
 mas "One Thing", id: 1604176982
 mas "Online Check", id: 6504709660
 mas "Slack", id: 803453959
-mas "Tailscale", id: 1475387142
+# mas "Tailscale", id: 1475387142  # Better to install "Standalone Variant" https://pkgs.tailscale.com/stable
 mas "The Unarchiver", id: 425424353
 mas "TickTick", id: 966085870
 mas "UTC Time", id: 1538245904
