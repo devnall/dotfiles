@@ -27,7 +27,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
 - **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
 - **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
-- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, and `packages/Brewfile.local` with commented templates if they don't exist
+- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, `~/.claude/settings.local.json`, and `packages/Brewfile.local` with commented templates if they don't exist
 - **Display type detection** (macOS) — detects ultrawide vs widescreen displays, stores fallback at `~/.local/state/display-type`
 - **Wallpapers repo** (macOS) — prompts to clone the wallpapers repo to `~/Pictures/wallpapers/` for folder-based rotation. Validates existing clones (correct remote, has images)
 - **Mise runtimes** — offers to run `mise install` to provision language toolchains
@@ -80,6 +80,25 @@ killall Dock                                                  # apply
 | `~/.env.local` | Machine-specific exports, PATH additions, non-secret config |
 | `~/.secrets.local` | API keys, tokens, credentials — never commit |
 | `~/.ssh/config.local` | Per-machine SSH host entries (not tracked) |
+| `~/.claude/settings.local.json` | Machine-specific Claude Code config (deep-merged with settings.json) |
+
+### Local files: backup & migration
+
+These untracked files contain machine-specific config that won't survive a wipe or new-machine setup. Back them up to 1Password (or your vault of choice) periodically and before migrating.
+
+| File | What to back up | Sensitive? |
+|------|----------------|-----------|
+| `~/.work` / `~/.personal` / `~/.remote*` | Just remember which marker to `touch` | No |
+| `~/.env.local` | Full file contents | Maybe |
+| `~/.secrets.local` | Full file contents | **Yes** — store in 1Password |
+| `~/.ssh/config.local` | Full file contents | Maybe |
+| `config/git/.gitconfig-user` | name, email, signingkey values | No |
+| `config/git/.gitconfig-work` | name, email, signingkey values (work machines) | No |
+| `packages/Brewfile.local` | Full file contents | No |
+| `~/.claude/settings.local.json` | Full file contents | Maybe |
+| `~/.local/state/display-type` | Single word (`widescreen` / `ultrawide`) — auto-detected, low priority | No |
+
+**Recommended workflow:** Create a secure note in 1Password called "dotfiles local config — \<machine name\>" and paste the contents of each file. Update it when you make significant changes to any local file. On a new machine, run `bootstrap.sh` first (creates stubs), then paste saved contents into each file.
 
 ---
 
