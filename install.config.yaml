@@ -89,6 +89,11 @@
     ~/.config/btop:
       path: config/btop
 
+    # Raycast
+    ~/.config/raycast/scripts:
+      path: config/raycast/scripts
+      force: true
+
     # AI tools
     ~/.claude/settings.json:
       path: config/claude/settings.json

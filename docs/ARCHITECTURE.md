@@ -73,6 +73,8 @@ dotfiles/
     │   └── lua/
     │       ├── config/        # options, keymaps, autocmds, appearance
     │       └── plugins/       # One lazy.nvim spec per plugin concern
+    ├── raycast/              # Raycast script commands (settings synced by Raycast Premium)
+    │   └── scripts/          # Script commands dir (symlinked to ~/.config/raycast/scripts)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)

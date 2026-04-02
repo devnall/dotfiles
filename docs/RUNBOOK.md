@@ -60,6 +60,10 @@ Applies preferred system preferences: Dock (auto-hide, small icons, no recents),
 
 The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
 
+### 6. Configure Raycast script commands (one-time)
+
+Open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
+
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
 **Backup/restore:** Before running, you can snapshot current values:
@@ -193,6 +197,17 @@ Repos are organized by identity under `~/code/`:
 The `~/code/work/` directory triggers `includeIf` in git config, loading `.gitconfig-work` which overrides `user.name`, `user.email`, and `user.signingkey` for all repos cloned there. Repos anywhere else use the default personal identity from `.gitconfig-user`.
 
 Bootstrap creates these directories automatically (`~/code/work/` only on work machines).
+
+### Raycast script commands
+
+Custom [Raycast script commands](https://github.com/raycast/script-commands) live in `config/raycast/scripts/`, symlinked to `~/.config/raycast/scripts/` by dotbot. Raycast settings, keybinds, and extensions are synced by Raycast Premium — only script commands are managed here.
+
+**One-time setup:** After running `./install`, open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
+
+**Current scripts:**
+- `quick-capture-obsidian.sh` — quick-capture a note to the Obsidian inbox
+
+A `script-command.template.sh` is included as a starting point for new scripts.
 
 ### Editors
 
@@ -423,6 +438,7 @@ dotfiles/
     ├── git/                  # Git config + identity template (.gitconfig-user.example)
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── raycast/              # Raycast script commands (symlinked to ~/.config/raycast/scripts)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
@@ -651,6 +667,15 @@ Drop a file in `zsh/lib/yourfile.zsh` — it will be sourced automatically next 
 ### New bin script
 
 Drop it in `bin/` — Dotbot glob-symlinks the whole directory to `~/bin`, so it's in PATH after `./install`.
+
+### New Raycast script command
+
+1. Copy `config/raycast/scripts/script-command.template.sh` to a new file in the same directory
+2. Edit the `@raycast.*` metadata comments and add your logic
+3. Make it executable: `chmod +x config/raycast/scripts/your-script.sh`
+4. Run `./install` (or it will be picked up automatically if the symlink is already in place)
+
+See the [Raycast script commands docs](https://github.com/raycast/script-commands) for the full metadata spec.
 
 ### New tealdeer custom page
 
