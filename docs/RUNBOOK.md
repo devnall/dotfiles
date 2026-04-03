@@ -702,3 +702,15 @@ cheat.sh stash        # find stash-related entries across all files
 - Both are covered by the `*.local` gitignore pattern and sourced silently at shell startup.
 - If you accidentally commit a secret: rotate it immediately, then scrub it from git history.
 - **Git identity** (`name`, `email`, `signingkey`) lives in `config/git/.gitconfig-user` — gitignored, never tracked. Copy from `config/git/.gitconfig-user.example` on each new machine.
+
+### Jellyfish OTEL telemetry (work machines)
+
+Claude Code usage telemetry is sent to Jellyfish via OTEL on work machines. Generic OTEL config (`CLAUDE_CODE_ENABLE_TELEMETRY`, `OTEL_METRICS_EXPORTER`, `OTEL_EXPORTER_OTLP_PROTOCOL`) lives in `env/work.zsh` (tracked). The org-specific endpoint and bearer token must be added to `~/.secrets.local` on each work machine:
+
+```bash
+# Jellyfish OTEL — org-specific endpoint and auth
+export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="https://app.jellyfish.co/ingest-webhooks/claude/<org-id>"
+export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer <token>"
+```
+
+Retrieve the actual values from the 1Password item "dotfiles local config" for your machine. Claude Code inherits these env vars from the parent shell — no changes to `~/.claude/settings.json` needed.
