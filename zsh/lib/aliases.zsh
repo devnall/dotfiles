@@ -14,11 +14,6 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
     alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
     alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
     alias lt='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first --tree --level=3'
-  elif [[ -f "$HOMEBREW_PREFIX/bin/exa" ]]; then
-    alias l='exa -laFh --color-scale --icons --git'
-    alias ll='exa -laFh --time-style=long-iso --group --binary --color-scale --icons --git --group-directories-first'
-    alias la='exa -aFh --color-scale'
-    echo 'exa is deprecated, switch to eza'
   else
     alias l='ls -lAhF ${ls_colorflag}'
     alias ll='ls -lhF ${ls_colorflag}'
