@@ -27,7 +27,7 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
   fi
 else # Linux
   ls_colorflag="--color"
-  if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
+  if command -v eza > /dev/null; then
     alias l='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first'
     alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
     alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
