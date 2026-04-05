@@ -73,6 +73,8 @@ dotfiles/
     │   └── lua/
     │       ├── config/        # options, keymaps, autocmds, appearance
     │       └── plugins/       # One lazy.nvim spec per plugin concern
+    ├── raycast/              # Raycast script commands (settings synced by Raycast Premium)
+    │   └── scripts/          # Script commands dir (symlinked to ~/.config/raycast/scripts)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
@@ -136,10 +138,11 @@ dotfiles/
 
 - Passwords, API keys, and tokens MUST NOT be committed to version control.
 - `.gitignore` must explicitly exclude `*.local`, `.env*`, `*secrets*`, and `*.key`.
-- **Local override files** (both gitignored, sourced silently, skipped without error if absent):
+- **Local override files** (all gitignored, skipped without error if absent):
   - `~/.env.local` — machine-specific exports, PATH additions, non-secret config
   - `~/.secrets.local` — credentials, API keys, tokens
-- **Sourcing order:** `~/.env.local` first, then `~/.secrets.local` at the very end of `zshrc.zsh`.
+  - `~/.claude/settings.local.json` — machine-specific Claude Code config (deep-merged with `~/.claude/settings.json` at runtime; use for work-only integrations, local MCP servers, etc.)
+- **Sourcing order:** `~/.env.local` first, then `~/.secrets.local` at the very end of `zshrc.zsh`. Claude settings are merged by Claude Code at startup, not by the shell.
 
 ### 3.6 Editor Configuration
 

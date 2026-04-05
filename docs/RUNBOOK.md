@@ -27,7 +27,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
 - **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
 - **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
-- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, and `packages/Brewfile.local` with commented templates if they don't exist
+- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, `~/.claude/settings.local.json`, and `packages/Brewfile.local` with commented templates if they don't exist
 - **Display type detection** (macOS) — detects ultrawide vs widescreen displays, stores fallback at `~/.local/state/display-type`
 - **Wallpapers repo** (macOS) — prompts to clone the wallpapers repo to `~/Pictures/wallpapers/` for folder-based rotation. Validates existing clones (correct remote, has images)
 - **Mise runtimes** — offers to run `mise install` to provision language toolchains
@@ -60,6 +60,10 @@ Applies preferred system preferences: Dock (auto-hide, small icons, no recents),
 
 The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
 
+### 6. Configure Raycast script commands (one-time)
+
+Open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
+
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
 **Backup/restore:** Before running, you can snapshot current values:
@@ -80,6 +84,25 @@ killall Dock                                                  # apply
 | `~/.env.local` | Machine-specific exports, PATH additions, non-secret config |
 | `~/.secrets.local` | API keys, tokens, credentials — never commit |
 | `~/.ssh/config.local` | Per-machine SSH host entries (not tracked) |
+| `~/.claude/settings.local.json` | Machine-specific Claude Code config (deep-merged with settings.json) |
+
+### Local files: backup & migration
+
+These untracked files contain machine-specific config that won't survive a wipe or new-machine setup. Back them up to 1Password (or your vault of choice) periodically and before migrating.
+
+| File | What to back up | Sensitive? |
+|------|----------------|-----------|
+| `~/.work` / `~/.personal` / `~/.remote*` | Just remember which marker to `touch` | No |
+| `~/.env.local` | Full file contents | Maybe |
+| `~/.secrets.local` | Full file contents | **Yes** — store in 1Password |
+| `~/.ssh/config.local` | Full file contents | Maybe |
+| `config/git/.gitconfig-user` | name, email, signingkey values | No |
+| `config/git/.gitconfig-work` | name, email, signingkey values (work machines) | No |
+| `packages/Brewfile.local` | Full file contents | No |
+| `~/.claude/settings.local.json` | Full file contents | Maybe |
+| `~/.local/state/display-type` | Single word (`widescreen` / `ultrawide`) — auto-detected, low priority | No |
+
+**Recommended workflow:** Create a secure note in 1Password called "dotfiles local config — \<machine name\>" and paste the contents of each file. Update it when you make significant changes to any local file. On a new machine, run `bootstrap.sh` first (creates stubs), then paste saved contents into each file.
 
 ---
 
@@ -174,6 +197,17 @@ Repos are organized by identity under `~/code/`:
 The `~/code/work/` directory triggers `includeIf` in git config, loading `.gitconfig-work` which overrides `user.name`, `user.email`, and `user.signingkey` for all repos cloned there. Repos anywhere else use the default personal identity from `.gitconfig-user`.
 
 Bootstrap creates these directories automatically (`~/code/work/` only on work machines).
+
+### Raycast script commands
+
+Custom [Raycast script commands](https://github.com/raycast/script-commands) live in `config/raycast/scripts/`, symlinked to `~/.config/raycast/scripts/` by dotbot. Raycast settings, keybinds, and extensions are synced by Raycast Premium — only script commands are managed here.
+
+**One-time setup:** After running `./install`, open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
+
+**Current scripts:**
+- `quick-capture-obsidian.sh` — quick-capture a note to the Obsidian inbox
+
+A `script-command.template.sh` is included as a starting point for new scripts.
 
 ### Editors
 
@@ -404,6 +438,7 @@ dotfiles/
     ├── git/                  # Git config + identity template (.gitconfig-user.example)
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
+    ├── raycast/              # Raycast script commands (symlinked to ~/.config/raycast/scripts)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)
@@ -481,8 +516,9 @@ mas search "App Name"       # find an app's ID
 
 ### Manual applications (personal machines)
 
-Some apps are not available via Homebrew or the Mac App Store and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
+Some apps are not available via Homebrew or the Mac App Store, or have stunted features if installed via those routes, and must be installed manually from vendor websites. These are documented as `# Download:` comments in `Brewfile.personal`:
 
+- **Tailscale** - the "Standalone Variant" has features unavailable in the MAS version, and gets updates more frequently. Download and install it from https://pkgs.tailscale.com/stable/#macos
 - **Audio production platform managers** — install these first, then use them to install individual plugins (Native Access, IK Product Manager, Spitfire Audio, etc.)
 - **Standalone audio apps** — synth tutorials, amp sims, etc.
 - **Non-audio apps** — apps whose Homebrew cask is deprecated or was never available (Affinity Photo 2, Aqua Voice, etc.)
@@ -632,6 +668,15 @@ Drop a file in `zsh/lib/yourfile.zsh` — it will be sourced automatically next 
 
 Drop it in `bin/` — Dotbot glob-symlinks the whole directory to `~/bin`, so it's in PATH after `./install`.
 
+### New Raycast script command
+
+1. Copy `config/raycast/scripts/script-command.template.sh` to a new file in the same directory
+2. Edit the `@raycast.*` metadata comments and add your logic
+3. Make it executable: `chmod +x config/raycast/scripts/your-script.sh`
+4. Run `./install` (or it will be picked up automatically if the symlink is already in place)
+
+See the [Raycast script commands docs](https://github.com/raycast/script-commands) for the full metadata spec.
+
 ### New tealdeer custom page
 
 Create `docs/tldr/my-<topic>.page.md` following the [tldr page format](https://github.com/tldr-pages/tldr/blob/main/contributing-guides/style-guide.md):
@@ -682,3 +727,15 @@ cheat.sh stash        # find stash-related entries across all files
 - Both are covered by the `*.local` gitignore pattern and sourced silently at shell startup.
 - If you accidentally commit a secret: rotate it immediately, then scrub it from git history.
 - **Git identity** (`name`, `email`, `signingkey`) lives in `config/git/.gitconfig-user` — gitignored, never tracked. Copy from `config/git/.gitconfig-user.example` on each new machine.
+
+### Jellyfish OTEL telemetry (work machines)
+
+Claude Code usage telemetry is sent to Jellyfish via OTEL on work machines. Generic OTEL config (`CLAUDE_CODE_ENABLE_TELEMETRY`, `OTEL_METRICS_EXPORTER`, `OTEL_EXPORTER_OTLP_PROTOCOL`) lives in `env/work.zsh` (tracked). The org-specific endpoint and bearer token must be added to `~/.secrets.local` on each work machine:
+
+```bash
+# Jellyfish OTEL — org-specific endpoint and auth
+export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT="https://app.jellyfish.co/ingest-webhooks/claude/<org-id>"
+export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer <token>"
+```
+
+Retrieve the actual values from the 1Password item "dotfiles local config" for your machine. Claude Code inherits these env vars from the parent shell — no changes to `~/.claude/settings.json` needed.

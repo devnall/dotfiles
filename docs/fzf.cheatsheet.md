@@ -22,6 +22,13 @@
 
 - `preview` — open fzf with bat syntax-highlighted preview (`fzf --preview 'bat --color "always" {}'`)
 
+## tmux Integration
+
+| Key | Action |
+|-----|--------|
+| `C-a u` | Fuzzy-search URLs in current tmux pane; open or copy to clipboard (via tmux-fzf-url plugin) |
+| `C-a S` | SSH to host via fzf fuzzy picker (custom script) |
+
 ## Reference
 
 - [fzf](https://junegunn.github.io/fzf/)

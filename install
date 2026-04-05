@@ -12,3 +12,14 @@ cd "${BASEDIR}"
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+# Cache 1Password CLI completions (avoids macOS TCC prompt on every shell launch)
+if command -v op &> /dev/null; then
+  _op_cache="${XDG_CACHE_HOME:-$HOME/.cache}/op/completion.zsh"
+  mkdir -p "$(dirname "$_op_cache")"
+  op completion zsh > "$_op_cache" 2>/dev/null && \
+    echo "1Password CLI completions cached." || \
+    echo "Note: Could not cache 1Password completions. Run 'op-refresh-completions' in a new shell."
+else
+  echo "Note: 1Password CLI (op) not found. After installing, run 'op-refresh-completions' to enable completions."
+fi

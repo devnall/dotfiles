@@ -234,6 +234,10 @@ create_stub "$DOTFILES_DIR/packages/Brewfile.local" \
 # cask \"example\"" \
 "packages/Brewfile.local"
 
+create_stub "$HOME/.claude/settings.local.json" \
+"{}" \
+"~/.claude/settings.local.json"
+
 # --- 9. Display type detection (macOS only) ---
 # theme-switch auto-detects per-display aspect ratios at runtime, so this
 # fallback file is only used when system_profiler is unavailable.
