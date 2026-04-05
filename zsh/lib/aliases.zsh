@@ -27,11 +27,22 @@ if [[ `uname` == 'Darwin' ]]; then # MacOS
   fi
 else # Linux
   ls_colorflag="--color"
-  alias l='ls -lAhF ${ls_colorflag}'
-  alias ll='ls -lhF ${ls_colorflag}'
-  alias la='ls -AhF ${ls_colorflag}'
-  alias lsa='ls -lahF ${ls_colorflag}'
-  alias lsal='ls -lahF ${ls_colorflag} | less -R'
+  if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
+    alias l='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first'
+    alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
+    alias lt='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first --tree --level=3'
+  else
+    alias l='ls -lAhF ${ls_colorflag}'
+    alias ll='ls -lhF ${ls_colorflag}'
+    alias la='ls -AhF ${ls_colorflag}'
+    alias lsa='ls -lahF ${ls_colorflag}'
+    alias lsal='ls -lahF ${ls_colorflag} | less -R'
+  fi
+  # Fix other-writable (ow) directory color: default 34;42 (blue on ANSI green) is
+  # unreadable on dark terminal themes where ANSI green maps to a dark color.
+  # 1;34 = bold blue, no background — readable on any theme.
+  export LS_COLORS="${LS_COLORS:+$LS_COLORS:}ow=1;34:tw=1;36"
 fi
 
 # Other
