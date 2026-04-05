@@ -59,14 +59,14 @@ alias k8='kubectl'
 alias cls='printf "\033c"'   # clear screen
 
 # If prettyping is installed, use it instead of ping
-if [[ -f "$HOMEBREW_PREFIX/bin/prettyping" ]]; then
+if command -v prettyping > /dev/null; then
   alias ping="prettyping --nolegend"
 fi
 
 # If btop or htop is installed, use it instead of top
-if [[ -f "$HOMEBREW_PREFIX/bin/btop" ]]; then
+if command -v btop > /dev/null; then
   alias top="btop"
-elif [[ -f "$HOMEBREW_PREFIX/bin/htop" ]]; then
+elif command -v htop > /dev/null; then
   alias top="htop"
 fi
 
@@ -76,7 +76,7 @@ if [[ -f "$HOMEBREW_PREFIX/bin/gdate" ]]; then
 fi
 
 # If ncdu is installed, use it instead of du
-if [[ -f "$HOMEBREW_PREFIX/bin/ncdu" ]]; then
+if command -v ncdu > /dev/null; then
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 fi
 
