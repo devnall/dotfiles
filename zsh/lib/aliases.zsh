@@ -9,7 +9,7 @@ alias _='sudo'
 if [[ `uname` == 'Darwin' ]]; then # MacOS
   ls_colorflag="-G"
   alias lsal='CLICOLOR_FORCE=1 ls -lahF ${ls_colorflag} | less -R'
-  if [[ -f "$HOMEBREW_PREFIX/bin/eza" ]]; then
+  if command -v eza > /dev/null; then
     alias l='eza --long --all --classify --time-style=relative --color-scale size --no-permissions --octal-permissions --icons --git --group-directories-first'
     alias ll='eza --long --all --header --classify --time-style=long-iso --group --color-scale size --octal-permissions --icons --git --git-repos --group-directories-first'
     alias la='eza --long --all --header --classify --time-style=long-iso --group --color-scale age --octal-permissions --icons --git --git-repos --group-directories-first'
@@ -66,7 +66,7 @@ elif command -v htop > /dev/null; then
 fi
 
 # If GNU date is installed, use it instead of old date shipped w/ MacOS
-if [[ -f "$HOMEBREW_PREFIX/bin/gdate" ]]; then
+if command -v gdate > /dev/null; then
   alias date="gdate"
 fi
 
