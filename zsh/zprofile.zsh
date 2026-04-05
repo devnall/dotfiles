@@ -1,7 +1,7 @@
 # Set up Homebrew environment (PATH, MANPATH, INFOPATH, HOMEBREW_PREFIX, etc.)
 # This runs in .zprofile so all login shells — interactive or not — get correct PATH ordering.
-if [ "$(uname -m)" = "arm64" ]; then
+if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ "$(uname -m)" = "x86_64" ]; then
+elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi

@@ -28,7 +28,7 @@ fi
 
 # 1Password CLI completions — cached to avoid triggering macOS TCC prompts on
 # every shell launch. Run `op-refresh-completions` to regenerate after upgrades.
-if [[ -f $HOMEBREW_PREFIX/bin/op ]]; then
+if command -v op > /dev/null; then
   _op_comp_cache="${XDG_CACHE_HOME:-$HOME/.cache}/op/completion.zsh"
   if [[ -f "$_op_comp_cache" ]]; then
     source "$_op_comp_cache"
