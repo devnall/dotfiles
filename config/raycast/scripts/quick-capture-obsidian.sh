@@ -9,13 +9,14 @@
 INBOX="$HOME/Documents/Obsidian/KB/Inbox/"
 DATE=$(date +%Y%m%d)
 TIME=$(date +%H-%M-%S)
+CREATED=$(date +%Y-%m-%dT%H:%M)
 FILENAME="${DATE} ${TIME} Capture.md"
 
 cat >"$INBOX/$FILENAME" <<EOF
 ---
 status: inbox
-type: note
-created: ${DATE}
+type: capture
+created: ${CREATED}
 ---
 # ${DATE} Capture
 
