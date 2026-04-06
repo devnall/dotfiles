@@ -26,7 +26,7 @@ function current_branch() {
 
 # Subset of aliases that should only be used if not using forgit plugin <github.com/wfxr/forgit>
 function forgit_alias_check() {
-  if ! command -v forgit::info > /dev/null; then
+  if ! command -v forgit::add > /dev/null; then
     alias ga='git add'
     alias glo='git log --oneline --decorate'
     alias grh='git reset'
