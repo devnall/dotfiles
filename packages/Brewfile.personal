@@ -3,6 +3,7 @@
 # Sourced by install when ~/.personal marker exists
 
 # Casks
+cask "zoom"
 
 # Mac App Store
 mas "Anytune", id: 722444976
@@ -49,4 +50,3 @@ mas "Unread", id: 1363637349
 # cask "qflipper"          # Flipper Zero utility — 20260315
 # cask "signal"            # 20260315
 # cask "zen"               # 20260323
-# cask "zoom"              # 20260315
