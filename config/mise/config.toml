@@ -1,7 +1,7 @@
 [tools]
 go = "1"
 lua = "5"
-node = "25"
+node = "24.11"
 python = "3"
-ruby = "4"
+ruby = "3.4.8"
 terraform = "1"
