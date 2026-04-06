@@ -110,6 +110,7 @@ cask "thaw"                # menubar manager
 cask "visual-studio-code"
 cask "vivaldi"
 cask "vlc"
+cask "zoom"
 
 # Mac App Store
 brew "mas"               # Mac App Store CLI
