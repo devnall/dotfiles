@@ -18,7 +18,7 @@ copy-on-select = clipboard
 window-padding-x = 8
 window-padding-y = 8,0
 window-padding-balance = true
-window-save-state = always
+window-save-state = default
 
 # transparency & blur
 # tried this, marginally preferred it in light mode, didn't like in dark
