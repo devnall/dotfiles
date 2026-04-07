@@ -15,7 +15,6 @@ tap "cormacrelf/tap"
 brew "cormacrelf/tap/dark-notify"     # macOS appearance change callback
 
 # Core CLI utilities
-brew "awscli"
 brew "bat"            # better cat
 brew "btop"           # better top
 brew "coreutils"
