@@ -6,4 +6,8 @@
 Include ~/.ssh/config.local
 
 Host *
+  AddKeysToAgent yes
+
+# 1Password SSH agent (macOS only — socket doesn't exist on Linux)
+Match exec "test $(uname) = Darwin"
   IdentityAgent "~/.1p-agent.sock"

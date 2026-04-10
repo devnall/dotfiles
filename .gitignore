@@ -77,6 +77,7 @@ Thumbs.db
 # Git identity (copy from .gitconfig-*.example; keep untracked)
 config/git/.gitconfig-user
 config/git/.gitconfig-work
+config/git/.gitconfig-darwin
 
 # Live theme-switched configs (mutable at runtime, initialized from *.default)
 config/btop/btop.conf

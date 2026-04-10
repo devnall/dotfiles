@@ -10,6 +10,8 @@
       description: Initialize starship.toml from default (no-overwrite)
     - command: '[[ "$(uname)" == "Darwin" ]] && ln -sf "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" "$HOME/.1p-agent.sock" || true'
       description: Create no-space symlink for 1Password SSH agent socket (macOS only)
+    - command: '[[ "$(uname)" == "Darwin" ]] && printf "[credential]\n  helper = osxkeychain\n" > config/git/.gitconfig-darwin || rm -f config/git/.gitconfig-darwin; true'
+      description: Create .gitconfig-darwin on macOS (credential helper); remove on Linux
 
 # Link convention:
 #   force: true  — repo-authoritative config, always overwrite the target

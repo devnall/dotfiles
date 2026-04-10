@@ -1,6 +1,6 @@
 # This is Git's per-user configuration file
-[credential]
-  helper = osxkeychain
+# macOS: osxkeychain is included via .gitconfig-darwin (created by install)
+# Linux: no credential helper needed for SSH-based remotes
 [alias]
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
   lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
@@ -65,6 +65,7 @@
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com"
 [include]
+  path = ~/.dotfiles/config/git/.gitconfig-darwin
   path = ~/.dotfiles/config/git/.gitconfig-user
 [includeIf "gitdir:~/code/work/"]
   path = ~/.dotfiles/config/git/.gitconfig-work

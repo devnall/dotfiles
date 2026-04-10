@@ -126,9 +126,11 @@ All files in `zsh/lib/` are sourced automatically by `zshrc.zsh` in alphabetical
 
 ### SSH config
 
-`config/ssh/config` is symlinked to `~/.ssh/config`. It contains the universal `Host *` block (1Password SSH agent) and an `Include ~/.ssh/config.local` directive.
+`config/ssh/config` is symlinked to `~/.ssh/config`. It contains a universal `Host *` block with `AddKeysToAgent yes`, an `Include ~/.ssh/config.local` directive, and a `Match exec` block that activates the 1Password SSH agent on macOS only.
 
-The `IdentityAgent` path uses `~/.1p-agent.sock` — a no-space symlink created by `./install` pointing to the real 1Password socket at `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`. The symlink is needed because the space in that path breaks `SSH_AUTH_SOCK` sourcing in some env files.
+**macOS:** `IdentityAgent` points to `~/.1p-agent.sock` — a no-space symlink created by `./install` pointing to the real 1Password socket at `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`. The symlink is needed because the space in that path breaks `SSH_AUTH_SOCK` sourcing in some env files.
+
+**Linux (remote-full):** The `IdentityAgent` directive is skipped via `Match exec`. Instead, `zsh/lib/ssh.zsh` starts a persistent `ssh-agent` and caches the socket in `~/.ssh/agent.env`. Keys are added on first use (via `AddKeysToAgent yes`) — you'll be prompted for the passphrase once per agent lifetime. To pre-load a key: `ssh-add ~/.ssh/id_ed25519`.
 
 Machine-specific hosts (private IPs, internal hostnames, jump hosts) go in `~/.ssh/config.local` on each machine — this file is not tracked by dotfiles.
 
@@ -164,7 +166,7 @@ op read "op://VaultName/Item/field"    # read a single secret value (scriptable)
 
 All commits are signed (`commit.gpgsign = true` in shared git config, `gpg.format = ssh`). Each machine needs its `user.signingkey` set to the SSH public key string from 1Password.
 
-**Setup (per machine):**
+**Setup (per macOS machine):**
 
 1. Open 1Password → find your SSH key item → copy the public key (starts with `ssh-ed25519 AAAA...`)
 2. Paste it as the `signingkey` value in `config/git/.gitconfig-user`:
@@ -181,6 +183,12 @@ All commits are signed (`commit.gpgsign = true` in shared git config, `gpg.forma
    echo "test" | git commit-tree HEAD^{tree}   # should not error
    git log --show-signature -1                   # or check GitHub for "Verified" badge
    ```
+
+**Remote-full (Linux) machines:** Commit signing is disabled by default via `env/remote-full.zsh` (sets `commit.gpgsign=false` through `GIT_CONFIG_*` env vars) because the 1Password SSH agent is not available. To opt in to signing on a remote machine:
+
+1. Set `user.signingkey` in `config/git/.gitconfig-user` to the SSH public key
+2. Ensure the corresponding private key is loaded in the ssh-agent: `ssh-add ~/.ssh/id_ed25519`
+3. Override the env default: `git config --global commit.gpgsign true`
 
 **Note:** `allowed_signers` is intentionally not configured. GitHub handles signature verification via uploaded signing keys — local `git log --show-signature` won't show "Good signature" without it, but GitHub's Verified badge works.
 
