@@ -65,6 +65,9 @@ dotfiles/
     │   ├── .gitconfig-user   # Local git identity (gitignored)
     │   ├── .gitconfig-work.example  # Template for work identity (copy to .gitconfig-work)
     │   └── .gitconfig-work   # Work git identity (gitignored, work machines only)
+    ├── glow/                 # Markdown renderer config + custom glamour styles
+    │   ├── glow.yml
+    │   └── styles/           # NordicPine (dark) and AlpineDawn (light) JSON
     ├── macos/                # macOS setup/defaults scripts
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)

@@ -255,6 +255,7 @@ Desktop wallpaper (macOS):
 | Desktop wallpaper | Immediately (desktoppr) |
 | zsh syntax highlighting | Next prompt |
 | btop | Next launch |
+| glow | Next invocation (zsh wrapper reads `~/.local/state/appearance`) |
 
 ### Troubleshooting
 
@@ -436,6 +437,9 @@ dotfiles/
     ├── btop/
     ├── ghostty/
     ├── git/                  # Git config + identity template (.gitconfig-user.example)
+    ├── glow/                 # Markdown renderer config + custom glamour styles
+    │   ├── glow.yml
+    │   └── styles/           # NordicPine (dark) and AlpineDawn (light) JSON
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── raycast/              # Raycast script commands (symlinked to ~/.config/raycast/scripts)
