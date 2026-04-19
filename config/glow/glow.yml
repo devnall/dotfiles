@@ -1,0 +1,10 @@
+# glow config
+# https://github.com/charmbracelet/glow
+#
+# Note: the `style` field is intentionally unset. The `glow` zsh function in
+# zsh/lib/aliases.zsh injects `-s <path>` based on ~/.local/state/appearance
+# (written by bin/theme-switch), so the correct NordicPine/AlpineDawn JSON
+# under styles/ is selected per-invocation. To override, pass `-s` yourself.
+
+pager: true
+word-wrap: 100

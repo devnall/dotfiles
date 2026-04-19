@@ -88,6 +88,9 @@
       path: config/bat/themes/rose-pine-dawn.tmTheme
     ~/.config/btop:
       path: config/btop
+    ~/.config/glow:
+      path: config/glow
+      force: true
 
     # Raycast
     ~/.config/raycast/scripts:

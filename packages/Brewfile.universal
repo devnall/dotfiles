@@ -25,6 +25,7 @@ brew "fd"             # better find
 brew "ffmpeg"         # video processing
 brew "fzf"            # fuzzy finder
 brew "gawk"
+brew "glow"           # markdown renderer / pager
 brew "gnu-sed"
 brew "gnu-tar"
 brew "grep"

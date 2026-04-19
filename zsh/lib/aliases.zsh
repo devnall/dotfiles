@@ -85,6 +85,26 @@ if command -v bat > /dev/null; then
   alias bat_='bat --show-all'
 fi
 
+# glow — pick NordicPine/AlpineDawn style based on appearance state
+# (~/.local/state/appearance is written by bin/theme-switch). Glow's own
+# `style: auto` detection is unreliable in tmux/Ghostty, so we inject -s.
+# If the caller passes -s/--style explicitly, we defer to that.
+if command -v glow > /dev/null; then
+  glow() {
+    local arg
+    for arg in "$@"; do
+      case "$arg" in
+        -s|--style|--style=*) command glow "$@"; return ;;
+      esac
+    done
+    local style="$HOME/.config/glow/styles/nordicpine.json"
+    if [[ -f "$HOME/.local/state/appearance" && "$(<$HOME/.local/state/appearance)" == "light" ]]; then
+      style="$HOME/.config/glow/styles/alpinedawn.json"
+    fi
+    command glow -s "$style" "$@"
+  }
+fi
+
 # Retrain my youtube-dl muscle memory
 alias youtube-dl='echo "Use yt-dlp instead!"'
 
