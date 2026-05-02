@@ -129,10 +129,6 @@ Applies preferred system preferences: Dock (auto-hide, small icons, no recents),
 
 The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
 
-### 6. Configure Raycast script commands (one-time)
-
-Open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
-
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
 **Backup/restore:** Before running, you can snapshot current values:
@@ -142,6 +138,10 @@ defaults export com.apple.dock /tmp/dock-backup.plist       # backup
 defaults import com.apple.dock /tmp/dock-backup.plist        # restore
 killall Dock                                                  # apply
 ```
+
+### 6. Configure Raycast script commands (one-time)
+
+Open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
 
 ### Quick reference
 
