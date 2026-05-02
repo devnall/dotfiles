@@ -131,7 +131,7 @@ The script is idempotent and prompts before applying. It is **not** called by `.
 
 ### 6. Configure Raycast script commands (one-time)
 
-Open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
+Open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
 
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
@@ -271,7 +271,7 @@ Bootstrap creates these directories automatically (`~/code/work/` only on work m
 
 Custom [Raycast script commands](https://github.com/raycast/script-commands) live in `config/raycast/scripts/`, symlinked to `~/.config/raycast/scripts/` by dotbot. Raycast settings, keybinds, and extensions are synced by Raycast Premium — only script commands are managed here.
 
-**One-time setup:** After running `./install`, open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
+**One-time setup:** After running `./install`, open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
 
 **Current scripts:**
 - `quick-capture-obsidian.sh` — quick-capture a note to the Obsidian inbox
