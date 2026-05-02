@@ -174,10 +174,14 @@ if [[ "$(uname)" == "Darwin" ]]; then
   else
     info "1Password SSH agent setup:"
     info "  1. Open 1Password and sign in"
-    info "  2. Settings → Developer → enable 'Use the SSH agent'"
-    info "  3. Add your SSH key item to 1Password if not already present"
-    info "  4. Upload the public key to GitHub: https://github.com/settings/keys"
-    info "     Add it as BOTH an Authentication key AND a Signing key"
+    info "  2. Settings → Developer → click 'Set Up SSH Agent...'"
+    info "     (1Password will offer to edit ~/.ssh/config — accept)"
+    info "  3. Existing SSH keys in any 1Password vault are auto-discovered."
+    info "     No need to generate a new key if you already have one stored."
+    info "     Verify with: ssh-add -L  (should list your keys)"
+    info "  4. Copy your SSH public key from its key item in 1Password"
+    info "  5. Upload to GitHub: https://github.com/settings/keys"
+    info "     Add it TWICE: once as Authentication Key, once as Signing Key"
     read -rp "[→] Press Enter when done (or skip with Ctrl-C): " _
     if github_ssh_check; then
       success "GitHub SSH auth verified"

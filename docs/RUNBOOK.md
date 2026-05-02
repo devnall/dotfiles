@@ -42,10 +42,16 @@ Bootstrap will warn if missing. Required for git, compilers, and most dev tools.
 Bootstrap will install the app and CLI via Homebrew if you haven't already. Either way, you need to:
 
 - Sign into 1Password.
-- Enable SSH agent: `Settings → Developer → Use the SSH agent`.
-- Make sure your SSH key item exists in 1Password (or sync it down from another vault).
-- Upload the public key to GitHub at https://github.com/settings/keys — add it **twice**: once as an Authentication Key, once as a Signing Key.
-- Verify:
+- **Settings → Developer → click "Set Up SSH Agent..."**. 1Password will offer to write/modify `~/.ssh/config` — accept. (The dotfiles repo already includes an `IdentityAgent` directive in `config/ssh/config`; 1Password's edits are compatible and necessary to activate the agent.)
+- **Existing SSH keys in any 1Password vault are auto-discovered** by the agent. No need to generate a new key if you already have one stored. To verify the agent picked them up:
+  ```sh
+  ssh-add -L
+  # should list your public keys
+  ```
+- Only if you don't have an SSH key in 1Password yet: create one via 1Password → **New Item → SSH Key → Generate**.
+- Copy the public key from its key item in 1Password (there's a "Copy Public Key" action).
+- Upload to GitHub at https://github.com/settings/keys — add it **twice**: once as an Authentication Key, once as a Signing Key.
+- Verify end-to-end:
   ```sh
   ssh -T git@github.com
   # Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
