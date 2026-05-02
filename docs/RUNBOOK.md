@@ -4,6 +4,75 @@ Detailed reference for setting up, using, and maintaining these dotfiles.
 
 ---
 
+## New Mac onboarding (prerequisites)
+
+Complete these steps **before** cloning the repo and running `bootstrap.sh`. The bootstrap wizard handles 1Password, App Store, and Apple Watch as gates, but the manual macOS-side actions (signing in, enabling features) still need to happen — bootstrap pauses for you, it doesn't click for you.
+
+### 1. macOS first-run
+
+- Sign into iCloud with your Apple ID.
+- Run Software Update (`System Settings → General → Software Update`) — get to the latest minor version before installing tools.
+- Connect to network.
+
+### 2. Apple Watch unlock (if applicable)
+
+If you have an Apple Watch and your Mac doesn't have built-in Touch ID (Mac Mini, Mac Studio, iMac without Magic Keyboard with Touch ID), set up Watch-approves-Mac unlock:
+
+- `System Settings → "Touch ID & Password"` (or `"Login Password"` on Macs without Touch ID like the Mac Mini) → toggle on your Apple Watch.
+- Prereqs: Watch paired with iPhone on the same Apple ID, two-factor authentication enabled.
+
+This turns every MAS install authentication and sudo prompt into a single Watch tap instead of typing your password.
+
+### 3. App Store sign-in
+
+Open the App Store and sign in with your Apple ID. **Do this before running bootstrap.** Otherwise every `mas install` re-prompts for your password from scratch — a dozen+ prompts for a personal Brewfile.
+
+MAS app associations are account-level, so apps obtained on prior Macs are recognized here. With Apple Watch unlock or Touch ID set up, installs are a tap each. Without either, you'll be typing your password per app.
+
+### 4. Xcode Command Line Tools
+
+```sh
+xcode-select --install
+```
+
+Bootstrap will warn if missing. Required for git, compilers, and most dev tools.
+
+### 5. 1Password setup
+
+Bootstrap will install the app and CLI via Homebrew if you haven't already. Either way, you need to:
+
+- Sign into 1Password.
+- **Settings → Developer → click "Set Up SSH Agent..."**. 1Password will offer to write/modify `~/.ssh/config` — accept. (The dotfiles repo already includes an `IdentityAgent` directive in `config/ssh/config`; 1Password's edits are compatible and necessary to activate the agent.)
+- **Existing SSH keys in any 1Password vault are auto-discovered** by the agent. No need to generate a new key if you already have one stored. To verify the agent picked them up:
+  ```sh
+  ssh-add -L
+  # should list your public keys
+  ```
+- Only if you don't have an SSH key in 1Password yet: create one via 1Password → **New Item → SSH Key → Generate**.
+- Copy the public key from its key item in 1Password (there's a "Copy Public Key" action).
+- Upload to GitHub at https://github.com/settings/keys — add it **twice**: once as an Authentication Key, once as a Signing Key.
+- Verify end-to-end:
+  ```sh
+  ssh -T git@github.com
+  # Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
+  ```
+
+See [Commit Signing with 1Password SSH Keys](#commit-signing-with-1password-ssh-keys) for the per-machine signing key configuration that follows.
+
+**Why Homebrew cask vs Mac App Store for 1Password:** the cask wraps the official direct-download installer (full functionality — SSH agent, browser integration, biometric unlock). The MAS build is more sandboxed and historically had reduced features. 1Password's in-app updater handles updates independently of `brew upgrade`.
+
+### 6. Apple Silicon note
+
+Rosetta 2 is **not** installed by default and is **not** auto-installed by bootstrap. Some apps (Steam Link, certain audio plugins, older vendor tools) require it. Install on demand:
+
+```sh
+softwareupdate --install-rosetta --agree-to-license
+```
+
+Steam Link specifically has been removed from `Brewfile.personal` for this reason — see the `# Download:` comment there for the manual install link.
+
+---
+
 ## New Machine Setup
 
 ### 1. Clone the repo
@@ -60,10 +129,6 @@ Applies preferred system preferences: Dock (auto-hide, small icons, no recents),
 
 The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
 
-### 6. Configure Raycast script commands (one-time)
-
-Open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
-
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
 **Backup/restore:** Before running, you can snapshot current values:
@@ -73,6 +138,10 @@ defaults export com.apple.dock /tmp/dock-backup.plist       # backup
 defaults import com.apple.dock /tmp/dock-backup.plist        # restore
 killall Dock                                                  # apply
 ```
+
+### 6. Configure Raycast script commands (one-time)
+
+Open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
 
 ### Quick reference
 
@@ -202,7 +271,7 @@ Bootstrap creates these directories automatically (`~/code/work/` only on work m
 
 Custom [Raycast script commands](https://github.com/raycast/script-commands) live in `config/raycast/scripts/`, symlinked to `~/.config/raycast/scripts/` by dotbot. Raycast settings, keybinds, and extensions are synced by Raycast Premium — only script commands are managed here.
 
-**One-time setup:** After running `./install`, open **Raycast Settings → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
+**One-time setup:** After running `./install`, open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
 
 **Current scripts:**
 - `quick-capture-obsidian.sh` — quick-capture a note to the Obsidian inbox

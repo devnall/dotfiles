@@ -7,10 +7,12 @@ Includes configs for zsh, tmux, Neovim, Ghostty, Starship, and more.
 
 ### First-time setup
 
+> **New Mac?** Complete the [prerequisites](docs/RUNBOOK.md#new-mac-onboarding-prerequisites) (App Store sign-in, Apple Watch unlock, 1Password + SSH keys) before running bootstrap.
+
 ```sh
 git clone --recursive git@github.com:devnall/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-./bin/bootstrap.sh    # Xcode CLT, Homebrew, machine-type marker, git identity, mise
+./bin/bootstrap.sh    # Xcode CLT, Homebrew, 1Password, machine-type marker, git identity, mise
 ./install             # symlinks everything, installs Brewfile packages
 ```
 

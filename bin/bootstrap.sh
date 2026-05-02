@@ -47,6 +47,13 @@ if [[ "$(uname)" == "Darwin" ]]; then
   fi
 fi
 
+# --- 1b. Apple Silicon advisory (macOS only) ---
+
+if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
+  info "Apple Silicon detected. Some apps (e.g., Steam Link) require Rosetta 2."
+  info "Not auto-installed. Run on demand: softwareupdate --install-rosetta --agree-to-license"
+fi
+
 # --- 2. Submodule check ---
 
 if [[ -d "$DOTFILES_DIR/dotbot" ]] && [[ -z "$(ls -A "$DOTFILES_DIR/dotbot" 2>/dev/null)" ]]; then
@@ -120,6 +127,102 @@ if [[ "$(uname)" == "Darwin" ]] || [[ -f "$HOME/.remote-full" ]]; then
     else
       warn "Skipped Homebrew install — you can install it later"
     fi
+  fi
+fi
+
+# --- 4a. 1Password setup (macOS only) ---
+# Cask wraps the official direct-download installer (full functionality:
+# SSH agent, browser integration, biometric unlock). MAS build is more
+# sandboxed and lacks features.
+
+p1_ssh_ok=false
+github_ssh_check() {
+  # ssh -T returns 1 even on successful auth; check stderr for the success message.
+  # || true swallows ssh's exit code so pipefail doesn't mask the grep result.
+  local output
+  output=$(ssh -o BatchMode=yes -o ConnectTimeout=5 -T git@github.com 2>&1 || true)
+  printf '%s' "$output" | grep -q "successfully authenticated"
+}
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [[ -d "/Applications/1Password.app" ]]; then
+    skip "1Password app"
+  elif command -v brew &>/dev/null; then
+    read -rp "[→] Install 1Password app? [Y/n]: " yn
+    if [[ "$yn" =~ ^[Nn]$ ]]; then
+      warn "Skipped 1Password app — install before using SSH agent for git"
+    else
+      info "Installing 1Password..."
+      brew install --cask 1password
+      success "1Password installed"
+    fi
+  else
+    warn "Homebrew not available — install 1Password from 1password.com manually"
+  fi
+
+  if command -v op &>/dev/null; then
+    skip "1Password CLI (op)"
+  elif command -v brew &>/dev/null; then
+    info "Installing 1Password CLI..."
+    brew install --cask 1password-cli
+    success "1Password CLI installed"
+  fi
+
+  if github_ssh_check; then
+    skip "1Password SSH agent → GitHub"
+    p1_ssh_ok=true
+  else
+    info "1Password SSH agent setup:"
+    info "  1. Open 1Password and sign in"
+    info "  2. Settings → Developer → click 'Set Up SSH Agent...'"
+    info "     (1Password will offer to edit ~/.ssh/config — accept)"
+    info "  3. Existing SSH keys in any 1Password vault are auto-discovered."
+    info "     No need to generate a new key if you already have one stored."
+    info "     Verify with: ssh-add -L  (should list your keys)"
+    info "  4. Copy your SSH public key from its key item in 1Password"
+    info "  5. Upload to GitHub: https://github.com/settings/keys"
+    info "     Add it TWICE: once as Authentication Key, once as Signing Key"
+    read -rp "[→] Press Enter when done (or skip with Ctrl-C): " _
+    if github_ssh_check; then
+      success "GitHub SSH auth verified"
+      p1_ssh_ok=true
+    else
+      warn "Could not verify GitHub SSH auth — fix before pushing or signing commits"
+    fi
+  fi
+fi
+
+# --- 4b. Apple Watch unlock advisory (macOS only) ---
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [[ -f "$HOME/.local/state/apple-watch-prompted" ]]; then
+    skip "Apple Watch unlock advisory"
+  else
+    info "Apple Watch unlock makes MAS installs and sudo prompts a single tap"
+    info "instead of repeated password entry. Especially useful on Macs without"
+    info "Touch ID (Mac Mini, Mac Studio, etc.)."
+    info "Setup: System Settings → 'Touch ID & Password' (or 'Login Password' on"
+    info "       Macs without Touch ID) → toggle on your Apple Watch"
+    info "Prereqs: Watch paired with iPhone on the same Apple ID, 2FA enabled."
+    read -rp "[→] Press Enter when ready (or skip if no Apple Watch): " _
+    mkdir -p "$HOME/.local/state"
+    touch "$HOME/.local/state/apple-watch-prompted"
+  fi
+fi
+
+# --- 4c. App Store sign-in gate (macOS personal/work only) ---
+
+if [[ "$(uname)" == "Darwin" ]] && { [[ -f "$HOME/.personal" ]] || [[ -f "$HOME/.work" ]]; }; then
+  if [[ -f "$HOME/.local/state/appstore-signin-prompted" ]]; then
+    skip "App Store sign-in gate"
+  else
+    warn "Sign into the App Store BEFORE continuing — otherwise every 'mas install'"
+    warn "will re-prompt for your Apple ID password from scratch."
+    info "Once signed in, expect a Touch ID / Apple Watch tap per app and possibly"
+    info "a one-time TOS or family-sharing confirmation. Not silent, but no loop."
+    read -rp "[→] Press Enter when signed in (or Ctrl-C to abort): " _
+    mkdir -p "$HOME/.local/state"
+    touch "$HOME/.local/state/appstore-signin-prompted"
   fi
 fi
 
@@ -366,7 +469,9 @@ if [[ -f "$HOME/.work" ]]; then
     todos+=("Edit config/git/.gitconfig-work with your work name, email, and signingkey")
   fi
 fi
-todos+=("Set up commit signing with 1Password SSH keys — see docs/RUNBOOK.md")
+if [[ "$p1_ssh_ok" != "true" ]]; then
+  todos+=("Set up commit signing with 1Password SSH keys — see docs/RUNBOOK.md")
+fi
 todos+=("Run 'gh auth login' once so gh works in non-TTY contexts (IDE shells, scripts)")
 if [[ -f "$HOME/.env.local" ]] && ! grep -qv '^#' "$HOME/.env.local" 2>/dev/null; then
   todos+=("Add machine-specific config to ~/.env.local")
