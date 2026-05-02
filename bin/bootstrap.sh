@@ -201,7 +201,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
     info "Apple Watch unlock makes MAS installs and sudo prompts a single tap"
     info "instead of repeated password entry. Especially useful on Macs without"
     info "Touch ID (Mac Mini, Mac Studio, etc.)."
-    info "Setup: System Settings → Touch ID & Password → toggle on Apple Watch"
+    info "Setup: System Settings → 'Touch ID & Password' (or 'Login Password' on"
+    info "       Macs without Touch ID) → toggle on your Apple Watch"
     info "Prereqs: Watch paired with iPhone on the same Apple ID, 2FA enabled."
     read -rp "[→] Press Enter when ready (or skip if no Apple Watch): " _
     mkdir -p "$HOME/.local/state"

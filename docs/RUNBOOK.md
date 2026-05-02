@@ -18,7 +18,7 @@ Complete these steps **before** cloning the repo and running `bootstrap.sh`. The
 
 If you have an Apple Watch and your Mac doesn't have built-in Touch ID (Mac Mini, Mac Studio, iMac without Magic Keyboard with Touch ID), set up Watch-approves-Mac unlock:
 
-- `System Settings → Touch ID & Password → Apple Watch` → toggle on.
+- `System Settings → "Touch ID & Password"` (or `"Login Password"` on Macs without Touch ID like the Mac Mini) → toggle on your Apple Watch.
 - Prereqs: Watch paired with iPhone on the same Apple ID, two-factor authentication enabled.
 
 This turns every MAS install authentication and sudo prompt into a single Watch tap instead of typing your password.
