@@ -18,7 +18,6 @@ mas "Paprika Recipe Manager 3", id: 1303222628
 mas "Parcel", id: 375589283
 mas "Pi Stats", id: 1514075262
 mas "Shareful", id: 1522267256
-mas "Steam Link", id: 1246969117
 mas "Unread", id: 1363637349
 
 # Audio production — platform managers (install first, then use to install plugins)
@@ -39,6 +38,7 @@ mas "Unread", id: 1363637349
 # Non-audio — manual install (no Homebrew cask available)
 # Download: Affinity Photo 2    — affinity.serif.com — photo editor (cask deprecated)
 # Download: Aqua Voice          — withaqua.com — speech-to-text
+# Download: Steam Link          — apps.apple.com/app/id1246969117 — requires Rosetta 2 on Apple Silicon (softwareupdate --install-rosetta --agree-to-license)
 
 # ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 6 months
