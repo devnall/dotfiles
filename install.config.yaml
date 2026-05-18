@@ -98,9 +98,6 @@
       force: true
 
     # AI tools
-    ~/.claude/settings.json:
-      path: config/claude/settings.json
-      force: true
     ~/.claude/statusline-command.sh:
       path: config/claude/statusline-command.sh
       force: true

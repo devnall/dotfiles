@@ -51,7 +51,8 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true
   },
   "extraKnownMarketplaces": {
     "claude-code-plugins": {
@@ -59,6 +60,14 @@
         "source": "github",
         "repo": "anthropics/claude-code"
       }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
     }
-  }
+  },
+  "effortLevel": "high",
+  "theme": "light"
 }
