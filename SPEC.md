@@ -1,7 +1,7 @@
 # Dotfiles Project Spec
 
 > **Version:** 5.0
-> **Purpose:** Architecture reference and task plan for the `~/.dotfiles` repo. Part A documents design decisions and constraints. Part B holds the current project's task plan (rotates per project).
+> **Purpose:** Architecture reference and task plan for the `~/.dotfiles` repo. Part A documents design decisions and constraints. Part B holds the **latest** project's task plan — in progress, or the most recently completed. It is overwritten by the next project's first commit, never reset to an idle state on its own (completed plans stay recoverable from this file's git history).
 >
 > **Repo:** `~/.dotfiles` (Dotbot-managed, macOS/zsh-centric, with Linux remote support)
 >
@@ -34,8 +34,6 @@ After all cleanup work is complete, these must all be true:
 ## Part B: Task Plan
 
 ### Project: Remote bat version upgrade helper
-
-> **Previous:** v4.0 Dotbot deep audit & optimization — completed. Install pipeline cleaned, config reorganized, RUNBOOK docs added.
 
 **Problem**
 
