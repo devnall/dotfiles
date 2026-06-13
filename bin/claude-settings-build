@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+#
+# claude-settings-build — generate ~/.claude/settings.json from layered sources
+#
+# Claude Code rewrites ~/.claude/settings.json at runtime (theme, model, effortLevel,
+# …). Tracking that file in git makes the tree perpetually dirty, and symlinking it is a
+# known Claude Code bug (perm failures + perf degradation). Instead we keep curated,
+# layered source files in the repo and deep-merge them onto the live file here, producing
+# a REAL (untracked) ~/.claude/settings.json that Claude can freely rewrite without churn.
+#
+# Deep-merge order (low → high precedence):
+#   1. ~/.claude/settings.local.json         legacy user-scope local — rescued (Claude
+#                                            does NOT read this at user scope), then retire
+#   2. ~/.claude/settings.json               live runtime values (theme/model/effort/…)
+#   3. config/claude/settings.shared.json    universal curated baseline (committed)
+#   4. config/claude/settings.<marker>.json  active marker layer (work|personal|remote*)
+#   5. config/claude/settings.local.json     per-machine overrides/secrets (gitignored)
+#
+# Merge rules: objects recurse, arrays union + dedup (so permission lists compose and
+# runtime "always allow" grants survive), scalars right-wins. Keys present only in the
+# live file (theme/model/effortLevel) are preserved untouched — no reset surprise.
+#
+# Idempotent. No-op (with a warning) where jq is unavailable (e.g. minimal .remote).
+
+# shellcheck disable=SC2088  # tilde in quoted output strings is intentional display text
+set -euo pipefail
+
+# Resolve this script's real location through any symlink (it is also linked into ~/bin).
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  src_dir="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$src_dir/$SOURCE"
+done
+DOTFILES_DIR="$(cd -P "$(dirname "$SOURCE")/.." && pwd)"
+
+CLAUDE_DIR="$HOME/.claude"
+TARGET="$CLAUDE_DIR/settings.json"
+CONFIG_DIR="$DOTFILES_DIR/config/claude"
+
+# --- Output helpers (match bin/bootstrap.sh) ---
+tput_available() { command -v tput >/dev/null 2>&1 && tput sgr0 >/dev/null 2>&1; }
+if tput_available; then
+  BOLD=$(tput bold); GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); RESET=$(tput sgr0)
+else
+  BOLD="" GREEN="" YELLOW="" RESET=""
+fi
+info()    { printf '%s[→]%s %s\n' "$BOLD"  "$RESET" "$1"; }
+success() { printf '%s[✓]%s %s\n' "$GREEN" "$RESET" "$1"; }
+warn()    { printf '%s[!]%s %s\n' "$YELLOW" "$RESET" "$1"; }
+
+# --- jq guard ---
+if ! command -v jq >/dev/null 2>&1; then
+  warn "jq not found — skipping ~/.claude/settings.json build"
+  exit 0
+fi
+
+# --- Detect active marker (first match wins, same order as bootstrap.sh) ---
+marker=""
+for m in work personal remote-full remote; do
+  if [[ -f "$HOME/.$m" ]]; then
+    marker="$m"
+    break
+  fi
+done
+
+# --- Resolve layer files (low → high precedence) ---
+legacy_local="$CLAUDE_DIR/settings.local.json"
+shared="$CONFIG_DIR/settings.shared.json"
+marker_layer=""
+[[ -n "$marker" ]] && marker_layer="$CONFIG_DIR/settings.$marker.json"
+repo_local="$CONFIG_DIR/settings.local.json"
+
+# Capture the live file. If it is a dangling symlink, cat fails — fall back to {} so a
+# stale legacy symlink can't abort the build.
+live_json="{}"
+if [[ -e "$TARGET" ]]; then
+  live_json="$(cat "$TARGET" 2>/dev/null || echo '{}')"
+  [[ -z "$live_json" ]] && live_json="{}"
+fi
+
+# Emit a file's JSON, or {} when missing/empty.
+emit() { if [[ -f "$1" && -s "$1" ]]; then cat "$1"; else echo '{}'; fi; }
+
+mkdir -p "$CLAUDE_DIR"
+tmp="$(mktemp "${TMPDIR:-/tmp}/claude-settings.XXXXXX")"
+trap 'rm -f "$tmp"' EXIT
+
+# Deep-merge all layers: objects recurse, arrays union + dedup, scalars right-wins.
+# (a/b are bound to $a/$b up front: jq function args are call-by-name filters that would
+# otherwise re-evaluate against the changing reduce accumulator.)
+jq -s '
+  def deepmerge(a; b):
+    a as $a | b as $b
+    | if   ($a | type) == "object" and ($b | type) == "object"
+      then reduce ($b | keys_unsorted[]) as $k ($a;
+             .[$k] = deepmerge($a[$k]; $b[$k]))
+      elif ($a | type) == "array"  and ($b | type) == "array"
+      then ($a + $b | unique)
+      elif $b == null then $a
+      else $b
+      end;
+  reduce .[1:][] as $o (.[0]; deepmerge(.; $o))
+' \
+  <(emit "$legacy_local") \
+  <(printf '%s' "$live_json") \
+  <(emit "$shared") \
+  <(emit "$marker_layer") \
+  <(emit "$repo_local") \
+  > "$tmp"
+
+# Write only when the result changes; replace a legacy dotbot symlink with a real file.
+if [[ -f "$TARGET" && ! -L "$TARGET" ]] && cmp -s "$tmp" "$TARGET"; then
+  success "~/.claude/settings.json already up to date${marker:+ (marker: $marker)}"
+else
+  if [[ -L "$TARGET" ]]; then
+    rm -f "$TARGET"
+    info "Replaced legacy ~/.claude/settings.json symlink with a real file"
+  fi
+  mv "$tmp" "$TARGET"
+  success "Built ~/.claude/settings.json${marker:+ (marker: $marker)}"
+fi
+
+# Nudge to retire the legacy user-scope local file (Claude ignores it at user scope).
+if [[ -f "$legacy_local" ]]; then
+  warn "~/.claude/settings.local.json is not read by Claude at user scope; its keys were"
+  warn "merged into ~/.claude/settings.json. Move per-machine overrides into"
+  warn "config/claude/settings.local.json, then: rm ~/.claude/settings.local.json"
+fi

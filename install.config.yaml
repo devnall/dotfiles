@@ -146,6 +146,10 @@
      description: Build bat theme cache
      stdout: true
     -
+     command: 'command -v jq > /dev/null && bash bin/claude-settings-build || true'
+     description: Build ~/.claude/settings.json from layered sources (marker-driven)
+     stdout: true
+    -
      command: 'command -v pre-commit > /dev/null && [ -d .git ] && pre-commit install || true'
      description: Install pre-commit git hooks
     -
