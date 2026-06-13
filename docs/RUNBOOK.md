@@ -445,6 +445,21 @@ or if a `bat` ≥ 0.25.0 is already installed. It resolves the latest `sharkdp/b
 release, removes the apt package if present, and installs the matching `.deb` (needs
 `sudo`). Not part of `./install` — run it on demand on minimal `.remote` servers.
 
+### Broken backspace / `tput: unknown terminal` over SSH
+
+Ghostty (and kitty, etc.) set `TERM=xterm-ghostty`, which SSH forwards to the server.
+If that server has no matching terminfo entry, backspace and other keys misbehave and
+`tput` errors out. The zsh entrypoint and the bash baseline self-heal this: if `$TERM`
+has no terminfo entry on the host, they fall back to `xterm-256color` before keybindings
+initialize. A no-op where the entry exists (e.g. macOS).
+
+For full-fidelity keys on a server you use often, install Ghostty's terminfo once from
+your **local** machine instead of relying on the downgrade:
+
+```sh
+infocmp -x xterm-ghostty | ssh you@server -- tic -x -
+```
+
 ---
 
 ## Troubleshooting `./install`

@@ -5,6 +5,14 @@
 : "${XDG_CONFIG_HOME:=$HOME/.config}"
 : "${XDG_DATA_HOME:=$HOME/.local/share}"
 
+# Fall back to a generic TERM when the current value has no terminfo entry on
+# this host — e.g. TERM=xterm-ghostty forwarded over SSH to a server that lacks
+# Ghostty's terminfo. Without this, backspace/keys and tput break. Must run
+# before zle/keybindings init. No-op where the terminfo entry exists (e.g. macOS).
+if [[ -n "$TERM" ]] && command -v infocmp >/dev/null 2>&1 && ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
 # HOMEBREW_PREFIX, PATH, MANPATH, INFOPATH are set by brew shellenv in zprofile.
 # Fallback for non-login shells where zprofile didn't run.
 if [ -z "$HOMEBREW_PREFIX" ]; then

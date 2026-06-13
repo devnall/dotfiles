@@ -14,7 +14,9 @@ DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 # --- Output helpers (match dotbot style) ---
 
-tput_available() { command -v tput >/dev/null 2>&1; }
+# Require that tput actually works for $TERM, not just that it's installed —
+# an unknown terminal (e.g. xterm-ghostty over SSH) makes tput exit non-zero.
+tput_available() { command -v tput >/dev/null 2>&1 && tput sgr0 >/dev/null 2>&1; }
 
 if tput_available; then
   BOLD=$(tput bold)

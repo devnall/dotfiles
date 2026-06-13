@@ -22,7 +22,10 @@ MIN_VERSION="0.25.0"   # config feature floor — below this, bat errors on our 
 
 # --- Output helpers (match bin/bootstrap.sh style) ---
 
-if command -v tput >/dev/null 2>&1; then
+# Probe that tput works for the current $TERM, not just that it exists — an
+# unknown terminal (e.g. xterm-ghostty on a server without that terminfo) makes
+# tput exit non-zero, which under `set -e` would abort the script.
+if command -v tput >/dev/null 2>&1 && tput sgr0 >/dev/null 2>&1; then
   BOLD=$(tput bold); GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); RED=$(tput setaf 1); RESET=$(tput sgr0)
 else
   BOLD="" GREEN="" YELLOW="" RED="" RESET=""
