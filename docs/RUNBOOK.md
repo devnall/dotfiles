@@ -411,6 +411,7 @@ This creates all symlinks. Homebrew and Brewfile steps are skipped.
 | starship prompt | skips if not installed; falls back to system prompt |
 | zoxide, thefuck, terraform completions | skip if not installed (guarded with `command -v`) |
 | bat theme cache | skips if bat not installed |
+| bat (Debian/Ubuntu) | apt's 0.24.0 errors on the shared config — run `linux-bat-install` (see below) |
 | Homebrew PATH | harmless on Linux (`/usr/local` typically exists) |
 | Brewfile installs | skipped via `~/.remote` guard |
 
@@ -426,6 +427,23 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 # zoxide — smarter cd
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 ```
+
+### bat (Debian/Ubuntu)
+
+apt ships an old bat (0.24.0 on current Debian/Ubuntu) that **errors on the shared
+`config/bat/config`** — it uses options added in bat 0.25.0 (`--theme="auto:system"`,
+`--theme-light`/`--theme-dark`, `--squeeze-limit`, `--set-terminal-title`). The apt
+package also installs the binary as `batcat`, not `bat`, which the repo's aliases and
+fzf previews expect. Run the helper to swap it for the latest upstream `.deb`:
+
+```sh
+linux-bat-install    # symlinked to ~/bin by ./install
+```
+
+It's idempotent and self-guarding: a no-op on macOS, on `.remote-full` (Homebrew bat),
+or if a `bat` ≥ 0.25.0 is already installed. It resolves the latest `sharkdp/bat`
+release, removes the apt package if present, and installs the matching `.deb` (needs
+`sudo`). Not part of `./install` — run it on demand on minimal `.remote` servers.
 
 ---
 

@@ -109,6 +109,7 @@ dotfiles/
 - **Plugin manager:** Sheldon (`config/sheldon/`) manages zsh plugins. Homebrew dependency. Initialization guarded with `command -v sheldon > /dev/null && [[ -t 1 ]]`.
 - **Terminal font:** `SauceCodePro Nerd Font Mono` is installed via `Brewfile.universal` (`font-sauce-code-pro-nerd-font` cask). Required by Ghostty config and Starship prompt glyphs. Remote machines don't need it — the local terminal renders all glyphs.
 - **Optional tool guards:** Tools that may not be installed on all machines (zoxide, thefuck, terraform, bat) are guarded with `command -v` checks. The installer's `bat cache --build` step is similarly guarded.
+- **Remote bat upgrade:** Debian/Ubuntu apt ships bat 0.24.0, which errors on the shared `config/bat/config` (it uses 0.25.0+ options) and installs the binary as `batcat`. `bin/linux-bat-install` is an idempotent, self-guarding helper that swaps the apt package for the latest upstream `.deb` on minimal `.remote` servers. Run on demand — not wired into `./install`. No-op on macOS and `.remote-full` (Homebrew bat).
 
 ### 3.3 Machine-Specific PATH
 
