@@ -111,10 +111,11 @@ the work/personal layer.
   `~/.secrets.local` (untracked), and the runbook's existing rule that work OTEL secrets
   go in `~/.secrets.local`, not settings.json.
 - **Merge semantics (`bin/claude-settings-build`, jq):** recursive deep-merge —
-  objects recurse, **arrays union + dedup** (so `permissions.allow` composes:
-  shared ∪ marker ∪ local, and runtime "always allow" grants in the live file are
-  preserved), scalars right-wins. Keys only in the live file (`theme`/`model`/`effort`)
-  are preserved untouched → no reset surprise.
+  objects recurse, arrays union + dedup, scalars right-wins, canonical sorted-key output.
+  **Permissions are repo-authoritative**: the live file's permissions are dropped before
+  merging, so the allow/deny lists are exactly shared ∪ marker ∪ local (curated removals
+  propagate; runtime "always allow" grants don't accumulate). Keys only in the live file
+  (`theme`/`model`/`effort`) are preserved untouched → no reset surprise.
 - **Volatile keys** are deliberately *absent* from all committed layers, so the merge
   never overwrites them → the churn fix. (`model`: stays machine-local per the earlier
   `🔧 Remove model key from shared Claude settings` decision; this machine's `opus`
@@ -182,9 +183,18 @@ live on this `.personal` machine: the orphan `~/.claude/settings.json` symlink i
 real file carrying the curated baseline + preserved `theme`/`effort`/`skipAutoPermissionPrompt`
 + rescued `model: opus`; re-run is a clean no-op; `git status` shows no settings churn.
 `pre-commit run --all-files` green (shellcheck included). `.gitconfig-darwin` removed and
-the legacy `~/.claude/settings.local.json` retired. Work/personal layers committed empty
-(`{}`) — the mechanism is in place; populate as needed. Not yet exercised on a `.work` or
-`.remote` box (no access from here; logic verified via sandbox marker tests).
+the legacy `~/.claude/settings.local.json` retired. Not yet exercised on a `.work` or `.remote` box (no access from here; logic verified via
+sandbox marker tests).
+
+**Follow-up — permission audit (2026-06-13):** trimmed the shared allow-list to a
+least-privilege baseline (dropped 14 redundant read-only builtins; removed the
+escape-hatch/outward/secret entries `python3 -c`, `command`, `gh`, `git push`, `env`,
+`printenv`; tightened `git config` to read-only). Moved `git push` + a narrow `gh` read
+subset to `settings.personal.json`. Added a `deny` block to `settings.shared.json`
+(`rm -rf`, `gh repo delete`, `gh auth token`, `gh secret`). Made the generator treat
+**permissions as repo-authoritative** (drops the live file's permissions before merging) so
+curated removals propagate and runtime grants don't accumulate; output is now sorted-key
+for stable idempotency. Live file regenerated: 35 allow + 5 deny, volatile keys preserved.
 
 **Verification plan**
 

@@ -205,13 +205,27 @@ config/claude/settings.local.json      this machine only — gitignored, for sec
 ~/.claude/settings.json (live)         runtime keys (theme/model/effort) preserved as-is
 ```
 
-Merge rules: objects merge, **permission allow-lists union** (shared ∪ marker ∪ local,
-plus any "always allow" you grant at runtime), later layers win on scalar conflicts.
-Volatile keys exist only in the live file, so the merge never resets them — zero churn.
+Merge rules: objects merge, later layers win on scalar conflicts, output has sorted keys
+for stable idempotency. **Permissions are repo-authoritative** — the allow/deny lists are
+exactly shared ∪ marker ∪ local. A runtime "always allow" grant lasts only until the next
+build, so to keep one you must add it to a layer (and removing one from a layer actually
+drops it). Volatile keys (theme/model/effort) exist only in the live file and are preserved
+— zero churn.
+
+The allow-list is deliberately **least-privilege**: read-only or trivially-reversible,
+local, non-arbitrary-execution commands only. Outward-facing (`git push`, `gh`) and
+arbitrary-execution (`python3 -c`, `command`) commands are kept out of the shared baseline
+— `git push` and a narrow `gh` read subset live in `settings.personal.json`; everything
+else prompts. A `deny` block in `settings.shared.json` hard-blocks never-auto destructive
+ops (`rm -rf`, `gh repo delete`, `gh auth token`, `gh secret`) on every machine. (Argument
+matching is prefix-based and, per Anthropic's docs, "fragile" for blocking flags like
+`--force`; the deny block is a safety net, not airtight — use a PreToolUse hook if you need
+a hard guarantee.)
 
 **Add a permission for every machine:** edit `config/claude/settings.shared.json`, then
-`./install` (or run `claude-settings-build` directly). For work-only or personal-only
-config, edit the matching `settings.<marker>.json`.
+`./install` (or run `claude-settings-build` directly) — this is the *only* way to persist a
+permission, since runtime grants are transient. For work-only or personal-only config, edit
+the matching `settings.<marker>.json`.
 
 **Per-machine secrets** (internal hostnames in permission rules, `hooks`, `apiKeyHelper`)
 go in `config/claude/settings.local.json` (gitignored). For real credentials use a

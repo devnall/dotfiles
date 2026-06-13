@@ -196,10 +196,21 @@ that `bin/claude-settings-build` deep-merges into a real, untracked `~/.claude/s
     non-sensitive); `settings.remote*.json` optional. The active marker file selects one.
   - `settings.local.json` — gitignored per-machine overrides/secrets (real credentials via
     1Password `op://` + `apiKeyHelper`). Bootstrap seeds a `{}` stub.
-- **Merge rules:** objects recurse, arrays union + dedup (so permission allow-lists
-  compose and runtime "always allow" grants in the live file survive), scalars right-wins.
-  Volatile keys live only in the untracked live file, so the merge never resets them — that
-  is the churn fix. The build is idempotent and re-applies the baseline on every `./install`.
+- **Merge rules:** objects recurse, arrays union + dedup, scalars right-wins; output is
+  canonical (sorted keys) for stable idempotency. **Permissions are repo-authoritative** —
+  the live file's permissions are dropped before merging, so the allow/deny lists are
+  exactly shared ∪ marker ∪ local. Curated removals propagate, and runtime "always allow"
+  grants do not silently accumulate (to keep one, add it to a layer). All other keys live
+  only in the untracked live file and are preserved untouched (theme/model/effort), so the
+  merge never resets them — that is the churn fix. Idempotent; re-applies on every `./install`.
+- **Permission posture (least privilege):** the shared allow-list is limited to read-only
+  or trivially-reversible, local, non-arbitrary-execution commands. Outward-facing
+  (`git push`, `gh`) and arbitrary-execution (`python3 -c`, `command`) commands are
+  intentionally excluded — they prompt instead, or live in `settings.personal.json` for
+  this user's own machines. A `deny` block in `settings.shared.json` hard-blocks never-auto
+  destructive ops (`rm -rf`, `gh repo delete`, `gh auth token`, `gh secret`); deny beats
+  allow on every machine. Note `Bash(x:*)` is a prefix match, so a broad allow would also
+  cover dangerous variants (`git push:*` ⊇ `--force`) — hence the narrow, explicit lists.
 - **Secrets:** MCP servers live in `~/.claude.json` (not settings.json); credentials in
   `~/.claude/.credentials.json`; work OTEL tokens in `~/.secrets.local` (inherited via the
   shell). So the committed layers carry no secrets — anything sensitive goes in the
