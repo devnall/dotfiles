@@ -16,9 +16,12 @@
 #   4. config/claude/settings.<marker>.json  active marker layer (work|personal|remote*)
 #   5. config/claude/settings.local.json     per-machine overrides/secrets (gitignored)
 #
-# Merge rules: objects recurse, arrays union + dedup (so permission lists compose and
-# runtime "always allow" grants survive), scalars right-wins. Keys present only in the
-# live file (theme/model/effortLevel) are preserved untouched — no reset surprise.
+# Merge rules: objects recurse, arrays union + dedup, scalars right-wins. Permissions are
+# REPO-AUTHORITATIVE: the live file's permissions are dropped before merging, so the
+# allow/deny lists are exactly shared ∪ marker ∪ local — curated removals propagate and
+# runtime "always allow" grants do not silently accumulate (to keep a grant, add it to a
+# layer). All other keys present only in the live file (theme/model/effortLevel) are
+# preserved untouched — no reset surprise.
 #
 # Idempotent. No-op (with a warning) where jq is unavailable (e.g. minimal .remote).
 
@@ -78,6 +81,9 @@ if [[ -e "$TARGET" ]]; then
   live_json="$(cat "$TARGET" 2>/dev/null || echo '{}')"
   [[ -z "$live_json" ]] && live_json="{}"
 fi
+# Permissions are repo-authoritative — drop the live file's permissions so curated
+# removals take effect and runtime "always allow" grants don't accumulate across builds.
+live_json="$(printf '%s' "$live_json" | jq -c 'del(.permissions)' 2>/dev/null || echo '{}')"
 
 # Emit a file's JSON, or {} when missing/empty.
 emit() { if [[ -f "$1" && -s "$1" ]]; then cat "$1"; else echo '{}'; fi; }
@@ -89,7 +95,9 @@ trap 'rm -f "$tmp"' EXIT
 # Deep-merge all layers: objects recurse, arrays union + dedup, scalars right-wins.
 # (a/b are bound to $a/$b up front: jq function args are call-by-name filters that would
 # otherwise re-evaluate against the changing reduce accumulator.)
-jq -s '
+# -S emits canonical sorted-key output so the result is stable regardless of input key
+# order — required for the "write only when changed" idempotency check below.
+jq -sS '
   def deepmerge(a; b):
     a as $a | b as $b
     | if   ($a | type) == "object" and ($b | type) == "object"
