@@ -4,6 +4,16 @@
 ##########
 
 ##########
+# TERM fallback
+##########
+# Downgrade to a generic TERM when the current value has no terminfo entry on
+# this host (e.g. xterm-ghostty forwarded over SSH to a server without it).
+# Prevents broken backspace/keys and tput errors. No-op where the entry exists.
+if [ -n "$TERM" ] && command -v infocmp >/dev/null 2>&1 && ! infocmp "$TERM" >/dev/null 2>&1; then
+	export TERM=xterm-256color
+fi
+
+##########
 # Aliases
 ##########
 
