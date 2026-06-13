@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+#
+# linux-bat-install — install/upgrade bat from the latest sharkdp/bat release.
+#
+# Why: config/bat/config uses options added in bat 0.25.0 (--theme="auto:system",
+# --theme-light/-dark, --squeeze-limit, --set-terminal-title). Debian/Ubuntu's apt
+# ships bat 0.24.0, which hard-errors on those flags, and installs the binary as
+# `batcat` rather than `bat` (conflict with bacula-console-bat). The repo's aliases
+# and fzf previews all call `bat`. This script swaps the apt package for the upstream
+# .deb, fixing both the version and the naming gap.
+#
+# Idempotent and self-guarding:
+#   - No-op unless on Linux with dpkg available (macOS/.remote-full use Homebrew).
+#   - No-op if a `bat`-named binary is already >= 0.25.0 (Homebrew, or a prior run).
+#
+# Run on demand on a minimal `.remote` server:
+#   linux-bat-install
+
+set -euo pipefail
+
+MIN_VERSION="0.25.0"   # config feature floor — below this, bat errors on our config
+
+# --- Output helpers (match bin/bootstrap.sh style) ---
+
+if command -v tput >/dev/null 2>&1; then
+  BOLD=$(tput bold); GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); RED=$(tput setaf 1); RESET=$(tput sgr0)
+else
+  BOLD="" GREEN="" YELLOW="" RED="" RESET=""
+fi
+
+info()    { printf '%s[→]%s %s\n' "$BOLD"   "$RESET" "$1"; }
+success() { printf '%s[✓]%s %s\n' "$GREEN"  "$RESET" "$1"; }
+warn()    { printf '%s[!]%s %s\n' "$YELLOW" "$RESET" "$1"; }
+error()   { printf '%s[✗]%s %s\n' "$RED"    "$RESET" "$1" >&2; }
+
+# --- Helpers ---
+
+# True (0) if version $1 >= version $2.
+version_ge() {
+  [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | head -n1)" = "$2" ]
+}
+
+# Version of the `bat`-named binary specifically (empty/nonzero if absent).
+# We check `bat`, not `batcat`: an apt `batcat` doesn't satisfy our config, which
+# invokes `bat`, so the upstream .deb is still wanted to provide that name.
+bat_bin_version() {
+  command -v bat >/dev/null 2>&1 || return 1
+  bat --version 2>/dev/null | awk '{print $2; exit}'
+}
+
+# --- 1. Platform guard ---
+
+if [ "$(uname -s)" != "Linux" ]; then
+  info "Not Linux — bat is managed by Homebrew here. Nothing to do."
+  exit 0
+fi
+
+if ! command -v dpkg >/dev/null 2>&1; then
+  warn "dpkg not found — this script targets Debian/Ubuntu only."
+  warn "Install bat from your package manager or https://github.com/sharkdp/bat/releases"
+  exit 0
+fi
+
+if ! command -v curl >/dev/null 2>&1; then
+  error "curl is required but not installed."
+  exit 1
+fi
+
+# --- 2. Skip if a current bat is already present ---
+
+current="$(bat_bin_version || true)"
+if [ -n "$current" ] && version_ge "$current" "$MIN_VERSION"; then
+  success "bat $current already installed (>= $MIN_VERSION) — nothing to do."
+  exit 0
+fi
+
+if [ -n "$current" ]; then
+  info "Found bat $current (< $MIN_VERSION) — upgrading."
+else
+  info "No 'bat' binary found — installing the latest release."
+fi
+
+# --- 3. Resolve privilege escalation (need root for apt-get / dpkg) ---
+
+SUDO=""
+if [ "$(id -u)" -ne 0 ]; then
+  if command -v sudo >/dev/null 2>&1; then
+    SUDO="sudo"
+  else
+    error "Root required (apt-get remove / dpkg -i) but sudo is unavailable. Re-run as root."
+    exit 1
+  fi
+fi
+
+priv() {
+  if [ -n "$SUDO" ]; then sudo "$@"; else "$@"; fi
+}
+
+# --- 4. Map architecture to a release asset ---
+
+dpkg_arch="$(dpkg --print-architecture)"
+case "$dpkg_arch" in
+  amd64) asset_arch="amd64" ;;
+  arm64) asset_arch="arm64" ;;
+  armhf) asset_arch="armhf" ;;
+  *)
+    error "Unsupported architecture: $dpkg_arch"
+    error "Grab a .deb manually from https://github.com/sharkdp/bat/releases"
+    exit 1
+    ;;
+esac
+
+# --- 5. Resolve the latest release version (no jq; follow the redirect) ---
+
+info "Resolving latest sharkdp/bat release..."
+final_url="$(curl -fsSLI -o /dev/null -w '%{url_effective}' \
+  https://github.com/sharkdp/bat/releases/latest)"
+tag="${final_url##*/}"          # e.g. v0.26.1
+version="${tag#v}"              # e.g. 0.26.1
+
+if [ -z "$version" ] || [ "$tag" = "latest" ]; then
+  error "Could not resolve the latest bat version from GitHub."
+  exit 1
+fi
+
+deb="bat_${version}_${asset_arch}.deb"
+url="https://github.com/sharkdp/bat/releases/download/${tag}/${deb}"
+
+# --- 6. Download ---
+
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT
+
+info "Downloading $deb ..."
+if ! curl -fSL -o "$tmpdir/$deb" "$url"; then
+  error "Download failed: $url"
+  exit 1
+fi
+
+# --- 7. Remove the apt package (if present) and install the upstream .deb ---
+
+if dpkg -s bat >/dev/null 2>&1; then
+  info "Removing apt 'bat' package (it installs as 'batcat')..."
+  priv apt-get remove -y bat
+fi
+
+info "Installing $deb ..."
+priv dpkg -i "$tmpdir/$deb" || priv apt-get -f install -y
+
+# --- 8. Verify ---
+
+new="$(bat_bin_version || true)"
+if [ -n "$new" ] && version_ge "$new" "$MIN_VERSION"; then
+  success "bat $new installed."
+else
+  warn "Install finished but 'bat' isn't on PATH as expected — open a new shell or check /usr/bin/bat."
+fi
