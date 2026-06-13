@@ -1,0 +1,60 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(basename:*)",
+      "Bash(date:*)",
+      "Bash(dirname:*)",
+      "Bash(file:*)",
+      "Bash(git add:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git config --get:*)",
+      "Bash(git config --get-regexp:*)",
+      "Bash(git config --list:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(git pull:*)",
+      "Bash(git remote:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git stash:*)",
+      "Bash(git submodule:*)",
+      "Bash(git switch:*)",
+      "Bash(git tag:*)",
+      "Bash(jq:*)",
+      "Bash(man:*)",
+      "Bash(realpath:*)",
+      "Bash(type:*)",
+      "Bash(uname:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh auth token:*)",
+      "Bash(gh secret:*)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
+  }
+}

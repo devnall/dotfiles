@@ -78,6 +78,10 @@ Thumbs.db
 config/git/.gitconfig-user
 config/git/.gitconfig-work
 
+# Claude Code per-machine settings layer — overrides/secrets, merged at install
+# (also matched by *.local.* above; listed explicitly for clarity)
+config/claude/settings.local.json
+
 # Live theme-switched configs (mutable at runtime, initialized from *.default)
 config/btop/btop.conf
 config/starship/starship.toml

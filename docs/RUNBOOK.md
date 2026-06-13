@@ -96,7 +96,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 - **Git identity** — copies `config/git/.gitconfig-user.example` → `.gitconfig-user` if missing. Edit this file with your name, email, and signingkey
 - **Code directories** — creates `~/code/personal/` on all machines, `~/code/work/` on work machines only
 - **Work git identity** (work machines only) — copies `config/git/.gitconfig-work.example` → `.gitconfig-work` if missing. Edit with your work name, email, and signingkey
-- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, `~/.claude/settings.local.json`, and `packages/Brewfile.local` with commented templates if they don't exist
+- **Stub files** — creates `~/.env.local`, `~/.secrets.local`, `~/.ssh/config.local`, `config/claude/settings.local.json`, and `packages/Brewfile.local` with commented templates if they don't exist
 - **Display type detection** (macOS) — detects ultrawide vs widescreen displays, stores fallback at `~/.local/state/display-type`
 - **Wallpapers repo** (macOS) — prompts to clone the wallpapers repo to `~/Pictures/wallpapers/` for folder-based rotation. Validates existing clones (correct remote, has images)
 - **Mise runtimes** — offers to run `mise install` to provision language toolchains
@@ -153,7 +153,7 @@ Open **Raycast Settings → Extensions → Script Commands → Add Script Direct
 | `~/.env.local` | Machine-specific exports, PATH additions, non-secret config |
 | `~/.secrets.local` | API keys, tokens, credentials — never commit |
 | `~/.ssh/config.local` | Per-machine SSH host entries (not tracked) |
-| `~/.claude/settings.local.json` | Machine-specific Claude Code config (deep-merged with settings.json) |
+| `config/claude/settings.local.json` | Per-machine Claude Code overrides/secrets (gitignored; merged into `~/.claude/settings.json` at install) |
 
 ### Local files: backup & migration
 
@@ -168,7 +168,7 @@ These untracked files contain machine-specific config that won't survive a wipe 
 | `config/git/.gitconfig-user` | name, email, signingkey values | No |
 | `config/git/.gitconfig-work` | name, email, signingkey values (work machines) | No |
 | `packages/Brewfile.local` | Full file contents | No |
-| `~/.claude/settings.local.json` | Full file contents | Maybe |
+| `config/claude/settings.local.json` | Full file contents | Maybe |
 | `~/.local/state/display-type` | Single word (`widescreen` / `ultrawide`) — auto-detected, low priority | No |
 
 **Recommended workflow:** Create a secure note in 1Password called "dotfiles local config — \<machine name\>" and paste the contents of each file. Update it when you make significant changes to any local file. On a new machine, run `bootstrap.sh` first (creates stubs), then paste saved contents into each file.
@@ -188,6 +188,64 @@ none exists            → only universal config loads
 ```
 
 The marker file is checked at shell startup (for env sourcing) and at install time (for Brewfiles). To switch machine type: remove the old marker, touch the new one, re-run `./install`.
+
+### Claude Code settings
+
+`~/.claude/settings.json` is a **real, untracked file** — *not* a symlink and *not* in
+the repo. Claude rewrites it constantly at runtime (theme, model, effort level, etc.), so
+tracking it churns the tree and symlinking it trips a known Claude bug. Instead the repo
+keeps layered source files that `./install` (via `bin/claude-settings-build`) deep-merges
+into the live file:
+
+```
+config/claude/settings.shared.json     baseline — applied on every machine
+config/claude/settings.<marker>.json   work | personal | remote | remote-full (marker-selected)
+config/claude/settings.local.json      this machine only — gitignored, for secrets/overrides
+        +
+~/.claude/settings.json (live)         runtime keys (theme/model/effort) preserved as-is
+```
+
+Merge rules: objects merge, later layers win on scalar conflicts, output has sorted keys
+for stable idempotency. **Permissions are repo-authoritative** — the allow/deny lists are
+exactly shared ∪ marker ∪ local. A runtime "always allow" grant lasts only until the next
+build, so to keep one you must add it to a layer (and removing one from a layer actually
+drops it). Volatile keys (theme/model/effort) exist only in the live file and are preserved
+— zero churn.
+
+The allow-list is deliberately **least-privilege**: read-only or trivially-reversible,
+local, non-arbitrary-execution commands only. Outward-facing (`git push`, `gh`) and
+arbitrary-execution (`python3 -c`, `command`) commands are kept out of the shared baseline
+— `git push` and a narrow `gh` read subset live in `settings.personal.json`; everything
+else prompts. A `deny` block in `settings.shared.json` hard-blocks never-auto destructive
+ops (`rm -rf`, `gh repo delete`, `gh auth token`, `gh secret`) on every machine. (Argument
+matching is prefix-based and, per Anthropic's docs, "fragile" for blocking flags like
+`--force`; the deny block is a safety net, not airtight — use a PreToolUse hook if you need
+a hard guarantee.)
+
+**Add a permission for every machine:** edit `config/claude/settings.shared.json`, then
+`./install` (or run `claude-settings-build` directly) — this is the *only* way to persist a
+permission, since runtime grants are transient. For work-only or personal-only config, edit
+the matching `settings.<marker>.json`.
+
+**Per-machine secrets** (internal hostnames in permission rules, `hooks`, `apiKeyHelper`)
+go in `config/claude/settings.local.json` (gitignored). For real credentials use a
+1Password reference, e.g. `"apiKeyHelper": "op read op://Private/anthropic/key"` — never
+a literal secret. Env-var secrets (e.g. work OTEL) still belong in `~/.secrets.local` and
+are inherited by Claude from the shell; they do not go in settings.json.
+
+**Important:** a `~/.claude/settings.local.json` (user scope) is **not** read by Claude —
+only a *project*-scoped `.claude/settings.local.json` is. Use the repo's
+`config/claude/settings.local.json` for global per-machine overrides instead.
+
+Run it manually anytime after editing a layer:
+
+```sh
+claude-settings-build      # symlinked to ~/bin by ./install
+```
+
+It is idempotent and self-guarding (no-op where `jq` is unavailable, e.g. minimal
+`.remote`). On first run it converts the legacy `~/.claude/settings.json` symlink to a
+real file, preserving your current theme/model/effort.
 
 ### zsh lib loading
 
