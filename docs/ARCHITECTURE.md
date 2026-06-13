@@ -57,6 +57,12 @@ dotfiles/
     ├── bash/bashrc           # Minimal bash (remote server baseline only)
     ├── bat/
     ├── btop/
+    ├── claude/               # Claude Code settings — layers merged into ~/.claude/settings.json at install (§3.10)
+    │   ├── settings.shared.json     # Universal baseline (committed)
+    │   ├── settings.work.json       # Work-machine layer (committed, non-sensitive)
+    │   ├── settings.personal.json   # Personal-machine layer (committed)
+    │   ├── settings.local.json      # Per-machine overrides/secrets (gitignored)
+    │   └── statusline-command.sh    # Statusline script (symlinked to ~/.claude/)
     ├── ghostty/
     ├── git/
     │   ├── config            # Git config (symlinked to ~/.gitconfig)
@@ -121,6 +127,7 @@ dotfiles/
 - **Detection:** Marker file approach — one of `~/.work`, `~/.personal`, `~/.remote-full`, or `~/.remote` is touched during machine setup. No hostname detection.
 - **Shell loader:** Sources the corresponding `env/*.zsh` file. If no marker exists, only universal config loads.
 - **Dotbot install:** Runs `brew bundle` for the appropriate Brewfile(s) based on marker.
+- **Claude Code settings:** `bin/claude-settings-build` (run by `./install`) merges `config/claude/settings.shared.json` + the active marker's `settings.<marker>.json` + the gitignored `settings.local.json` into the real `~/.claude/settings.json`. See §3.10.
 - **Mac App Store apps:** Tracked via `mas "Name", id: 123456` entries in Brewfiles. The `mas` CLI is in `Brewfile.universal`.
 - **Manually-installed apps:** Audio production software (Native Instruments, IK Multimedia, etc.) is installed via vendor-specific managers, not Homebrew. Platform managers and standalone apps are documented as `# Download:` comments in `Brewfile.personal`.
 - **Marker definitions:**
@@ -145,8 +152,8 @@ dotfiles/
 - **Local override files** (all gitignored, skipped without error if absent):
   - `~/.env.local` — machine-specific exports, PATH additions, non-secret config
   - `~/.secrets.local` — credentials, API keys, tokens
-  - `~/.claude/settings.local.json` — machine-specific Claude Code config (deep-merged with `~/.claude/settings.json` at runtime; use for work-only integrations, local MCP servers, etc.)
-- **Sourcing order:** `~/.env.local` first, then `~/.secrets.local` at the very end of `zshrc.zsh`. Claude settings are merged by Claude Code at startup, not by the shell.
+  - `config/claude/settings.local.json` — per-machine Claude Code overrides/secrets (internal hostnames in permission rules, `hooks`, `apiKeyHelper`). Merged into `~/.claude/settings.json` **at install time** by `bin/claude-settings-build` — NOT by Claude at runtime (Claude does not read a user-scope `settings.local.json`; only a *project*-scoped one is merged). See §3.10.
+- **Sourcing order:** `~/.env.local` first, then `~/.secrets.local` at the very end of `zshrc.zsh`. Claude settings are assembled at install time by `bin/claude-settings-build` (§3.10), not by the shell.
 
 ### 3.6 Editor Configuration
 
@@ -168,6 +175,35 @@ dotfiles/
 - **ShellCheck** (`.shellcheckrc`) defaults to `shell=bash`. No global suppressions — fix or inline-suppress case-by-case.
 - **Dotbot integration:** `./install` runs `pre-commit install` (guarded with `command -v`) to set up local git hooks automatically.
 - **Brewfile:** `pre-commit` is in `Brewfile.universal`.
+
+### 3.10 Claude Code Settings
+
+`~/.claude/settings.json` is **not** symlinked or tracked. Claude Code rewrites it at
+runtime (`theme`, `model`, `effortLevel`, `skipAutoPermissionPrompt`, …); tracking it
+makes the tree perpetually dirty, and symlinking it is a known Claude Code bug
+(permission failures + perf degradation). Instead the repo holds **layered source files**
+that `bin/claude-settings-build` deep-merges into a real, untracked `~/.claude/settings.json`.
+
+- **Verified precedence (not what older docs claimed):** Claude merges, high→low,
+  managed → CLI `--settings` → project `.claude/settings.local.json` → project
+  `.claude/settings.json` → user `~/.claude/settings.json`. There is **no user-scope
+  `settings.local.json`** — a `~/.claude/settings.local.json` is silently ignored. So
+  work/personal differentiation must happen at install time, via marker files.
+- **Layers (`config/claude/`, low→high precedence):**
+  - `settings.shared.json` — committed universal baseline: `permissions`, `statusLine`,
+    `enabledPlugins`, `extraKnownMarketplaces`. No volatile keys, no secrets.
+  - `settings.<marker>.json` — `settings.work.json` / `settings.personal.json` (committed,
+    non-sensitive); `settings.remote*.json` optional. The active marker file selects one.
+  - `settings.local.json` — gitignored per-machine overrides/secrets (real credentials via
+    1Password `op://` + `apiKeyHelper`). Bootstrap seeds a `{}` stub.
+- **Merge rules:** objects recurse, arrays union + dedup (so permission allow-lists
+  compose and runtime "always allow" grants in the live file survive), scalars right-wins.
+  Volatile keys live only in the untracked live file, so the merge never resets them — that
+  is the churn fix. The build is idempotent and re-applies the baseline on every `./install`.
+- **Secrets:** MCP servers live in `~/.claude.json` (not settings.json); credentials in
+  `~/.claude/.credentials.json`; work OTEL tokens in `~/.secrets.local` (inherited via the
+  shell). So the committed layers carry no secrets — anything sensitive goes in the
+  gitignored `settings.local.json`. `model` stays machine-local (no committed default).
 
 ---
 
