@@ -138,42 +138,53 @@ the work/personal layer.
 
 **Tasks**
 
-- [ ] **Source layers** (`config/claude/`):
-  - [ ] Create `settings.shared.json` from the current HEAD curated keys (permissions,
+- [x] **Source layers** (`config/claude/`):
+  - [x] Create `settings.shared.json` from the current HEAD curated keys (permissions,
         statusLine, enabledPlugins, extraKnownMarketplaces) — no volatile keys, no secrets.
-  - [ ] Create `settings.personal.json` and `settings.work.json` (safe, minimal to start).
-  - [ ] `git rm` the tracked `config/claude/settings.json` (drift subsumed).
-- [ ] **`bin/claude-settings-build`** (bash, shellcheck-clean, bootstrap.sh output style):
-  - [ ] `jq` guard → warn + exit 0 if absent. `mkdir -p ~/.claude`. trap-clean temp.
-  - [ ] Detect active marker; missing marker → empty marker layer.
-  - [ ] Deep-merge (objects recurse / arrays union+dedup / scalars right-wins), inputs
+  - [x] Create `settings.personal.json` and `settings.work.json` (safe, minimal to start).
+  - [x] `git rm` the tracked `config/claude/settings.json` (drift subsumed).
+- [x] **`bin/claude-settings-build`** (bash, shellcheck-clean, bootstrap.sh output style):
+  - [x] `jq` guard → warn + exit 0 if absent. `mkdir -p ~/.claude`. trap-clean temp.
+  - [x] Detect active marker; missing marker → empty marker layer.
+  - [x] Deep-merge (objects recurse / arrays union+dedup / scalars right-wins), inputs
         low→high: legacy `~/.claude/settings.local.json` (rescue) → live
         `~/.claude/settings.json` → `settings.shared.json` → `settings.<marker>.json` →
         `config/claude/settings.local.json`.
-  - [ ] **Symlink migration:** if `~/.claude/settings.json` is a symlink, read its
+  - [x] **Symlink migration:** if `~/.claude/settings.json` is a symlink, read its
         content (or `{}` if dangling) as the live input, then atomically replace it with
         the generated real file.
-  - [ ] Write only when content changes (avoid needless rewrites). Validate JSON before `mv`.
-  - [ ] Idempotent on re-run; note when it rescues/should-delete legacy local file.
-- [ ] **`install.config.yaml`:** add a shell step (after the bat-cache step) running
+  - [x] Write only when content changes (avoid needless rewrites). Validate JSON before `mv`.
+  - [x] Idempotent on re-run; note when it rescues/should-delete legacy local file.
+- [x] **`install.config.yaml`:** add a shell step (after the bat-cache step) running
       `command -v jq > /dev/null && bash bin/claude-settings-build || true`. (No symlink
       entry to remove — already gone in `68f0532`.)
-- [ ] **`bootstrap.sh`:** repoint the stub from `~/.claude/settings.local.json` to
+- [x] **`bootstrap.sh`:** repoint the stub from `~/.claude/settings.local.json` to
       `config/claude/settings.local.json` (`{}`); fix any summary/TODO text referencing
       the old path.
-- [ ] **`.gitignore`:** add explicit `config/claude/settings.local.json` under a Claude
+- [x] **`.gitignore`:** add explicit `config/claude/settings.local.json` under a Claude
       comment (confirm committed layers are not caught by `*.local.*`).
-- [ ] **`config/git/.gitconfig-darwin`:** remove (redundant/orphaned).
-- [ ] **Docs:**
-  - [ ] ARCHITECTURE §3.5 — correct the false "settings.local.json deep-merged at
+- [x] **`config/git/.gitconfig-darwin`:** remove (redundant/orphaned).
+- [x] **Docs:**
+  - [x] ARCHITECTURE §3.5 — correct the false "settings.local.json deep-merged at
         runtime" claim; describe the layered generate. §3.4 — list Claude layers as
         marker-driven. §2 tree — add `config/claude/*` layers + `bin/claude-settings-build`.
-  - [ ] RUNBOOK — new "Claude Code settings" section (layering, how to add a permission,
+  - [x] RUNBOOK — new "Claude Code settings" section (layering, how to add a permission,
         work vs personal, migration); fix the local-files / backup tables.
-  - [ ] README — check for and fix any settings references.
-- [ ] **Migration (this machine):** run the generator; confirm `~/.claude/settings.json`
+  - [x] README — check for and fix any settings references.
+- [x] **Migration (this machine):** run the generator; confirm `~/.claude/settings.json`
       is now a real file with the curated baseline + preserved `theme`/`effort`/`model`;
       advise deleting the legacy `~/.claude/settings.local.json`.
+
+**Status:** Implemented on branch `feat/claude-settings-layering`. Generator
+unit-tested in a sandbox (permission union, volatile-key preservation, precedence,
+legacy rescue, marker selection, symlink migration, idempotency — all pass) and run
+live on this `.personal` machine: the orphan `~/.claude/settings.json` symlink is now a
+real file carrying the curated baseline + preserved `theme`/`effort`/`skipAutoPermissionPrompt`
++ rescued `model: opus`; re-run is a clean no-op; `git status` shows no settings churn.
+`pre-commit run --all-files` green (shellcheck included). `.gitconfig-darwin` removed and
+the legacy `~/.claude/settings.local.json` retired. Work/personal layers committed empty
+(`{}`) — the mechanism is in place; populate as needed. Not yet exercised on a `.work` or
+`.remote` box (no access from here; logic verified via sandbox marker tests).
 
 **Verification plan**
 
