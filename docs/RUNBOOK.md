@@ -109,7 +109,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 
 This will:
 - Create all symlinks (zshrc, nvim, tmux, ghostty, starship, bat, btop, etc.)
-- Run `brew bundle` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file, plus `Brewfile.local` if it exists
+- Run `brew bundle --no-upgrade` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file, plus `Brewfile.local` if it exists. `--no-upgrade` keeps `./install` install-only so self-updating apps (Chrome, Vivaldi, etc.) aren't downgraded to the cask version on re-run; use `bubu` / `brew upgrade` for intentional upgrades
 
 ### 4. Install runtimes
 
