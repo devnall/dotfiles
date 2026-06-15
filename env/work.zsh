@@ -25,3 +25,9 @@ function avl() {
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
 export OTEL_METRICS_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_PROTOCOL="http/json"
+
+# Unset $GITHUB_TOKEN per-invocation so `gh auth login` and friends use the
+# keychain credential instead of erroring on the work-provided token.
+if command -v gh > /dev/null; then
+  alias gh="env GITHUB_TOKEN='' gh"
+fi

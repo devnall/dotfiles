@@ -128,20 +128,23 @@
     -
      command: 'command -v brew > /dev/null || { echo "⚠ Homebrew not found. Run ./bin/bootstrap.sh first or install manually."; }'
      description: Verify Homebrew is available
+    # --no-upgrade keeps ./install idempotent: missing packages install, but
+    # already-installed casks/MAS apps that have self-updated past the cask
+    # version stay put. Use `brew upgrade` for intentional upgrades.
     -
-     command: '([[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]) && brew bundle --file=packages/Brewfile.universal || true'
+     command: '([[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]) && brew bundle --no-upgrade --file=packages/Brewfile.universal || true'
      description: Install universal Homebrew packages
      stdout: true
     -
-     command: '[[ -f ~/.work ]] && brew bundle --file=packages/Brewfile.work || true'
+     command: '[[ -f ~/.work ]] && brew bundle --no-upgrade --file=packages/Brewfile.work || true'
      description: Install work Homebrew packages
      stdout: true
     -
-     command: '[[ -f ~/.personal ]] && brew bundle --file=packages/Brewfile.personal || true'
+     command: '[[ -f ~/.personal ]] && brew bundle --no-upgrade --file=packages/Brewfile.personal || true'
      description: Install personal Homebrew packages
      stdout: true
     -
-     command: '[[ -f packages/Brewfile.local ]] && brew bundle --file=packages/Brewfile.local || true'
+     command: '[[ -f packages/Brewfile.local ]] && brew bundle --no-upgrade --file=packages/Brewfile.local || true'
      description: Install local Homebrew packages
      stdout: true
     -
