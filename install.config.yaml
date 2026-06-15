@@ -101,6 +101,9 @@
     ~/.claude/statusline-command.sh:
       path: config/claude/statusline-command.sh
       force: true
+    ~/.claude/commands:
+      path: config/claude/commands
+      force: true
 
     # Wallpapers
     ~/.local/share/wallpapers:

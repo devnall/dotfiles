@@ -1,0 +1,1 @@
+Commit, push, and open a PR for the current branch. Do all three without asking for confirmation between steps. Follow the repo's commit and PR conventions (gitmoji prefixes, CLAUDE.md rules). If already on main, warn and stop — never commit directly to main.
