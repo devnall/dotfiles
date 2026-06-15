@@ -1,0 +1,1 @@
+Post-merge local repo cleanup. Capture the current branch name, switch to main, pull latest, and delete the old local branch. If already on main, just pull. Do not push or fetch --prune — just the three-step local cleanup. Do this without asking for confirmation.
