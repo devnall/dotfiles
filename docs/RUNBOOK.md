@@ -627,10 +627,12 @@ Dotbot's `relink: true` (the default in this repo) removes stale symlinks and re
 ### Update Homebrew packages
 
 ```sh
-bubu  # brew update && brew upgrade
-brew bundle --file=~/.dotfiles/packages/Brewfile.universal
+bubu  # brew update && brew upgrade — upgrades formulae and non-greedy casks
+brew bundle --no-upgrade --file=~/.dotfiles/packages/Brewfile.universal
 # plus Brewfile.work or Brewfile.personal as appropriate
 ```
+
+`bubu` handles actual upgrades. `brew bundle --no-upgrade` only installs any new Brewfile entries — `--no-upgrade` avoids downgrading self-updating casks (Chrome, Vivaldi, etc.) to the cask's pinned version.
 
 ### Check for Brewfile drift
 
