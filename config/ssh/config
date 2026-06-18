@@ -6,4 +6,6 @@
 Include ~/.ssh/config.local
 
 Host *
+  AddKeysToAgent yes
+  UseKeychain yes
   IdentityAgent "~/.1p-agent.sock"
