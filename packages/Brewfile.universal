@@ -41,6 +41,7 @@ brew "nmap"
 brew "prettyping"
 brew "reattach-to-user-namespace"
 brew "ripgrep"        # better grep
+brew "rsync"          # macOS ships ancient 2.6.9; this is current 3.x
 brew "rustscan"       # portscanner
 brew "sheldon"        # zsh plugin manager
 brew "shfmt"          # shell script formatter
