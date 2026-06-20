@@ -101,7 +101,7 @@ cask "ghostty"
 cask "google-chrome"
 cask "iina"                # video player
 cask "imageoptim"          # image optimizer
-cask "json-viewer"
+cask "karabiner-elements"  # keyboard remapper (system extension)
 cask "latest"              # app update checker
 cask "obsidian"
 cask "plexamp"
@@ -142,6 +142,7 @@ mas "Xcode", id: 497799835
 # brew "tree"                  # 20260313
 # brew "urlview"               # tmux-urlview plugin dep — 20260313
 # cask "jordanbaird-ice"       # menu bar manager — 20260315
+# cask "json-viewer"           # Intel-only; dropped in rebuild — 20260619
 # cask "keepingyouawake"       # 20260313
 # cask "pika"                  # color picker — 20260313
 # cask "shottr"                # screenshot tool — 20260313

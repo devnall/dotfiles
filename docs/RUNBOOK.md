@@ -125,7 +125,7 @@ Installs all tools defined in `~/.config/mise/config.toml` (go, lua, node, pytho
 bash config/macos/defaults.sh
 ```
 
-Applies preferred system preferences: Dock (auto-hide, small icons, no recents), Finder (list view, show hidden files, extensions), keyboard repeat rate, tap-to-click, three-finger drag, screenshot location (`~/Pictures/Screenshots`), Mission Control (no hot corners, stable Spaces), and menu bar clock (24-hour, no date).
+Applies preferred system preferences: Dock (auto-hide with no delay, small icons, magnification, no recents, minimize-into-icon), Finder (list view, hidden files, extensions, POSIX path in title, folders-first, ⌘Q to quit, 30-day trash, new windows → `~/Downloads`), Input (fast key repeat, key-repeat-on-hold, tap-to-click, three-finger drag, two-finger right-click, natural-scroll off), Text & Typing (disable autocorrect + smart quotes/dashes/period/capitalization), screenshot location (`~/Pictures/Screenshots`), Mission Control (no hot corners, stable Spaces), System UI (auto Light/Dark, 24-hour clock, no date), and Save & Files (expanded save panels, save-to-disk default, **no `.DS_Store` on network/USB shares**, no Time Machine new-disk prompt).
 
 The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
 
@@ -172,6 +172,8 @@ These untracked files contain machine-specific config that won't survive a wipe 
 | `~/.local/state/display-type` | Single word (`widescreen` / `ultrawide`) — auto-detected, low priority | No |
 
 **Recommended workflow:** Create a secure note in 1Password called "dotfiles local config — \<machine name\>" and paste the contents of each file. Update it when you make significant changes to any local file. On a new machine, run `bootstrap.sh` first (creates stubs), then paste saved contents into each file.
+
+**Before a wipe or migration — audit `Brewfile.local`.** Its entries are gitignored and *not* codified, so they will **not** reinstall from the repo — easy to forget, since installed apps look identical to codified ones. Triage each entry: promote anything you want on more than one machine to a tracked Brewfile (`Brewfile.universal` / `Brewfile.personal`); keep genuinely machine-specific tools (hardware drivers, this-box-only apps) in `Brewfile.local` and stash the curated file per the workflow above; drop the rest. The same "is this worth keeping?" pass applies to `~/.ssh/config.local` host entries. Verify your commit-signing SSH key is actually present in your 1Password vault (`ssh-keygen -lf ~/.ssh/id_rsa.pub` and match the fingerprint) — the signing config is useless if the key itself isn't recoverable.
 
 ---
 

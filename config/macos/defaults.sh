@@ -40,7 +40,7 @@ setting() { printf '    %s\n' "$1"; }
 # --- Confirmation prompt ---
 
 printf '\n%s=== macOS defaults ===%s\n\n' "$BOLD" "$RESET"
-info "This will apply system preferences for: Dock, Finder, Input, Screenshots, Mission Control, System UI"
+info "This will apply system preferences for: Dock, Finder, Input, Text & Typing, Screenshots, Mission Control, System UI, Save dialogs & Files"
 printf '\n'
 read -rp "Apply macOS defaults? [y/N] " confirm
 if [[ "$confirm" != [yY] ]]; then
@@ -70,6 +70,16 @@ setting "Use genie minimize animation"
 
 defaults write com.apple.dock show-recents -bool false
 setting "Hide recent apps section"
+
+defaults write com.apple.dock autohide-delay -float 0
+setting "No delay before the Dock auto-shows"
+
+defaults write com.apple.dock minimize-to-application -bool true
+setting "Minimize windows into the app icon"
+
+defaults write com.apple.dock magnification -bool true
+defaults write com.apple.dock largesize -int 128
+setting "Enable Dock magnification (128px)"
 
 printf '\n'
 read -rp "  Remove all default Dock icons? (You can re-add apps later) [y/N] " wipe_dock
@@ -109,6 +119,22 @@ setting "Search current folder by default"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 setting "Disable extension change warning"
 
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+setting "Show full POSIX path in window title"
+
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+setting "Keep folders on top when sorting"
+
+defaults write com.apple.finder QuitMenuItem -bool true
+setting "Allow quitting Finder with ⌘Q"
+
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+setting "Remove items from Trash after 30 days"
+
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
+setting "Open new Finder windows in ~/Downloads"
+
 success "Finder configured"
 
 # =============================================================================
@@ -124,6 +150,9 @@ setting "  Fast key repeat rate"
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 setting "  Short delay before repeat (~225ms)"
 
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+setting "  Repeat key on hold (no accent menu)"
+
 setting "Trackpad:"
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 setting "  Enable tap-to-click"
@@ -134,9 +163,39 @@ setting "  Enable tap-to-click at login screen"
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
 setting "  Enable three-finger drag"
 
+defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
+setting "  Enable two-finger right-click"
+
+setting "Scrolling:"
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+setting "  Disable natural scroll direction"
+
 defaults write com.apple.accessibility ReduceMotionEnabled -int 0 2>/dev/null || true
 
 success "Input configured (logout/restart may be needed)"
+
+# =============================================================================
+# Text & Typing
+# =============================================================================
+
+info "Configuring Text & Typing…"
+
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+setting "Disable auto-capitalization"
+
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+setting "Disable autocorrect"
+
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+setting "Disable smart dashes"
+
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+setting "Disable period substitution on double-space"
+
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+setting "Disable smart quotes"
+
+success "Text & Typing configured"
 
 # =============================================================================
 # Screenshots
@@ -184,6 +243,10 @@ success "Mission Control configured"
 
 info "Configuring System UI…"
 
+setting "Appearance:"
+defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
+setting "  Auto-switch Light/Dark with time of day"
+
 setting "Battery:"
 defaults write com.apple.controlcenter BatteryShowPercentage -bool false
 setting "  Hide battery percentage in menu bar"
@@ -191,6 +254,9 @@ setting "  Hide battery percentage in menu bar"
 setting "Clock:"
 defaults write com.apple.menuextra.clock Show24Hour -int 1
 setting "  Use 24-hour clock"
+
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+setting "  Force 24-hour time system-wide"
 
 defaults write com.apple.menuextra.clock ShowDate -int 2
 setting "  Hide date"
@@ -207,6 +273,30 @@ setting "  Don't show seconds"
 success "System UI configured"
 
 # =============================================================================
+# Save Dialogs & Files
+# =============================================================================
+
+info "Configuring Save dialogs & file behavior…"
+
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+setting "Expand the Save panel by default"
+
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+setting "Save new documents to disk (not iCloud) by default"
+
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+setting "Don't write .DS_Store on network shares (NAS)"
+
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+setting "Don't write .DS_Store on USB volumes"
+
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+setting "Don't prompt to use new disks for Time Machine"
+
+success "Save dialogs & files configured"
+
+# =============================================================================
 # Apply changes
 # =============================================================================
 
@@ -217,4 +307,4 @@ killall Dock Finder SystemUIServer 2>/dev/null || true
 
 printf '\n'
 success "macOS defaults applied!"
-warn "Some input settings (key repeat, trackpad) may require logout or restart."
+warn "Some settings (key repeat, trackpad, text substitutions, appearance, .DS_Store-on-network) may require logout or restart."
