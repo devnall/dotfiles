@@ -3,6 +3,7 @@
 # Sourced by install when ~/.personal marker exists
 
 # Casks
+cask "antinote"          # quick scratchpad notes
 cask "zoom"
 
 # Mac App Store
@@ -13,6 +14,7 @@ mas "Infuse", id: 1136220934
 mas "Kindle", id: 302584613
 mas "Logic Pro", id: 634148309
 mas "MainStage", id: 634159523
+mas "Marked 2", id: 890031187
 mas "Panels", id: 1236567663
 mas "Paprika Recipe Manager 3", id: 1303222628
 mas "Parcel", id: 375589283
@@ -35,10 +37,8 @@ mas "Unread", id: 1363637349
 # Download: Syntorial           — syntorial.com — synth programming tutorial
 # Download: VCV Rack 2 Free     — vcvrack.com — virtual modular synth
 
-# Non-audio — manual install (no Homebrew cask available)
-# Download: Affinity Photo 2    — affinity.serif.com — photo editor (cask deprecated)
-# Download: Aqua Voice          — withaqua.com — speech-to-text
-# Download: Steam Link          — apps.apple.com/app/id1246969117 — requires Rosetta 2 on Apple Silicon (softwareupdate --install-rosetta --agree-to-license)
+# Non-audio — manual install (direct license, not via Homebrew)
+# Download: Affinity Photo 2    — affinity.serif.com — photo editor (direct license; affinity-photo cask exists but installed manually)
 
 # ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 6 months
@@ -50,3 +50,5 @@ mas "Unread", id: 1363637349
 # cask "qflipper"          # Flipper Zero utility — 20260315
 # cask "signal"            # 20260315
 # cask "zen"               # 20260323
+# cask "aqua-voice"        # speech-to-text; dropped in rebuild — 20260619
+# mas  "Steam Link", id: 1246969117  # Intel-only (needs Rosetta); dropped in rebuild — 20260619
