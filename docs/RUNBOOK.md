@@ -37,6 +37,16 @@ xcode-select --install
 
 Bootstrap will warn if missing. Required for git, compilers, and most dev tools.
 
+**If you installed the full Xcode app** (not just the Command Line Tools), accept
+its license before running `./install` — until you do, `xcodebuild` and any tool
+that shells out to it exit non-zero, which can break the installer mid-run:
+
+```sh
+sudo xcodebuild -license accept
+```
+
+CLT-only installs (`xcode-select --install`) don't need this step.
+
 ### 5. 1Password setup
 
 Bootstrap will install the app and CLI via Homebrew if you haven't already. Either way, you need to:
@@ -70,6 +80,26 @@ softwareupdate --install-rosetta --agree-to-license
 ```
 
 Steam Link specifically has been removed from `Brewfile.personal` for this reason — see the `# Download:` comment there for the manual install link.
+
+**Docker without Rosetta:** Docker Desktop does **not** require Rosetta. Rosetta
+only accelerates **x86_64/amd64** container images on Apple Silicon — arm64 images
+run natively. Most popular images are multi-arch (arm64), so a default workflow
+needs no Rosetta at all. To keep Docker Rosetta-free:
+
+- **Docker Desktop → Settings → General →** turn **off** *"Use Rosetta for
+  x86_64/amd64 emulation on Apple Silicon"*, then **Apply & restart**. (The toggle
+  is only active when *Virtual Machine Manager* is set to *Apple Virtualization
+  framework*, on the same tab; it defaults to off on a clean install.)
+- With it off, amd64 images fall back to **QEMU** — fully Rosetta-free but ~4–5×
+  slower. Prefer arm64 images; only reach for `--platform linux/amd64` when needed.
+- Switching runtimes does **not** avoid Rosetta: Apple's `container` framework and
+  Podman also use Rosetta for x86 emulation. The only Rosetta-free x86 path on any
+  runtime is QEMU.
+
+**Deprecation horizon:** Apple ships general-purpose Rosetta 2 through **macOS 27**
+(Golden Gate, fall 2026); **macOS 28** (fall 2027) removes it except for a narrow
+set of legacy game frameworks. If x86 containers ever become load-bearing, that
+2027 cutoff is the real deadline — install Rosetta on demand until then.
 
 ---
 
@@ -127,7 +157,13 @@ bash config/macos/defaults.sh
 
 Applies preferred system preferences: Dock (auto-hide with no delay, small icons, magnification, no recents, minimize-into-icon), Finder (list view, hidden files, extensions, POSIX path in title, folders-first, ⌘Q to quit, 30-day trash, new windows → `~/Downloads`), Input (fast key repeat, key-repeat-on-hold, tap-to-click, three-finger drag, two-finger right-click, natural-scroll off), Text & Typing (disable autocorrect + smart quotes/dashes/period/capitalization), screenshot location (`~/Pictures/Screenshots`), Mission Control (no hot corners, stable Spaces), System UI (auto Light/Dark, 24-hour clock, no date), and Save & Files (expanded save panels, save-to-disk default, **no `.DS_Store` on network/USB shares**, no Time Machine new-disk prompt).
 
-The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately; input settings (key repeat, trackpad) may require logout or restart.
+The script is idempotent and prompts before applying. It is **not** called by `./install` — run it manually on new machines. Most settings take effect immediately (the script `killall`s Dock, Finder, etc.), but several — notably input settings (key repeat, trackpad) and some global UI prefs — aren't fully picked up until the next login.
+
+**Reboot after running the script** on a new machine to ensure everything applies cleanly:
+
+```sh
+sudo shutdown -r now
+```
 
 **After macOS upgrades:** Re-run the script after major upgrades (e.g. Sequoia). Major upgrades occasionally reset Dock, trackpad, and input settings. Minor updates almost never touch them. If a setting doesn't take effect after re-running, Apple likely changed or dropped the key — check `defaults read <domain>` to find the new key name.
 
