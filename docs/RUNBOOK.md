@@ -539,6 +539,7 @@ The installer is a thin wrapper around dotbot. Most failures are environmental.
 | `fatal: no submodule mapping found` | stale or uninitialized dotbot submodule | `git submodule update --init --recursive` |
 | `Error: <target> already exists and is not a link` | real file at symlink target (and `force` not set) | Back up the file, remove it, re-run `./install` |
 | Link succeeds but points to nothing | config file was moved or deleted in repo | Check `git status` for missing tracked files |
+| `brew bundle` errors on a `tap "..."` line (e.g. `cormacrelf/tap`) — *"tap … is not trusted"* | Homebrew 6+ ships `HOMEBREW_REQUIRE_TAP_TRUST` on by default and won't load non-official taps until trusted | `./install` auto-trusts every tap declared in the applicable Brewfiles before bundling. If it still trips (older checkout, or you ran `brew bundle` directly), run `brew trust --tap <tap>` once, then re-run |
 
 **Safe to re-run:** The installer is idempotent by design — re-running it won't duplicate symlinks, re-install already-installed Homebrew packages, or overwrite user-customizable configs (starship, ripgrep, bat, btop).
 
@@ -821,6 +822,12 @@ Add to the appropriate Brewfile and run `./install` (or `brew bundle` directly):
 - `packages/Brewfile.work` — work machines only
 - `packages/Brewfile.personal` — personal machines only
 - `packages/Brewfile.local` — this machine only (gitignored)
+
+**Adding a `tap`:** Homebrew 6+ requires non-official taps to be trusted before it
+will load them (`HOMEBREW_REQUIRE_TAP_TRUST`, default-on). `./install` pre-trusts
+every `tap "..."` line in the applicable Brewfiles automatically, so just add the
+`tap` and run `./install`. If you `brew bundle` directly instead, run
+`brew trust --tap <tap>` first. Commented-out tap lines are ignored.
 
 ### New zsh config
 
