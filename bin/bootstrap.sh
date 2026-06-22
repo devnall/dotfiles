@@ -246,6 +246,25 @@ else
   fi
 fi
 
+# --- 5b. SSH commit-signing allowers (enables local signature verification) ---
+# Derived from .gitconfig-user (single source of truth) so `git log --show-signature`
+# and `git verify-commit` can validate our own SSH-signed commits.
+
+ALLOWED_SIGNERS="$DOTFILES_DIR/config/git/allowed_signers"
+
+if [[ -f "$ALLOWED_SIGNERS" ]]; then
+  skip "Git allowed_signers (config/git/allowed_signers)"
+elif [[ -f "$GITCONFIG_USER" ]]; then
+  signer_email="$(git config --file "$GITCONFIG_USER" user.email 2>/dev/null || true)"
+  signer_key="$(git config --file "$GITCONFIG_USER" user.signingkey 2>/dev/null || true)"
+  if [[ -n "$signer_email" && "$signer_key" == ssh-* ]]; then
+    printf '%s namespaces="git" %s\n' "$signer_email" "$signer_key" > "$ALLOWED_SIGNERS"
+    success "Generated config/git/allowed_signers from .gitconfig-user"
+  else
+    warn "Skipped allowed_signers — set email/signingkey in .gitconfig-user, then re-run bootstrap"
+  fi
+fi
+
 # --- 6. Code directories ---
 
 if [[ -d "$HOME/code/personal" ]]; then

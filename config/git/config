@@ -70,3 +70,5 @@
   path = ~/.dotfiles/config/git/.gitconfig-work
 [gpg]
   format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.dotfiles/config/git/allowed_signers
