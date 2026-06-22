@@ -12,7 +12,7 @@ if &background ==# "dark"
 
   " Core
   hi Normal       guifg=#c6e0df guibg=#0f111a ctermfg=152 ctermbg=233
-  hi Comment      guifg=#343b51 guibg=NONE    ctermfg=237 ctermbg=NONE gui=italic cterm=italic
+  hi Comment      guifg=#555e7a guibg=NONE    ctermfg=60  ctermbg=NONE gui=italic cterm=italic
   hi NonText      guifg=#343b51 guibg=NONE    ctermfg=237 ctermbg=NONE
   hi SpecialKey   guifg=#343b51 guibg=NONE    ctermfg=237 ctermbg=NONE
 

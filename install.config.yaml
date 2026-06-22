@@ -86,6 +86,8 @@
       path: config/bat/config
     ~/.config/bat/themes/rose-pine-dawn.tmTheme:
       path: config/bat/themes/rose-pine-dawn.tmTheme
+    ~/.config/bat/themes/nordicpine.tmTheme:
+      path: config/bat/themes/nordicpine.tmTheme
     ~/.config/btop:
       path: config/btop
     ~/.config/glow:

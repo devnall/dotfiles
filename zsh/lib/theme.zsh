@@ -35,7 +35,7 @@ _apply_theme() {
     FAST_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#e6cc6f'
     FAST_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#ddbc44'
     FAST_HIGHLIGHT_STYLES[assign]='fg=#c6e0df'
-    FAST_HIGHLIGHT_STYLES[comment]='fg=#343b51,italic'
+    FAST_HIGHLIGHT_STYLES[comment]='fg=#555e7a,italic'
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#555e7a'
   else
     # ── AlpineDawn (light) ───────────────────────────────────────────
