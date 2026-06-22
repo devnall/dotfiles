@@ -56,6 +56,36 @@ if [[ -f "$starship_conf" ]]; then
   fi
 fi
 
+# Claude Code — toggle the ANSI base of a watched custom theme so RUNNING
+# sessions hot-reload live. (A `theme` change in settings.json only applies on
+# next launch; files under ~/.claude/themes/ hot-reload immediately. Built-in
+# `auto` only toggles the hardcoded dark/light presets, not the ANSI ones.)
+# Select once with `/theme` → "NordicPine". Self-creates the file if missing and
+# preserves any `overrides` you add. jq-guarded; atomic write into the watched dir.
+claude_theme_file="$HOME/.claude/themes/nordicpine.json"
+if command -v jq &>/dev/null; then
+  mkdir -p "$(dirname "$claude_theme_file")"
+  if [[ "$mode" == "dark" ]]; then
+    claude_base="dark-ansi"
+  else
+    claude_base="light-ansi"
+  fi
+  claude_tmp="$(mktemp "${claude_theme_file}.XXXXXX")"
+  if [[ -f "$claude_theme_file" ]]; then
+    if jq --arg b "$claude_base" '.base = $b' "$claude_theme_file" > "$claude_tmp" 2>/dev/null; then
+      mv "$claude_tmp" "$claude_theme_file"
+    else
+      rm -f "$claude_tmp"
+    fi
+  else
+    if jq -n --arg b "$claude_base" '{name: "NordicPine", base: $b, overrides: {}}' > "$claude_tmp" 2>/dev/null; then
+      mv "$claude_tmp" "$claude_theme_file"
+    else
+      rm -f "$claude_tmp"
+    fi
+  fi
+fi
+
 # Desktop wallpaper — switch via desktoppr (macOS only)
 # Detects per-display aspect ratio so mixed ultrawide + widescreen setups
 # each get the right wallpaper folder/image.
