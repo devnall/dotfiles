@@ -69,9 +69,9 @@ theme[available_mid]="#087fab"
 theme[available_end]="#087fab"
 
 # Mem/Disk used meter
-theme[used_start]="#2a5f8f"
-theme[used_mid]="#2a5f8f"
-theme[used_end]="#2a5f8f"
+theme[used_start]="#38c9a7"
+theme[used_mid]="#e6cc6f"
+theme[used_end]="#e16c58"
 
 # Download graph colors
 theme[download_start]="#087fab"
