@@ -398,7 +398,8 @@ macOS appearance change
       ├─ tmux: sources tmux-nordic.conf or tmux-alpine.conf (immediate)
       ├─ neovim: sends ThemeSwitch to all running instances via socket (immediate)
       ├─ btop: seds color_theme in btop.conf (next launch)
-      └─ starship: seds palette line in starship.toml (next prompt)
+      ├─ starship: seds palette line in starship.toml (next prompt)
+      └─ Claude Code: toggles base in ~/.claude/themes/nordicpine.json (live hot-reload)
 
 Existing shell sessions:
   → precmd hook in theme.zsh reads ~/.local/state/appearance
@@ -421,6 +422,7 @@ Desktop wallpaper (macOS):
 | zsh syntax highlighting | Next prompt |
 | btop | Next launch |
 | glow | Next invocation (zsh wrapper reads `~/.local/state/appearance`) |
+| Claude Code | Immediately (custom-theme hot-reload; requires one-time `/theme` → NordicPine) |
 
 ### Troubleshooting
 

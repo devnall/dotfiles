@@ -27,12 +27,18 @@ local nordicpine_overrides = {
   Title = { fg = "#6ab4c2", bold = true },
 
   -- Syntax
-  Comment = { fg = "#343b51", italic = true },
+  Comment = { fg = "#555e7a", italic = true },
   String = { fg = "#e6cc6f" },
   Constant = { fg = "#e6cc6f" },
   Number = { fg = "#e6cc6f" },
   Boolean = { fg = "#cca2c0" },
   Function = { fg = "#38c9a7" },
+  -- rose-pine themes @function explicitly, so the Function override above doesn't
+  -- reach treesitter; set them directly + split builtins to blue (mirrors bat).
+  ["@function"] = { fg = "#38c9a7" },
+  ["@function.call"] = { fg = "#38c9a7" },
+  ["@function.method"] = { fg = "#38c9a7" },
+  ["@function.builtin"] = { fg = "#087fab" },
   Keyword = { fg = "#087fab", bold = true },
   Statement = { fg = "#087fab", bold = true },
   Identifier = { fg = "#c6e0df" },
@@ -41,6 +47,29 @@ local nordicpine_overrides = {
   SpecialComment = { fg = "#cca2c0" },
   Operator = { fg = "#c6e0df" },
   ["@punctuation"] = { fg = "#555e7a" },
+  -- rose-pine themes most treesitter groups explicitly, so the legacy overrides
+  -- above don't reach them. Map the rest onto the NordicPine palette so dark mode
+  -- is fully NordicPine. All of these clear on the light/dawn path (no overrides).
+  ["@variable"] = { fg = "#c6e0df" },
+  ["@variable.builtin"] = { fg = "#cca2c0" },
+  ["@variable.parameter"] = { fg = "#c6e0df" },
+  ["@variable.member"] = { fg = "#c6e0df" },
+  ["@property"] = { fg = "#c6e0df" },
+  ["@field"] = { fg = "#c6e0df" },
+  ["@type"] = { fg = "#6ab4c2" },
+  ["@type.builtin"] = { fg = "#6ab4c2" },
+  ["@constructor"] = { fg = "#6ab4c2" },
+  ["@namespace"] = { fg = "#6ab4c2" },
+  ["@module"] = { fg = "#6ab4c2" },
+  ["@constant"] = { fg = "#e6cc6f" },
+  ["@constant.builtin"] = { fg = "#e6cc6f" },
+  ["@attribute"] = { fg = "#6ab4c2" },
+  ["@tag"] = { fg = "#087fab" },
+  ["@tag.attribute"] = { fg = "#6ab4c2" },
+  ["@label"] = { fg = "#cca2c0" },
+  ["@string.escape"] = { fg = "#6ab4c2" },
+  ["@punctuation.bracket"] = { fg = "#555e7a" },
+  ["@punctuation.delimiter"] = { fg = "#555e7a" },
 
   -- Diagnostics
   DiagnosticError = { fg = "#e16c58" },

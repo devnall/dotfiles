@@ -8,7 +8,7 @@
 # Specify desired theme(s). Run `bat --list-themes` for a list of all available themes
 #--theme="Coldark-Cold"
 --theme-light="rose-pine-dawn"
---theme-dark="base16"
+--theme-dark="nordicpine"
 
 # Specify when to use colored output. Automatic mode enables colors if an
 # interactive terminal is detected, colors are automatically disabled if
@@ -38,3 +38,6 @@
 #   Example 2: Use ".gitignore"-style highlighting for ".ignore" files
 #--map-syntax "*.ino:C++"
 #--map-syntax ".ignore:Git Ignore"
+# bat only knows the exact name "Brewfile" → Ruby; the suffixed variants
+# (Brewfile.universal/.work/.personal/.local) fall back to plain text without this.
+--map-syntax "Brewfile.*:Ruby"

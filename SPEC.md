@@ -1,11 +1,11 @@
 # Dotfiles Project Spec
 
-> **Version:** 6.0
+> **Version:** 7.0
 > **Purpose:** Architecture reference and task plan for the `~/.dotfiles` repo. Part A documents design decisions and constraints. Part B holds the **latest** project's task plan — in progress, or the most recently completed. It is overwritten by the next project's first commit, never reset to an idle state on its own (completed plans stay recoverable from this file's git history).
 >
 > **Repo:** `~/.dotfiles` (Dotbot-managed, macOS/zsh-centric, with Linux remote support)
 >
-> **Previous:** v5.0 Remote bat version upgrade helper — completed. `bin/linux-bat-install` swaps apt's stale bat for the latest upstream `.deb` on minimal `.remote` servers.
+> **Previous:** v6.0 Claude Code settings — install-time layered merge — completed. `bin/claude-settings-build` deep-merges layered source files (`config/claude/settings.{shared,<marker>,local}.json`) into the untracked, real `~/.claude/settings.json`, ending runtime churn and keeping secrets out of the public repo.
 
 ---
 
@@ -33,187 +33,72 @@ After all cleanup work is complete, these must all be true:
 
 ## Part B: Task Plan
 
-### Project: Claude Code settings — install-time layered merge
+### Project: NordicPine dark-mode readability + full-stack palette coherence
 
 **Problem**
 
-`~/.claude/settings.json` is an **orphan symlink** into the public repo
-(`config/claude/settings.json`). Four issues, priority order:
+Dark-mode `bat` rendered comments as near-invisible dim slate, and `Brewfile.*` files
+showed no syntax highlighting at all. Root causes, in the order they surfaced:
 
-1. **Churn (biggest):** Claude Code rewrites the live file at runtime (`theme`,
-   `effortLevel`, `model`, `skipAutoPermissionPrompt`, …). Because it's symlinked
-   into the repo, `git status` is perpetually dirty and `git pull` autostash has
-   conflicted twice. Confirmed live: the working-tree drift on
-   `config/claude/settings.json` is exactly these runtime writes.
-2. **Secrets risk:** the file lives in a **public** repo. `settings.json` can carry
-   `env`, `apiKeyHelper`, `hooks`, and internal hostnames in `permissions` rules.
-   (Audit result below: the *current* file has none — but the exposure is real.)
-3. **Work vs personal:** different settings wanted per machine type, driven by the
-   existing marker files (`~/.work`, `~/.personal`, `~/.remote`, `~/.remote-full`),
-   the same way Brewfiles and `env/*.zsh` already layer.
-4. **Curated shared baseline:** still want permissions / statusline / plugins /
-   marketplaces version-controlled and applied on every machine — committed safely.
+1. **No syntax highlighting on `Brewfile.universal/.work/.personal/.local`** — bat maps
+   only the exact name `Brewfile` → Ruby; the suffixed variants fell back to plain text,
+   so every token (comments included) rendered as the bare foreground. This was the
+   actual "comments unreadable" cause — masked because the first screenshot was Neovim,
+   not bat.
+2. **`bat` dark theme was `base16`**, which borrows the terminal's 16 ANSI colors;
+   comments mapped to ANSI bright-black `#343b51`, ~1.7:1 contrast on the `#0f111a` bg.
+   `#343b51` does double duty as a structural color (borders, tmux bg), so it could not
+   simply be lightened globally.
+3. **NordicPine palette had low hue diversity** — palette-4 (blue `#257994`) and
+   palette-6 (cyan `#33859d`) were ΔE≈5 apart, collapsing distinct syntax scopes; and the
+   bat tmTheme reused one teal across `support.function` / `entity.name.function`.
+4. **Neovim treesitter bleed** — rose-pine themes the `@`-capture groups explicitly, so
+   the legacy `Function`/`Type`/`Constant` overrides never reached treesitter-highlighted
+   code: ~20 semantic groups were rendering rose-pine defaults, not NordicPine.
 
-**Verified before designing** (current Claude Code docs + live inspection; supersedes
-training memory and the old ARCHITECTURE §3.5 claim):
+**Decisions**
 
-- **Precedence (high→low):** managed-settings → CLI `--settings` → project
-  `.claude/settings.local.json` → project `.claude/settings.json` → user
-  `~/.claude/settings.json`. User/project/local **deep-merge**; managed is
-  enterprise/root-scope (macOS `/Library/Application Support/ClaudeCode/`, Linux
-  `/etc/claude-code/`) and pops a security dialog — wrong tool for personal dotfiles.
-- **`~/.claude/settings.local.json` is NOT merged at user scope** — only project-scoped
-  `.claude/settings.local.json` merges. Confirmed live: `~/.claude/settings.local.json`
-  contains `{"model":"opus"}` and is being **ignored**. → ARCHITECTURE §3.5 and
-  `bootstrap.sh` are **wrong** and must be corrected.
-- **No native include/compose** for user settings. `CLAUDE_CONFIG_DIR` relocates the
-  whole `.claude` dir (incl. credentials) — heavier than needed. ⇒ work/personal
-  differentiation must be done **at install time via marker files**.
-- **MCP servers live in `~/.claude.json`, not `settings.json`** — that whole "work MCP"
-  leak worry is off the table for this file. Onboarding/tips/oauth/caches also live in
-  `~/.claude.json`; credentials in `~/.claude/.credentials.json`.
-- **Volatile keys** confirmed auto-written to `settings.json`: `theme`, `effortLevel`,
-  `skipAutoPermissionPrompt` (live drift), plus `model`/`outputStyle` via slash commands.
-- **Known bug (independent reason to drop the symlink):** Claude Code issue **#3575** —
-  symlinked `settings.json` causes permission failures and perf degradation; Nix users
-  hit read-only-symlink write errors (#55485, #52525). Consensus fix: **copy/generate a
-  real file, never symlink it.**
-- **Community consensus:** robust setups generate/merge `settings.json` from a tracked
-  base (e.g. ryoppippi's jq deep-merge with an OS conditional — our marker approach);
-  secrets stay out entirely, in a gitignored local layer or resolved at runtime via a
-  secret manager (1Password `op://` + `apiKeyHelper`).
-
-**Audit of current `config/claude/settings.json`:** no secrets. Curated keys
-(`permissions` allow-list of generic git/gh/standard tools, `statusLine`,
-`enabledPlugins`, `extraKnownMarketplaces`) are all safe to commit. Volatile keys
-(`theme`, `effortLevel`, `skipAutoPermissionPrompt`) are runtime drift, not curated.
-
-**Design**
-
-Stop tracking a single `settings.json`. Keep **layered source files** in the repo and
-generate the **real, untracked** `~/.claude/settings.json` at install time by
-deep-merging the layers on top of the live file. Churn lands in an untracked file (zero
-git noise); the curated baseline is re-applied every `./install`; marker files select
-the work/personal layer.
-
-- **Layers in `config/claude/` (low→high precedence):**
-  - `settings.shared.json` — **committed**. Universal curated baseline: `permissions`,
-    `statusLine`, `enabledPlugins`, `extraKnownMarketplaces`. No secrets, no volatile keys.
-  - `settings.<marker>.json` — `settings.personal.json` / `settings.work.json`
-    **committed** (safe, non-sensitive); `settings.remote*.json` optional/future.
-    Generator picks the one matching the active marker.
-  - `settings.local.json` — **gitignored** (matches existing `*.local.*`; explicit entry
-    added for clarity). Per-machine secrets/overrides: internal hostnames in permission
-    rules, `hooks`, `apiKeyHelper` (real creds via 1Password `op://`). Mirrors
-    `~/.env.local` / `~/.secrets.local`. Bootstrap creates a `{}` stub.
-- **Work-layer decision:** commit a safe `settings.work.json`; route any sensitive bits
-  to the gitignored `settings.local.json`. Mirrors `env/work.zsh` (tracked) +
-  `~/.secrets.local` (untracked), and the runbook's existing rule that work OTEL secrets
-  go in `~/.secrets.local`, not settings.json.
-- **Merge semantics (`bin/claude-settings-build`, jq):** recursive deep-merge —
-  objects recurse, arrays union + dedup, scalars right-wins, canonical sorted-key output.
-  **Permissions are repo-authoritative**: the live file's permissions are dropped before
-  merging, so the allow/deny lists are exactly shared ∪ marker ∪ local (curated removals
-  propagate; runtime "always allow" grants don't accumulate). Keys only in the live file
-  (`theme`/`model`/`effort`) are preserved untouched → no reset surprise.
-- **Volatile keys** are deliberately *absent* from all committed layers, so the merge
-  never overwrites them → the churn fix. (`model`: stays machine-local per the earlier
-  `🔧 Remove model key from shared Claude settings` decision; this machine's `opus`
-  preference is rescued from the legacy `~/.claude/settings.local.json` during migration.
-  To default a new machine to opus, set it once via `/model` or in `settings.local.json`.)
-- **Why not just commit-and-churn / git-wrapper / per-key strip:** committing the whole
-  file keeps the public-repo secret exposure and the dirty tree; a git auto-sync wrapper
-  still pushes every model/theme flip; per-key `assume-unchanged` is unshipped in the
-  wild and brittle. Install-time generate is the robust, repo-idiomatic fit.
-
-**Decisions (made 2026-06-13)**
-
-- Work layer: **commit safe + gitignored local for secrets** (not whole-file-ignored).
-- Pre-existing drift: **subsume** the `config/claude/settings.json` working-tree drift
-  (it's removed by the redesign; curated keys extracted into `settings.shared.json`
-  first), and **remove** the redundant untracked `config/git/.gitconfig-darwin`
-  (`credential.helper = osxkeychain` is already set directly in `config/git/config`;
-  the file is referenced nowhere).
-- `jq` already in `Brewfile.universal`; generator self-guards and no-ops where absent
-  (e.g. minimal `.remote`).
+- **Keep NordicPine** (test-drove Gotham / Iceberg / Moonfly / Kanagawa Wave; NordicPine
+  won the "dark + high text-to-bg contrast + dusty/muted, no purple" brief — Gotham failed
+  on contrast not darkness, Moonfly was too vivid). User taste captured in auto-memory
+  `theme-color-preferences`.
+- bat dark theme = custom `config/bat/themes/nordicpine.tmTheme` (mirrors light-mode
+  `rose-pine-dawn.tmTheme`); every color traces to `docs/color-palettes.md`.
+- Comments = Autosuggest `#555e7a` everywhere (readable, palette-faithful); `#343b51`
+  retired to structural-only (borders / invisibles).
+- palette-4 `#257994 → #2a5f8f` (blue ≠ cyan, ΔE 5 → 23) across all role usages.
+- Light mode stays clean Rosé Pine Dawn / AlpineDawn — dark overrides must fully toggle off.
 
 **Tasks**
 
-- [x] **Source layers** (`config/claude/`):
-  - [x] Create `settings.shared.json` from the current HEAD curated keys (permissions,
-        statusLine, enabledPlugins, extraKnownMarketplaces) — no volatile keys, no secrets.
-  - [x] Create `settings.personal.json` and `settings.work.json` (safe, minimal to start).
-  - [x] `git rm` the tracked `config/claude/settings.json` (drift subsumed).
-- [x] **`bin/claude-settings-build`** (bash, shellcheck-clean, bootstrap.sh output style):
-  - [x] `jq` guard → warn + exit 0 if absent. `mkdir -p ~/.claude`. trap-clean temp.
-  - [x] Detect active marker; missing marker → empty marker layer.
-  - [x] Deep-merge (objects recurse / arrays union+dedup / scalars right-wins), inputs
-        low→high: legacy `~/.claude/settings.local.json` (rescue) → live
-        `~/.claude/settings.json` → `settings.shared.json` → `settings.<marker>.json` →
-        `config/claude/settings.local.json`.
-  - [x] **Symlink migration:** if `~/.claude/settings.json` is a symlink, read its
-        content (or `{}` if dangling) as the live input, then atomically replace it with
-        the generated real file.
-  - [x] Write only when content changes (avoid needless rewrites). Validate JSON before `mv`.
-  - [x] Idempotent on re-run; note when it rescues/should-delete legacy local file.
-- [x] **`install.config.yaml`:** add a shell step (after the bat-cache step) running
-      `command -v jq > /dev/null && bash bin/claude-settings-build || true`. (No symlink
-      entry to remove — already gone in `68f0532`.)
-- [x] **`bootstrap.sh`:** repoint the stub from `~/.claude/settings.local.json` to
-      `config/claude/settings.local.json` (`{}`); fix any summary/TODO text referencing
-      the old path.
-- [x] **`.gitignore`:** add explicit `config/claude/settings.local.json` under a Claude
-      comment (confirm committed layers are not caught by `*.local.*`).
-- [x] **`config/git/.gitconfig-darwin`:** remove (redundant/orphaned).
-- [x] **Docs:**
-  - [x] ARCHITECTURE §3.5 — correct the false "settings.local.json deep-merged at
-        runtime" claim; describe the layered generate. §3.4 — list Claude layers as
-        marker-driven. §2 tree — add `config/claude/*` layers + `bin/claude-settings-build`.
-  - [x] RUNBOOK — new "Claude Code settings" section (layering, how to add a permission,
-        work vs personal, migration); fix the local-files / backup tables.
-  - [x] README — check for and fix any settings references.
-- [x] **Migration (this machine):** run the generator; confirm `~/.claude/settings.json`
-      is now a real file with the curated baseline + preserved `theme`/`effort`/`model`;
-      advise deleting the legacy `~/.claude/settings.local.json`.
+- [x] **bat syntax mapping** — `--map-syntax "Brewfile.*:Ruby"` in `config/bat/config`.
+- [x] **bat dark theme** — new `nordicpine.tmTheme`; `--theme-dark="nordicpine"`; symlink
+      entry in `install.config.yaml`; `bat cache --build`. Builtins (`support.function`)
+      → blue, user functions teal; readable `gutterForeground` + pink grid.
+- [x] **Palette blue/cyan split** — palette-4 → `#2a5f8f` in `ghostty/themes/NordicPine`,
+      `color-palettes.md`, `starship.toml` ×2, `tmux-nordic.conf`. palette-8
+      `#343b51 → #555e7a` (Ghostty + doc ANSI table).
+- [x] **Readable comments across the stack** — `#343b51 → #555e7a` in nvim
+      `appearance.lua`, `vim/colors/nordicpine.vim`, `zsh/lib/theme.zsh`.
+- [x] **nvim treesitter alignment** — ~20 `@`-groups mapped onto the NordicPine palette in
+      `appearance.lua` (functions teal + builtins blue, types cyan, constants gold,
+      variables fg, `self`/labels pink, tags blue, punctuation slate).
+- [x] **Doc sync** — `color-palettes.md`: ANSI-8 → `#555e7a`; relabel `#343b51`
+      (borders/invisibles) and `#555e7a` (autosuggest/comments).
 
-**Status:** Implemented on branch `feat/claude-settings-layering`. Generator
-unit-tested in a sandbox (permission union, volatile-key preservation, precedence,
-legacy rescue, marker selection, symlink migration, idempotency — all pass) and run
-live on this `.personal` machine: the orphan `~/.claude/settings.json` symlink is now a
-real file carrying the curated baseline + preserved `theme`/`effort`/`skipAutoPermissionPrompt`
-+ rescued `model: opus`; re-run is a clean no-op; `git status` shows no settings churn.
-`pre-commit run --all-files` green (shellcheck included). `.gitconfig-darwin` removed and
-the legacy `~/.claude/settings.local.json` retired. Not yet exercised on a `.work` or `.remote` box (no access from here; logic verified via
-sandbox marker tests).
-
-**Follow-up — permission audit (2026-06-13):** trimmed the shared allow-list to a
-least-privilege baseline (dropped 14 redundant read-only builtins; removed the
-escape-hatch/outward/secret entries `python3 -c`, `command`, `gh`, `git push`, `env`,
-`printenv`; tightened `git config` to read-only). Moved `git push` + a narrow `gh` read
-subset to `settings.personal.json`. Added a `deny` block to `settings.shared.json`
-(`rm -rf`, `gh repo delete`, `gh auth token`, `gh secret`). Made the generator treat
-**permissions as repo-authoritative** (drops the live file's permissions before merging) so
-curated removals propagate and runtime grants don't accumulate; output is now sorted-key
-for stable idempotency. Live file regenerated: 35 allow + 5 deny, volatile keys preserved.
-
-**Verification plan**
-
-- `shellcheck` + `bash -n` clean on `bin/claude-settings-build`; `pre-commit run
-  --all-files` green.
-- Generate → `~/.claude/settings.json` is a regular file (not a symlink), valid JSON,
-  contains the shared baseline; `theme`/`effortLevel`/`model` preserved. Re-run is a
-  no-op (idempotent).
-- Merge logic tested against sample layer inputs in a temp dir for each marker
-  (permissions union; marker override; local override) — without touching real markers.
-- `git status` shows no `settings.json` (file untracked + removed from repo); a Claude
-  session that flips theme/model produces **no** repo diff.
-- `./install` end-to-end idempotent.
+**Status:** Implemented on branch `feat/nordicpine-dark-readability`. Verified live: bat
+renders Brewfiles with readable comments and builtin ≠ user-function colors; nvim dark
+mode is full NordicPine across legacy + treesitter groups. A headless `dark → light →
+dark` toggle confirms every override clears to clean Rosé Pine Dawn and restores with no
+leakage in either direction; ΔE math confirms the blue/cyan separation (5 → 23). Shipped
+as a 3-commit split: `🔧` drop deprecated `docker-completion` (pre-existing working-tree
+change) + `🐛` Brewfile.* map-syntax + `🎨` NordicPine dark-mode overhaul.
 
 **Acceptance**
 
-- `git status` no longer shows settings.json churn on any machine after normal Claude use.
-- The shared baseline (permissions/statusline/plugins/marketplaces) applies on all machines.
-- Work machines get the work layer; personal machines get the personal layer — via markers.
-- No sensitive data in the public repo; volatile model/theme/effort stay machine-local.
-- `./install` stays idempotent; migration converts the orphan symlink with no data loss.
-- ARCHITECTURE / RUNBOOK / bootstrap.sh corrected (esp. the settings.local.json claim).
+- bat dark mode: `Brewfile.*` highlight; comments legible (`#555e7a`, ~2.9:1);
+  builtins ≠ user functions.
+- nvim: dark = NordicPine across legacy + treesitter; light = clean Rosé Pine Dawn; the
+  dark↔light toggle is lossless in both directions.
+- NordicPine 16-color palette has no near-duplicate slots (blue ≠ cyan, ΔE ≥ ~20).
+- All theme colors trace to `docs/color-palettes.md`.

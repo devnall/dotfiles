@@ -32,10 +32,10 @@
 | Dark red (ANSI 1)             | `#bb2938` |
 | Pink (separator / terraform)  | `#cca2c0` |
 | Lavender (globbing)           | `#ffd2f8` |
-| Muted blue (ANSI 4 / docker)  | `#257994` |
+| Muted blue (ANSI 4 / docker)  | `#2a5f8f` |
 | Dark green (ANSI 2)           | `#26a98b` |
-| Dim text (comments)           | `#343b51` |
-| Autosuggest                   | `#555e7a` |
+| Borders / invisibles          | `#343b51` |
+| Autosuggest / comments        | `#555e7a` |
 
 ### ANSI Palette
 
@@ -45,11 +45,11 @@
 | 1     | Red           | `#bb2938` |
 | 2     | Green         | `#26a98b` |
 | 3     | Yellow        | `#ddbc44` |
-| 4     | Blue          | `#257994` |
+| 4     | Blue          | `#2a5f8f` |
 | 5     | Magenta       | `#cca2c0` |
 | 6     | Cyan          | `#33859d` |
 | 7     | White         | `#c6e0df` |
-| 8     | Bright black  | `#343b51` |
+| 8     | Bright black  | `#555e7a` |
 | 9     | Bright red    | `#e16c58` |
 | 10    | Bright green  | `#38c9a7` |
 | 11    | Bright yellow | `#e6cc6f` |
