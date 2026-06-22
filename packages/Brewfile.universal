@@ -8,7 +8,6 @@ brew "zsh-completions"
 brew "zsh-fast-syntax-highlighting"
 brew "bash"
 brew "bash-completion"
-brew "docker-completion"
 
 # Theme switching
 tap "cormacrelf/tap"
@@ -156,3 +155,4 @@ mas "Xcode", id: 497799835
 # brew "zsh-history-substring-search" # 20260324 — replaced by built-in up-line-or-beginning-search
 # cask "zoom"                  # 20260406 — moved to Brewfile.personal; IT-managed on work machines
 # cask "latest"              # 20260620
+# brew "docker-completion"    # 20260621 formula deprecated
