@@ -130,25 +130,15 @@
      description: Verify Homebrew is available
     # Homebrew 6+ ships HOMEBREW_REQUIRE_TAP_TRUST on by default: it refuses to
     # load non-official taps until they're trusted, so `brew bundle` errors on a
-    # fresh machine the first time it hits a `tap "..."` line. Pre-trust every
-    # tap declared in the applicable Brewfiles (the repo is the source of truth
-    # for what's intentionally installed). Idempotent; no-op on Homebrew < 6
-    # (no `trust` subcommand) and on non-brew hosts.
+    # fresh machine the first time it hits a `tap "..."` line. brew-trust-taps
+    # prompts for each untrusted tap (with origin + what it provides) rather than
+    # trusting them silently — auto-trusting would defeat the safeguard. Already-
+    # trusted taps are skipped; no-op on Homebrew < 6 and non-brew hosts.
     -
-     command: |
-       if command -v brew > /dev/null && brew trust --help > /dev/null 2>&1; then
-         for _bf in packages/Brewfile.universal \
-                    "$([[ -f ~/.work ]] && echo packages/Brewfile.work)" \
-                    "$([[ -f ~/.personal ]] && echo packages/Brewfile.personal)" \
-                    "$([[ -f packages/Brewfile.local ]] && echo packages/Brewfile.local)"; do
-           [[ -n "$_bf" && -f "$_bf" ]] || continue
-           grep -E '^[[:space:]]*tap ' "$_bf" | sed -E 's/.*tap "([^"]+)".*/\1/' | while read -r _tap; do
-             [[ -n "$_tap" ]] && brew trust --tap "$_tap" > /dev/null 2>&1 || true
-           done
-         done
-       fi
-     description: Trust non-official Homebrew taps declared in Brewfiles (Homebrew 6+)
+     command: 'bash bin/brew-trust-taps'
+     description: Review & trust non-official Homebrew taps declared in Brewfiles (Homebrew 6+)
      stdout: true
+     stdin: true
     # --no-upgrade keeps ./install idempotent: missing packages install, but
     # already-installed casks/MAS apps that have self-updated past the cask
     # version stay put. Use `brew upgrade` for intentional upgrades.

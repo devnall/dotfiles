@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+#
+# brew-trust-taps — interactively trust non-official Homebrew taps declared in
+# the applicable Brewfiles, one prompt per tap.
+#
+# Why prompt instead of auto-trust: Homebrew 6+ ships HOMEBREW_REQUIRE_TAP_TRUST
+# on by default and refuses to load non-official taps until they're trusted, so
+# `brew bundle` errors on a fresh machine the first time it hits a `tap "..."`
+# line. Auto-trusting every declared tap silently would defeat the point of that
+# safeguard — a poisoned or hijacked tap added to a Brewfile (by a bad merge, a
+# typo'd name resolving to a squatter, or an upstream compromise) would be
+# trusted without a human ever seeing it. Instead we surface each untrusted tap
+# with enough context (origin repo, declaring Brewfile, what it provides) to make
+# a deliberate trust decision, and trust only the ones you approve.
+#
+# Run automatically by ./install before `brew bundle`. Safe to run by hand too:
+#   brew-trust-taps
+#
+# Idempotent and self-guarding:
+#   - No-op where `brew` / `brew trust` is unavailable (Homebrew < 6, non-brew hosts).
+#   - Already-trusted taps are skipped silently.
+#   - Non-interactive (no TTY on stdin): trusts NOTHING, lists what needs trusting
+#     and the manual command, then exits 0 so ./install proceeds. `brew bundle`
+#     will surface the untrusted-tap error itself — the safe, visible default.
+
+# shellcheck disable=SC2088  # tilde in quoted output strings is intentional display text
+set -euo pipefail
+
+# Resolve this script's real location through any symlink (it is also linked into ~/bin).
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  src_dir="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$src_dir/$SOURCE"
+done
+DOTFILES_DIR="$(cd -P "$(dirname "$SOURCE")/.." && pwd)"
+PACKAGES_DIR="$DOTFILES_DIR/packages"
+
+# --- Output helpers (match bin/bootstrap.sh style) ---
+
+if command -v tput >/dev/null 2>&1 && tput sgr0 >/dev/null 2>&1; then
+  BOLD=$(tput bold); GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); RED=$(tput setaf 1); RESET=$(tput sgr0)
+else
+  BOLD="" GREEN="" YELLOW="" RED="" RESET=""
+fi
+
+info()    { printf '%s[→]%s %s\n' "$BOLD"   "$RESET" "$1"; }
+success() { printf '%s[✓]%s %s\n' "$GREEN"  "$RESET" "$1"; }
+warn()    { printf '%s[!]%s %s\n' "$YELLOW" "$RESET" "$1"; }
+error()   { printf '%s[✗]%s %s\n' "$RED"    "$RESET" "$1"; }
+
+# --- Self-guard: need brew with the `trust` subcommand (Homebrew 6+) ---
+
+if ! command -v brew >/dev/null 2>&1 || ! brew trust --help >/dev/null 2>&1; then
+  exit 0
+fi
+
+# --- Collect taps declared in the applicable Brewfiles ---
+# Mirror install.config.yaml's selection: universal + marker-selected + local.
+
+brewfiles=("$PACKAGES_DIR/Brewfile.universal")
+[[ -f "$HOME/.work" ]]     && brewfiles+=("$PACKAGES_DIR/Brewfile.work")
+[[ -f "$HOME/.personal" ]] && brewfiles+=("$PACKAGES_DIR/Brewfile.personal")
+[[ -f "$PACKAGES_DIR/Brewfile.local" ]] && brewfiles+=("$PACKAGES_DIR/Brewfile.local")
+
+# Map of tap -> declaring Brewfile basename (first one wins). Track order separately
+# so output is deterministic.
+declare -a taps=()
+declare -A tap_source=()
+for bf in "${brewfiles[@]}"; do
+  [[ -f "$bf" ]] || continue
+  # `^[[:space:]]*tap "..."` only — commented-out tap lines are ignored.
+  while IFS= read -r tap; do
+    [[ -n "$tap" ]] || continue
+    if [[ -z "${tap_source[$tap]:-}" ]]; then
+      taps+=("$tap")
+      tap_source[$tap]="$(basename "$bf")"
+    fi
+  done < <(grep -E '^[[:space:]]*tap "' "$bf" | sed -E 's/.*tap "([^"]+)".*/\1/')
+done
+
+[[ ${#taps[@]} -eq 0 ]] && exit 0
+
+# --- Determine which taps are already trusted ---
+
+is_trusted() {
+  local tap="$1"
+  if command -v jq >/dev/null 2>&1; then
+    brew trust --json v1 2>/dev/null | jq -e --arg t "$tap" '.taps | index($t)' >/dev/null 2>&1
+  else
+    # Fallback: match the quoted tap name in the JSON array.
+    brew trust --json v1 2>/dev/null | grep -qF "\"$tap\""
+  fi
+}
+
+# Filter to untrusted taps.
+declare -a pending=()
+for tap in "${taps[@]}"; do
+  is_trusted "$tap" || pending+=("$tap")
+done
+
+[[ ${#pending[@]} -eq 0 ]] && exit 0
+
+# --- Context helpers ---
+
+# A tap "owner/repo" lives at github.com/owner/homebrew-repo.
+tap_url() {
+  local owner="${1%%/*}" repo="${1#*/}"
+  printf 'https://github.com/%s/homebrew-%s' "$owner" "$repo"
+}
+
+# List formulae/casks in the declaring Brewfile that reference this tap fully-
+# qualified ("owner/repo/name"), with any trailing comment, as decision context.
+tap_provides() {
+  local tap="$1" bf="$PACKAGES_DIR/${tap_source[$1]}"
+  [[ -f "$bf" ]] || return 0
+  # Match e.g.  brew "cormacrelf/tap/dark-notify"   # comment
+  grep -E "\"${tap}/[^\"]+\"" "$bf" | sed -E \
+    -e "s|.*\"${tap}/([^\"]+)\".*#[[:space:]]*(.*)|  · \1 — \2|" \
+    -e "s|.*\"${tap}/([^\"]+)\".*|  · \1|"
+}
+
+# --- Non-interactive: trust nothing, report, let brew bundle surface it ---
+
+if [[ ! -t 0 ]]; then
+  warn "Untrusted Homebrew tap(s) need a decision, but stdin is not a terminal."
+  for tap in "${pending[@]}"; do
+    printf '      %s (from %s)\n' "$tap" "${tap_source[$tap]}"
+  done
+  info "Re-run interactively:  brew-trust-taps"
+  info "Or trust one by hand:  brew trust --tap <owner/repo>"
+  exit 0
+fi
+
+# --- Interactive: one prompt per untrusted tap ---
+
+warn "${#pending[@]} non-official Homebrew tap(s) declared in your Brewfiles are not trusted."
+info "Homebrew won't load a non-official tap until you trust it. Review each below."
+printf '\n'
+
+trusted_count=0
+for tap in "${pending[@]}"; do
+  printf '%sTap:%s      %s\n' "$BOLD" "$RESET" "$tap"
+  printf '  Source:   %s\n' "${tap_source[$tap]}"
+  printf '  Origin:   %s\n' "$(tap_url "$tap")"
+  provides="$(tap_provides "$tap")"
+  if [[ -n "$provides" ]]; then
+    printf '  Provides:\n%s\n' "$provides"
+  fi
+  printf '%s[→]%s Trust %s? [y/N]: ' "$BOLD" "$RESET" "$tap"
+  read -r yn
+  case "$yn" in
+    [yY] | [yY][eE][sS])
+      if brew trust --tap "$tap" >/dev/null 2>&1; then
+        success "Trusted $tap"
+        trusted_count=$((trusted_count + 1))
+      else
+        error "Failed to trust $tap"
+      fi
+      ;;
+    *)
+      warn "Skipped $tap — packages from this tap will not install until trusted."
+      ;;
+  esac
+  printf '\n'
+done
+
+success "Done. Trusted $trusted_count of ${#pending[@]} tap(s) this run."
