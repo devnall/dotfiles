@@ -5,6 +5,17 @@
 # ~/.ssh/config.local, which is not tracked by dotfiles.
 Include ~/.ssh/config.local
 
+# The 1Password agent serves every stored key, so a bare Host * makes git offer
+# all of them to GitHub — including the work key, which biometric-prompts before
+# the personal key wins. Pin GitHub auth to one key (IdentityAgent is inherited
+# from Host * below). The GitHub account is shared between work and personal —
+# per-repo identity and signing are handled by git includeIf, not the transport
+# key — so the auth key is interchangeable; this just stops the extra prompt. The
+# pubkey is generated from .gitconfig-user's signingkey by bootstrap (gitignored).
+Host github.com
+  IdentitiesOnly yes
+  IdentityFile ~/.dotfiles/config/git/personal_github.pub
+
 Host *
   AddKeysToAgent yes
   UseKeychain yes

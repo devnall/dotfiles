@@ -265,6 +265,26 @@ elif [[ -f "$GITCONFIG_USER" ]]; then
   fi
 fi
 
+# --- 5c. Personal SSH key pin (scopes GitHub auth to one key in the 1Password agent) ---
+# config/ssh/config's `Host github.com` block points IdentityFile at this file with
+# IdentitiesOnly=yes, so the 1Password agent offers ONLY this key to GitHub instead of
+# every stored key (which otherwise prompts for the work key first). The signingkey string
+# IS the public key, so this is derived from .gitconfig-user (same source as allowed_signers).
+
+PERSONAL_PUBKEY="$DOTFILES_DIR/config/git/personal_github.pub"
+
+if [[ -f "$PERSONAL_PUBKEY" ]]; then
+  skip "Personal SSH key pin (config/git/personal_github.pub)"
+elif [[ -f "$GITCONFIG_USER" ]]; then
+  signer_key="$(git config --file "$GITCONFIG_USER" user.signingkey 2>/dev/null || true)"
+  if [[ "$signer_key" == ssh-* ]]; then
+    printf '%s\n' "$signer_key" > "$PERSONAL_PUBKEY"
+    success "Generated config/git/personal_github.pub from .gitconfig-user"
+  else
+    warn "Skipped personal_github.pub — set signingkey in .gitconfig-user, then re-run bootstrap"
+  fi
+fi
+
 # --- 6. Code directories ---
 
 if [[ -d "$HOME/code/personal" ]]; then
