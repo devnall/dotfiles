@@ -128,7 +128,9 @@
 
 - shell:
     -
-     command: 'command -v brew > /dev/null || { echo "⚠ Homebrew not found. Run ./bin/bootstrap.sh first or install manually."; }'
+     # Reset the failure log (consumed by the summary step at the end) before any
+     # bundle runs, so a clean install never reports stale failures.
+     command: 'rm -f "${TMPDIR:-/tmp}/dotfiles-brew-failures"; command -v brew > /dev/null || { echo "⚠ Homebrew not found. Run ./bin/bootstrap.sh first or install manually."; }'
      description: Verify Homebrew is available
     # Homebrew 6+ ships HOMEBREW_REQUIRE_TAP_TRUST on by default: it refuses to
     # load non-official taps until they're trusted, so `brew bundle` errors on a
@@ -144,20 +146,25 @@
     # --no-upgrade keeps ./install idempotent: missing packages install, but
     # already-installed casks/MAS apps that have self-updated past the cask
     # version stay put. Use `brew upgrade` for intentional upgrades.
+    # Each bundle step is non-blocking (install never aborts on a bad entry), but
+    # a failure is recorded to the log and surfaced by the summary step below —
+    # `brew bundle` aborts the *whole* file on one unresolved entry, so the rest
+    # of that Brewfile may be missing too. The `if`/`fi` guard means the warning
+    # fires only on a real bundle failure, never when the marker is just absent.
     -
-     command: '([[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]) && brew bundle --no-upgrade --file=packages/Brewfile.universal || true'
+     command: 'if [[ "$(uname)" == "Darwin" ]] || [[ -f ~/.remote-full ]]; then brew bundle --no-upgrade --file=packages/Brewfile.universal || { echo "⚠ Brewfile.universal: some packages failed to install (see output above)"; echo "Brewfile.universal" >> "${TMPDIR:-/tmp}/dotfiles-brew-failures"; }; fi'
      description: Install universal Homebrew packages
      stdout: true
     -
-     command: '[[ -f ~/.work ]] && brew bundle --no-upgrade --file=packages/Brewfile.work || true'
+     command: 'if [[ -f ~/.work ]]; then brew bundle --no-upgrade --file=packages/Brewfile.work || { echo "⚠ Brewfile.work: some packages failed to install (see output above)"; echo "Brewfile.work" >> "${TMPDIR:-/tmp}/dotfiles-brew-failures"; }; fi'
      description: Install work Homebrew packages
      stdout: true
     -
-     command: '[[ -f ~/.personal ]] && brew bundle --no-upgrade --file=packages/Brewfile.personal || true'
+     command: 'if [[ -f ~/.personal ]]; then brew bundle --no-upgrade --file=packages/Brewfile.personal || { echo "⚠ Brewfile.personal: some packages failed to install (see output above)"; echo "Brewfile.personal" >> "${TMPDIR:-/tmp}/dotfiles-brew-failures"; }; fi'
      description: Install personal Homebrew packages
      stdout: true
     -
-     command: '[[ -f packages/Brewfile.local ]] && brew bundle --no-upgrade --file=packages/Brewfile.local || true'
+     command: 'if [[ -f packages/Brewfile.local ]]; then brew bundle --no-upgrade --file=packages/Brewfile.local || { echo "⚠ Brewfile.local: some packages failed to install (see output above)"; echo "Brewfile.local" >> "${TMPDIR:-/tmp}/dotfiles-brew-failures"; }; fi'
      description: Install local Homebrew packages
      stdout: true
     -
@@ -178,4 +185,24 @@
          launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist
        fi
      description: Load dark-notify LaunchAgent
+     stdout: true
+    -
+     command: |
+       fails="${TMPDIR:-/tmp}/dotfiles-brew-failures"
+       if [[ -s "$fails" ]]; then
+         echo ""
+         echo "═══════════════════════════════════════════════════════════════"
+         echo "⚠  Some Homebrew packages failed to install and need attention:"
+         while read -r bf; do
+           echo "     • $bf  →  recheck: brew bundle check --file=packages/$bf"
+         done < "$fails"
+         echo ""
+         echo "   One unresolved entry aborts the rest of that Brewfile, so other"
+         echo "   packages in it may be missing too. Fix or remove the entry, then"
+         echo "   re-run ./install."
+         echo "═══════════════════════════════════════════════════════════════"
+         rm -f "$fails"
+       fi
+       true
+     description: Report any Homebrew packages that failed to install
      stdout: true

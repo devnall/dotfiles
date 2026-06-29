@@ -7,7 +7,6 @@ brew "aws-vault"
 brew "doitlive"
 brew "kubectx"        # switch k8s contexts
 brew "s3scanner"      # s3 bucket scanner
-brew "tflint"         # terraform linter
 # brew "terraform"    # quarantined 20260315 — migrating to mise
 # brew "tfenv"        # quarantined 20260315 — migrating to mise
 brew "yarn"
@@ -21,6 +20,10 @@ brew "aws/tap/eks-node-viewer"  # EKS node resource viewer
 
 tap "hashicorp/tap"
 brew "hashicorp/tap/packer"     # machine image building
+
+# tflint left homebrew-core; vendor ships it via their own tap
+tap "terraform-linters/tap"
+brew "terraform-linters/tap/tflint"  # terraform linter
 
 brew "eksctl"         # AWS EKS CLI
 brew "k9s"            # Kubernetes TUI
