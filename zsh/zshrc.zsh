@@ -50,6 +50,13 @@ setopt pushdtohome              # push to $HOME when no argument is given to `cd
 setopt pushdignoredups          # ignore duplicate entries in directory stack
 setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
 
+# zsh-you-should-use config (plugin loaded via sheldon, below). Tuned to keep the
+# learning benefit while cutting paste-noise: best-match only, reminder after the
+# command output, and an ignore list for aliases we routinely paste in full.
+export YSU_MODE="BESTMATCH"           # suggest only the single best alias, not every partial match
+export YSU_MESSAGE_POSITION="after"   # show reminder after the command runs, not before it
+export YSU_IGNORED_ALIASES=("g" "_" "vim" "e" "k8")  # git, sudo, editor, kubectl — fire on nearly every paste
+
 if command -v sheldon > /dev/null && [[ -t 1 ]]; then
   export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon"
   export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon"
