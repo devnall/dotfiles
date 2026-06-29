@@ -139,7 +139,7 @@ The bootstrap wizard is interactive and idempotent — it skips anything already
 
 This will:
 - Create all symlinks (zshrc, nvim, tmux, ghostty, starship, bat, btop, etc.)
-- Run `brew bundle --no-upgrade` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file, plus `Brewfile.local` if it exists. `--no-upgrade` keeps `./install` install-only so self-updating apps (Chrome, Vivaldi, etc.) aren't downgraded to the cask version on re-run; use `bubu` / `brew upgrade` for intentional upgrades
+- Run `brew bundle --no-upgrade` for `Brewfile.universal`, plus `Brewfile.work` or `Brewfile.personal` based on the marker file, plus `Brewfile.local` if it exists. `--no-upgrade` keeps `./install` install-only so self-updating apps (Chrome, Vivaldi, etc.) aren't downgraded to the cask version on re-run; use `bubu` / `brew upgrade` for intentional upgrades. A failing `brew bundle` does **not** abort `./install` (each step is non-blocking), but a failure is recorded and a summary at the very end of the run lists which Brewfile(s) failed and the `brew bundle check` command to investigate each — so a silent failure can't slip by unnoticed. Note that `brew bundle` resolves the whole file up front, so a *single* unresolvable entry (e.g. a formula removed from homebrew-core) aborts the rest of **that** Brewfile, leaving its other packages uninstalled
 
 ### 4. Install runtimes
 
@@ -588,6 +588,7 @@ The installer is a thin wrapper around dotbot. Most failures are environmental.
 | `Error: <target> already exists and is not a link` | real file at symlink target (and `force` not set) | Back up the file, remove it, re-run `./install` |
 | Link succeeds but points to nothing | config file was moved or deleted in repo | Check `git status` for missing tracked files |
 | `brew bundle` errors on a `tap "..."` line (e.g. `cormacrelf/tap`) — *"tap … is not trusted"* | Homebrew 6+ ships `HOMEBREW_REQUIRE_TAP_TRUST` on by default and won't load non-official taps until trusted | `./install` runs `brew-trust-taps`, which **prompts** for each untrusted tap (showing its origin repo and what it provides) before bundling — say yes to trust it. If a tap still trips (you declined it, ran `./install` non-interactively, ran `brew bundle` directly, or are on an older checkout), run `brew-trust-taps` interactively or `brew trust --tap <tap>` once, then re-run |
+| End-of-install summary says *"Some Homebrew packages failed to install"*, or `Error: No available formula with the name "<x>"` | A formula was removed from homebrew-core (often moved to a vendor tap), or a typo'd entry. `brew bundle` resolves the whole file up front, so this one entry aborts the rest of that Brewfile | Run `brew bundle check --file=packages/Brewfile.<name>` (named in the summary) to see what's missing. Fix the bad entry — find the formula's new home with `brew search <x>` / the vendor's install docs and switch it to `tap "vendor/tap"` + `brew "vendor/tap/<x>"` — or remove it, then re-run `./install` |
 
 **Safe to re-run:** The installer is idempotent by design — re-running it won't duplicate symlinks, re-install already-installed Homebrew packages, or overwrite user-customizable configs (starship, ripgrep, bat, btop).
 
