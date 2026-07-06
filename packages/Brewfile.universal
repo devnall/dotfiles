@@ -88,7 +88,6 @@ brew "shellcheck"
 cask "1password"
 cask "1password-cli"
 cask "brave-browser"
-cask "claude"
 cask "claude-code@latest"  # tracks newest release
 cask "cleanshot"
 cask "desktoppr"           # set desktop wallpaper
