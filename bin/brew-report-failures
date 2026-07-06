@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# brew-report-failures — print an end-of-install summary of any Brewfiles whose
+# `brew bundle` step failed during ./install, then clear the failure log.
+#
+# The log is reset before bundling begins (in install.config.yaml) and appended
+# to by brew-bundle-install on each failure. Because `brew bundle` aborts the
+# whole file on one unresolved entry, a failure here means other packages in that
+# Brewfile may be missing too — hence the pointer to `brew bundle check`.
+#
+# No-op (exit 0) when nothing failed.
+
+set -uo pipefail
+
+fails="${TMPDIR:-/tmp}/dotfiles-brew-failures"
+[[ -s "$fails" ]] || exit 0
+
+bar="═══════════════════════════════════════════════════════════════"
+printf '\n%s\n' "$bar"
+printf '⚠  Some Homebrew packages failed to install and need attention:\n'
+while IFS= read -r bf; do
+  [[ -n "$bf" ]] || continue
+  printf '     • %s  →  recheck: brew bundle check --file=packages/%s\n' "$bf" "$bf"
+done < "$fails"
+printf '\n'
+printf '   One unresolved entry aborts the rest of that Brewfile, so other\n'
+printf '   packages in it may be missing too. Fix or remove the entry, then\n'
+printf '   re-run ./install.\n'
+printf '%s\n' "$bar"
+
+rm -f "$fails"

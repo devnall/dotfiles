@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# brew-bundle-install — install one Brewfile's packages, recording any failure
+# for the end-of-install summary (see brew-report-failures).
+#
+# Usage: brew-bundle-install <universal|work|personal|local>
+#
+# Given a Brewfile key, this applies the same marker-based selection ./install
+# uses (so a hand-run behaves identically) and installs packages/Brewfile.<key>:
+#   universal — macOS, or a ~/.remote-full Linux box
+#   work      — ~/.work marker present
+#   personal  — ~/.personal marker present
+#   local     — packages/Brewfile.local exists (machine-specific, gitignored)
+# When the selection doesn't apply, it's a silent no-op (exit 0).
+#
+# `brew bundle` resolves the whole file up front, so a single unresolvable entry
+# (e.g. a formula removed from homebrew-core) aborts the rest of THAT Brewfile,
+# leaving its other packages uninstalled. We don't want that to abort ./install,
+# so this ALWAYS exits 0; on failure it appends the Brewfile's name to a shared
+# failure log that brew-report-failures reads at the very end and turns into an
+# actionable summary. --no-upgrade keeps ./install install-only (missing packages
+# install; self-updating casks aren't downgraded to the pinned version).
+#
+# Keeping selection here (not inline in install.config.yaml) keeps the installer
+# output tidy: dotbot echoes the short command, not a wall of shell.
+
+set -uo pipefail
+
+key="${1:?usage: brew-bundle-install <universal|work|personal|local>}"
+
+# Apply the same selection install.config.yaml / brew-trust-taps use.
+case "$key" in
+  universal) [[ "$(uname)" == "Darwin" || -f "$HOME/.remote-full" ]] || exit 0 ;;
+  work)      [[ -f "$HOME/.work" ]]     || exit 0 ;;
+  personal)  [[ -f "$HOME/.personal" ]] || exit 0 ;;
+  local)     : ;;  # gated only by the Brewfile's existence, checked below
+  *) echo "brew-bundle-install: unknown Brewfile key '$key'" >&2; exit 2 ;;
+esac
+
+# Resolve this script's real location through any symlink (it is also linked into
+# ~/bin), so the packages/ path resolves regardless of the caller's cwd.
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  src_dir="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$src_dir/$SOURCE"
+done
+DOTFILES_DIR="$(cd -P "$(dirname "$SOURCE")/.." && pwd)"
+
+brewfile="Brewfile.$key"
+path="$DOTFILES_DIR/packages/$brewfile"
+fails="${TMPDIR:-/tmp}/dotfiles-brew-failures"
+
+command -v brew >/dev/null 2>&1 || exit 0
+[[ -f "$path" ]] || exit 0
+
+if ! brew bundle --no-upgrade --file="$path"; then
+  printf '⚠ %s: some packages failed to install (see output above)\n' "$brewfile"
+  printf '%s\n' "$brewfile" >> "$fails"
+fi
+
+exit 0

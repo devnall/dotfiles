@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# dark-notify-load — (re)load the dark-notify LaunchAgent that drives automatic
+# dark/light theme switching (see docs/RUNBOOK.md § Theme Switching).
+#
+# bootout first (ignoring "not loaded" errors), then bootstrap, so re-running
+# ./install picks up a changed plist instead of erroring on an already-loaded
+# agent. No-op (exit 0) on non-macOS or where dark-notify isn't installed
+# (e.g. remote/minimal machines).
+#
+# Run by ./install. Safe to run by hand:
+#   dark-notify-load
+
+set -uo pipefail
+
+[[ "$(uname)" == "Darwin" ]] || exit 0
+command -v dark-notify >/dev/null 2>&1 || exit 0
+
+plist="$HOME/Library/LaunchAgents/com.dnall.dark-notify.plist"
+domain="gui/$(id -u)"
+
+launchctl bootout "$domain" "$plist" 2>/dev/null || true
+launchctl bootstrap "$domain" "$plist"

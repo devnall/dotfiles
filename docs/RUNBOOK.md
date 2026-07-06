@@ -439,7 +439,9 @@ Desktop wallpaper (macOS):
 **LaunchAgent not running:**
 ```sh
 launchctl list | grep dark-notify
-# If missing:
+# If missing, reload it (bootout + bootstrap; no-op off macOS / without dark-notify):
+dark-notify-load
+# Or the raw command it wraps:
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dnall.dark-notify.plist
 ```
 
