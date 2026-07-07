@@ -85,7 +85,8 @@ dotfiles/
     │       ├── config/        # options, keymaps, autocmds, appearance
     │       └── plugins/       # One lazy.nvim spec per plugin concern
     ├── raycast/              # Raycast script commands (settings synced by Raycast Premium)
-    │   └── scripts/          # Script commands dir (symlinked to ~/.config/raycast/scripts)
+    │   └── scripts/          # Script commands dir (symlinked to ~/.config/raycast/scripts;
+    │                         #   shared by both v1 and the separate v2-beta app — see RUNBOOK)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)

@@ -179,6 +179,8 @@ killall Dock                                                  # apply
 
 Open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This points Raycast at the dotfiles-managed script commands directory.
 
+If you also run the **Raycast v2 beta**, its "Migrate from Raycast v1" onboarding carries the script-directory registration across automatically (verified) — only re-add it by hand if you skip migration. See [Raycast script commands](#raycast-script-commands) below for the v1/v2 details. Run `raycast-doctor` any time to check symlink health.
+
 ### Quick reference
 
 | File | Purpose |
@@ -377,12 +379,30 @@ Bootstrap creates these directories automatically (`~/code/work/` only on work m
 
 Custom [Raycast script commands](https://github.com/raycast/script-commands) live in `config/raycast/scripts/`, symlinked to `~/.config/raycast/scripts/` by dotbot. Raycast settings, keybinds, and extensions are synced by Raycast Premium — only script commands are managed here.
 
-**One-time setup:** After running `./install`, open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per machine.
+**One-time setup:** After running `./install`, open **Raycast Settings → Extensions → Script Commands → Add Script Directory** and select `~/.config/raycast/scripts`. This tells Raycast to scan that directory for script commands. You only need to do this once per app, per machine.
 
 **Current scripts:**
 - `quick-capture-obsidian.sh` — quick-capture a note to the Obsidian inbox
 
 A `script-command.template.sh` is included as a starting point for new scripts.
+
+#### Raycast v1 vs v2 beta
+
+Raycast ships the [v2 beta](https://www.raycast.com/new) as a **separate app** that coexists with v1 — different app bundles and bundle IDs, so neither can clobber the other:
+
+| | v1 | v2 beta |
+|------|------|------|
+| App | `/Applications/Raycast.app` | `/Applications/Raycast Beta.app` |
+| Bundle ID | `com.raycast.macos` | `com.raycast-x.macos` |
+| Settings store | `~/Library/Application Support/com.raycast.macos` | `…/com.raycast-x.macos` |
+| Homebrew | `cask "raycast"` | none yet — **manual install** from [raycast.com/new](https://www.raycast.com/new) (requires macOS Tahoe) |
+
+Key points:
+
+- **The Brewfile can't clobber the beta.** There is no `raycast@beta` cask, `brew bundle` runs with `--no-upgrade` (a no-op for the already-installed v1), and nothing in the install path runs `brew bundle cleanup`/`zap`, so the untracked beta app is never touched. `cask "raycast"` is intentionally kept — don't remove it to "clean up."
+- **Script commands are fully compatible.** They're plain shell with `@raycast.*` metadata comments; v2 supports the same format. The `~/.config/raycast/scripts` symlink is app-agnostic.
+- **Registration carries over on migration.** v2 has its own settings store, but its "Migrate from Raycast v1" onboarding brings the script-directory registration across automatically (verified — no manual action needed). If you skip migration, re-add `~/.config/raycast/scripts` under **Script Commands → Add Script Directory** inside the beta. This registration isn't stored in a readable location, so `raycast-doctor` can't verify it either way.
+- **`raycast-doctor`** (in `~/bin`) reports which apps are installed, checks the script-directory symlink, lists the tracked scripts, and prints the manual-registration reminder. Read-only; run it any time or on a new machine.
 
 ### Editors
 

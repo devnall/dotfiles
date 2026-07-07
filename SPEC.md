@@ -5,7 +5,7 @@
 >
 > **Repo:** `~/.dotfiles` (Dotbot-managed, macOS/zsh-centric, with Linux remote support)
 >
-> **Previous:** v6.0 Claude Code settings — install-time layered merge — completed. `bin/claude-settings-build` deep-merges layered source files (`config/claude/settings.{shared,<marker>,local}.json`) into the untracked, real `~/.claude/settings.json`, ending runtime churn and keeping secrets out of the public repo.
+> **Previous:** v7.0 NordicPine dark-mode readability — completed. Fixed unreadable `bat` comments (Brewfile.* syntax mapping + custom `nordicpine.tmTheme`), split the near-duplicate blue/cyan palette slots (ΔE 5 → 23), and aligned Neovim treesitter groups onto the NordicPine palette with a lossless dark↔light toggle.
 
 ---
 
@@ -33,72 +33,67 @@ After all cleanup work is complete, these must all be true:
 
 ## Part B: Task Plan
 
-### Project: NordicPine dark-mode readability + full-stack palette coherence
+### Project: Raycast v2 beta coexistence — protect scripts + Brewfile
 
 **Problem**
 
-Dark-mode `bat` rendered comments as near-invisible dim slate, and `Brewfile.*` files
-showed no syntax highlighting at all. Root causes, in the order they surfaced:
+Migrating to the [Raycast v2 beta](https://www.raycast.com/new) raised two fears: (1) that
+`brew bundle` would clobber the beta and reinstall v1, and (2) that the dotfiles-managed
+`config/raycast/scripts/*` script commands would break. Investigation showed both fears are
+largely unfounded given how Raycast actually ships v2 — the work is to document that and add
+a guardrail so a future cleanup doesn't reintroduce the risk.
 
-1. **No syntax highlighting on `Brewfile.universal/.work/.personal/.local`** — bat maps
-   only the exact name `Brewfile` → Ruby; the suffixed variants fell back to plain text,
-   so every token (comments included) rendered as the bare foreground. This was the
-   actual "comments unreadable" cause — masked because the first screenshot was Neovim,
-   not bat.
-2. **`bat` dark theme was `base16`**, which borrows the terminal's 16 ANSI colors;
-   comments mapped to ANSI bright-black `#343b51`, ~1.7:1 contrast on the `#0f111a` bg.
-   `#343b51` does double duty as a structural color (borders, tmux bg), so it could not
-   simply be lightened globally.
-3. **NordicPine palette had low hue diversity** — palette-4 (blue `#257994`) and
-   palette-6 (cyan `#33859d`) were ΔE≈5 apart, collapsing distinct syntax scopes; and the
-   bat tmTheme reused one teal across `support.function` / `entity.name.function`.
-4. **Neovim treesitter bleed** — rose-pine themes the `@`-capture groups explicitly, so
-   the legacy `Function`/`Type`/`Constant` overrides never reached treesitter-highlighted
-   code: ~20 semantic groups were rendering rose-pine defaults, not NordicPine.
+Findings (verified on a live machine):
+
+1. **v1 and v2 are separate apps.** v1 = `/Applications/Raycast.app` (`com.raycast.macos`);
+   v2 beta = `/Applications/Raycast Beta.app` (`com.raycast-x.macos`), separate settings
+   stores. They coexist by design; neither bundle can clobber the other.
+2. **The Brewfile can't clobber the beta.** No `raycast@beta` cask exists (checked the
+   Homebrew API — `raycast@beta`/`raycast-beta`/`raycast-x` all 404), so the beta is a manual
+   install. `bin/brew-bundle-install` runs `brew bundle --no-upgrade` (a no-op for the
+   already-installed v1), and nothing in the install path runs `brew bundle cleanup`/`zap`.
+3. **Script commands are compatible.** Plain shell + `@raycast.*` metadata; v2 supports the
+   same format. `~/.config/raycast/scripts` is app-agnostic.
+4. **Registration carries over on migration.** v2's separate settings store would in
+   principle need the script directory re-registered — but its "Migrate from Raycast v1"
+   onboarding does this automatically (verified: no manual action needed). Only relevant if
+   migration is skipped. The registration is NOT in NSUserDefaults, so it can be reminded
+   about but not verified programmatically.
 
 **Decisions**
 
-- **Keep NordicPine** (test-drove Gotham / Iceberg / Moonfly / Kanagawa Wave; NordicPine
-  won the "dark + high text-to-bg contrast + dusty/muted, no purple" brief — Gotham failed
-  on contrast not darkness, Moonfly was too vivid). User taste captured in auto-memory
-  `theme-color-preferences`.
-- bat dark theme = custom `config/bat/themes/nordicpine.tmTheme` (mirrors light-mode
-  `rose-pine-dawn.tmTheme`); every color traces to `docs/color-palettes.md`.
-- Comments = Autosuggest `#555e7a` everywhere (readable, palette-faithful); `#343b51`
-  retired to structural-only (borders / invisibles).
-- palette-4 `#257994 → #2a5f8f` (blue ≠ cyan, ΔE 5 → 23) across all role usages.
-- Light mode stays clean Rosé Pine Dawn / AlpineDawn — dark overrides must fully toggle off.
+- **Keep `cask "raycast"` (v1)** during the beta (Raycast recommends coexistence; the beta
+  still lacks some features). Add a comment so it isn't "cleaned up."
+- **Beta stays a manual install** — no cask to add yet. Revisit if/when `raycast@beta` lands.
+- **Guardrail = a read-only doctor**, not an install-time gate, since the one unverifiable
+  step (script-dir registration) can only be reminded, not enforced. Model it on
+  `bin/brew-audit.sh` (colored, read-only, exit 0).
 
 **Tasks**
 
-- [x] **bat syntax mapping** — `--map-syntax "Brewfile.*:Ruby"` in `config/bat/config`.
-- [x] **bat dark theme** — new `nordicpine.tmTheme`; `--theme-dark="nordicpine"`; symlink
-      entry in `install.config.yaml`; `bat cache --build`. Builtins (`support.function`)
-      → blue, user functions teal; readable `gutterForeground` + pink grid.
-- [x] **Palette blue/cyan split** — palette-4 → `#2a5f8f` in `ghostty/themes/NordicPine`,
-      `color-palettes.md`, `starship.toml` ×2, `tmux-nordic.conf`. palette-8
-      `#343b51 → #555e7a` (Ghostty + doc ANSI table).
-- [x] **Readable comments across the stack** — `#343b51 → #555e7a` in nvim
-      `appearance.lua`, `vim/colors/nordicpine.vim`, `zsh/lib/theme.zsh`.
-- [x] **nvim treesitter alignment** — ~20 `@`-groups mapped onto the NordicPine palette in
-      `appearance.lua` (functions teal + builtins blue, types cyan, constants gold,
-      variables fg, `self`/labels pink, tags blue, punctuation slate).
-- [x] **Doc sync** — `color-palettes.md`: ANSI-8 → `#555e7a`; relabel `#343b51`
-      (borders/invisibles) and `#555e7a` (autosuggest/comments).
+- [x] **`bin/raycast-doctor`** — detects installed v1/v2 apps, checks the
+      `~/.config/raycast/scripts` symlink, lists tracked script commands, prints the
+      per-app manual-registration reminder. Read-only, exit 0, macOS-guarded. Auto-symlinked
+      into `~/bin` via the existing `bin/*` glob (no `install.config.yaml` change).
+- [x] **`packages/Brewfile.universal`** — comment on `cask "raycast"` explaining v1 is kept
+      intentionally, no beta cask exists, and brew won't clobber the beta.
+- [x] **`docs/RUNBOOK.md`** — new "Raycast v1 vs v2 beta" subsection (comparison table +
+      key points) and a v2 note on the one-time setup step; reference `raycast-doctor`.
+- [x] **`docs/ARCHITECTURE.md`** — note the scripts dir is shared by v1 and the separate v2
+      app.
+- [x] **`SPEC.md`** — rotate Part B to this project.
 
-**Status:** Implemented on branch `feat/nordicpine-dark-readability`. Verified live: bat
-renders Brewfiles with readable comments and builtin ≠ user-function colors; nvim dark
-mode is full NordicPine across legacy + treesitter groups. A headless `dark → light →
-dark` toggle confirms every override clears to clean Rosé Pine Dawn and restores with no
-leakage in either direction; ΔE math confirms the blue/cyan separation (5 → 23). Shipped
-as a 3-commit split: `🔧` drop deprecated `docker-completion` (pre-existing working-tree
-change) + `🐛` Brewfile.* map-syntax + `🎨` NordicPine dark-mode overhaul.
+**Status:** Implemented on branch `feat/raycast-v2-beta-coexistence`. `raycast-doctor` runs
+clean on a live machine with both apps installed (v1 + v2 beta detected, symlink healthy,
+`quick-capture-obsidian.sh` listed). Applies across work and personal machines via the
+universal Brewfile + `bin/*` glob symlink.
 
 **Acceptance**
 
-- bat dark mode: `Brewfile.*` highlight; comments legible (`#555e7a`, ~2.9:1);
-  builtins ≠ user functions.
-- nvim: dark = NordicPine across legacy + treesitter; light = clean Rosé Pine Dawn; the
-  dark↔light toggle is lossless in both directions.
-- NordicPine 16-color palette has no near-duplicate slots (blue ≠ cyan, ΔE ≥ ~20).
-- All theme colors trace to `docs/color-palettes.md`.
+- `raycast-doctor` reports installed apps, symlink health, and tracked scripts; exits 0; is
+  a no-op on non-macOS.
+- `cask "raycast"` carries a comment documenting the intentional v1/v2 coexistence.
+- RUNBOOK + ARCHITECTURE accurately describe the separate-app model and the per-app
+  script-directory registration.
+- No install-path change auto-removes or downgrades the beta (no `cleanup`/`zap`;
+  `--no-upgrade` retained).

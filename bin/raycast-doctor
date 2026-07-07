@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# raycast-doctor — Raycast script-command health check (v1 + v2 beta coexistence)
+#
+# Read-only diagnostic. Reports which Raycast apps are installed, whether the
+# dotfiles-managed script directory is symlinked correctly, and which script
+# commands it contains. Because Raycast v1 (com.raycast.macos) and v2 beta
+# (com.raycast-x.macos) are SEPARATE apps with SEPARATE settings stores, the
+# "Add Script Directory" registration is per-app — but v2's "Migrate from Raycast
+# v1" onboarding carries it over automatically. It is NOT stored in NSUserDefaults,
+# so this script can only remind you, not verify it. Makes no changes; exits 0.
+#
+# Usage:
+#   raycast-doctor        # run via ~/bin symlink
+#   bin/raycast-doctor    # run directly
+
+set -uo pipefail
+
+# --- Resolve dotfiles directory ---
+
+if [[ -n "${DOTFILES:-}" ]]; then
+  DOTFILES_DIR="$DOTFILES"
+else
+  SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")")" && pwd)"
+  DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+fi
+
+SCRIPTS_SRC="$DOTFILES_DIR/config/raycast/scripts"
+SCRIPTS_LINK="$HOME/.config/raycast/scripts"
+
+# --- Output helpers (mirror bin/brew-audit.sh) ---
+
+tput_available() { command -v tput >/dev/null 2>&1; }
+
+if tput_available; then
+  BOLD=$(tput bold)
+  GREEN=$(tput setaf 2)
+  YELLOW=$(tput setaf 3)
+  RED=$(tput setaf 1)
+  DIM=$(tput dim)
+  RESET=$(tput sgr0)
+else
+  BOLD="" GREEN="" YELLOW="" RED="" DIM="" RESET=""
+fi
+
+header()  { printf '\n%s=== %s ===%s\n' "$BOLD" "$1" "$RESET"; }
+ok()      { printf '  %s✓%s %s\n' "$GREEN" "$RESET" "$1"; }
+finding() { printf '  %s•%s %s\n' "$YELLOW" "$RESET" "$1"; }
+bad()     { printf '  %s✗%s %s\n' "$RED" "$RESET" "$1"; }
+info()    { printf '  %s%s%s\n' "$DIM" "$1" "$RESET"; }
+
+printf '%sRaycast Doctor%s — %s\n' "$BOLD" "$RESET" "$(hostname -s)"
+printf '%s\n' "$(date '+%Y-%m-%d %H:%M')"
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+  info "Not macOS — Raycast is macOS-only. Nothing to check."
+  exit 0
+fi
+
+# --- Installed Raycast apps ---
+# v1 and v2 beta are distinct app bundles / bundle IDs and coexist by design.
+
+header "Installed Raycast apps"
+
+v1_app="/Applications/Raycast.app"
+v2_app="/Applications/Raycast Beta.app"
+
+if [[ -d "$v1_app" ]]; then
+  ok "Raycast v1 (com.raycast.macos) — $v1_app"
+else
+  finding "Raycast v1 not found at $v1_app (managed by 'cask \"raycast\"')"
+fi
+
+if [[ -d "$v2_app" ]]; then
+  ok "Raycast v2 beta (com.raycast-x.macos) — $v2_app"
+else
+  finding "Raycast v2 beta not installed."
+  info "No Homebrew cask exists yet — install manually from https://www.raycast.com/new"
+  info "(v2 beta requires macOS Tahoe; it installs alongside v1, not over it.)"
+fi
+
+# --- Script directory symlink (dotbot-managed) ---
+
+header "Script directory symlink"
+
+if [[ -L "$SCRIPTS_LINK" ]]; then
+  target="$(readlink "$SCRIPTS_LINK")"
+  if [[ "$target" == "$SCRIPTS_SRC" ]]; then
+    ok "$SCRIPTS_LINK → $target"
+  else
+    bad "$SCRIPTS_LINK → $target"
+    info "Expected → $SCRIPTS_SRC. Re-run ./install to fix the dotbot symlink."
+  fi
+elif [[ -e "$SCRIPTS_LINK" ]]; then
+  bad "$SCRIPTS_LINK exists but is NOT a symlink."
+  info "Expected a dotbot symlink → $SCRIPTS_SRC. Re-run ./install."
+else
+  bad "$SCRIPTS_LINK does not exist."
+  info "Run ./install to create the dotbot symlink → $SCRIPTS_SRC."
+fi
+
+# --- Tracked script commands ---
+
+header "Tracked script commands"
+
+shopt -s nullglob
+found=0
+for f in "$SCRIPTS_SRC"/*.sh; do
+  base="$(basename "$f")"
+  [[ "$base" == *.template.sh ]] && continue
+  title="$(sed -n 's/^# @raycast\.title[[:space:]]*//p' "$f" | head -1)"
+  exec_flag=""; [[ -x "$f" ]] || exec_flag=" ${YELLOW}(not executable — chmod +x)${RESET}"
+  printf '  %s•%s %s%s%s%s\n' "$GREEN" "$RESET" "$base" \
+    "${title:+  — }" "${title:-}" "$exec_flag"
+  found=$((found + 1))
+done
+shopt -u nullglob
+[[ $found -eq 0 ]] && info "No script commands found in $SCRIPTS_SRC"
+
+# --- Manual registration reminder (not machine-verifiable) ---
+
+header "Registering the directory (per app)"
+
+info "The script-directory registration lives in Raycast's internal store, not in"
+info "NSUserDefaults, so it can't be verified here. v2 beta's 'Migrate from Raycast"
+info "v1' onboarding carries it over automatically — only do this by hand if you"
+info "skipped migration or are setting up a fresh app:"
+printf '    %sRaycast → Settings → Extensions → Script Commands → Add Script Directory%s\n' "$DIM" "$RESET"
+printf '    %s→ select %s%s\n' "$DIM" "$SCRIPTS_LINK" "$RESET"
+
+exit 0
