@@ -102,7 +102,11 @@ cask "imageoptim"          # image optimizer
 cask "karabiner-elements"  # keyboard remapper (system extension)
 cask "obsidian"
 cask "plexamp"
-cask "raycast"
+cask "raycast"            # v1; kept alongside the manually-installed v2 beta
+                          # (com.raycast-x.macos — separate app, no cask exists
+                          # yet). Do NOT remove to "clean up": brew won't clobber
+                          # the beta, and this cask stays a no-op under
+                          # --no-upgrade. See `raycast-doctor` + docs/RUNBOOK.md.
 cask "steam"
 cask "thaw"                # menubar manager
 cask "visual-studio-code"
