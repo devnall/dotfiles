@@ -81,6 +81,9 @@ defaults write com.apple.dock magnification -bool true
 defaults write com.apple.dock largesize -int 128
 setting "Enable Dock magnification (128px)"
 
+defaults write com.apple.dock appswitcher-all-displays -bool true
+setting "Show the ⌘-Tab app switcher on all displays"
+
 printf '\n'
 read -rp "  Remove all default Dock icons? (You can re-add apps later) [y/N] " wipe_dock
 if [[ "$wipe_dock" == [yY] ]]; then
