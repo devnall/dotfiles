@@ -21,9 +21,9 @@ brew "aws/tap/eks-node-viewer"  # EKS node resource viewer
 tap "hashicorp/tap"
 brew "hashicorp/tap/packer"     # machine image building
 
-# tflint left homebrew-core; vendor ships it via their own tap
+# tflint left homebrew-core; vendor ships it as a cask via their own tap
 tap "terraform-linters/tap"
-brew "terraform-linters/tap/tflint"  # terraform linter
+cask "terraform-linters/tap/tflint"  # terraform linter
 
 brew "eksctl"         # AWS EKS CLI
 brew "k9s"            # Kubernetes TUI
