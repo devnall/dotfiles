@@ -77,6 +77,11 @@ if [ -d /usr/local/sbin ] ; then
 	PATH="${PATH}:/usr/local/sbin"
 fi
 
+# ~/.local/bin (e.g. uv, pip --user installs)
+if [ -d "$HOME"/.local/bin ] ; then
+	PATH="$HOME/.local/bin:${PATH}"
+fi
+
 # Bash prompt
 PS1="\[\033[0;31m\][\$(date +%H:%M)]\[\033[0m\]\u@\h:\[\033[0;36m\]\W\[\033[0m\]\$ "
 
