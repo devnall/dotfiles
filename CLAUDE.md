@@ -18,15 +18,7 @@ These must be respected when editing any shell config:
 2. **POSIX alias safety** — Do not alias standard POSIX commands (`ls`, `cat`, `grep`) to alter their output. Use new names (e.g., `ll` for `eza -l`).
 3. **Git config simplicity** — No exotic git hooks or `core.editor` behaviors that break automated commit workflows.
 
-## Key paths
+## Non-obvious paths
 
-| Path | Purpose |
-|------|---------|
-| `install.config.yaml` | Dotbot config — all symlinks and shell commands |
-| `zsh/zshrc.zsh` | Zsh entrypoint (symlinked to `~/.zshrc`) |
-| `zsh/lib/` | Modular zsh config, auto-sourced alphabetically |
-| `config/` | Tool configs symlinked to `~/.config/` |
-| `packages/Brewfile.*` | Homebrew packages (universal, work, personal) |
-| `docs/ARCHITECTURE.md` | Design source of truth |
-| `docs/RUNBOOK.md` | Usage, maintenance, troubleshooting |
-| `SPEC.md` | Current project task plan (rotates per project) |
+- `zsh/lib/` is auto-sourced alphabetically — filename order is load order.
+- `SPEC.md` is the current project's task plan and rotates per project.
