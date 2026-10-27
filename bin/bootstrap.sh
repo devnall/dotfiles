@@ -285,6 +285,28 @@ elif [[ -f "$GITCONFIG_USER" ]]; then
   fi
 fi
 
+# --- 5d. Work SSH key pin (the key config/ssh/config actually uses for GitHub auth) ---
+# The callrail org enforces SAML SSO, and only the work key is authorized for it, so
+# `Host github.com` pins this key rather than personal_github.pub. It's on the same GitHub
+# account, so it also works for personal repos. Derived from .gitconfig-work's signingkey.
+
+GITCONFIG_WORK="$DOTFILES_DIR/config/git/.gitconfig-work"
+WORK_PUBKEY="$DOTFILES_DIR/config/git/work_github.pub"
+
+if [[ -f "$WORK_PUBKEY" ]]; then
+  skip "Work SSH key pin (config/git/work_github.pub)"
+elif [[ -f "$GITCONFIG_WORK" ]]; then
+  signer_key="$(git config --file "$GITCONFIG_WORK" user.signingkey 2>/dev/null || true)"
+  if [[ "$signer_key" == ssh-* ]]; then
+    printf '%s\n' "$signer_key" > "$WORK_PUBKEY"
+    success "Generated config/git/work_github.pub from .gitconfig-work"
+  else
+    warn "Skipped work_github.pub — set signingkey in .gitconfig-work, then re-run bootstrap"
+  fi
+else
+  warn "Skipped work_github.pub — create config/git/.gitconfig-work, then re-run bootstrap"
+fi
+
 # --- 6. Code directories ---
 
 if [[ -d "$HOME/code/personal" ]]; then

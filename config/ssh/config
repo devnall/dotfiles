@@ -6,15 +6,16 @@
 Include ~/.ssh/config.local
 
 # The 1Password agent serves every stored key, so a bare Host * makes git offer
-# all of them to GitHub — including the work key, which biometric-prompts before
-# the personal key wins. Pin GitHub auth to one key (IdentityAgent is inherited
-# from Host * below). The GitHub account is shared between work and personal —
-# per-repo identity and signing are handled by git includeIf, not the transport
-# key — so the auth key is interchangeable; this just stops the extra prompt. The
-# pubkey is generated from .gitconfig-user's signingkey by bootstrap (gitignored).
+# all of them to GitHub, prompting for each. Pin GitHub auth to one key
+# (IdentityAgent is inherited from Host * below). The GitHub account is shared
+# between work and personal — per-repo identity and signing are handled by git
+# includeIf, not the transport key — but the keys are NOT interchangeable: the
+# callrail org enforces SAML SSO and only the work key is authorized for it. The
+# work key is on the same account, so it covers personal repos too. The pubkey is
+# generated from .gitconfig-work's signingkey by bootstrap (gitignored).
 Host github.com
   IdentitiesOnly yes
-  IdentityFile ~/.dotfiles/config/git/personal_github.pub
+  IdentityFile ~/.dotfiles/config/git/work_github.pub
 
 Host *
   AddKeysToAgent yes
