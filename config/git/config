@@ -68,6 +68,8 @@
   path = ~/.dotfiles/config/git/.gitconfig-user
 [includeIf "gitdir:~/code/work/"]
   path = ~/.dotfiles/config/git/.gitconfig-work
+[includeIf "gitdir:~/projects/work/"]
+  path = ~/.dotfiles/config/git/.gitconfig-work
 [gpg]
   format = ssh
 [gpg "ssh"]
