@@ -270,6 +270,7 @@ fi
 # IdentitiesOnly=yes, so the 1Password agent offers ONLY this key to GitHub instead of
 # every stored key (which otherwise prompts for the work key first). The signingkey string
 # IS the public key, so this is derived from .gitconfig-user (same source as allowed_signers).
+# CallRail repos are the exception — see 5d.
 
 PERSONAL_PUBKEY="$DOTFILES_DIR/config/git/personal_github.pub"
 
@@ -285,10 +286,10 @@ elif [[ -f "$GITCONFIG_USER" ]]; then
   fi
 fi
 
-# --- 5d. Work SSH key pin (the key config/ssh/config actually uses for GitHub auth) ---
-# The callrail org enforces SAML SSO, and only the work key is authorized for it, so
-# `Host github.com` pins this key rather than personal_github.pub. It's on the same GitHub
-# account, so it also works for personal repos. Derived from .gitconfig-work's signingkey.
+# --- 5d. Work SSH key pin (GitHub auth for CallRail repos) ---
+# The callrail org enforces SAML SSO, and only the work key is authorized for it.
+# config/git/config rewrites callrail URLs to the `github-work` SSH alias, whose
+# IdentityFile is this file. Derived from .gitconfig-work's signingkey.
 
 GITCONFIG_WORK="$DOTFILES_DIR/config/git/.gitconfig-work"
 WORK_PUBKEY="$DOTFILES_DIR/config/git/work_github.pub"

@@ -64,6 +64,19 @@
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com"
+# Route CallRail repos through the github-work SSH alias (work key; see
+# config/ssh/config). insteadOf is a case-sensitive prefix match and rewrites
+# don't chain, so each spelling of the org and the gh: shorthand are listed.
+# HTTPS fetches stay HTTPS, matching the github.com rules above.
+[url "git@github-work:callrail/"]
+  insteadOf = git@github.com:callrail/
+  insteadOf = git@github.com:CallRail/
+  insteadOf = ssh://git@github.com/callrail/
+  insteadOf = ssh://git@github.com/CallRail/
+  insteadOf = gh:callrail/
+  insteadOf = gh:CallRail/
+  pushInsteadOf = https://github.com/callrail/
+  pushInsteadOf = https://github.com/CallRail/
 [include]
   path = ~/.dotfiles/config/git/.gitconfig-user
 [includeIf "gitdir:~/code/work/"]
