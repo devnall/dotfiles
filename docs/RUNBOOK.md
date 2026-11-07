@@ -413,6 +413,29 @@ Key points:
 - **Registration carries over on migration.** v2 has its own settings store, but its "Migrate from Raycast v1" onboarding brings the script-directory registration across automatically (verified — no manual action needed). If you skip migration, re-add `~/.config/raycast/scripts` under **Script Commands → Add Script Directory** inside the beta. This registration isn't stored in a readable location, so `raycast-doctor` can't verify it either way.
 - **`raycast-doctor`** (in `~/bin`) reports which apps are installed, checks the script-directory symlink, lists the tracked scripts, and prints the manual-registration reminder. Read-only; run it any time or on a new machine.
 
+### Rex terminal multiplexer
+
+[Rex](https://www.superlogical.com/rex/docs/customize/config) (beta) reads one config file, `~/.config/rex/init.lua`, symlinked from `config/rex/init.lua`. The repo manages the **host list**: the other Rex servers each machine reaches with `rex -S LABEL`. Every machine gets the same `rex.host{...}` declarations, so the list stays in sync without depending on another machine being online. `./install` runs `rex-config-reload` so a running server picks up changes. It never starts a server, and a server that starts later reads the file on its own.
+
+| Label | Machine | Rex endpoint |
+|------|------|------|
+| `rum` | laptop | `https://rum-rex.badger-micro.ts.net` |
+| `studio` | Mac Studio | `https://mac-studio-rex.badger-micro.ts.net` |
+
+**Adding a machine:**
+
+1. Install Rex and turn on its built-in Tailscale (`rex server tailscale on`, then `rex server tailscale login` if asked). This is per machine and interactive, so the repo can't do it. Rex runs its **own** Tailscale node (named like `<machine>-rex`), separate from the machine's regular Tailscale name.
+2. Get the endpoint: `rex whoami --json | jq -r .tailscale.https.url`.
+3. Add a `rex.host{...}` block to `config/rex/init.lua` with a new `id` (`echo "host:$(uuidgen | tr A-Z a-z)"`), commit, then `git pull && ./install` on each machine.
+4. Check with `rex hosts check`.
+
+Key points:
+
+- **Use the `-rex` endpoint, not the machine's Tailscale name.** Rex doesn't listen on the machine's own node, so `drews-mac-studio.badger-micro.ts.net` is refused.
+- **Don't use `rex hosts add` for permanent hosts.** It writes to the *home* server's stored list (`rex home`), not to this file, so the change isn't tracked here.
+- **`rex config reload` only works locally.** It is refused over `-S`, so run `./install` (or `rex-config-reload`) on each machine.
+- **Upgrade the server too.** Updating the Rex app/CLI doesn't restart a running server. `rex whoami --json | jq .api_revision` shows what the server speaks.
+
 ### Editors
 
 - **Neovim** (`config/nvim/`) — modular lazy.nvim-based config (see `docs/nvim.cheatsheet.md` for keymaps)
@@ -686,6 +709,7 @@ dotfiles/
     ├── mise/                 # Runtime version manager config
     ├── nvim/                 # Neovim config (lazy.nvim)
     ├── raycast/              # Raycast script commands (symlinked to ~/.config/raycast/scripts)
+    ├── rex/                  # Rex init.lua: declared hosts (symlinked to ~/.config/rex/init.lua)
     ├── ripgrep/
     ├── sheldon/              # Zsh plugin manager config
     ├── ssh/                  # SSH config template (private hosts in ~/.ssh/config.local)

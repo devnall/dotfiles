@@ -60,6 +60,9 @@
     ~/.config/tmux/plugins:
       path: config/tmux/plugins
       force: true
+    ~/.config/rex/init.lua:
+      path: config/rex/init.lua
+      force: true
 
     # Prompt & theme
     ~/.config/starship.toml:
@@ -179,6 +182,10 @@
     -
      command: 'bash bin/dark-notify-load'
      description: Load dark-notify LaunchAgent
+     stdout: true
+    -
+     command: 'bash bin/rex-config-reload'
+     description: Reload Rex config so declared hosts take effect
      stdout: true
     # Prints a summary of any Brewfiles whose bundle step failed (see
     # brew-bundle-install), then clears the log. Silent when nothing failed.
