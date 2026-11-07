@@ -6,19 +6,28 @@
 # No-op (exit 0) where rex isn't installed or no local server is running; a
 # server that starts later reads the file on its own. Never starts a server.
 #
+# The Rex app puts `rex` on PATH only inside its own terminals, so when
+# ./install runs from another terminal (e.g. Ghostty) fall back to the CLI
+# bundled with the macOS app.
+#
 # Run by ./install. Safe to run by hand:
 #   rex-config-reload
 
 set -uo pipefail
 
-command -v rex >/dev/null 2>&1 || exit 0
+rex_bin="$(command -v rex 2>/dev/null)"
+bundled="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+if [[ -z "$rex_bin" && -x "$bundled" ]]; then
+  rex_bin="$bundled"
+fi
+[[ -n "$rex_bin" ]] || exit 0
 
-if ! rex --autostart=false --timeout 5s server status >/dev/null 2>&1; then
+if ! "$rex_bin" --autostart=false --timeout 5s server status >/dev/null 2>&1; then
   echo "Rex server not running; it will read init.lua when it starts."
   exit 0
 fi
 
-if rex --autostart=false --timeout 5s config reload; then
+if "$rex_bin" --autostart=false --timeout 5s config reload; then
   echo "Rex config reloaded."
 else
   echo "⚠ Rex config reload failed. Run 'rex config check' to see why."
