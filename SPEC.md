@@ -5,7 +5,7 @@
 >
 > **Repo:** `~/.dotfiles` (Dotbot-managed, macOS/zsh-centric, with Linux remote support)
 >
-> **Previous:** v7.0 NordicPine dark-mode readability — completed. Fixed unreadable `bat` comments (Brewfile.* syntax mapping + custom `nordicpine.tmTheme`), split the near-duplicate blue/cyan palette slots (ΔE 5 → 23), and aligned Neovim treesitter groups onto the NordicPine palette with a lossless dark↔light toggle.
+> **Previous:** Raycast v2 beta coexistence — completed. Added the read-only `bin/raycast-doctor`, documented that v1 and the v2 beta are separate apps the Brewfile can't clobber, and kept `cask "raycast"` intentionally.
 
 ---
 
@@ -33,67 +33,30 @@ After all cleanup work is complete, these must all be true:
 
 ## Part B: Task Plan
 
-### Project: Raycast v2 beta coexistence — protect scripts + Brewfile
+### Project: Rex hosts in dotfiles — one host list for every machine
 
 **Problem**
 
-Migrating to the [Raycast v2 beta](https://www.raycast.com/new) raised two fears: (1) that
-`brew bundle` would clobber the beta and reinstall v1, and (2) that the dotfiles-managed
-`config/raycast/scripts/*` script commands would break. Investigation showed both fears are
-largely unfounded given how Raycast actually ships v2 — the work is to document that and add
-a guardrail so a future cleanup doesn't reintroduce the risk.
-
-Findings (verified on a live machine):
-
-1. **v1 and v2 are separate apps.** v1 = `/Applications/Raycast.app` (`com.raycast.macos`);
-   v2 beta = `/Applications/Raycast Beta.app` (`com.raycast-x.macos`), separate settings
-   stores. They coexist by design; neither bundle can clobber the other.
-2. **The Brewfile can't clobber the beta.** No `raycast@beta` cask exists (checked the
-   Homebrew API — `raycast@beta`/`raycast-beta`/`raycast-x` all 404), so the beta is a manual
-   install. `bin/brew-bundle-install` runs `brew bundle --no-upgrade` (a no-op for the
-   already-installed v1), and nothing in the install path runs `brew bundle cleanup`/`zap`.
-3. **Script commands are compatible.** Plain shell + `@raycast.*` metadata; v2 supports the
-   same format. `~/.config/raycast/scripts` is app-agnostic.
-4. **Registration carries over on migration.** v2's separate settings store would in
-   principle need the script directory re-registered — but its "Migrate from Raycast v1"
-   onboarding does this automatically (verified: no manual action needed). Only relevant if
-   migration is skipped. The registration is NOT in NSUserDefaults, so it can be reminded
-   about but not verified programmatically.
+The [Rex](https://www.superlogical.com/rex/docs/customize/config) beta multiplexer runs a server per machine, each on its own built-in Tailscale node. The laptop listed the Mac Studio as a host, but the Mac Studio listed nothing. Host lists live on each device's *home* server, and every device is its own home by default, so a `rex hosts add` on one machine never reaches the others. Neither of the laptop's two Mac Studio entries worked either: one used the machine's regular Tailscale name (Rex isn't listening there, so the connection is refused) and the other used a name that doesn't resolve.
 
 **Decisions**
 
-- **Keep `cask "raycast"` (v1)** during the beta (Raycast recommends coexistence; the beta
-  still lacks some features). Add a comment so it isn't "cleaned up."
-- **Beta stays a manual install** — no cask to add yet. Revisit if/when `raycast@beta` lands.
-- **Guardrail = a read-only doctor**, not an install-time gate, since the one unverifiable
-  step (script-dir registration) can only be reminded, not enforced. Model it on
-  `bin/brew-audit.sh` (colored, read-only, exit 0).
+- **Declare hosts in `init.lua`** (`rex.host{...}`), the config file the Rex server reads, instead of relying on `rex home` syncing. Every machine gets the same list from git, and nothing depends on one machine being online.
+- **Endpoints are the Rex server's own Tailscale node** (`<machine>-rex`), not the machine's Tailscale name.
+- **Stable `id` per host** so a rename keeps the host's identity.
+- **Reload, never start.** `bin/rex-config-reload` reloads a running server and is a no-op without `rex` or a running server, modeled on `bin/dark-notify-load`.
+- **Turning on Tailscale stays manual.** Sign-in is interactive and per machine. It is documented in the RUNBOOK, not automated.
 
 **Tasks**
 
-- [x] **`bin/raycast-doctor`** — detects installed v1/v2 apps, checks the
-      `~/.config/raycast/scripts` symlink, lists tracked script commands, prints the
-      per-app manual-registration reminder. Read-only, exit 0, macOS-guarded. Auto-symlinked
-      into `~/bin` via the existing `bin/*` glob (no `install.config.yaml` change).
-- [x] **`packages/Brewfile.universal`** — comment on `cask "raycast"` explaining v1 is kept
-      intentionally, no beta cask exists, and brew won't clobber the beta.
-- [x] **`docs/RUNBOOK.md`** — new "Raycast v1 vs v2 beta" subsection (comparison table +
-      key points) and a v2 note on the one-time setup step; reference `raycast-doctor`.
-- [x] **`docs/ARCHITECTURE.md`** — note the scripts dir is shared by v1 and the separate v2
-      app.
-- [x] **`SPEC.md`** — rotate Part B to this project.
-
-**Status:** Implemented on branch `feat/raycast-v2-beta-coexistence`. `raycast-doctor` runs
-clean on a live machine with both apps installed (v1 + v2 beta detected, symlink healthy,
-`quick-capture-obsidian.sh` listed). Applies across work and personal machines via the
-universal Brewfile + `bin/*` glob symlink.
+- [x] **`config/rex/init.lua`**: declares `rum` (laptop) and `studio` (Mac Studio).
+- [x] **`install.config.yaml`**: links `~/.config/rex/init.lua` (`force: true`) and runs `bin/rex-config-reload`.
+- [x] **`bin/rex-config-reload`**: reloads a running server and exits 0 everywhere. Auto-linked into `~/bin` by the `bin/*` glob.
+- [x] **`docs/RUNBOOK.md`**: new "Rex terminal multiplexer" section (host table, adding a machine, pitfalls) and a directory-tree entry.
+- [x] **`docs/ARCHITECTURE.md`**: directory-tree entry.
+- [x] **`SPEC.md`**: Part B moved to this project.
 
 **Acceptance**
 
-- `raycast-doctor` reports installed apps, symlink health, and tracked scripts; exits 0; is
-  a no-op on non-macOS.
-- `cask "raycast"` carries a comment documenting the intentional v1/v2 coexistence.
-- RUNBOOK + ARCHITECTURE accurately describe the separate-app model and the per-app
-  script-directory registration.
-- No install-path change auto-removes or downgrades the beta (no `cleanup`/`zap`;
-  `--no-upgrade` retained).
+- After `./install`, `rex hosts list` on each machine shows `rum` and `studio` with `init.lua` as the source, and `rex hosts check` reports both reachable.
+- `./install` succeeds on machines without Rex or without a running server.
