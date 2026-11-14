@@ -948,6 +948,21 @@ Drop a file in `zsh/lib/yourfile.zsh` — it will be sourced automatically next 
 2. Add a symlink entry to `install.config.yaml`
 3. Run `./install`
 
+### Codex CLI (local setup)
+
+Run `codex -p cli` from the project directory. Its profile source is
+`config/codex/cli.local.config.toml` (gitignored), linked by Dotbot to
+`~/.codex/cli.config.toml` only when the source exists. The base config and
+all credentials and runtime state remain in the real `~/.codex` directory.
+See [the Codex cheatsheet](codex.cheatsheet.md). Sharing defaults and choosing
+machine types are deferred until the local profile has been tuned.
+
+`cx` forwards arguments to `codex -p cli` after shell reload. Global preferences
+live in the gitignored `config/codex/AGENTS.local.md`, linked to
+`~/.codex/AGENTS.md` when present. Claude instruction fallback is disabled to
+preserve independent reviews. Use worktrees for file isolation and named Rex
+sessions for terminal organization when useful; see the cheatsheet for examples.
+
 ### New bin script
 
 Drop it in `bin/` — Dotbot glob-symlinks the whole directory to `~/bin`, so it's in PATH after `./install`.

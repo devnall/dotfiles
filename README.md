@@ -57,6 +57,8 @@ Both are sourced silently at the end of every shell session.
 
 ## Documentation
 
+- [Codex CLI](docs/codex.cheatsheet.md) — local profile and first-session commands
+
 - [Architecture](docs/ARCHITECTURE.md) — design decisions and constraints
 - [Runbook](docs/RUNBOOK.md) — usage, maintenance, troubleshooting
 - Cheatsheets: [fzf](docs/fzf.cheatsheet.md), [git](docs/git.cheatsheet.md), [tmux](docs/tmux.cheatsheet.md), [shell](docs/shell.cheatsheet.md), [vim](docs/vim.cheatsheet.md), [kubernetes](docs/kubernetes.cheatsheet.md)

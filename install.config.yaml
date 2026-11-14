@@ -103,6 +103,12 @@
       force: true
 
     # AI tools
+    ~/.codex/AGENTS.md:
+      path: config/codex/AGENTS.local.md
+      if: 'test -f config/codex/AGENTS.local.md'
+    ~/.codex/cli.config.toml:
+      path: config/codex/cli.local.config.toml
+      if: 'test -f config/codex/cli.local.config.toml'
     ~/.claude/statusline-command.sh:
       path: config/claude/statusline-command.sh
       force: true

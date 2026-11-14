@@ -110,6 +110,7 @@ dotfiles/
 ### 3.1 Configuration Management (Dotbot)
 
 - `dotbot` handles all symlinking and bootstrapping via `install.config.yaml`.
+- **Codex CLI:** Dotbot links the gitignored `config/codex/cli.local.config.toml` to `~/.codex/cli.config.toml` and `config/codex/AGENTS.local.md` to `~/.codex/AGENTS.md` only when each source exists. `zsh/lib/codex.zsh` provides `cx` when the CLI and profile are available. Keep `~/.codex` and the desktop-managed base `config.toml` local; credentials and runtime state are not symlinked into the repo. See `config/codex/README.md`.
 - The `install` script must be 100% idempotent — safe to re-run at any time without errors or duplications.
 - `install.config.yaml` symlinks at minimum: `~/.zshrc`, `~/.bashrc`, `~/.config/nvim`, and all tool configs under `config/` to their correct XDG locations.
 
