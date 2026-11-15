@@ -1,0 +1,7 @@
+.DS_Store
+*.swp
+config/btop/btop.conf
+config/starship/starship.toml
+config/git/.gitconfig-*
+!config/git/.gitconfig-*.example
+config/git/allowed_signers
