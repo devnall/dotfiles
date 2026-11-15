@@ -1,0 +1,17 @@
+name: Check
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  scan:
+    runs-on: docker
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Test the scan
+        run: scripts/test-scan
+      - name: Scan
+        run: scripts/scan
+        env:
+          DENYLIST: ${{ secrets.DENYLIST }}

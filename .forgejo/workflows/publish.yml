@@ -1,0 +1,51 @@
+# Pushes main to github.com/devnall/dotfiles after scanning that exact commit.
+# A push to main only fast-forwards GitHub. Replacing GitHub's history (the
+# first publish) is a manual run with `force` checked.
+name: Publish
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Replace GitHub main even if it isn't an ancestor (first publish only)
+        type: boolean
+        default: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: docker
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Scan
+        run: scripts/scan
+        env:
+          DENYLIST: ${{ secrets.DENYLIST }}
+      - name: Push to GitHub
+        env:
+          TOKEN: ${{ secrets.PUBLIC_SYNC_TOKEN }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+          [ -n "$TOKEN" ] || { echo "PUBLIC_SYNC_TOKEN is not set" >&2; exit 1; }
+          url=https://github.com/devnall/dotfiles.git
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+
+          sha=$(git rev-parse HEAD)
+          theirs=$(git ls-remote "$url" refs/heads/main | cut -f1)
+          if [ "$theirs" = "$sha" ]; then
+            echo "GitHub main is already $sha"
+          elif [ -z "$theirs" ] || git merge-base --is-ancestor "$theirs" "$sha" 2>/dev/null; then
+            git push "$url" "$sha:refs/heads/main"
+          elif [ "$FORCE" = true ]; then
+            echo "Replacing GitHub main $theirs with $sha"
+            git push --force-with-lease="refs/heads/main:$theirs" "$url" "$sha:refs/heads/main"
+          else
+            echo "GitHub main ($theirs) isn't an ancestor of $sha, so this won't fast-forward." >&2
+            echo "For the first publish, run this workflow by hand with force checked." >&2
+            exit 1
+          fi

@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+# Pre-publish scan. Fails if anything private would reach the public repo.
+#
+#   scripts/scan [REV]
+#
+# Checks, all against the repo you run it in:
+#   1. gitleaks on the files (tracked plus untracked-but-not-ignored)
+#   2. gitleaks on the history reachable from REV (default HEAD)
+#   3. the denylist on file paths and contents
+#   4. the denylist on every commit message, author and committer in REV's history
+#
+# The denylist is one case-insensitive Perl regex per line; blank lines and
+# lines starting with # are skipped. It is read from $DENYLIST (the contents),
+# else from $DENYLIST_FILE, else from ~/.config/public-sync/denylist. It is
+# never stored in this repo. A missing or empty denylist is an error, not a pass.
+#
+# gitleaks is pinned and checksum-verified, and cached under
+# ~/.cache/public-sync. Set GITLEAKS=/path/to/gitleaks to use another binary.
+#
+# Exit status: 0 clean, 1 findings, 2 usage or setup error.
+set -euo pipefail
+
+GITLEAKS_VERSION=8.30.1
+
+die() { printf 'scan: %s\n' "$*" >&2; exit 2; }
+
+rev=${1:-HEAD}
+root=$(git rev-parse --show-toplevel 2>/dev/null) || die "not in a git repo"
+cd "$root"
+git rev-parse --verify --quiet "$rev^{commit}" >/dev/null || die "unknown revision: $rev"
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+# --- denylist -------------------------------------------------------------
+
+denylist=$tmp/denylist
+if [[ -n ${DENYLIST:-} ]]; then
+  printf '%s\n' "$DENYLIST" >"$denylist"
+else
+  src=${DENYLIST_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/public-sync/denylist}
+  [[ -r $src ]] || die "no denylist: set DENYLIST or DENYLIST_FILE, or create $src"
+  cp "$src" "$denylist"
+fi
+grep -Eqv '^[[:space:]]*(#|$)' "$denylist" || die "the denylist is empty"
+
+# --- gitleaks -------------------------------------------------------------
+
+fetch_gitleaks() {
+  local os arch sum
+  case $(uname -s) in
+    Linux) os=linux ;;
+    Darwin) os=darwin ;;
+    *) die "no pinned gitleaks for $(uname -s)" ;;
+  esac
+  case $(uname -m) in
+    x86_64 | amd64) arch=x64 ;;
+    arm64 | aarch64) arch=arm64 ;;
+    *) die "no pinned gitleaks for $(uname -m)" ;;
+  esac
+  case $os-$arch in
+    darwin-arm64) sum=b40ab0ae55c505963e365f271a8d3846efbc170aa17f2607f13df610a9aeb6a5 ;;
+    darwin-x64) sum=dfe101a4db2255fc85120ac7f3d25e4342c3c20cf749f2c20a18081af1952709 ;;
+    linux-arm64) sum=e4a487ee7ccd7d3a7f7ec08657610aa3606637dab924210b3aee62570fb4b080 ;;
+    linux-x64) sum=551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb ;;
+  esac
+
+  local dir=${XDG_CACHE_HOME:-$HOME/.cache}/public-sync/gitleaks-$GITLEAKS_VERSION
+  GITLEAKS=$dir/gitleaks
+  [[ -x $GITLEAKS ]] && return
+
+  local tarball=gitleaks_${GITLEAKS_VERSION}_${os}_${arch}.tar.gz
+  echo "scan: fetching gitleaks $GITLEAKS_VERSION ($os/$arch)" >&2
+  curl -fsSL -o "$tmp/$tarball" \
+    "https://github.com/gitleaks/gitleaks/releases/download/v$GITLEAKS_VERSION/$tarball" ||
+    die "could not download $tarball"
+  local got
+  if command -v sha256sum >/dev/null; then
+    got=$(sha256sum "$tmp/$tarball" | cut -d' ' -f1)
+  else
+    got=$(shasum -a 256 "$tmp/$tarball" | cut -d' ' -f1)
+  fi
+  [[ $got == "$sum" ]] || die "checksum mismatch for $tarball: got $got"
+  mkdir -p "$dir"
+  tar -xzf "$tmp/$tarball" -C "$dir" gitleaks
+}
+
+[[ -n ${GITLEAKS:-} ]] || fetch_gitleaks
+[[ -x $GITLEAKS ]] || die "gitleaks not executable: $GITLEAKS"
+
+# --- the file set -----------------------------------------------------------
+
+# Copy the files git would publish (tracked, plus new files not ignored) so
+# both scanners see exactly that set, and never local ignored files.
+tree=$tmp/tree
+mkdir "$tree"
+git ls-files -z --cached --others --exclude-standard |
+  while IFS= read -r -d '' f; do
+    [[ -e $f || -L $f ]] && printf '%s\0' "$f"
+  done |
+  tar --null -T - -cf - | tar -xf - -C "$tree"
+
+# --- checks -----------------------------------------------------------------
+
+failed=()
+
+echo "== gitleaks: files"
+"$GITLEAKS" dir --no-banner --redact --exit-code 1 "$tree" || failed+=("gitleaks files")
+
+echo "== gitleaks: history of $rev"
+"$GITLEAKS" git --no-banner --redact --exit-code 1 --log-opts="$rev" . || failed+=("gitleaks history")
+
+# Prints "label: pattern #N: line" for each hit and exits 1 if there were any.
+# Input is NUL-separated records of "label\ntext".
+match_denylist() {
+  perl -e '
+    open my $fh, "<", shift or die "denylist: $!";
+    my (@re, @n);
+    while (<$fh>) {
+      chomp; next if /^\s*(#|$)/;
+      my $re = eval { qr/$_/i } or die "denylist line $.: bad regex: $_\n";
+      push @re, $re; push @n, $.;
+    }
+    my $hits = 0;
+    local $/ = "\0";
+    while (my $rec = <STDIN>) {
+      chomp $rec;
+      my ($label, $text) = split /\n/, $rec, 2;
+      $text //= "";
+      my $ln = 0;
+      for my $line (split /\n/, $text) {
+        $ln++;
+        for my $i (0 .. $#re) {
+          next unless $line =~ $re[$i];
+          printf "%s:%d: denylist line %d: %s\n", $label, $ln, $n[$i], $line;
+          $hits++;
+        }
+      }
+    }
+    exit($hits ? 1 : 0);
+  ' "$denylist"
+}
+
+echo "== denylist: file paths and contents"
+(
+  cd "$tree"
+  find . -type f -print0 | sort -z | while IFS= read -r -d '' f; do
+    f=${f#./}
+    printf 'path %s\n%s\0' "$f" "$f"
+    # Skip binaries (images and the like); grep -I treats them as non-matching.
+    if grep -Iq . "$f" 2>/dev/null; then
+      printf '%s\n' "$f"
+      cat "$f"
+      printf '\0'
+    fi
+  done
+) | match_denylist || failed+=("denylist files")
+
+echo "== denylist: commit messages and identities in $rev"
+git log -z --format='commit %h
+author: %an <%ae>
+committer: %cn <%ce>
+%B' "$rev" | match_denylist || failed+=("denylist commits")
+
+if ((${#failed[@]})); then
+  printf -v list '%s, ' "${failed[@]}"
+  printf '\nscan: FAILED: %s\n' "${list%, }" >&2
+  exit 1
+fi
+echo
+echo "scan: clean"

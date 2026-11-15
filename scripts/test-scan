@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+# Tests for scripts/scan: a clean repo passes, and each kind of leak fails.
+# Builds throwaway repos with a synthetic denylist, so it needs no secrets.
+set -euo pipefail
+
+scan=$(cd "$(dirname "$0")" && pwd)/scan
+work=$(mktemp -d)
+trap 'rm -rf "$work"' EXIT
+
+marker=zz-private-marker
+export DENYLIST="# test denylist
+$marker"
+# Keep your own git config and global ignores (core.excludesFile) out of it.
+export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 XDG_CONFIG_HOME=$work/xdg
+export GIT_AUTHOR_NAME=Tester GIT_AUTHOR_EMAIL=tester@example.com
+export GIT_COMMITTER_NAME=Tester GIT_COMMITTER_EMAIL=tester@example.com
+
+pass=0 fail=0
+
+# new_repo NAME: a repo with one clean commit, cd'd into.
+new_repo() {
+  mkdir "$work/$1" && cd "$work/$1"
+  git init -q -b main
+  echo "hello" >README.md
+  git add README.md && git commit -q -m "Add README"
+}
+
+# expect STATUS NAME: run the scan in the current repo and check its exit status.
+expect() {
+  local want=$1 name=$2 got=0
+  "$scan" >"$work/$name.log" 2>&1 || got=$?
+  if [[ $got == "$want" ]]; then
+    printf 'ok    %s\n' "$name"
+    pass=$((pass + 1))
+  else
+    printf 'FAIL  %s: exit %s, want %s\n' "$name" "$got" "$want"
+    sed 's/^/      /' "$work/$name.log"
+    fail=$((fail + 1))
+  fi
+}
+
+new_repo clean
+expect 0 clean
+
+new_repo file-content
+echo "see $marker for details" >notes.txt
+git add notes.txt && git commit -q -m "Add notes"
+expect 1 file-content
+
+new_repo file-uncommitted
+echo "$marker" >draft.txt
+expect 1 file-uncommitted
+
+new_repo file-ignored
+echo "secret.txt" >.gitignore
+echo "$marker" >secret.txt
+git add .gitignore && git commit -q -m "Ignore secret.txt"
+expect 0 file-ignored
+
+new_repo file-path
+echo "fine" >"$marker.txt"
+git add . && git commit -q -m "Add a file"
+expect 1 file-path
+
+new_repo file-history
+echo "$marker" >old.txt
+git add old.txt && git commit -q -m "Add old"
+git rm -q old.txt && git commit -q -m "Remove old"
+expect 0 file-history-removed-is-ok
+
+new_repo commit-message
+git commit -q --allow-empty -m "Fix it" -m "Copied from $marker"
+expect 1 commit-message
+
+new_repo author-email
+GIT_AUTHOR_EMAIL="me@$marker.example" git commit -q --allow-empty -m "Change"
+expect 1 author-email
+
+new_repo committer-email
+GIT_COMMITTER_EMAIL="me@$marker.example" git commit -q --allow-empty -m "Change"
+expect 1 committer-email
+
+# Built at runtime so this file never holds a token-shaped string.
+token=ghp_$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom 2>/dev/null | head -c 36 || true)
+
+new_repo gitleaks-file
+echo "GITHUB_TOKEN=$token" >.env.example
+expect 1 gitleaks-file
+
+new_repo gitleaks-history
+echo "GITHUB_TOKEN=$token" >config.sh
+git add config.sh && git commit -q -m "Add config"
+git rm -q config.sh && git commit -q -m "Remove config"
+expect 1 gitleaks-history
+
+new_repo no-denylist
+DENYLIST="" DENYLIST_FILE=$work/missing expect 2 no-denylist
+
+new_repo empty-denylist
+DENYLIST="# only a comment" expect 2 empty-denylist
+
+printf '\n%d passed, %d failed\n' "$pass" "$fail"
+((fail == 0))
