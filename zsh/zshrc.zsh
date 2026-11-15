@@ -1,0 +1,121 @@
+###############################################
+## .zshrc                                    ##
+###############################################
+
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+: "${XDG_DATA_HOME:=$HOME/.local/share}"
+
+# Fall back to a generic TERM when the current value has no terminfo entry on
+# this host — e.g. TERM=xterm-ghostty forwarded over SSH to a server that lacks
+# Ghostty's terminfo. Without this, backspace/keys and tput break. Must run
+# before zle/keybindings init. No-op where the terminfo entry exists (e.g. macOS).
+if [[ -n "$TERM" ]] && command -v infocmp >/dev/null 2>&1 && ! infocmp "$TERM" >/dev/null 2>&1; then
+  export TERM=xterm-256color
+fi
+
+# HOMEBREW_PREFIX, PATH, MANPATH, INFOPATH are set by brew shellenv in zprofile.
+# Fallback for non-login shells where zprofile didn't run.
+if [ -z "$HOMEBREW_PREFIX" ]; then
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
+if command -v mise > /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+## History config
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE="50000"
+SAVEHIST="50000"
+setopt appendhistory
+setopt EXTENDED_HISTORY         # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY       # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY            # Share history between all sessions.
+setopt HIST_IGNORE_DUPS         # Don't log duplicate entries
+setopt HIST_EXPIRE_DUPS_FIRST   # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_SPACE        # Dont record an entry starting with a space.
+setopt HIST_VERIFY              # Show command with history expansion to user before running it
+
+## Directory navigation
+
+DIRSTACKSIZE="12"               # Maximum number of entries in directory stack
+setopt autopushd                # Make `cd` act like `pushd`
+setopt pushdminus               # Swap meanings of `-` and `+` when specifying a directory in the stack
+setopt pushdsilent              # Don't print the directory stack on every `cd`
+setopt pushdtohome              # push to $HOME when no argument is given to `cd`
+setopt pushdignoredups          # ignore duplicate entries in directory stack
+setopt autocd                   # if a command isn't valid, but is a directory, cd to that directory
+
+# zsh-you-should-use config (plugin loaded via sheldon, below). Tuned to keep the
+# learning benefit while cutting paste-noise: best-match only, reminder after the
+# command output, and an ignore list for aliases we routinely paste in full.
+export YSU_MODE="BESTMATCH"           # suggest only the single best alias, not every partial match
+export YSU_MESSAGE_POSITION="after"   # show reminder after the command runs, not before it
+export YSU_IGNORED_ALIASES=("g" "_" "vim" "e" "k8")  # git, sudo, editor, kubectl — fire on nearly every paste
+
+if command -v sheldon > /dev/null && [[ -t 1 ]]; then
+  export SHELDON_CONFIG_DIR="$XDG_CONFIG_HOME/sheldon"
+  export SHELDON_DATA_DIR="$XDG_DATA_HOME/sheldon"
+  eval "$(sheldon source)"
+fi
+
+## Source other zsh config files
+for zsh_file in ~/.config/zsh/lib/*.zsh; do
+  source "$zsh_file"
+done
+
+DOTFILES="${HOME}/.dotfiles"
+if [[ -f "${HOME}/.work" ]]; then
+  [[ -f "${DOTFILES}/env/work.zsh" ]] && source "${DOTFILES}/env/work.zsh"
+elif [[ -f "${HOME}/.personal" ]]; then
+  [[ -f "${DOTFILES}/env/personal.zsh" ]] && source "${DOTFILES}/env/personal.zsh"
+elif [[ -f "${HOME}/.remote-full" ]]; then
+  [[ -f "${DOTFILES}/env/remote-full.zsh" ]] && source "${DOTFILES}/env/remote-full.zsh"
+elif [[ -f "${HOME}/.remote" ]]; then
+  [[ -f "${DOTFILES}/env/remote.zsh" ]] && source "${DOTFILES}/env/remote.zsh"
+fi
+
+export EDITOR="vim"
+
+# Lazy-load thefuck — avoid ~150ms Python startup on every shell
+if command -v thefuck > /dev/null; then
+  fuck() {
+    unfunction fuck
+    eval "$(thefuck --alias)"
+    fuck "$@"
+  }
+fi
+
+
+# Set fpath (function path) and source function files
+# Note: files are sourced explicitly because autoloading alone required running
+# a function twice before it would register; explicit sourcing avoids this.
+fpath=( "${HOME}/.config/zsh/zfunctions" "${fpath[@]}" )
+source "${HOME}"/.config/zsh/zfunctions/color_list
+source "${HOME}"/.config/zsh/zfunctions/clipboard
+
+# Starship prompt
+if [[ $- == *i* ]]; then
+  if command -v starship > /dev/null; then
+    eval "$(starship init zsh)"
+  else
+    autoload -U promptinit && promptinit
+    prompt devnall
+  fi
+fi
+
+if [[ -t 1 ]] && command -v terraform > /dev/null; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -o nospace -C "$(command -v terraform)" terraform
+fi
+
+if command -v zoxide > /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+if [[ -f "${HOME}/.env.local" ]]; then source "${HOME}/.env.local"; fi
+if [[ -f "${HOME}/.secrets.local" ]]; then source "${HOME}/.secrets.local"; fi

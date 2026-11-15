@@ -1,0 +1,140 @@
+" vimrc — minimal remote-safe config (no plugin manager)
+
+set nocompatible
+filetype plugin indent on
+syntax enable
+
+" Formatting
+set fo+=o         " Insert comment leader after 'o'/'O' in Normal mode
+set fo-=r         " Don't auto-insert comment leader after <Enter>
+set fo-=t         " Don't auto-wrap text using textwidth
+set nowrap
+set textwidth=0
+set backspace=indent,eol,start
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set smarttab
+set autoindent
+set cindent
+set cinoptions=:s,ps,ts,cs
+set cinwords=if,else,while,do,for,switch,case
+set hlsearch
+set incsearch
+set autoread
+set timeoutlen=250
+set wildmenu
+set wildmode=longest,list
+
+" No backup / swap files
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Visual
+set number
+set ruler
+set showcmd
+set showmatch
+set matchtime=5
+set visualbell
+set noerrorbells
+set laststatus=2
+set shortmess=atI
+set nolist
+set listchars=tab:·\ ,eol:¶,trail:·,extends:»,precedes:«
+set cursorline
+
+" Folding
+set foldenable
+set foldmethod=marker
+set foldlevel=100
+set foldopen=block,hor,mark,percent,quickfix,tag
+
+" Splits
+set splitbelow
+set splitright
+
+set title
+set clipboard=unnamed
+
+" Mouse support
+if has('mouse')
+  set mouse=a
+  set mousehide
+endif
+
+" Colors
+if ! has("gui_running")
+  set t_Co=256
+endif
+
+if (has("termguicolors"))
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+let s:appearance = system('cat ~/.local/state/appearance 2>/dev/null')
+if s:appearance =~ 'light'
+  set background=light
+else
+  set background=dark
+endif
+colorscheme nordicpine
+
+" Autocmds
+if has("autocmd")
+  augroup vimrcEx
+  au!
+  autocmd FileType text setlocal textwidth=78 nolist wrap linebreak breakat&vim
+  autocmd FileType markdown setlocal textwidth=78 nolist wrap linebreak breakat&vim
+  au BufRead,BufNewFile {*.md,*.mkd,*.markdown} set ft=markdown
+  au BufRead,BufNewFile {COMMIT_EDITMSG} set ft=gitcommit
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal g'\"" | endif
+  augroup END
+else
+  set autoindent
+endif
+
+" Key mappings
+let mapleader = " "
+map <silent> <F12> :set invlist<CR>
+imap jj <Esc>
+nnoremap <Leader>/ :nohlsearch<CR>
+
+" Split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-\> :vs<CR>
+
+" Tab navigation
+nnoremap <C-t> :tabnew<CR>
+inoremap <C-t> <Esc>:tabnew<CR>
+nnoremap th  :tabfirst<CR>
+nnoremap tj  :tabnext<CR>
+nnoremap tk  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tt  :tabedit<Space>
+nnoremap tm  :tabm<Space>
+nnoremap t1 1gt
+nnoremap t2 2gt
+nnoremap t3 3gt
+nnoremap t4 4gt
+nnoremap t5 5gt
+nnoremap t6 6gt
+nnoremap t7 7gt
+nnoremap t8 8gt
+nnoremap t9 9gt
+
+" Allow saving as sudo
+cmap W!! w !sudo tee > /dev/null %
+
+" Diff current buffer vs saved file
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+    \ | wincmd p | diffthis
+endif

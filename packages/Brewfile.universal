@@ -1,0 +1,163 @@
+# Universal Brewfile — install on every machine
+# Run: brew bundle --file=packages/Brewfile.universal
+
+# Shells and completion
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-fast-syntax-highlighting"
+brew "bash"
+brew "bash-completion"
+
+# Theme switching
+tap "cormacrelf/tap"
+brew "cormacrelf/tap/dark-notify"     # macOS appearance change callback
+
+# Core CLI utilities
+brew "bat"            # better cat
+brew "btop"           # better top
+brew "coreutils"
+brew "curl"
+brew "doggo"
+brew "eza"            # better ls
+brew "fd"             # better find
+brew "ffmpeg"         # video processing
+brew "fzf"            # fuzzy finder
+brew "gawk"
+brew "glow"           # markdown renderer / pager
+brew "gnu-sed"
+brew "gnu-tar"
+brew "grep"
+brew "gzip"
+brew "htop"
+brew "imagemagick"    # image processing
+brew "ipcalc"
+brew "lazydocker"     # docker TUI
+brew "lazygit"        # git TUI
+brew "mole"           # MacOS maintenance TUI
+brew "ncdu"
+brew "nmap"
+brew "prettyping"
+brew "reattach-to-user-namespace"
+brew "ripgrep"        # better grep
+brew "rsync"          # macOS ships ancient 2.6.9; this is current 3.x
+brew "rustscan"       # portscanner
+brew "sheldon"        # zsh plugin manager
+brew "shfmt"          # shell script formatter
+brew "ssh-copy-id"
+brew "starship"       # cross-shell prompt
+brew "thefuck"
+brew "tealdeer"
+brew "tmux"           # terminal multiplexer
+brew "watch"
+brew "wifi-password"  # display current wifi password
+brew "wtfis"
+brew "xz"
+brew "yt-dlp"
+brew "zoxide"
+
+# Git
+brew "gist"
+brew "git"
+brew "git-delta"      # better git diffs
+brew "git-filter-repo" # git history rewriting
+brew "gitleaks"       # secret scanner (dotfiles-public publish gate)
+brew "gh"             # GitHub CLI
+
+# Editors
+brew "neovim"
+brew "tree-sitter-cli" # needed by nvim-treesitter to compile parsers
+brew "vim"
+
+# Dev tools
+brew "jq"             # JSON processor
+brew "pre-commit"     # git hooks framework
+brew "yq"             # YAML processor
+brew "wget"
+brew "httpie"
+brew "mise"           # version and venv manager
+brew "pipx"           # install Python CLI tools in isolated envs
+brew "uv"             # Python package/tool manager
+brew "mkcert"         # local HTTPS certs
+brew "shellcheck"
+
+# Languages
+# brew "python"       # managed via mise
+# brew "ruby"         # managed via mise
+# brew "rust"         # managed via rustup/mise
+
+# Casks
+cask "1password"
+cask "1password-cli"
+cask "brave-browser"
+cask "claude-code@latest"  # tracks newest release
+cask "cleanshot"
+cask "desktoppr"           # set desktop wallpaper
+cask "docker-desktop"
+cask "dot"
+cask "firefox"
+cask "font-sauce-code-pro-nerd-font"  # terminal font (Ghostty + Starship glyphs)
+cask "ghostty"
+cask "google-chrome"
+cask "iina"                # video player
+cask "imageoptim"          # image optimizer
+cask "karabiner-elements"  # keyboard remapper (system extension)
+cask "obsidian"
+cask "plexamp"
+cask "raycast"            # launcher (v2): the same DMG raycast.com serves; self-updates
+cask "steam"
+# Standalone build, not the Mac App Store one: only standalone has the
+# `tailscale ssh` command, and the App Store build puts no CLI on PATH. The two
+# must never be installed together, so skip this while the App Store copy is
+# still there; bin/tailscale-variant-check walks through removing it.
+cask "tailscale-app" unless File.exist?("/Applications/Tailscale.app/Contents/_MASReceipt")
+cask "thaw"                # menubar manager
+cask "visual-studio-code"
+cask "vivaldi"
+cask "vlc"
+
+# Mac App Store
+brew "mas"               # Mac App Store CLI
+mas "Bear", id: 1091189122
+mas "Command X", id: 6448461551
+mas "Fantastical", id: 975937182
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "InYourFace", id: 1476964367
+mas "One Thing", id: 1604176982
+mas "Online Check", id: 6504709660
+mas "Slack", id: 803453959
+mas "The Unarchiver", id: 425424353
+mas "TickTick", id: 966085870
+mas "UTC Time", id: 1538245904
+mas "Velja", id: 1607635845
+mas "Xcode", id: 497799835
+
+# ──────────────────────────────────────────────────────────────────
+# Quarantined — delete if still commented after 6 months
+# brew "ack"                   # 20260313
+# brew "bandwhich"             # 20260313
+# brew "docker"                 # 20260322 — docker CLI is bundled w/ Desktop cask
+# brew "handbrake"             # HandBrakeCLI — 20260315
+# brew "inetutils"             # 20260313
+# brew "iftop"                 # 20260313
+# brew "trash"                 # safer rm — 20260313
+# brew "tree"                  # 20260313
+# brew "urlview"               # tmux-urlview plugin dep — 20260313
+# cask "jordanbaird-ice"       # menu bar manager — 20260315
+# cask "json-viewer"           # Intel-only; dropped in rebuild — 20260619
+# cask "keepingyouawake"       # 20260313
+# cask "pika"                  # color picker — 20260313
+# cask "shottr"                # screenshot tool — 20260313
+# brew "go"                     # 20260316 — migrated to mise
+# brew "node"                   # 20260316 — migrated to mise
+# brew "nvm"                    # 20260316 — migrated to mise
+# brew "rbenv"                  # 20260316 — migrated to mise
+# brew "diff-so-fancy"          # 20260322 — replaced by git-delta
+# cask "vscodium"              # 20260313
+# cask "flameshot"             # 20260322 - migrate to CleanShotX
+# cask "itsycal"              # 20260322 - migrate to Dot
+# brew "zsh-history-substring-search" # 20260324 — replaced by built-in up-line-or-beginning-search
+# cask "zoom"                  # 20260406 — moved to Brewfile.personal; IT-managed on work machines
+# cask "latest"              # 20260620
+# brew "docker-completion"    # 20260621 formula deprecated

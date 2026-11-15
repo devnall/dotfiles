@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# tailscale-variant-check — make sure this Mac runs Tailscale's standalone
+# build, not the Mac App Store one, and that its CLI is on PATH.
+#
+# The App Store build lacks the `tailscale ssh` command and installs no CLI.
+# Brewfile.universal installs the standalone build (cask "tailscale-app") but
+# skips it while the App Store copy is present, because Tailscale says never to
+# have both installed. This script explains how to switch when needed.
+#
+# Advisory only: always exits 0 so ./install carries on. No-op off macOS.
+
+set -uo pipefail
+
+[[ "$(uname)" == "Darwin" ]] || exit 0
+
+app=/Applications/Tailscale.app
+bold=$(tput bold 2>/dev/null || true)
+reset=$(tput sgr0 2>/dev/null || true)
+
+if [[ ! -d "$app" ]]; then
+  echo "Tailscale isn't installed; brew bundle installs the standalone build (tailscale-app)."
+  exit 0
+fi
+
+if [[ -d "$app/Contents/_MASReceipt" ]]; then
+  cat <<MSG
+${bold}[!] Tailscale is the Mac App Store build. Switch to the standalone build:${reset}
+    1. Quit Tailscale from its menu bar icon.
+    2. Delete $app, empty the Trash, and restart the Mac.
+       (Tailscale's guidance: never install both builds at once.)
+    3. Run ./install again (or: brew install --cask tailscale-app).
+    4. Open Tailscale, approve its system extension in System Settings →
+       General → Login Items & Extensions → Network Extensions, and log in.
+    5. In the admin console (Machines), check this Mac's name. If the old
+       App Store entry is still listed, remove it and rename the new one.
+    The cask stays skipped until step 2 is done.
+MSG
+  exit 0
+fi
+
+if command -v tailscale >/dev/null 2>&1; then
+  echo "Tailscale: standalone build, CLI at $(command -v tailscale)"
+else
+  cat <<MSG
+${bold}[!] Tailscale's CLI isn't on PATH.${reset}
+    Open Tailscale → Settings → "Install CLI…" (installs /usr/local/bin/tailscale).
+MSG
+fi
+exit 0

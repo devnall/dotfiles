@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+#
+# lite-install — put a small, safe slice of these dotfiles on a machine you
+# don't own: shell (zsh/bash), tmux and vim. No sudo, no package installs, no
+# secrets, no network access beyond the clone you already made.
+#
+#   git clone https://github.com/devnall/dotfiles ~/dotfiles-lite
+#   ~/dotfiles-lite/lite-install            # every component whose program exists
+#   ~/dotfiles-lite/lite-install tmux vim   # just these
+#   ~/dotfiles-lite/lite-install --uninstall
+#
+# Files are copied, not symlinked, so deleting the clone afterwards is fine.
+# Anything already in the way is moved to a timestamped backup first, and
+# --uninstall removes what was installed and puts the backups back.
+
+set -euo pipefail
+
+SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STATE="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles-lite"
+CFG="${XDG_CONFIG_HOME:-$HOME/.config}"
+OS="$(uname -s)"
+
+say()  { printf '  %s\n' "$*"; }
+die()  { printf 'lite-install: %s\n' "$*" >&2; exit 1; }
+have() { command -v "$1" >/dev/null 2>&1; }
+
+usage() {
+  sed -n '3,15p' "$0" | sed 's/^# \{0,1\}//'
+  exit "${1:-0}"
+}
+
+# --- install helpers ---------------------------------------------------------
+
+RUN_DIR="" MANIFEST=""
+
+begin_run() {
+  RUN_DIR="$STATE/run-$(date +%Y%m%d-%H%M%S)"
+  mkdir -p "$RUN_DIR/backup"
+  MANIFEST="$RUN_DIR/manifest"
+  : > "$MANIFEST"
+}
+
+# place SRC DEST: back up whatever is at DEST, copy SRC there, record DEST.
+place() {
+  local src="$1" dest="$2"
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    local rel="${dest#"$HOME"/}"
+    mkdir -p "$RUN_DIR/backup/$(dirname "$rel")"
+    mv "$dest" "$RUN_DIR/backup/$rel"
+    say "backed up ~/$rel"
+  fi
+  mkdir -p "$(dirname "$dest")"
+  cp -R "$src" "$dest"
+  printf '%s\n' "$dest" >> "$MANIFEST"
+  say "installed ${dest/#$HOME/\~}"
+}
+
+# --- components --------------------------------------------------------------
+
+install_zsh() {
+  place "$SRC/zsh/zshrc.zsh"   "$HOME/.zshrc"
+  place "$SRC/zsh/zprofile.zsh" "$HOME/.zprofile"
+  place "$SRC/zsh/lib"         "$CFG/zsh/lib"
+  place "$SRC/zsh/zfunctions"  "$CFG/zsh/zfunctions"
+  # The template is for the full setup, and ssh.zsh starts a persistent
+  # ssh-agent on Linux, which has no business running on a borrowed machine.
+  rm -f "$CFG/zsh/lib/local.zsh.template" "$CFG/zsh/lib/ssh.zsh"
+}
+
+install_bash() {
+  place "$SRC/config/bash/bashrc" "$HOME/.bashrc"
+}
+
+install_vim() {
+  place "$SRC/config/vim/vimrc"  "$HOME/.vim/vimrc"
+  place "$SRC/config/vim/colors" "$HOME/.vim/colors"
+}
+
+install_tmux() {
+  local f
+  for f in tmux.conf tmux-nordic.conf tmux-alpine.conf; do
+    place "$SRC/config/tmux/$f" "$CFG/tmux/$f"
+  done
+  # The full setup vendors plugins as git submodules; the lite copy has none.
+  # Load each plugin only if it's actually there, instead of erroring.
+  for f in "$CFG/tmux/"*.conf; do
+    sed -E 's|^run-shell (~/[^[:space:]]+)$|if-shell "test -f \1" "run-shell \1"|' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+  done
+  if [[ "$OS" != Darwin ]]; then
+    # No Apple Music to show, and no `defaults` to detect dark mode: drop the
+    # now-playing segment and default to the dark theme.
+    for f in "$CFG/tmux/"tmux-*.conf; do
+      sed -E 's|#\(osascript [^)]*\)||' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+    done
+    sed "s|'source-file ~/.config/tmux/tmux-alpine.conf'|'source-file ~/.config/tmux/tmux-nordic.conf'|" \
+      "$CFG/tmux/tmux.conf" > "$CFG/tmux/tmux.conf.tmp" && mv "$CFG/tmux/tmux.conf.tmp" "$CFG/tmux/tmux.conf"
+  fi
+}
+
+# --- uninstall ---------------------------------------------------------------
+
+uninstall() {
+  local runs=() run dest rel
+  if [[ -d "$STATE" ]]; then
+    while IFS= read -r run; do runs+=("$run"); done < <(find "$STATE" -maxdepth 1 -type d -name 'run-*' | sort -r)
+  fi
+  (( ${#runs[@]} )) || die "nothing to uninstall (no runs under $STATE)"
+  # Newest first, so each backup is restored over what replaced it.
+  for run in "${runs[@]}"; do
+    while IFS= read -r dest; do
+      [[ -n "$dest" ]] || continue
+      rm -rf "$dest"
+      rel="${dest#"$HOME"/}"
+      if [[ -e "$run/backup/$rel" || -L "$run/backup/$rel" ]]; then
+        mkdir -p "$(dirname "$dest")"
+        mv "$run/backup/$rel" "$dest"
+        say "restored ~/$rel"
+      else
+        say "removed ~/$rel"
+      fi
+      # Drop parent directories this install created, if they're now empty.
+      local parent; parent="$(dirname "$dest")"
+      while [[ "$parent" != "$HOME" && "$parent" == "$HOME"/* ]] && rmdir "$parent" 2>/dev/null; do
+        parent="$(dirname "$parent")"
+      done
+    done < "$run/manifest"
+    rm -rf "$run"
+  done
+  rmdir "$STATE" 2>/dev/null || true
+  echo "Uninstalled."
+}
+
+# --- main --------------------------------------------------------------------
+
+components=()
+for arg in "$@"; do
+  case "$arg" in
+    -h|--help) usage ;;
+    --uninstall) uninstall; exit 0 ;;
+    zsh|bash|tmux|vim) components+=("$arg") ;;
+    *) printf 'lite-install: unknown argument: %s\n\n' "$arg" >&2; usage 1 ;;
+  esac
+done
+
+if (( ${#components[@]} == 0 )); then
+  for c in zsh bash tmux vim; do have "$c" && components+=("$c"); done
+  (( ${#components[@]} )) || die "none of zsh, bash, tmux, vim found"
+fi
+
+[[ "$(id -u)" -ne 0 ]] || die "refusing to run as root; this is meant for your own user"
+
+begin_run
+echo "Installing: ${components[*]}"
+for c in "${components[@]}"; do install_"$c"; done
+echo "Done. Backups and the undo list are in ${RUN_DIR/#$HOME/\~}."
+echo "Undo with: $0 --uninstall"

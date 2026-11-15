@@ -1,0 +1,76 @@
+# This is Git's per-user configuration file
+# Credential helper: macOS gets osxkeychain via .gitconfig-darwin (written by
+# ./install, removed on Linux). Linux clones of ~/.dotfiles set a repo-local
+# `credential.helper store` instead (see RUNBOOK "Remote/Server Setup").
+[alias]
+  # Undo the last commit, keeping its changes staged
+  undo = reset --soft HEAD^
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
+[apply]
+  whitespace = fix
+[push]
+  default = current
+  autoSetupRemote = true
+  followTags = true
+[pull]
+  rebase = true
+[fetch]
+  prune = true
+  pruneTags = true
+[rebase]
+  autosquash = true
+  autostash = true
+[rerere]
+  enabled = true
+  autoupdate = true
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:refname
+[commit]
+  verbose = true
+  gpgsign = true
+[help]
+  autocorrect = prompt
+[core]
+  autocrlf = input
+  safecrlf = warn
+  editor = vim
+  pager = delta
+  whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true   # use n and N to move between diff sections
+  side-by-side = true
+  syntax-theme = base16
+[diff]
+  colorMoved = default
+[init]
+  defaultBranch = main
+[color]
+  ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[merge]
+  log = true
+  conflictstyle = zdiff3
+[url "git@github.com:"]
+  pushInsteadOf = https://github.com/
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com"
+[include]
+  path = ~/.dotfiles/config/git/.gitconfig-darwin
+  path = ~/.dotfiles/config/git/.gitconfig-user
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.dotfiles/config/git/allowed_signers

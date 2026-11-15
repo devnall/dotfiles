@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# bootstrap-stage0 — break-glass first stage for setting up one of MY Macs when
+# the private dotfiles aren't reachable yet (away from the home network). Its
+# only job is getting the machine onto the tailnet; then it clones the private
+# repo and hands off to that repo's own bootstrap.
+#
+#   curl -fsSL https://raw.githubusercontent.com/devnall/dotfiles/main/bootstrap-stage0 -o stage0
+#   less stage0        # read it first
+#   bash stage0
+#
+# Nothing private is in this file. The clone URL is asked for (or read from
+# $DOTFILES_URL), and the git token comes from 1Password via an op:// reference
+# (asked for, or $DOTFILES_TOKEN_REF).
+#
+# Not useful to anyone else as-is, but a reasonable template if you also keep
+# private dotfiles behind a VPN.
+
+set -euo pipefail
+
+step() { printf '\n==> %s\n' "$*"; }
+ask()  { local v; read -rp "    $1: " v; printf '%s' "$v"; }
+wait_for() { # wait_for "message" cmd...
+  local msg="$1"; shift
+  until "$@" >/dev/null 2>&1; do read -rp "    $msg — press Enter to check again " _; done
+}
+
+[[ "$(uname -s)" == Darwin ]] || { echo "stage0 is macOS-only. On Linux: install Tailscale, join the tailnet, then clone." >&2; exit 1; }
+
+step "Xcode Command Line Tools"
+if ! xcode-select -p >/dev/null 2>&1; then
+  xcode-select --install || true
+  wait_for "Finish the Command Line Tools installer" xcode-select -p
+fi
+
+step "Homebrew"
+if ! command -v brew >/dev/null 2>&1; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+
+step "1Password, its CLI, and Tailscale"
+brew install --cask 1password 1password-cli tailscale-app
+
+step "Sign in to 1Password"
+echo "    Open 1Password, sign in, and turn on Settings → Developer → Integrate with 1Password CLI."
+open -a 1Password || true
+wait_for "Sign in to 1Password and enable CLI integration" op whoami
+
+step "Join the tailnet"
+open -a Tailscale || true
+TS=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+wait_for "Log in to Tailscale from the menu bar" "$TS" status
+
+DOTFILES_URL="${DOTFILES_URL:-$(ask 'Private dotfiles clone URL (https://...)')}"
+DOTFILES_TOKEN_REF="${DOTFILES_TOKEN_REF:-$(ask 'op:// reference for the git token (blank to type it when git asks)')}"
+host="$(printf '%s' "$DOTFILES_URL" | sed -E 's|^https://([^/]+)/.*|\1|')"
+
+step "Wait for $host to resolve over the tailnet"
+wait_for "Can't reach $host yet (is Tailscale connected?)" git ls-remote --exit-code "$DOTFILES_URL" HEAD </dev/null || true
+
+if [[ -n "$DOTFILES_TOKEN_REF" ]]; then
+  step "Store the git token in the macOS keychain"
+  user="$(ask "Username on $host")"
+  token="$(op read "$DOTFILES_TOKEN_REF")"
+  printf 'protocol=https\nhost=%s\nusername=%s\npassword=%s\n\n' "$host" "$user" "$token" \
+    | git -c credential.helper=osxkeychain credential approve
+  unset token
+fi
+
+step "Clone and hand off to the real bootstrap"
+[[ -e "$HOME/.dotfiles" ]] && { echo "    ~/.dotfiles already exists; not touching it." >&2; exit 1; }
+git -c credential.helper=osxkeychain clone --recursive "$DOTFILES_URL" "$HOME/.dotfiles"
+cd "$HOME/.dotfiles"
+exec ./bin/bootstrap.sh

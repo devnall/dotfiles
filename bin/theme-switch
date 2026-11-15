@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+# theme-switch — called by dark-notify when macOS appearance changes
+# Usage: theme-switch dark|light
+
+set -euo pipefail
+
+mode="${1:-}"
+if [[ "$mode" != "dark" && "$mode" != "light" ]]; then
+  echo "Usage: theme-switch dark|light" >&2
+  exit 1
+fi
+
+# Resolve symlinks for sed -i (macOS sed can't edit symlinks in-place)
+_resolve() { local t; t="$(readlink "$1" 2>/dev/null)" && echo "$t" || echo "$1"; }
+
+# Write state file for shells to read
+mkdir -p ~/.local/state
+echo "$mode" > ~/.local/state/appearance
+
+# Tmux — source the appropriate theme if tmux is running
+# Use explicit socket path since LaunchAgents don't inherit TMUX env
+tmux_socket="/private/tmp/tmux-$(id -u)/default"
+if [[ -S "$tmux_socket" ]]; then
+  tmux_bin="$(command -v tmux 2>/dev/null || echo /opt/homebrew/bin/tmux)"
+  if [[ "$mode" == "dark" ]]; then
+    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-nordic.conf
+  else
+    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-alpine.conf
+  fi
+fi
+
+# btop — sed the color_theme line (takes effect on next launch)
+btop_conf="$(_resolve "$HOME/.config/btop/btop.conf")"
+if [[ -f "$btop_conf" ]]; then
+  if [[ "$mode" == "dark" ]]; then
+    sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/nordicpine.theme\"|" "$btop_conf"
+  else
+    sed -i '' "s|^color_theme = .*|color_theme = \"${HOME}/.config/btop/themes/rose-pine-dawn.theme\"|" "$btop_conf"
+  fi
+fi
+
+# Neovim — send ThemeSwitch command to all running instances
+for sock in /tmp/nvim-"$(whoami)"-*.sock; do
+  [[ -S "$sock" ]] || continue
+  nvim_bin="$(command -v nvim 2>/dev/null || echo /opt/homebrew/bin/nvim)"
+  "$nvim_bin" --server "$sock" --remote-send "<Cmd>ThemeSwitch $mode<CR>" 2>/dev/null || true
+done
+
+# starship — switch palette (takes effect on next prompt)
+starship_conf="$(_resolve "$HOME/.config/starship.toml")"
+if [[ -f "$starship_conf" ]]; then
+  if [[ "$mode" == "dark" ]]; then
+    sed -i '' 's/^palette = "alpinedawn"/palette = "nordicpine"/' "$starship_conf"
+  else
+    sed -i '' 's/^palette = "nordicpine"/palette = "alpinedawn"/' "$starship_conf"
+  fi
+fi
+
+# Claude Code — toggle the ANSI base of a watched custom theme so RUNNING
+# sessions hot-reload live. (A `theme` change in settings.json only applies on
+# next launch; files under ~/.claude/themes/ hot-reload immediately. Built-in
+# `auto` only toggles the hardcoded dark/light presets, not the ANSI ones.)
+# Select once with `/theme` → "NordicPine". Self-creates the file if missing and
+# preserves any `overrides` you add. jq-guarded; atomic write into the watched dir.
+claude_theme_file="$HOME/.claude/themes/nordicpine.json"
+if command -v jq &>/dev/null; then
+  mkdir -p "$(dirname "$claude_theme_file")"
+  if [[ "$mode" == "dark" ]]; then
+    claude_base="dark-ansi"
+  else
+    claude_base="light-ansi"
+  fi
+  claude_tmp="$(mktemp "${claude_theme_file}.XXXXXX")"
+  if [[ -f "$claude_theme_file" ]]; then
+    if jq --arg b "$claude_base" '.base = $b' "$claude_theme_file" > "$claude_tmp" 2>/dev/null; then
+      mv "$claude_tmp" "$claude_theme_file"
+    else
+      rm -f "$claude_tmp"
+    fi
+  else
+    if jq -n --arg b "$claude_base" '{name: "NordicPine", base: $b, overrides: {}}' > "$claude_tmp" 2>/dev/null; then
+      mv "$claude_tmp" "$claude_theme_file"
+    else
+      rm -f "$claude_tmp"
+    fi
+  fi
+fi
+
+# Desktop wallpaper — switch via desktoppr (macOS only)
+# Detects per-display aspect ratio so mixed ultrawide + widescreen setups
+# each get the right wallpaper folder/image.
+desktoppr_bin="$(command -v desktoppr 2>/dev/null || echo /usr/local/bin/desktoppr)"
+if [[ -x "$desktoppr_bin" ]]; then
+  wallpaper_repo="$HOME/Pictures/wallpapers"
+  wallpaper_default="$HOME/.local/share/wallpapers"
+  default_display_type="widescreen"
+  [[ -f "$HOME/.local/state/display-type" ]] && default_display_type="$(cat "$HOME/.local/state/display-type")"
+
+  # Build array of display resolutions from system_profiler (index-ordered)
+  display_resolutions=()
+  if command -v system_profiler &>/dev/null; then
+    while IFS= read -r line; do
+      if [[ "$line" =~ ([0-9]+)\ x\ ([0-9]+) ]]; then
+        display_resolutions+=("${BASH_REMATCH[1]}x${BASH_REMATCH[2]}")
+      fi
+    done < <(system_profiler SPDisplaysDataType 2>/dev/null | grep -i "resolution:")
+  fi
+
+  # Classify a resolution as ultrawide (aspect ratio >= 2:1) or widescreen
+  _display_type() {
+    local res="$1"
+    if [[ "$res" =~ ^([0-9]+)x([0-9]+)$ ]]; then
+      local w="${BASH_REMATCH[1]}" h="${BASH_REMATCH[2]}"
+      if (( h > 0 && w * 10 / h >= 20 )); then
+        echo "ultrawide"
+        return
+      fi
+    fi
+    echo "widescreen"
+  }
+
+  # Set wallpaper for a single screen index
+  _set_wallpaper() {
+    local screen_idx="$1" display_type="$2"
+
+    # Tier 2: folder rotation from wallpapers repo
+    local tier2_dir="$wallpaper_repo/$display_type-$mode"
+    if [[ -d "$tier2_dir" ]] && { compgen -G "$tier2_dir/*.jpg" || compgen -G "$tier2_dir/*.png" || compgen -G "$tier2_dir/*.jpeg"; } &>/dev/null; then
+      "$desktoppr_bin" "$screen_idx" "$tier2_dir"
+    else
+      # Tier 1: single image from dotfiles defaults
+      for ext in jpg png; do
+        local wp="$wallpaper_default/$mode.$ext"
+        if [[ -f "$wp" ]]; then
+          "$desktoppr_bin" "$screen_idx" "$wp"
+          break
+        fi
+      done
+    fi
+  }
+
+  if [[ ${#display_resolutions[@]} -gt 0 ]]; then
+    # Per-display: classify each screen and set its wallpaper individually
+    for idx in "${!display_resolutions[@]}"; do
+      # Verify this screen index exists in desktoppr
+      if "$desktoppr_bin" "$idx" &>/dev/null; then
+        dt="$(_display_type "${display_resolutions[$idx]}")"
+        _set_wallpaper "$idx" "$dt"
+      fi
+    done
+  else
+    # Fallback: no resolution data, apply to all screens using default type
+    _set_wallpaper "all" "$default_display_type"
+  fi
+fi
