@@ -42,7 +42,6 @@ fi
 
 # Other
 alias rm='rm -i'
-alias du='du -h'
 alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
@@ -70,9 +69,9 @@ if command -v gdate > /dev/null; then
   alias date="gdate"
 fi
 
-# If ncdu is installed, use it instead of du
+# ncdu defaults: dark theme, read-only, stay on one filesystem, skip VCS/deps
 if command -v ncdu > /dev/null; then
-  alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+  alias ncdu="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 fi
 
 # No `free` command on OSX, here's a hacky substitute

@@ -42,7 +42,7 @@ Directory stack persists for the session (up to 12 entries, no duplicates).
 | Alias | Command |
 |-------|---------|
 | `top` | `btop` (if installed, else `htop`) |
-| `du` | `ncdu --color dark -rr -x --exclude .git --exclude node_modules` (if ncdu installed) |
+| `ncdu` | `ncdu --color dark -rr -x --exclude .git --exclude node_modules` (if ncdu installed) |
 | `free` | Hack: reads PhysMem from macOS `top` output |
 | `ports` | `netstat -tulan` — show open ports |
 
