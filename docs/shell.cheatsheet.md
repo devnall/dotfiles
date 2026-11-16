@@ -79,7 +79,6 @@ Directory stack persists for the session (up to 12 entries, no duplicates).
 | `finder` | `open ./` — open current directory in Finder |
 | `dscleanup` | Recursively delete all `.DS_Store` files |
 | `emptytrash` | Empty Trash on all mounted volumes |
-| `date` | `gdate` — GNU date (if installed via brew) |
 
 ## Shell Utilities
 

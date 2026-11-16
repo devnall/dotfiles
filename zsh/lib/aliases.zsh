@@ -64,11 +64,6 @@ elif command -v htop > /dev/null; then
   alias top="htop"
 fi
 
-# If GNU date is installed, use it instead of old date shipped w/ MacOS
-if command -v gdate > /dev/null; then
-  alias date="gdate"
-fi
-
 # ncdu defaults: dark theme, read-only, stay on one filesystem, skip VCS/deps
 if command -v ncdu > /dev/null; then
   alias ncdu="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
