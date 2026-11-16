@@ -135,29 +135,6 @@ mas "Xcode", id: 497799835
 
 # ──────────────────────────────────────────────────────────────────
 # Quarantined — delete if still commented after 6 months
-# brew "ack"                   # 20260313
-# brew "bandwhich"             # 20260313
-# brew "docker"                 # 20260322 — docker CLI is bundled w/ Desktop cask
-# brew "handbrake"             # HandBrakeCLI — 20260315
-# brew "inetutils"             # 20260313
-# brew "iftop"                 # 20260313
-# brew "trash"                 # safer rm — 20260313
-# brew "tree"                  # 20260313
-# brew "urlview"               # tmux-urlview plugin dep — 20260313
-# cask "jordanbaird-ice"       # menu bar manager — 20260315
 # cask "json-viewer"           # Intel-only; dropped in rebuild — 20260619
-# cask "keepingyouawake"       # 20260313
-# cask "pika"                  # color picker — 20260313
-# cask "shottr"                # screenshot tool — 20260313
-# brew "go"                     # 20260316 — migrated to mise
-# brew "node"                   # 20260316 — migrated to mise
-# brew "nvm"                    # 20260316 — migrated to mise
-# brew "rbenv"                  # 20260316 — migrated to mise
-# brew "diff-so-fancy"          # 20260322 — replaced by git-delta
-# cask "vscodium"              # 20260313
-# cask "flameshot"             # 20260322 - migrate to CleanShotX
-# cask "itsycal"              # 20260322 - migrate to Dot
-# brew "zsh-history-substring-search" # 20260324 — replaced by built-in up-line-or-beginning-search
-# cask "zoom"                  # 20260406 — moved to Brewfile.personal; IT-managed on work machines
 # cask "latest"              # 20260620
 # brew "docker-completion"    # 20260621 formula deprecated
