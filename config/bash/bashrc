@@ -55,6 +55,8 @@ fi
 ##########
 export PAGER="less"
 export EDITOR="vim"
+# bat's --theme="auto:system" is macOS-only; on Linux, pin the dark theme.
+case "$OSTYPE" in linux*) export BAT_THEME="nordicpine" ;; esac
 export HISTCONTROL=erasedups
 export HISTSIZE=5000
 export HISTIGNORE="&:pwd:ls:ll:la:lsd:exit:cl"

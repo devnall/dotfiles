@@ -12,4 +12,3 @@ Scripts I keep on `PATH` (linked into `~/bin`).
 | `cheat.sh` | Browses the cheatsheets in [`docs/`](../docs/) with fzf |
 | `curlperf URL` | Prints connect time + time to first byte = total, from curl |
 | `tailscale-variant-check` | Checks that a Mac runs Tailscale's standalone build, not the App Store one. Only the standalone build has `tailscale ssh` and puts a CLI on `PATH`. Explains how to switch; never fails. |
-| `linux-bat-install` | Installs or updates bat from its GitHub releases on Linux. The bat config needs 0.25+ options (`--theme=auto:system`); apt has those from Ubuntu 26.04 and Debian 13, but not on Ubuntu 24.04 or Debian 12 |

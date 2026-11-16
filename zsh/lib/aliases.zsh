@@ -79,7 +79,16 @@ if [[ `uname` == 'Darwin' ]]; then
   alias free="/usr/bin/top -l 1 -s 0 | grep PhysMem"
 fi
 
-if command -v bat > /dev/null; then
+# The config's --theme="auto:system" is macOS-only; on Linux bat warns on every
+# run and falls back to its default theme. BAT_THEME outranks the config file.
+if [[ "$OSTYPE" == linux* ]]; then
+  export BAT_THEME="nordicpine"
+fi
+
+# apt installs bat as /usr/bin/batcat; link it as bat with
+#   ln -s /usr/bin/batcat ~/.local/bin/bat
+# ~/.local/bin isn't on PATH yet here: path.zsh loads after this file.
+if command -v bat > /dev/null || [[ -x "$HOME/.local/bin/bat" ]]; then
   alias batp='bat -p'
   alias bat_='bat --show-all'
 fi
