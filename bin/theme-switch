@@ -25,7 +25,7 @@ if [[ -S "$tmux_socket" ]]; then
   if [[ "$mode" == "dark" ]]; then
     "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-nordic.conf
   else
-    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-alpine.conf
+    "$tmux_bin" -S "$tmux_socket" source-file ~/.config/tmux/tmux-rose-pine-dawn.conf
   fi
 fi
 
@@ -49,10 +49,13 @@ done
 # starship — switch palette (takes effect on next prompt)
 starship_conf="$(_resolve "$HOME/.config/starship.toml")"
 if [[ -f "$starship_conf" ]]; then
+  # starship.toml is an untracked per-machine copy; migrate copies made while
+  # the light palette was still called "alpinedawn".
+  sed -i '' 's/^\[palettes\.alpinedawn\]$/[palettes.rose-pine-dawn]/' "$starship_conf"
   if [[ "$mode" == "dark" ]]; then
-    sed -i '' 's/^palette = "alpinedawn"/palette = "nordicpine"/' "$starship_conf"
+    sed -i '' 's/^palette = ".*"/palette = "nordicpine"/' "$starship_conf"
   else
-    sed -i '' 's/^palette = "nordicpine"/palette = "alpinedawn"/' "$starship_conf"
+    sed -i '' 's/^palette = ".*"/palette = "rose-pine-dawn"/' "$starship_conf"
   fi
 fi
 

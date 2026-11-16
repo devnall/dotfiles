@@ -1,7 +1,7 @@
 # tmux
 
 `tmux.conf` goes in `~/.config/tmux/`. The two theme files sit next to it:
-`tmux-nordic.conf` (dark) and `tmux-alpine.conf` (light). On startup, tmux picks
+`tmux-nordic.conf` (dark) and `tmux-rose-pine-dawn.conf` (light). On startup, tmux picks
 one from the macOS appearance setting, and [`bin/theme-switch`](../../bin/theme-switch)
 re-sources the other one live when the setting changes.
 

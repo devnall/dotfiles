@@ -1,4 +1,4 @@
-" nordicpine.vim — dual-mode colorscheme (NordicPine dark / AlpineDawn light)
+" nordicpine.vim — dual-mode colorscheme (NordicPine dark / Rosé Pine Dawn light)
 " Requires 256-color terminal or termguicolors
 
 hi clear
@@ -91,7 +91,7 @@ if &background ==# "dark"
   hi SpellCap     guisp=#087fab gui=undercurl ctermfg=31  ctermbg=NONE cterm=underline
 
 else
-  " ── AlpineDawn (light) ─────────────────────────────────────────────
+  " ── Rosé Pine Dawn (light) ─────────────────────────────────────────────
 
   " Core
   hi Normal       guifg=#575279 guibg=#faf4ed ctermfg=60  ctermbg=231
@@ -159,10 +159,10 @@ else
   hi PmenuSel     guifg=#faf4ed guibg=#286983 ctermfg=231 ctermbg=24
 
   " UI — diff
-  hi DiffAdd      guifg=NONE    guibg=#e8f5e9 ctermfg=NONE ctermbg=230
-  hi DiffChange   guifg=NONE    guibg=#e8eaf6 ctermfg=NONE ctermbg=230
-  hi DiffDelete   guifg=#b4637a guibg=#fce4ec ctermfg=132  ctermbg=230
-  hi DiffText     guifg=NONE    guibg=#c5cae9 ctermfg=NONE ctermbg=252 gui=NONE cterm=NONE
+  hi DiffAdd      guifg=NONE    guibg=#d9e1dd ctermfg=NONE ctermbg=230
+  hi DiffChange   guifg=NONE    guibg=#f3ddd7 ctermfg=NONE ctermbg=230
+  hi DiffDelete   guifg=#b4637a guibg=#ecd7d6 ctermfg=132  ctermbg=230
+  hi DiffText     guifg=NONE    guibg=#ecc6c1 ctermfg=NONE ctermbg=252 gui=NONE cterm=NONE
 
   " UI — folds / signs
   hi Folded       guifg=#9893a5 guibg=#f2e9e1 ctermfg=247 ctermbg=230

@@ -60,37 +60,43 @@
 
 ---
 
-## AlpineDawn
+## Rosé Pine Dawn
 
-### Background / Foreground / Cursor / Selection
+The light theme is stock [Rosé Pine Dawn](https://rosepinetheme.com/en/palette/). Prefer an upstream port from [rosepinetheme.com/en/themes](https://rosepinetheme.com/en/themes/) when adding a tool. Ghostty uses its built-in `Rose Pine Dawn` theme; bat and btop use upstream `rose-pine-dawn` files; Neovim uses rose-pine's `dawn` variant. Hand-written light sections (tmux, zsh, starship, glow, classic vim) use only palette colors.
 
-| Role               | Hex       |
-|--------------------|-----------|
-| Background         | `#faf4ed` |
-| Foreground         | `#575279` |
-| Cursor             | `#575279` |
-| Selection bg       | `#f2e9e1` |
-| Selection fg       | `#575279` |
+### Palette
 
-### Primary accents
+| Name           | Hex       |
+|----------------|-----------|
+| Base           | `#faf4ed` |
+| Surface        | `#fffaf3` |
+| Overlay        | `#f2e9e1` |
+| Muted          | `#9893a5` |
+| Subtle         | `#797593` |
+| Text           | `#575279` |
+| Love           | `#b4637a` |
+| Gold           | `#ea9d34` |
+| Rose           | `#d7827e` |
+| Pine           | `#286983` |
+| Foam           | `#56949f` |
+| Iris           | `#907aa9` |
+| Highlight low  | `#f4ede8` |
+| Highlight med  | `#dfdad9` |
+| Highlight high | `#cecacd` |
 
-| Role                      | Hex       |
-|---------------------------|-----------|
-| Pine (command / branch)   | `#286983` |
-| Foam (path / dir)         | `#56949f` |
-| Iris (terraform / sep.)   | `#907aa9` |
+### How the hand-written configs use it
 
-### Secondary accents
+| Role                                   | Color |
+|----------------------------------------|-------|
+| Command / branch / active tmux window  | Pine  |
+| Path / dir / tmux date segment         | Foam  |
+| Separator / terraform / tmux copy mode | Iris  |
+| Error / git del / tmux offline         | Love  |
+| Strings / aws / tmux prefix            | Gold  |
+| Globbing                               | Rose  |
+| Comments / autosuggest                 | Muted |
 
-| Role                          | Hex       |
-|-------------------------------|-----------|
-| Love (error / git del)        | `#b4637a` |
-| Gold (string literals / aws)  | `#ea9d34` |
-| Rose (globbing)               | `#d7827e` |
-| Subtle fg (comments)          | `#9893a5` |
-| Autosuggest                   | `#9893a5` |
-
-### ANSI Palette
+### ANSI Palette (Ghostty built-in)
 
 | Index | Label         | Hex       |
 |-------|---------------|-----------|
@@ -98,9 +104,9 @@
 | 1     | Red           | `#b4637a` |
 | 2     | Green         | `#286983` |
 | 3     | Yellow        | `#ea9d34` |
-| 4     | Blue          | `#286983` |
+| 4     | Blue          | `#56949f` |
 | 5     | Magenta       | `#907aa9` |
-| 6     | Cyan          | `#56949f` |
+| 6     | Cyan          | `#d7827e` |
 | 7     | White         | `#575279` |
 | 8     | Bright black  | `#9893a5` |
 | 9     | Bright red    | `#b4637a` |
@@ -108,5 +114,16 @@
 | 11    | Bright yellow | `#ea9d34` |
 | 12    | Bright blue   | `#56949f` |
 | 13    | Bright magenta| `#907aa9` |
-| 14    | Bright cyan   | `#56949f` |
+| 14    | Bright cyan   | `#d7827e` |
 | 15    | Bright white  | `#575279` |
+
+### Retired Ghostty tweaks
+
+Before the switch to Ghostty's built-in theme, the local `AlpineDawn` Ghostty theme differed from stock in four places. To bring any back, restore a local light theme (`git show 12db173:config/ghostty/themes/AlpineDawn`) and point `theme = ...,light:` at it. Don't set `palette =` in `config/ghostty/config`; the main config applies to both the dark and light themes.
+
+| Setting                | Stock (now)      | Old local value  |
+|------------------------|------------------|------------------|
+| `palette = 4` (blue)   | `#56949f` foam   | `#286983` pine   |
+| `palette = 6` (cyan)   | `#d7827e` rose   | `#56949f` foam   |
+| `palette = 14` (bright cyan) | `#d7827e` rose | `#56949f` foam |
+| `selection-background` | `#dfdad9` highlight med | `#f2e9e1` overlay |

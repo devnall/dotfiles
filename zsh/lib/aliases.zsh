@@ -93,7 +93,7 @@ if command -v bat > /dev/null || [[ -x "$HOME/.local/bin/bat" ]]; then
   alias bat_='bat --show-all'
 fi
 
-# glow — pick NordicPine/AlpineDawn style based on appearance state
+# glow — pick NordicPine/Rosé Pine Dawn style based on appearance state
 # (~/.local/state/appearance is written by bin/theme-switch). Glow's own
 # `style: auto` detection is unreliable in tmux/Ghostty, so we inject -s.
 # If the caller passes -s/--style explicitly, we defer to that.
@@ -107,7 +107,7 @@ if command -v glow > /dev/null; then
     done
     local style="$HOME/.config/glow/styles/nordicpine.json"
     if [[ -f "$HOME/.local/state/appearance" && "$(<$HOME/.local/state/appearance)" == "light" ]]; then
-      style="$HOME/.config/glow/styles/alpinedawn.json"
+      style="$HOME/.config/glow/styles/rose-pine-dawn.json"
     fi
     command glow -s "$style" "$@"
   }

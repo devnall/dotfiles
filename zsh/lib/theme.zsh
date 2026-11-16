@@ -38,7 +38,7 @@ _apply_theme() {
     FAST_HIGHLIGHT_STYLES[comment]='fg=#555e7a,italic'
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#555e7a'
   else
-    # ── AlpineDawn (light) ───────────────────────────────────────────
+    # ── Rosé Pine Dawn (light) ───────────────────────────────────────────
     typeset -gA FAST_HIGHLIGHT_STYLES
     FAST_HIGHLIGHT_STYLES[default]='fg=#575279'
     FAST_HIGHLIGHT_STYLES[unknown-token]='fg=#b4637a'

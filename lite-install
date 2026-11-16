@@ -78,7 +78,7 @@ install_vim() {
 
 install_tmux() {
   local f
-  for f in tmux.conf tmux-nordic.conf tmux-alpine.conf; do
+  for f in tmux.conf tmux-nordic.conf tmux-rose-pine-dawn.conf; do
     place "$SRC/config/tmux/$f" "$CFG/tmux/$f"
   done
   # The full setup vendors plugins as git submodules; the lite copy has none.
@@ -92,7 +92,7 @@ install_tmux() {
     for f in "$CFG/tmux/"tmux-*.conf; do
       sed -E 's|#\(osascript [^)]*\)||' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
     done
-    sed "s|'source-file ~/.config/tmux/tmux-alpine.conf'|'source-file ~/.config/tmux/tmux-nordic.conf'|" \
+    sed "s|'source-file ~/.config/tmux/tmux-rose-pine-dawn.conf'|'source-file ~/.config/tmux/tmux-nordic.conf'|" \
       "$CFG/tmux/tmux.conf" > "$CFG/tmux/tmux.conf.tmp" && mv "$CFG/tmux/tmux.conf.tmp" "$CFG/tmux/tmux.conf"
   fi
 }

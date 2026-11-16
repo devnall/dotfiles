@@ -1,4 +1,4 @@
-# Starship Prompt Config — dual palette (NordicPine dark / AlpineDawn light)
+# Starship Prompt Config — dual palette (NordicPine dark / Rosé Pine Dawn light)
 #
 # Requires a nerd font
 
@@ -162,7 +162,7 @@ char_3     = "#38c9a7"
 char_err   = "#e16c58"
 jobs_col   = "#e16c58"
 
-[palettes.alpinedawn]
+[palettes.rose-pine-dawn]
 dir        = "#56949f"
 branch     = "#286983"
 git_add    = "#286983"

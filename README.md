@@ -1,8 +1,8 @@
 # dotfiles
 
 My (public) terminal/CLI setup and tooling; mostly macOS and mostly purged of the parts that only make sense on my machines.
-It's zsh, tmux, Neovim and Ghostty, with a custom dark/light theme pair
-(**NordicPine** and **AlpineDawn**) that follows the macOS appearance setting everywhere.
+It's zsh, tmux, Neovim and Ghostty, with a custom dark theme (**NordicPine**) and
+stock **Rosé Pine Dawn** for light, following the macOS appearance setting everywhere.
 
 This is a curated copy of my private dotfiles. It's meant to be read and
 borrowed from, not cloned and installed wholesale. Paths assume the files live
@@ -19,7 +19,7 @@ it with [Dotbot](https://github.com/anishathalye/dotbot).
 | [`config/vim/`](config/vim/) | A plugin-free vimrc for servers |
 | [`config/ghostty/`](config/ghostty/) | Ghostty, plus both themes |
 | [`config/starship/`](config/starship/) | Starship prompts: one local, one for SSH sessions |
-| [`docs/color-palettes.md`](docs/color-palettes.md) | Every color in NordicPine and AlpineDawn |
+| [`docs/color-palettes.md`](docs/color-palettes.md) | Every color in NordicPine and Rosé Pine Dawn |
 | [`config/bat/`](config/bat/), [`config/btop/`](config/btop/), [`config/glow/`](config/glow/) | The themes, ported to those tools |
 | [`config/git/`](config/git/) | Git config: SSH commit signing, aliases, a global ignore |
 | [`config/macos/defaults.sh`](config/macos/defaults.sh) | The `defaults write` settings I apply to a new Mac |
@@ -40,8 +40,8 @@ Switching macOS between dark and light mode switches everything at once.
   (syntax highlighting, autosuggestions) and glow read.
 
 NordicPine is [Rosé Pine](https://rosepinetheme.com/) without the heavy use of purple:
-pine-green and ice-blue on a near-black background. AlpineDawn is its light
-counterpart. The [palette doc](docs/color-palettes.md) has every hex value.
+pine-green and ice-blue on a near-black background. Its light counterpart is
+stock Rosé Pine Dawn. The [palette doc](docs/color-palettes.md) has every hex value.
 
 ## Borrowing things
 

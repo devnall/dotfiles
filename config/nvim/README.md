@@ -16,7 +16,7 @@ A [lazy.nvim](https://github.com/folke/lazy.nvim) config, split into
 | `editing.lua` | mini.surround and nvim-autopairs |
 | `lualine.lua`, `which-key.lua` | Status line and key hints |
 | `tmux-navigator.lua` | `C-h/j/k/l` moves across Neovim splits and tmux panes alike |
-| `colorscheme.lua` | Rosé Pine, recolored to NordicPine / AlpineDawn |
+| `colorscheme.lua` | Rosé Pine, recolored to NordicPine for dark; stock Dawn for light |
 
 **Live theme switching:** `lua/config/appearance.lua` reads
 `~/.local/state/appearance` at startup and defines a `:ThemeSwitch dark|light`
